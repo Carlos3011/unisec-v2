@@ -23,7 +23,7 @@
   </div>
 
   <!-- NAVBAR RESPONSIVO -->
-  <nav x-data="{ open: false }" class="sticky top-0 w-full bg-gradient-primary shadow-lg z-50 backdrop-blur-md bg-opacity-90 transition duration-300">
+  <nav x-data="{ open: false, dropdownOpen: false }" class="sticky top-0 w-full bg-gradient-primary shadow-lg z-50 backdrop-blur-md bg-opacity-90 transition duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
         
@@ -33,69 +33,65 @@
         </a>
 
         <!-- Menú principal (versión escritorio) -->
-        <div class="hidden lg:flex items-center space-x-8">
-            @foreach([
-                'user.dashboard' => 'Dashboard',
-                'user.cursos' => 'Explorar Cursos',
-                'user.talleres' => 'Explorar Talleres',
-                'user.ponencias' => 'Explorar Ponencias',
-                'user.concursos' => 'Concursos',
-                'user.inscripciones' => 'Mis Inscripciones',
-                'user.certificados' => 'Mis Certificados',
-                'user.pagos' => 'Mis Pagos y Facturas',
-                'user.resenas' => 'Mis Reseñas',
-                'user.eventos' => 'Mis Eventos y Asistencias',
-                'user.soporte' => 'Soporte'
-            ] as $route => $label)
-                <a href="{{ route($route) }}" class="relative text-gray-200 hover:text-white px-3 py-2 text-sm font-medium transition-all duration-300 
-                  before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300
-                  hover:before:w-full">
-                  {{ $label }}
-                </a>
-            @endforeach
+        <div class="hidden lg:flex items-center space-x-6">
+          <a href="{{ route('user.dashboard') }}" class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Tablero</span>
+          </a>
+          
+          <!-- Dropdown de Cursos y Talleres -->
+          <div class="relative" x-data="{ open: false }">
+            <button @click="open = !open" class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none">
+              <i class="fas fa-graduation-cap"></i>
+              <span>Eventos</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div x-show="open" x-transition:enter="transition ease-out duration-200 transform" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150 transform" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-md shadow-xl py-2 z-50">
+              <a href="{{ route('user.cursos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Cursos</a>
+              <a href="{{ route('user.talleres') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Talleres</a>
+              <a href="{{ route('user.ponencias') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Ponencias</a>
+              <a href="{{ route('user.concursos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Concursos</a>
+            </div>
+          </div>
 
-            <!-- Botón de Cerrar Sesión en el menú móvil -->
-            <form method="POST" action="{{ route('logout') }}" class="text-center">
+          <!-- Dropdown de Usuario -->
+          <div class="relative" x-data="{ open: false }">
+            <button @click="open = !open" class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none">
+              <i class="fas fa-tags"></i>
+              <span>Pagos</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div x-show="open" x-transition:enter="transition ease-out duration-200 transform" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150 transform" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-md shadow-xl py-2 z-50">
+              <a href="{{ route('user.pagos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Pagos</a>
+              <a href="{{ route('user.soporte') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Soporte</a>
+            </div>
+          </div>
+
+          <!-- Dropdown de Usuario con Nombre -->
+          <div class="relative" x-data="{ open: false }">
+            <button @click="open = !open" class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none">
+              <i class="fas fa-user"></i>
+              <span>{{ Auth::user()->name }}</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div x-show="open" x-transition:enter="transition ease-out duration-200 transform" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150 transform" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-md shadow-xl py-2 z-50">
+              <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Perfil</a>
+              <a href="{{ route('user.inscripciones') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Inscripciones</a>
+              <a href="{{ route('user.certificados') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Certificados</a>
+              <a href="{{ route('user.resenas') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Reseñas</a>
+              <a href="{{ route('user.eventos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Eventos</a>
+              <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" class="text-red-500 hover:text-red-700 text-base transition-colors">
-                    Cerrar Sesión
-                </a>
-            </form>
+                <button type="submit" class="w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Cerrar Sesión</button>
+              </form>
+            </div>
+          </div>
         </div>
 
         <!-- Botón Menú Móvil -->
         <button @click="open = !open" class="lg:hidden text-gray-200 focus:outline-none">
-            <i :class="open ? 'fas fa-times' : 'fas fa-bars'" class="text-2xl"></i>
+          <i :class="open ? 'fas fa-times' : 'fas fa-bars'" class="text-2xl"></i>
         </button>
-
-        <!-- Menú desplegable móvil -->
-        <div x-show="open" @click.away="open = false" x-transition class="lg:hidden bg-tech-dark rounded-lg mt-2 py-4 px-6 space-y-4">
-            @foreach([
-                'user.dashboard' => 'Dashboard',
-                'user.cursos' => 'Explorar Cursos',
-                'user.talleres' => 'Explorar Talleres',
-                'user.ponencias' => 'Explorar Ponencias',
-                'user.concursos' => 'Concursos',
-                'user.inscripciones' => 'Mis Inscripciones',
-                'user.certificados' => 'Mis Certificados',
-                'user.pagos' => 'Mis Pagos y Facturas',
-                'user.resenas' => 'Mis Reseñas',
-                'user.eventos' => 'Mis Eventos y Asistencias',
-                'user.soporte' => 'Soporte'
-            ] as $route => $label)
-                <a href="{{ route($route) }}" class="block text-gray-200 hover:text-white text-base transition-colors text-center">
-                    {{ $label }}
-                </a>
-            @endforeach
-
-            <!-- Botón de Cerrar Sesión en el menú móvil -->
-            <form method="POST" action="{{ route('logout') }}" class="text-center">
-                @csrf
-                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" class="text-red-500 hover:text-red-700 text-base transition-colors">
-                    Cerrar Sesión
-                </a>
-            </form>
-        </div>
       </div>
     </div>
   </nav>

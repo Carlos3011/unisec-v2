@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('titulo', 'Acerca de UNISEC')
+@section('titulo', 'Acerca de')
 
 @section('contenido')
 <section class="relative min-h-[80vh] flex flex-col justify-center items-center bg-gradient-to-br from-space-950 via-cosmic-900 to-space-950 overflow-hidden" data-aos="zoom-in-up" data-aos-duration="1200">

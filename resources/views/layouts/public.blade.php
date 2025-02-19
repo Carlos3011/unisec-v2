@@ -22,7 +22,7 @@
     <canvas id="starsCanvas" class="absolute inset-0 w-full h-full"></canvas>
   </div>
 
-  <!-- NAVBAR RESPONSIVO -->
+ <!-- NAVBAR RESPONSIVO -->
   <nav x-data="{ open: false }" class="sticky top-0 w-full bg-gradient-primary shadow-lg z-50 backdrop-blur-md bg-opacity-90 transition duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
@@ -34,11 +34,12 @@
 
         <!-- Menú principal -->
         <div class="hidden lg:flex items-center space-x-8">
-          @foreach(['inicio' => 'Inicio', 'acerca' => 'Acerca de', 'ofertas' => 'Ofertas', 'blog' => 'Blog', 'contacto' => 'Contacto', 'login' => 'Ingresar', 'register' => 'Registrarse'] as $route => $label)
-            <a href="{{ route($route) }}" class="relative text-gray-200 hover:text-white px-3 py-2 text-sm font-medium transition-all duration-300 
+          @foreach(['inicio' => ['Inicio', 'fas fa-home'], 'acerca' => ['Acerca de', 'fas fa-info-circle'], 'ofertas' => ['Ofertas', 'fas fa-tags'], 'blog' => ['Blog', 'fas fa-blog'], 'contacto' => ['Contacto', 'fas fa-envelope'], 'login' => ['Ingresar', 'fas fa-sign-in-alt'], 'register' => ['Registrarse', 'fas fa-user-plus']] as $route => [$label, $icon])
+            <a href="{{ route($route) }}" class="relative text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 transition-all duration-300 
               before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300
               hover:before:w-full">
-              {{ $label }}
+              <i class="{{ $icon }} text-lg"></i>
+              <span>{{ $label }}</span>
             </a>
           @endforeach
         </div>
@@ -51,16 +52,16 @@
 
       <!-- Menú desplegable móvil -->
       <div x-show="open" @click.away="open = false" x-transition class="lg:hidden bg-tech-dark rounded-lg mt-2 py-4 px-6 space-y-4">
-        @foreach(['inicio' => 'Inicio', 'acerca' => 'Acerca de', 'ofertas' => 'Ofertas', 'blog' => 'Blog', 'contacto' => 'Contacto', 'login' => 'Ingresar', 'register' => 'Registrarse'] as $route => $label)
-          <a href="{{ route($route) }}" class="block text-gray-200 hover:text-white text-base transition-colors text-center 
-              before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300
-              hover:before:w-full">
-            {{ $label }}
+        @foreach(['inicio' => ['Inicio', 'fas fa-home'], 'acerca' => ['Acerca de', 'fas fa-info-circle'], 'ofertas' => ['Ofertas', 'fas fa-tags'], 'blog' => ['Blog', 'fas fa-blog'], 'contacto' => ['Contacto', 'fas fa-envelope'], 'login' => ['Ingresar', 'fas fa-sign-in-alt'], 'register' => ['Registrarse', 'fas fa-user-plus']] as $route => [$label, $icon])
+          <a href="{{ route($route) }}" class="block text-gray-200 hover:text-white text-base transition-colors text-center flex items-center justify-center space-x-2">
+            <i class="{{ $icon }} text-lg"></i>
+            <span>{{ $label }}</span>
           </a>
         @endforeach
       </div>
     </div>
   </nav>
+
 
   <!-- CONTENIDO PRINCIPAL -->
   <main class="flex-1 relative overflow-hidden">

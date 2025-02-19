@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('titulo', 'Inicio - UniSec Aerospace')
+@section('titulo', 'Inicio')
 
 @section('contenido')
 
