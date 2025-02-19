@@ -32,32 +32,70 @@
           <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-32 h-auto">
         </a>
 
-        <!-- Menú principal -->
+        <!-- Menú principal (versión escritorio) -->
         <div class="hidden lg:flex items-center space-x-8">
-          @foreach(['inicio' => 'Inicio', 'acerca' => 'Acerca de', 'ofertas' => 'Ofertas', 'blog' => 'Blog', 'contacto' => 'Contacto', 'login' => 'Ingresar', 'register' => 'Registrarse'] as $route => $label)
-            <a href="{{ route($route) }}" class="relative text-gray-200 hover:text-white px-3 py-2 text-sm font-medium transition-all duration-300 
-              before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300
-              hover:before:w-full">
-              {{ $label }}
-            </a>
-          @endforeach
+            @foreach([
+                'user.dashboard' => 'Dashboard',
+                'user.cursos' => 'Explorar Cursos',
+                'user.talleres' => 'Explorar Talleres',
+                'user.ponencias' => 'Explorar Ponencias',
+                'user.concursos' => 'Concursos',
+                'user.inscripciones' => 'Mis Inscripciones',
+                'user.certificados' => 'Mis Certificados',
+                'user.pagos' => 'Mis Pagos y Facturas',
+                'user.resenas' => 'Mis Reseñas',
+                'user.eventos' => 'Mis Eventos y Asistencias',
+                'user.soporte' => 'Soporte'
+            ] as $route => $label)
+                <a href="{{ route($route) }}" class="relative text-gray-200 hover:text-white px-3 py-2 text-sm font-medium transition-all duration-300 
+                  before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300
+                  hover:before:w-full">
+                  {{ $label }}
+                </a>
+            @endforeach
+
+            <!-- Botón de Cerrar Sesión en el menú móvil -->
+            <form method="POST" action="{{ route('logout') }}" class="text-center">
+                @csrf
+                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" class="text-red-500 hover:text-red-700 text-base transition-colors">
+                    Cerrar Sesión
+                </a>
+            </form>
         </div>
 
         <!-- Botón Menú Móvil -->
         <button @click="open = !open" class="lg:hidden text-gray-200 focus:outline-none">
-          <i :class="open ? 'fas fa-times' : 'fas fa-bars'" class="text-2xl"></i>
+            <i :class="open ? 'fas fa-times' : 'fas fa-bars'" class="text-2xl"></i>
         </button>
-      </div>
 
-      <!-- Menú desplegable móvil -->
-      <div x-show="open" @click.away="open = false" x-transition class="lg:hidden bg-tech-dark rounded-lg mt-2 py-4 px-6 space-y-4">
-        @foreach(['inicio' => 'Inicio', 'acerca' => 'Acerca de', 'ofertas' => 'Ofertas', 'blog' => 'Blog', 'contacto' => 'Contacto', 'login' => 'Ingresar', 'register' => 'Registrarse'] as $route => $label)
-          <a href="{{ route($route) }}" class="block text-gray-200 hover:text-white text-base transition-colors text-center 
-              before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300
-              hover:before:w-full">
-            {{ $label }}
-          </a>
-        @endforeach
+        <!-- Menú desplegable móvil -->
+        <div x-show="open" @click.away="open = false" x-transition class="lg:hidden bg-tech-dark rounded-lg mt-2 py-4 px-6 space-y-4">
+            @foreach([
+                'user.dashboard' => 'Dashboard',
+                'user.cursos' => 'Explorar Cursos',
+                'user.talleres' => 'Explorar Talleres',
+                'user.ponencias' => 'Explorar Ponencias',
+                'user.concursos' => 'Concursos',
+                'user.inscripciones' => 'Mis Inscripciones',
+                'user.certificados' => 'Mis Certificados',
+                'user.pagos' => 'Mis Pagos y Facturas',
+                'user.resenas' => 'Mis Reseñas',
+                'user.eventos' => 'Mis Eventos y Asistencias',
+                'user.soporte' => 'Soporte'
+            ] as $route => $label)
+                <a href="{{ route($route) }}" class="block text-gray-200 hover:text-white text-base transition-colors text-center">
+                    {{ $label }}
+                </a>
+            @endforeach
+
+            <!-- Botón de Cerrar Sesión en el menú móvil -->
+            <form method="POST" action="{{ route('logout') }}" class="text-center">
+                @csrf
+                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" class="text-red-500 hover:text-red-700 text-base transition-colors">
+                    Cerrar Sesión
+                </a>
+            </form>
+        </div>
       </div>
     </div>
   </nav>

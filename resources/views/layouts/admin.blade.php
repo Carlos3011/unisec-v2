@@ -34,13 +34,34 @@
 
         <!-- Menú principal -->
         <div class="hidden lg:flex items-center space-x-8">
-          @foreach(['inicio' => 'Inicio', 'acerca' => 'Acerca de', 'ofertas' => 'Ofertas', 'blog' => 'Blog', 'contacto' => 'Contacto', 'login' => 'Ingresar', 'register' => 'Registrarse'] as $route => $label)
+          @foreach([
+            'admin.dashboard' => 'Dashboard',
+            'admin.usuarios' => 'Gestión de Usuarios',
+            'admin.categorias-temas' => 'Categorías y Temas',
+            'admin.cursos' => 'Gestión de Cursos',
+            'admin.talleres' => 'Gestión de Talleres',
+            'admin.ponencias' => 'Gestión de Ponencias',
+            'admin.concursos' => 'Gestión de Concursos',
+            'admin.ponentes' => 'Gestión de Ponentes',
+            'admin.congresos-eventos' => 'Congresos y Eventos',
+            'admin.becas' => 'Gestión de Becas',
+            'admin.pagos-facturacion' => 'Pagos y Facturación',
+            'admin.reportes-estadisticas' => 'Reportes y Estadísticas'
+            ] as $route => $label)
             <a href="{{ route($route) }}" class="relative text-gray-200 hover:text-white px-3 py-2 text-sm font-medium transition-all duration-300 
               before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300
               hover:before:w-full">
               {{ $label }}
             </a>
           @endforeach
+
+          <!-- Botón de Cerrar Sesión en el menú móvil -->
+          <form method="POST" action="{{ route('logout') }}" class="text-center">
+                @csrf
+                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" class="text-red-500 hover:text-red-700 text-base transition-colors">
+                    Cerrar Sesión
+                </a>
+            </form>
         </div>
 
         <!-- Botón Menú Móvil -->
@@ -51,13 +72,33 @@
 
       <!-- Menú desplegable móvil -->
       <div x-show="open" @click.away="open = false" x-transition class="lg:hidden bg-tech-dark rounded-lg mt-2 py-4 px-6 space-y-4">
-        @foreach(['inicio' => 'Inicio', 'acerca' => 'Acerca de', 'ofertas' => 'Ofertas', 'blog' => 'Blog', 'contacto' => 'Contacto', 'login' => 'Ingresar', 'register' => 'Registrarse'] as $route => $label)
+        @foreach([
+            'admin.dashboard' => 'Dashboard',
+            'admin.usuarios' => 'Gestión de Usuarios',
+            'admin.categorias-temas' => 'Categorías y Temas',
+            'admin.cursos' => 'Gestión de Cursos',
+            'admin.talleres' => 'Gestión de Talleres',
+            'admin.ponencias' => 'Gestión de Ponencias',
+            'admin.concursos' => 'Gestión de Concursos',
+            'admin.ponentes' => 'Gestión de Ponentes',
+            'admin.congresos-eventos' => 'Congresos y Eventos',
+            'admin.becas' => 'Gestión de Becas',
+            'admin.pagos-facturacion' => 'Pagos y Facturación',
+            'admin.reportes-estadisticas' => 'Reportes y Estadísticas'
+            ] as $route => $label)
           <a href="{{ route($route) }}" class="block text-gray-200 hover:text-white text-base transition-colors text-center 
               before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300
               hover:before:w-full">
             {{ $label }}
           </a>
         @endforeach
+
+        <form method="POST" action="{{ route('logout') }}" class="text-center">
+            @csrf
+            <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" class="text-red-500 hover:text-red-700 text-base transition-colors">
+                Cerrar Sesión
+            </a>
+        </form>
       </div>
     </div>
   </nav>
@@ -81,7 +122,16 @@
       <div>
         <h3 class="text-gray-100 text-lg font-semibold mb-4">Explorar</h3>
         <ul class="space-y-2">
-          @foreach(['ofertas' => 'Oportunidades', 'miembros' => 'Miembros', 'blog' => 'Blog Técnico'] as $route => $label)
+          @foreach([
+              'admin.dashboard' => 'Dashboard',
+              'admin.usuarios' => 'Gestión de Usuarios',
+              'admin.categorias-temas' => 'Categorías y Temas',
+              'admin.cursos' => 'Gestión de Cursos',
+              'admin.talleres' => 'Gestión de Talleres',
+              'admin.ponencias' => 'Gestión de Ponencias',
+              'admin.pagos-facturacion' => 'Pagos y Facturación',
+              'admin.reportes-estadisticas' => 'Reportes y Estadísticas'
+            ] as $route => $label)
             <li>
               <a href="{{ route($route) }}" class="text-sm hover:text-white transition-colors">
                 {{ $label }}
@@ -89,6 +139,7 @@
               
             </li>
           @endforeach
+
         </ul>
       </div>
 
