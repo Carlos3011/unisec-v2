@@ -3,177 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@yield('titulo') - UNISEC</title>
+  <title>Panel de Administración - UNISEC</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   @vite('resources/css/app.css')
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
-
-<body class="bg-cosmic text-base font-['Inter']">
-  
-  <!-- Barra de progreso superior -->
-  <div class="h-1 bg-secondary/20 fixed top-0 left-0 right-0 z-50">
-    <div class="h-full bg-secondary-900 transition-all duration-300 ease-out" id="progress-bar"></div>
-  </div>
-
-   <!-- Capa de partículas -->
+<body class="bg-black font-['Inter']">
+  <!-- Capa de partículas -->
   <div class="fixed inset-0 z-0 pointer-events-none">
     <canvas id="starsCanvas" class="absolute inset-0 w-full h-full"></canvas>
   </div>
-
-  <!-- NAVBAR RESPONSIVO -->
-  <nav x-data="{ open: false }" class="sticky top-0 w-full bg-gradient-primary shadow-lg z-50 backdrop-blur-md bg-opacity-90 transition duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-20">
-        
-        <!-- Logo -->
-        <a href="{{ route('inicio') }}" class="flex items-center">
-          <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-32 h-auto">
+  
+  <div class="flex h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gradient-to-b from-primary-500 to-purple-700 shadow-xl h-full p-6 text-gray-100 space-y-6">
+      <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-3">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-36 h-auto">
+      </a>
+      <nav class="space-y-4">
+        <a href="{{ route('admin.dashboard') }}" class="flex items-center px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
+          <i class="fas fa-home text-lg"></i>
+          <span class="ml-3 font-medium">Dashboard</span>
         </a>
+        
+        <div x-data="{ open: false }">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
+            <div class="flex items-center space-x-3">
+              <i class="fas fa-cogs text-lg"></i>
+              <span class="font-medium">Gestión Académica</span>
+            </div>
+            <i class="fas fa-chevron-down" x-show="!open"></i>
+            <i class="fas fa-chevron-up" x-show="open"></i>
+          </button>
+          <div x-show="open" class="pl-8 space-y-2" x-collapse>
+            <a href="{{ route('admin.cursos') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Cursos</a>
+            <a href="{{ route('admin.talleres') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Talleres</a>
+            <a href="{{ route('admin.ponencias') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Ponencias</a>
+            <a href="{{ route('admin.concursos') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Concursos</a>
+          </div>
+        </div>
 
-        <!-- Menú principal -->
-        <div class="hidden lg:flex items-center space-x-8">
-          @foreach([
-            'admin.dashboard' => 'Dashboard',
-            'admin.usuarios' => 'Gestión de Usuarios',
-            'admin.categorias-temas' => 'Categorías y Temas',
-            'admin.cursos' => 'Gestión de Cursos',
-            'admin.talleres' => 'Gestión de Talleres',
-            'admin.ponencias' => 'Gestión de Ponencias',
-            'admin.concursos' => 'Gestión de Concursos',
-            'admin.ponentes' => 'Gestión de Ponentes',
-            'admin.congresos-eventos' => 'Congresos y Eventos',
-            'admin.becas' => 'Gestión de Becas',
-            'admin.pagos-facturacion' => 'Pagos y Facturación',
-            'admin.reportes-estadisticas' => 'Reportes y Estadísticas'
-            ] as $route => $label)
-            <a href="{{ route($route) }}" class="relative text-gray-200 hover:text-white px-3 py-2 text-sm font-medium transition-all duration-300 
-              before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300
-              hover:before:w-full">
-              {{ $label }}
-            </a>
-          @endforeach
+        <div x-data="{ open: false }">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
+            <div class="flex items-center space-x-3">
+              <i class="fas fa-user-tie text-lg"></i>
+              <span class="font-medium">Gestión de Usuarios</span>
+            </div>
+            <i class="fas fa-chevron-down" x-show="!open"></i>
+            <i class="fas fa-chevron-up" x-show="open"></i>
+          </button>
+          <div x-show="open" class="pl-8 space-y-2" x-collapse>
+            <a href="{{ route('admin.usuarios') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Usuarios</a>
+            <a href="{{ route('admin.ponentes') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Ponentes</a>
+          </div>
+        </div>
 
-          <!-- Botón de Cerrar Sesión en el menú móvil -->
-          <form method="POST" action="{{ route('logout') }}" class="text-center">
-                @csrf
-                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" class="text-red-500 hover:text-red-700 text-base transition-colors">
-                    Cerrar Sesión
-                </a>
+        <div x-data="{ open: false }">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
+            <div class="flex items-center space-x-3">
+              <i class="fas fa-file-invoice text-lg"></i>
+              <span class="font-medium">Administración Financiera</span>
+            </div>
+            <i class="fas fa-chevron-down" x-show="!open"></i>
+            <i class="fas fa-chevron-up" x-show="open"></i>
+          </button>
+          <div x-show="open" class="pl-8 space-y-2" x-collapse>
+            <a href="{{ route('admin.pagos-facturacion') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Pagos y Facturación</a>
+            <a href="{{ route('admin.becas') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Becas</a>
+          </div>
+        </div>
+
+        <div x-data="{ open: false }">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
+            <div class="flex items-center space-x-3">
+              <i class="fas fa-chart-line text-lg"></i>
+              <span class="font-medium">Reportes y Estadísticas</span>
+            </div>
+            <i class="fas fa-chevron-down" x-show="!open"></i>
+            <i class="fas fa-chevron-up" x-show="open"></i>
+          </button>
+          <div x-show="open" class="pl-8 space-y-2" x-collapse>
+            <a href="{{ route('admin.reportes-estadisticas') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Reportes</a>
+          </div>
+        </div>
+
+        <div x-data="{ open: false }">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
+            <div class="flex items-center space-x-3">
+              <i class="fas fa-user text-lg"></i>
+              <span class="font-medium">{{ Auth::user()->name }}</span>
+            </div>
+            <i class="fas fa-chevron-down" x-show="!open"></i>
+            <i class="fas fa-chevron-up" x-show="open"></i>
+          </button>
+          <div x-show="open" class="pl-8 space-y-2" x-collapse>
+            <a href="{{ route('profile.edit') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Perfil</a>
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <button type="submit" class="w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Cerrar Sesión</button>
             </form>
+          </div>
         </div>
 
-        <!-- Botón Menú Móvil -->
-        <button @click="open = !open" class="lg:hidden text-gray-200 focus:outline-none">
-          <i :class="open ? 'fas fa-times' : 'fas fa-bars'" class="text-2xl"></i>
-        </button>
-      </div>
 
-      <!-- Menú desplegable móvil -->
-      <div x-show="open" @click.away="open = false" x-transition class="lg:hidden bg-tech-dark rounded-lg mt-2 py-4 px-6 space-y-4">
-        @foreach([
-            'admin.dashboard' => 'Dashboard',
-            'admin.usuarios' => 'Gestión de Usuarios',
-            'admin.categorias-temas' => 'Categorías y Temas',
-            'admin.cursos' => 'Gestión de Cursos',
-            'admin.talleres' => 'Gestión de Talleres',
-            'admin.ponencias' => 'Gestión de Ponencias',
-            'admin.concursos' => 'Gestión de Concursos',
-            'admin.ponentes' => 'Gestión de Ponentes',
-            'admin.congresos-eventos' => 'Congresos y Eventos',
-            'admin.becas' => 'Gestión de Becas',
-            'admin.pagos-facturacion' => 'Pagos y Facturación',
-            'admin.reportes-estadisticas' => 'Reportes y Estadísticas'
-            ] as $route => $label)
-          <a href="{{ route($route) }}" class="block text-gray-200 hover:text-white text-base transition-colors text-center 
-              before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300
-              hover:before:w-full">
-            {{ $label }}
-          </a>
-        @endforeach
-
-        <form method="POST" action="{{ route('logout') }}" class="text-center">
-            @csrf
-            <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" class="text-red-500 hover:text-red-700 text-base transition-colors">
-                Cerrar Sesión
-            </a>
-        </form>
-      </div>
-    </div>
-  </nav>
-
-  <!-- CONTENIDO PRINCIPAL -->
-  <main class="flex-1 relative overflow-hidden">
-    @yield('contenido')
-  </main>
-
-  <!-- FOOTER RESPONSIVO -->
-  <footer class="bg-gradient-primary text-gray-300 mt-24 py-12 border-t border-tech-medium">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-center sm:text-left">
-      
-      <!-- Logo y descripción -->
-      <div class="space-y-4">
-        <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-32 h-auto mx-auto sm:mx-0">
-        <p class="text-sm text-gray-400">Innovación aeroespacial para un futuro sostenible.</p>
-      </div>
-
-      <!-- Menú de navegación -->
-      <div>
-        <h3 class="text-gray-100 text-lg font-semibold mb-4">Explorar</h3>
-        <ul class="space-y-2">
-          @foreach([
-              'admin.dashboard' => 'Dashboard',
-              'admin.usuarios' => 'Gestión de Usuarios',
-              'admin.categorias-temas' => 'Categorías y Temas',
-              'admin.cursos' => 'Gestión de Cursos',
-              'admin.talleres' => 'Gestión de Talleres',
-              'admin.ponencias' => 'Gestión de Ponencias',
-              'admin.pagos-facturacion' => 'Pagos y Facturación',
-              'admin.reportes-estadisticas' => 'Reportes y Estadísticas'
-            ] as $route => $label)
-            <li>
-              <a href="{{ route($route) }}" class="text-sm hover:text-white transition-colors">
-                {{ $label }}
-              </a>
-              
-            </li>
-          @endforeach
-
-        </ul>
-      </div>
-
-      <!-- Información de contacto -->
-      <div>
-        <h3 class="text-gray-100 text-lg font-semibold mb-4">Contacto</h3>
-        <p class="text-sm"><i class="fas fa-phone-alt mr-2"></i>+1 (555) 123-4567</p>
-        <p class="text-sm"><i class="fas fa-envelope mr-2"></i>contacto@unisec.aero</p>
-      </div>
-
-      <!-- Redes Sociales -->
-      <div>
-        <h3 class="text-gray-100 text-lg font-semibold mb-4">Conecta con nosotros</h3>
-        <div class="flex justify-center sm:justify-start space-x-4">
-          @php
-            $socialIcons = ['facebook' => 'fab fa-facebook-f', 'twitter' => 'fab fa-twitter', 'instagram' => 'fab fa-instagram'];
-          @endphp
-          @foreach($socialIcons as $social => $icon)
-            <a href="#" class="p-3 bg-tech-dark rounded-lg hover:bg-primary transition-colors">
-              <i class="{{ $icon }} text-gray-300 hover:text-white transition-colors text-xl"></i>
-            </a>
-          @endforeach
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Copyright -->
-    <div class="pt-8 text-center text-sm text-gray-500">
-      &copy; {{ date('Y') }} UniSec Aerospace Consortium. Todos los derechos reservados.
-    </div>
-  </footer>
+      </nav>
+    </aside>
+    
+    <!-- Contenido Principal -->
+    <main class="flex-1 p-8 overflow-auto  shadow-md rounded-lg">
+      @yield('contenido')
+    </main>
+  </div>
 
   @vite('resources/js/app.js')
-  @vite('resources/js/typed.js')
 </body>
 </html>
