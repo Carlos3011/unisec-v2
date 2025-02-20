@@ -24,77 +24,119 @@
 
   <!-- NAVBAR RESPONSIVO -->
   <nav x-data="{ open: false, dropdownOpen: false }" class="sticky top-0 w-full bg-gradient-primary shadow-lg z-50 backdrop-blur-md bg-opacity-90 transition duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-20">
-        
-        <!-- Logo -->
-        <a href="{{ route('inicio') }}" class="flex items-center">
-          <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-32 h-auto">
-        </a>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between items-center h-20">
+              
+              <!-- Logo -->
+              <a href="{{ route('inicio') }}" class="flex items-center">
+                  <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-32 h-auto">
+              </a>
 
-        <!-- Menú principal (versión escritorio) -->
-        <div class="hidden lg:flex items-center space-x-6">
-          <a href="{{ route('user.dashboard') }}" class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2">
-            <i class="fas fa-tachometer-alt"></i>
-            <span>Tablero</span>
-          </a>
-          
-          <!-- Dropdown de Cursos y Talleres -->
-          <div class="relative" x-data="{ open: false }">
-            <button @click="open = !open" class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none">
-              <i class="fas fa-graduation-cap"></i>
-              <span>Eventos</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div x-show="open" x-transition:enter="transition ease-out duration-200 transform" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150 transform" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-md shadow-xl py-2 z-50">
-              <a href="{{ route('user.cursos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Cursos</a>
-              <a href="{{ route('user.talleres') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Talleres</a>
-              <a href="{{ route('user.ponencias') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Ponencias</a>
-              <a href="{{ route('user.concursos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Concursos</a>
-            </div>
+              <!-- Menú principal (versión escritorio) -->
+              <div class="hidden lg:flex items-center space-x-6">
+                  <a href="{{ route('user.dashboard') }}" class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2">
+                      <i class="fas fa-tachometer-alt"></i>
+                      <span>Tablero</span>
+                  </a>
+
+                  <!-- Dropdown de Eventos -->
+                  <div class="relative" x-data="{ open: false }">
+                      <button @click="open = !open" class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none">
+                          <i class="fas fa-graduation-cap"></i>
+                          <span>Eventos</span>
+                          <i class="fas fa-chevron-down"></i>
+                      </button>
+                      <div x-show="open" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-md shadow-xl py-2 z-50">
+                          <a href="{{ route('user.cursos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Cursos</a>
+                          <a href="{{ route('user.talleres') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Talleres</a>
+                          <a href="{{ route('user.ponencias') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Ponencias</a>
+                          <a href="{{ route('user.concursos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Concursos</a>
+                      </div>
+                  </div>
+
+                  <!-- Dropdown de Pagos -->
+                  <div class="relative" x-data="{ open: false }">
+                      <button @click="open = !open" class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none">
+                          <i class="fas fa-tags"></i>
+                          <span>Pagos</span>
+                          <i class="fas fa-chevron-down"></i>
+                      </button>
+                      <div x-show="open" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-md shadow-xl py-2 z-50">
+                          <a href="{{ route('user.pagos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Pagos</a>
+                          <a href="{{ route('user.soporte') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Soporte</a>
+                      </div>
+                  </div>
+
+                  <!-- Dropdown de Usuario -->
+                  <div class="relative" x-data="{ open: false }">
+                      <button @click="open = !open" class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none">
+                          <i class="fas fa-user"></i>
+                          <span>{{ Auth::user()->name }}</span>
+                          <i class="fas fa-chevron-down"></i>
+                      </button>
+                      <div x-show="open" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-md shadow-xl py-2 z-50">
+                          <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Perfil</a>
+                          <a href="{{ route('user.inscripciones') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Inscripciones</a>
+                          <a href="{{ route('user.certificados') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Certificados</a>
+                          <a href="{{ route('user.resenas') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Reseñas</a>
+                          <a href="{{ route('user.eventos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Eventos</a>
+                          <form method="POST" action="{{ route('logout') }}">
+                              @csrf
+                              <button type="submit" class="w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Cerrar Sesión</button>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Botón Menú Móvil -->
+              <button @click="open = !open" class="lg:hidden text-gray-200 focus:outline-none">
+                  <i :class="open ? 'fas fa-times' : 'fas fa-bars'" class="text-2xl"></i>
+              </button>
           </div>
-
-          <!-- Dropdown de Usuario -->
-          <div class="relative" x-data="{ open: false }">
-            <button @click="open = !open" class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none">
-              <i class="fas fa-tags"></i>
-              <span>Pagos</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div x-show="open" x-transition:enter="transition ease-out duration-200 transform" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150 transform" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-md shadow-xl py-2 z-50">
-              <a href="{{ route('user.pagos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Pagos</a>
-              <a href="{{ route('user.soporte') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Soporte</a>
-            </div>
-          </div>
-
-          <!-- Dropdown de Usuario con Nombre -->
-          <div class="relative" x-data="{ open: false }">
-            <button @click="open = !open" class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none">
-              <i class="fas fa-user"></i>
-              <span>{{ Auth::user()->name }}</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div x-show="open" x-transition:enter="transition ease-out duration-200 transform" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150 transform" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-md shadow-xl py-2 z-50">
-              <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Perfil</a>
-              <a href="{{ route('user.inscripciones') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Inscripciones</a>
-              <a href="{{ route('user.certificados') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Certificados</a>
-              <a href="{{ route('user.resenas') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Reseñas</a>
-              <a href="{{ route('user.eventos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Eventos</a>
-              <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Cerrar Sesión</button>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <!-- Botón Menú Móvil -->
-        <button @click="open = !open" class="lg:hidden text-gray-200 focus:outline-none">
-          <i :class="open ? 'fas fa-times' : 'fas fa-bars'" class="text-2xl"></i>
-        </button>
       </div>
-    </div>
+
+      <!-- Menú Móvil -->
+      <div x-show="open" @click.away="open = false" class="lg:hidden bg-gray-900 text-gray-200 w-full absolute top-20 left-0 py-4 px-6 space-y-4 z-50">
+          <a href="{{ route('user.dashboard') }}" class="block text-gray-200 hover:text-white">Tablero</a>
+          <div x-data="{ dropdown: false }">
+            <button @click="dropdown = !dropdown" class="w-full text-left flex justify-between text-gray-200 hover:text-white">
+              Eventos <i class="fas fa-chevron-down"></i>
+            </button>
+            <div x-show="dropdown" class="pl-4 space-y-2">
+              <a href="{{ route('user.cursos') }}" class="block text-gray-300 hover:text-white">Cursos</a>
+              <a href="{{ route('user.talleres') }}" class="block text-gray-300 hover:text-white">Talleres</a>
+              <a href="{{ route('user.ponencias') }}" class="block text-gray-300 hover:text-white">Ponencias</a>
+              <a href="{{ route('user.concursos') }}" class="block text-gray-300 hover:text-white">Concursos</a>
+            </div>
+          </div>
+          <div x-data="{ dropdown: false }">
+              <button @click="dropdown = !dropdown" class="w-full text-left flex justify-between text-gray-200 hover:text-white">
+                  Pagos <i class="fas fa-chevron-down"></i>
+              </button>
+              <div x-show="dropdown" class="pl-4 space-y-2">
+                  <a href="{{ route('user.pagos') }}" class="block text-gray-300 hover:text-white">Mis Pagos</a>
+                  <a href="{{ route('user.soporte') }}" class="block text-gray-300 hover:text-white">Soporte</a>
+              </div>
+          </div>
+          <!-- Dropdown de Perfil en móvil -->
+        <div x-data="{ open: false }">
+            <button @click="open = !open" class="w-full text-left flex justify-between text-gray-200 hover:text-white">
+                Perfil <i class="fas fa-chevron-down"></i>
+            </button>
+            <div x-show="open" class="pl-4 space-y-2">
+                <a href="{{ route('profile.edit') }}" class="block text-gray-300 hover:text-white">Editar Perfil</a>
+                <a href="{{ route('user.inscripciones') }}" class="block text-gray-300 hover:text-white">Mis Inscripciones</a>
+                <a href="{{ route('user.certificados') }}" class="block text-gray-300 hover:text-white">Mis Certificados</a>
+                <a href="{{ route('user.resenas') }}" class="block text-gray-300 hover:text-white">Mis Reseñas</a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="w-full text-left text-gray-200 hover:text-white">Cerrar Sesión</button>
+                </form>
+            </div>
+        </div>
+      </div>
   </nav>
+
 
   <!-- CONTENIDO PRINCIPAL -->
   <main class="flex-1 relative overflow-hidden">
