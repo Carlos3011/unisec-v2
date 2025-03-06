@@ -95,10 +95,10 @@
         <!-- Carrusel de Videos -->
         <div class="flex overflow-x-auto pb-6 space-x-4 scrollbar-hide" id="video-carousel">
             @foreach([
-                ['id' => 'hI9HQfCAw64', 'title' => 'Lanzamiento histórico'],
-                ['id' => '1C_zuHf6lP4', 'title' => 'Primeras imágenes James Webb'],
-                ['id' => '5KygwcZ545U', 'title' => 'Entrenamiento de astronautas'],
-                ['id' => 'BN624m0QJIM', 'title' => 'Falcon Heavy lanzamiento'],
+                ['id' => '3g8i7fFp5bc', 'title' => 'Long March-6A launches SpaceSail Polar Orbit 01'],
+                ['id' => 'gmA1Gr_JNio', 'title' => 'Una vista de satelites orbitando desde un órbita baja.'],
+                ['id' => 'px31OjiqoNM', 'title' => 'Comunicaciones Satelitales Avanzadas'],
+                ['id' => '-BGXRGoEnAc', 'title' => 'Diseño de Satélites a Medida'],
             ] as $video)
             <div 
                 class="flex-shrink-0 w-52 sm:w-64 cursor-pointer video-carousel-item transition-all duration-300 border border-tech-500 rounded-lg overflow-hidden bg-tech-700 hover:scale-105"
