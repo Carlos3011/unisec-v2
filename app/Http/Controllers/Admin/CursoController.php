@@ -1,0 +1,137 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Curso;
+use App\Models\Categoria;
+use App\Models\Tema;
+use App\Models\Ponente;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
+class CursoController extends Controller
+{
+    private function calcularDuracion($fecha_inicio, $fecha_fin)
+    {
+        $inicio = Carbon::parse($fecha_inicio);
+        $fin = Carbon::parse($fecha_fin);
+        $dias = $inicio->diffInDays($fin) + 1;
+        return $dias . ' días';
+    }
+
+    public function index()
+    {
+        $cursos = Curso::with(['categoria', 'inscripciones'])
+            ->withCount('inscripciones as inscritos_count')
+            ->get()
+            ->map(function($curso) {
+                $estado = 'inactivo';
+                if ($curso->fecha_fin >= now()) {
+                    $estado = $curso->fecha_inicio > now() ? 'proximo' : 'activo';
+                }
+                return [
+                    'id' => $curso->id,
+                    'nombre' => $curso->titulo,
+                    'categoria' => $curso->categoria->nombre,
+                    'duracion' => $this->calcularDuracion($curso->fecha_inicio, $curso->fecha_fin),
+                    'estado' => $estado,
+                    'inscritos_count' => $curso->inscritos_count
+                ];
+            });
+        $categorias = Categoria::all();
+        $temas = Tema::all();
+        return view('admin.cursos.index', compact('cursos', 'categorias', 'temas'));
+    }
+
+    public function create()
+    {
+        $categorias = Categoria::all();
+        $temas = Tema::all();
+        $ponentes = Ponente::all();
+        return view('admin.cursos.create')->with([
+            'categorias' => $categorias,
+            'temas' => $temas,
+            'ponentes' => $ponentes
+        ]);
+    }
+
+    public function edit(Curso $curso)
+    {
+        $categorias = Categoria::all();
+        $temas = Tema::all();
+        $ponentes = Ponente::all();
+        return view('admin.cursos.edit', compact('curso', 'categorias', 'temas', 'ponentes'));
+    }
+    
+
+    public function store(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'titulo' => 'required|string|max:255',
+                'descripcion' => 'required|string',
+                'categoria_id' => 'required|exists:categorias,id',
+                'tema_id' => 'required|exists:temas,id',
+                'ponente_id' => 'required|exists:ponentes,id',
+                'costo' => 'required|numeric|min:0',
+                'fecha_inicio' => 'required|date',
+                'fecha_fin' => 'required|date|after:fecha_inicio'
+            ]);
+
+            $curso = Curso::create($validated);
+
+            return redirect()->route('admin.cursos.index')
+                ->with('success', 'Curso creado exitosamente');
+        } catch (\Exception $e) {
+            return back()
+                ->withInput()
+                ->with('error', 'Error al crear el curso: ' . $e->getMessage());
+        }
+    }
+
+    public function show(Curso $curso)
+    {
+        return response()->json([
+            'success' => true,
+            'curso' => $curso->load('categoria', 'tema', 'ponente')
+        ]);
+    }
+
+    public function update(Request $request, Curso $curso)
+    {
+        try {
+            $validated = $request->validate([
+                'titulo' => 'required|string|max:255',
+                'descripcion' => 'required|string',
+                'categoria_id' => 'required|exists:categorias,id',
+                'tema_id' => 'required|exists:temas,id',
+                'ponente_id' => 'required|exists:ponentes,id',
+                'costo' => 'required|numeric|min:0',
+                'fecha_inicio' => 'required|date',
+                'fecha_fin' => 'required|date|after:fecha_inicio'
+            ]);
+
+            $curso->update($validated);
+
+            return redirect()->route('admin.cursos.index')
+                ->with('success', 'Curso actualizado exitosamente');
+        } catch (\Exception $e) {
+            return back()
+                ->withInput()
+                ->with('error', 'Error al actualizar el curso: ' . $e->getMessage());
+        }
+    }
+
+    public function destroy(Curso $curso)
+    {
+        try {
+            $curso->delete();
+            return redirect()->route('admin.cursos.index')
+                ->with('success', 'Curso eliminado exitosamente');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error al eliminar el curso: ' . $e->getMessage());
+        }
+    }
+}

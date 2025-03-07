@@ -37,10 +37,11 @@
             <i class="fas fa-chevron-up" x-show="open"></i>
           </button>
           <div x-show="open" class="pl-8 space-y-2" x-collapse>
-            <a href="{{ route('admin.cursos') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Cursos</a>
-            <a href="{{ route('admin.talleres') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Talleres</a>
-            <a href="{{ route('admin.ponencias') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Ponencias</a>
-            <a href="{{ route('admin.concursos') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Concursos</a>
+            <a href="{{ route('admin.categorias.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Categorías</a>
+            <a href="{{ route('admin.cursos.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Cursos</a>
+            <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Talleres</a>
+            <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Ponencias</a>
+            <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Concursos</a>
           </div>
         </div>
 
@@ -98,7 +99,7 @@
             <i class="fas fa-chevron-up" x-show="open"></i>
           </button>
           <div x-show="open" class="pl-8 space-y-2" x-collapse>
-            <a href="{{ route('profile.edit') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Perfil</a>
+            <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Perfil</a>
             <form method="POST" action="{{ route('logout') }}">
               @csrf
               <button type="submit" class="w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Cerrar Sesión</button>
