@@ -6,6 +6,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicController;
 
+use App\Http\Controllers\Admin\CursoController;
+use App\Http\Controllers\Admin\CategoriaController;
+
+
 Route::controller(PublicController::class)->group(function () {
     Route::get('/', 'inicio')->name('inicio');
     Route::get('/acerca', 'acerca')->name('acerca');
@@ -29,10 +33,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/usuarios', [AdminController::class, 'usuarios'])->name('admin.usuarios');
     Route::get('/admin/categorias-temas', [AdminController::class, 'categoriasTemas'])->name('admin.categorias-temas');
-    Route::get('/admin/cursos', [AdminController::class, 'cursos'])->name('admin.cursos');
-    Route::get('/admin/talleres', [AdminController::class, 'talleres'])->name('admin.talleres');
-    Route::get('/admin/ponencias', [AdminController::class, 'ponencias'])->name('admin.ponencias');
-    Route::get('/admin/concursos', [AdminController::class, 'concursos'])->name('admin.concursos');
+
+    // Rutas para la gestión de categorías
+    Route::get('/admin/categorias', [CategoriaController::class, 'index'])->name('admin.categorias.index');
+    Route::post('/admin/categorias', [CategoriaController::class, 'store'])->name('admin.categorias.store');
+    Route::put('/admin/categorias/{categoria}', [CategoriaController::class, 'update'])->name('admin.categorias.update');
+    Route::delete('/admin/categorias/{categoria}', [CategoriaController::class, 'destroy'])->name('admin.categorias.destroy');
+
+    // Rutas para la gestión de cursos
+    Route::get('/admin/cursos', [CursoController::class, 'index'])->name('admin.cursos.index');
+    Route::get('/admin/cursos/create', [CursoController::class, 'create'])->name('admin.cursos.create');
+    Route::post('/admin/cursos', [CursoController::class, 'store'])->name('admin.cursos.store');
+    Route::get('/admin/cursos/{curso}/edit', [CursoController::class, 'edit'])->name('admin.cursos.edit');
+    Route::put('/admin/cursos/{curso}', [CursoController::class, 'update'])->name('admin.cursos.update');
+    Route::delete('/admin/cursos/{curso}', [CursoController::class, 'destroy'])->name('admin.cursos.destroy');    
+    
+   
     Route::get('/admin/ponentes', [AdminController::class, 'ponentes'])->name('admin.ponentes');
     Route::get('/admin/congresos-eventos', [AdminController::class, 'congresosEventos'])->name('admin.congresos-eventos');
     Route::get('/admin/becas', [AdminController::class, 'becas'])->name('admin.becas');
