@@ -142,7 +142,7 @@
         <div class="text-center mb-16">
             <h2 class="text-5xl font-extrabold text-white drop-shadow-md animate-text-glow">Nuestra Misión, Visión y Objetivos</h2>
             <p class="text-gray-300 text-xl max-w-3xl mx-auto mt-4">
-                Dirigimos nuestra energía hacia un futuro donde la exploración espacial impulse la innovación y el desarrollo tecnológico global.
+                UNISEC -MX  facilita y promueve las actividades prácticas de desarrollo aéreo y espacial a nivel universitario , tales como el diseño, desarrollo, fabricación , armado,  lanzamiento y operación de micro/nano/ pico satélites, cohetes sonda y aeronaves incluyendo sus cargas útiles.
             </p>
         </div>
 
@@ -155,7 +155,7 @@
                 </div>
                 <h3 class="text-3xl font-bold text-accent">Misión</h3>
                 <p class="text-gray-300">
-                    Impulsar la investigación y el desarrollo en el ámbito aeroespacial, fomentando la colaboración internacional y la innovación para transformar el futuro en realidades tangibles.
+                    UNISEC -MX.  Impulsar el desarrollo de capacidades tecnológicas y científicas en ingeniería cosmonáutica y posicionar a México como un actor estratégico en la exploración y utilización del espacio ultraterrestre. Crear un ambiente que promueva el  intercambio de ideas, información y capacidades relacionadas con la ingeniería cosmonáutica y sus aplicaciones. Fomentar las capacidades locales para diseñar y fabricar componentes, sistemas y armado de una aeronave.
                 </p>
             </div>
 
@@ -166,7 +166,7 @@
                 </div>
                 <h3 class="text-3xl font-bold text-accent">Visión</h3>
                 <p class="text-gray-300">
-                    Ser el referente principal en innovación aeroespacial en Latinoamérica, liderando proyectos tecnológicos que conecten el mundo con el cosmos.
+                    El Consorcio de Universidades de Ingeniería Espacial Sección México  (UNISEC-MX) se visualiza logrando reducir la brecha tecnológica fomentando la independencia en el diseño y fabricación de sistemas cosmonáuticos, contribuyendo significativamente a la exploración espacial y la aviación sostenible. Consolidarse como un actor clave en la industria cosmonáutica y aérea donde las estructuras sociales -ya sean académicas, industriales o educativas- ofrecen oportunidades para desarrollar aplicaciones pacíficas y de beneficio para la humanidad. A través de la formación de talento especializado, la investigación en infraestructura y la colaboración internacional. 
                 </p>
             </div>
 
@@ -176,9 +176,14 @@
                     <i class="fas fa-bullseye text-4xl text-purple-500"></i>
                 </div>
                 <h3 class="text-3xl font-bold text-accent">Objetivos</h3>
-                <p class="text-gray-300">
-                    Desarrollar tecnologías espaciales de vanguardia, fortalecer la educación aeroespacial y promover el acceso a la exploración espacial para las futuras generaciones.
-                </p>
+                <ul class="text-gray-300 space-y-3 text-left list-inside list-disc">
+                    <ul>Fortalecer la educación cosmonáutica mediante programas académicos innovadores y prácticas hands-on.</ul>
+                    <ul>Desarrollar proyectos de investigación en tecnología espacial y aeronáutica de vanguardia.</ul>
+                    <ul>Fomentar la colaboración internacional y el intercambio de conocimientos entre instituciones.</ul>
+                    <ul>Impulsar el desarrollo de micro/nano/pico satélites y tecnologías espaciales.</ul>
+                    <ul>Promover la formación de profesionales especializados en el sector aeroespacial.</ul>
+                    <ul>Establecer vínculos estratégicos con la industria espacial global.</ul>
+                </ul>
             </div>
         </div>
     </div>
@@ -186,37 +191,103 @@
     <!-- Estilos Personalizados -->
     <style>
         .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.4s ease-in-out;
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: left;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
         }
 
         .glass-card:hover {
-            border-color: rgba(0, 255, 255, 0.6);
-            box-shadow: 0 4px 40px rgba(0, 255, 255, 0.4);
-            transform: translateY(-5px);
+            border-color: rgba(0, 255, 255, 0.4);
+            box-shadow: 0 15px 45px rgba(0, 255, 255, 0.2);
+            transform: translateY(-8px);
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card h3 {
+            font-size: 2.25rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #a5f3fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card p, .glass-card ul {
+            font-size: 1.1rem;
+            line-height: 1.75;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .glass-card ul li {
+            margin-bottom: 0.75rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .glass-card ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #a5f3fc;
+            font-size: 1.5rem;
+            line-height: 1;
         }
 
         .icon-container {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1rem;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            transition: all 0.4s ease;
+        }
+
+        .glass-card:hover .icon-container {
+            transform: scale(1.1) rotate(5deg);
+            border-color: rgba(0, 255, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
         }
 
         .animate-text-glow {
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
-                         0 0 40px rgba(76, 175, 255, 0.5);
+                         0 0 40px rgba(76, 175, 255, 0.5),
+                         0 0 60px rgba(76, 175, 255, 0.3);
         }
     </style>
 </section>
@@ -255,10 +326,10 @@
 <!-- SECCIÓN NUESTRO EQUIPO -->
 @php
 $presidente = [
-    'nombre' => 'HERMES MORENO ÁLVAREZ',
+    'nombre' => 'Dr. Hermes Moreno Alvarez',
     'cargo' => 'Presidente UNISEC México',
     'descripcion' => 'Líder visionario en el desarrollo aeroespacial y la educación espacial en México.',
-    'imagen' => 'team/ejemplo.jpg',
+    'imagen' => 'team/hermes-moreno.jpg',
     'linkedin' => '#',
     'email' => 'presidente@unisec.mx'
 ];
@@ -267,58 +338,99 @@ $secciones = [
     [
         'nombre' => 'Sección Norte',
         'director' => [
-            'nombre' => 'ANTONIO GÓMEZ ROA',
-            'cargo' => 'Universidad Autónoma de Baja California',
+            'nombre' => 'Dr. Ricardo Martínez',
+            'cargo' => 'Director Regional Norte',
             'descripcion' => 'Coordinación de proyectos espaciales en la región norte del país.',
-            'imagen' => 'team/ejemplo.jpg',
+            'imagen' => 'team/ricardo-martinez.jpg',
             'email' => 'norte.director@unisec.mx'
         ],
         'equipo' => [
             [
-                'nombre' => 'SILVIA KARINA REYES LIO',
-                'cargo' => 'Instituto Tcnológico de Nogales Sonora',
+                'nombre' => 'Dra. Ana Torres',
+                'cargo' => 'Coordinadora de Investigación',
                 'descripcion' => 'Especialista en sistemas de propulsión espacial.',
-                'imagen' => 'team/ejemplo.jpg',
+                'imagen' => 'team/placeholder.jpg',
                 'email' => 'norte.investigacion@unisec.mx'
             ],
             [
-                'nombre' => 'OSCAR MARTÍNEZ HERNÁNDEZ',
+                'nombre' => 'Ing. Miguel Ángel Ruiz',
                 'cargo' => 'Líder de Proyectos',
                 'descripcion' => 'Experto en diseño de nanosatélites.',
-                'imagen' => 'team/ejemplo.jpg',
+                'imagen' => 'team/placeholder.jpg',
                 'email' => 'norte.proyectos@unisec.mx'
+            ],
+            [
+                'nombre' => 'M.C. Isabel Ramírez',
+                'cargo' => 'Coordinadora Académica',
+                'descripcion' => 'Especialista en educación espacial.',
+                'imagen' => 'team/placeholder.jpg',
+                'email' => 'norte.academica@unisec.mx'
             ]
         ]
     ],
     [
         'nombre' => 'Sección Centro',
         'director' => [
-            'nombre' => 'JORGE ALFREDO FERRER PÉREZ',
-            'cargo' => 'UNAM - QUERÉTARO',
+            'nombre' => 'Dra. Laura Mendoza',
+            'cargo' => 'Directora Regional Centro',
             'descripcion' => 'Gestión de investigación y desarrollo en la zona central.',
-            'imagen' => 'team/ejemplo.jpg',
+            'imagen' => 'team/laura-mendoza.jpg',
             'email' => 'centro.director@unisec.mx'
         ],
         'equipo' => [
-   
+            [
+                'nombre' => 'Dr. Roberto Vega',
+                'cargo' => 'Coordinador de Innovación',
+                'descripcion' => 'Especialista en tecnologías satelitales.',
+                'imagen' => 'team/placeholder.jpg',
+                'email' => 'centro.innovacion@unisec.mx'
+            ],
+            [
+                'nombre' => 'Ing. Carmen Ortiz',
+                'cargo' => 'Líder de Desarrollo',
+                'descripcion' => 'Experta en sistemas embebidos espaciales.',
+                'imagen' => 'team/placeholder.jpg',
+                'email' => 'centro.desarrollo@unisec.mx'
+            ],
+            [
+                'nombre' => 'M.C. Daniel López',
+                'cargo' => 'Coordinador de Vinculación',
+                'descripcion' => 'Especialista en relaciones institucionales.',
+                'imagen' => 'team/placeholder.jpg',
+                'email' => 'centro.vinculacion@unisec.mx'
+            ]
         ]
     ],
     [
         'nombre' => 'Sección Sur',
         'director' => [
-            'nombre' => 'ROSA MARÍA MARTÍNEZ GALVÁN',
-            'cargo' => 'Instituto Tecnológico de Puebla',
+            'nombre' => 'Dr. Carlos Ramírez',
+            'cargo' => 'Director Regional Sur',
             'descripcion' => 'Desarrollo de programas espaciales en la región sur.',
-            'imagen' => 'team/ejemplo.jpg',
+            'imagen' => 'team/carlos-ramirez.jpg',
             'email' => 'sur.director@unisec.mx'
         ],
         'equipo' => [
             [
-                'nombre' => 'JOSUÉ MANCILLA CEREZO',
-                'cargo' => 'Instituto Tecnológico Superior de Tepeaca',
+                'nombre' => 'Dra. Patricia Morales',
+                'cargo' => 'Coordinadora de Investigación',
                 'descripcion' => 'Especialista en astrofísica aplicada.',
-                'imagen' => 'team/ejemplo.jpg',
+                'imagen' => 'team/placeholder.jpg',
                 'email' => 'sur.investigacion@unisec.mx'
+            ],
+            [
+                'nombre' => 'Ing. Fernando Díaz',
+                'cargo' => 'Líder de Proyectos',
+                'descripcion' => 'Experto en instrumentación espacial.',
+                'imagen' => 'team/placeholder.jpg',
+                'email' => 'sur.proyectos@unisec.mx'
+            ],
+            [
+                'nombre' => 'M.C. Gabriela Soto',
+                'cargo' => 'Coordinadora de Desarrollo',
+                'descripcion' => 'Especialista en software espacial.',
+                'imagen' => 'team/placeholder.jpg',
+                'email' => 'sur.desarrollo@unisec.mx'
             ]
         ]
     ]
