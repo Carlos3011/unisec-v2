@@ -367,19 +367,24 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <!-- SECCIÓN DE COLABORACIONES -->
-<section class="py-20 bg-gradient-to-br from-space-700 to-primary-dark">
-    <div class="max-w-7xl mx-auto px-6">
+<section class="py-20 bg-gradient-to-br from-space-900 to-primary-dark relative overflow-hidden">
+    <!-- Background pattern for depth -->
+    <div class="absolute inset-0 bg-[url('/svg/grid.svg')] opacity-10"></div>
+    
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
         <div class="text-center mb-20">
             <h2 class="text-4xl font-bold text-white mb-6">Nuestra Red Global</h2>
-            <p class="text-gray-400 max-w-2xl mx-auto">Colaborando con líderes internacionales en la nueva era espacial</p>
+            <p class="text-gray-300 text-lg max-w-2xl mx-auto">Colaborando con líderes internacionales en la nueva era espacial</p>
         </div>
 
         <div class="relative">
             <div class="global-map-overlay"></div>
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 relative z-10">
-                @foreach(['nasa', 'esa', 'spacex', 'blue-origin', 'jaxa'] as $agency)
-                <div class="group flex items-center justify-center p-6 bg-space-800 rounded-xl border border-space-700 hover:border-secondary transition-all duration-300">
-                    <img src="/images/agencies/{{ $agency }}.png" alt="{{ strtoupper($agency) }}" class="h-12 opacity-80 group-hover:opacity-100 transition-opacity">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-12 relative z-10">
+                @foreach(['buap', 'ECITEC', 'FM', 'iest', 'IPN', 'ITESCA', 'ITPuebla', 'TecNM', 'tecm', 'uac', 'uanl', 'UNAM', 'unisec' ] as $agency)
+                <div class="flex items-center justify-center transform transition-all duration-300 hover:scale-125">
+                    <img src="/images/logos/{{ $agency }}.png" 
+                         alt="{{ strtoupper($agency) }}" 
+                         class="h-16 w-auto object-contain filter brightness-75 hover:brightness-100 transition-all duration-300">
                 </div>
                 @endforeach
             </div>

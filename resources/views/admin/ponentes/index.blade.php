@@ -25,6 +25,17 @@
                 <input type="text" placeholder="Buscar ponentes..." class="w-full bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
                 <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
             </div>
+            <select class="bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <option value="">Todas las especialidades</option>
+                <option value="1">Diseño Espacial</option>
+                <option value="2">Programación Satelital</option>
+                <option value="3">Instrumentación</option>
+            </select>
+            <select class="bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <option value="">Estado</option>
+                <option value="activo">Activo</option>
+                <option value="inactivo">Inactivo</option>
+            </select>
         </div>
 
         <!-- Tabla de Ponentes -->
@@ -34,7 +45,7 @@
                     <tr>
                         <th class="px-4 py-3 text-left">Nombre</th>
                         <th class="px-4 py-3 text-left">Especialidad</th>
-                        <th class="px-4 py-3 text-left">Biografía</th>
+                        <th class="px-4 py-3 text-left">Bio</th>
                         <th class="px-4 py-3 text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -43,7 +54,7 @@
                         <tr class="hover:bg-gray-800/50">
                             <td class="px-4 py-3">{{ $ponente->nombre }}</td>
                             <td class="px-4 py-3">{{ $ponente->especialidad }}</td>
-                            <td class="px-4 py-3">{{ Str::limit($ponente->bio, 250) }}</td>
+                            <td class="px-4 py-3">{{ Str::limit($ponente->bio, 100) }}</td>
                             <td class="px-4 py-3 text-center">
                                 <div class="flex justify-center space-x-2">
                                     <a href="{{ route('admin.ponentes.edit', $ponente) }}" class="text-blue-400 hover:text-blue-300">
@@ -64,7 +75,10 @@
             </table>
         </div>
 
-        
+        <!-- Paginación -->
+        <div class="mt-6">
+            {{ $ponentes->links() }}
+        </div>
     </div>
 </div>
 @endsection
