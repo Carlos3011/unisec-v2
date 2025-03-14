@@ -75,7 +75,7 @@
                           <i class="fas fa-chevron-down"></i>
                       </button>
                       <div x-show="open" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-md shadow-xl py-2 z-50">
-                          <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Perfil</a>
+                          <a href="#" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Perfil</a>
                           <a href="{{ route('user.inscripciones') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Inscripciones</a>
                           <a href="{{ route('user.certificados') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Certificados</a>
                           <a href="{{ route('user.resenas') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Reseñas</a>
@@ -124,7 +124,7 @@
                 Perfil <i class="fas fa-chevron-down"></i>
             </button>
             <div x-show="open" class="pl-4 space-y-2">
-                <a href="{{ route('profile.edit') }}" class="block text-gray-300 hover:text-white">Editar Perfil</a>
+                <a href="#" class="block text-gray-300 hover:text-white">Editar Perfil</a>
                 <a href="{{ route('user.inscripciones') }}" class="block text-gray-300 hover:text-white">Mis Inscripciones</a>
                 <a href="{{ route('user.certificados') }}" class="block text-gray-300 hover:text-white">Mis Certificados</a>
                 <a href="{{ route('user.resenas') }}" class="block text-gray-300 hover:text-white">Mis Reseñas</a>
