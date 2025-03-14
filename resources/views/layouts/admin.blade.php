@@ -37,9 +37,10 @@
             <i class="fas fa-chevron-up" x-show="open"></i>
           </button>
           <div x-show="open" class="pl-8 space-y-2" x-collapse>
+            <a href="{{ route('admin.temas.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Temas</a>
             <a href="{{ route('admin.categorias.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Categorías</a>
             <a href="{{ route('admin.cursos.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Cursos</a>
-            <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Talleres</a>
+            <a href="{{ route('admin.talleres.index')}}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Talleres</a>
             <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Ponencias</a>
             <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Concursos</a>
           </div>
@@ -55,8 +56,8 @@
             <i class="fas fa-chevron-up" x-show="open"></i>
           </button>
           <div x-show="open" class="pl-8 space-y-2" x-collapse>
-            <a href="{{ route('admin.usuarios') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Usuarios</a>
-            <a href="{{ route('admin.ponentes') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Ponentes</a>
+            <a href="{{ route('admin.users.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Usuarios</a>
+            <a href="{{ route('admin.ponentes.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Ponentes</a>
           </div>
         </div>
 

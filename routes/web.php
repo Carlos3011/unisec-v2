@@ -6,9 +6,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicController;
 
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\CursoController;
 use App\Http\Controllers\Admin\CategoriaController;
-
+use App\Http\Controllers\Admin\PonentesController;
+use App\Http\Controllers\Admin\TemaController;
+use App\Http\Controllers\Admin\TallerController;
 
 Route::controller(PublicController::class)->group(function () {
     Route::get('/', 'inicio')->name('inicio');
@@ -31,8 +34,24 @@ Route::get('/dashboard', function () {
 // Grupo de rutas para Administradores
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/usuarios', [AdminController::class, 'usuarios'])->name('admin.usuarios');
+    
+    // Rutas para la gestión de usuarios
+    Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+    Route::get('/admin/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
+    Route::post('/admin/users', [AdminUserController::class, 'store'])->name('admin.users.store');
+    Route::get('/admin/users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/admin/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/admin/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+    
     Route::get('/admin/categorias-temas', [AdminController::class, 'categoriasTemas'])->name('admin.categorias-temas');
+
+    // Rutas para la gestión de temas
+    Route::get('/admin/temas', [TemaController::class, 'index'])->name('admin.temas.index');
+    Route::get('/admin/temas/create', [TemaController::class, 'create'])->name('admin.temas.create');
+    Route::post('/admin/temas', [TemaController::class, 'store'])->name('admin.temas.store');
+    Route::get('/admin/temas/{tema}/edit', [TemaController::class, 'edit'])->name('admin.temas.edit');
+    Route::put('/admin/temas/{tema}', [TemaController::class, 'update'])->name('admin.temas.update');
+    Route::delete('/admin/temas/{tema}', [TemaController::class, 'destroy'])->name('admin.temas.destroy');
 
     // Rutas para la gestión de categorías
     Route::get('/admin/categorias', [CategoriaController::class, 'index'])->name('admin.categorias.index');
@@ -49,7 +68,23 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/cursos/{curso}', [CursoController::class, 'destroy'])->name('admin.cursos.destroy');    
     
    
-    Route::get('/admin/ponentes', [AdminController::class, 'ponentes'])->name('admin.ponentes');
+    // Rutas para la gestión de ponentes
+    Route::get('/admin/ponentes', [PonentesController::class, 'index'])->name('admin.ponentes.index');
+    Route::get('/admin/ponentes/create', [PonentesController::class, 'create'])->name('admin.ponentes.create');
+    Route::post('/admin/ponentes', [PonentesController::class, 'store'])->name('admin.ponentes.store');
+    Route::get('/admin/ponentes/{ponente}/edit', [PonentesController::class, 'edit'])->name('admin.ponentes.edit');
+    Route::put('/admin/ponentes/{ponente}', [PonentesController::class, 'update'])->name('admin.ponentes.update');
+    Route::delete('/admin/ponentes/{ponente}', [PonentesController::class, 'destroy'])->name('admin.ponentes.destroy');
+
+    // Rutas para la gestión de talleres
+    Route::get('/admin/talleres', [TallerController::class, 'index'])->name('admin.talleres.index');
+    Route::get('/admin/talleres/create', [TallerController::class, 'create'])->name('admin.talleres.create');
+    Route::post('/admin/talleres', [TallerController::class, 'store'])->name('admin.talleres.store');
+    Route::get('/admin/talleres/{taller}/edit', [TallerController::class, 'edit'])->name('admin.talleres.edit');
+    Route::put('/admin/talleres/{taller}', [TallerController::class, 'update'])->name('admin.talleres.update');
+    Route::delete('/admin/talleres/{taller}', [TallerController::class, 'destroy'])->name('admin.talleres.destroy');
+
+    
     Route::get('/admin/congresos-eventos', [AdminController::class, 'congresosEventos'])->name('admin.congresos-eventos');
     Route::get('/admin/becas', [AdminController::class, 'becas'])->name('admin.becas');
     Route::get('/admin/pagos-facturacion', [AdminController::class, 'pagosFacturacion'])->name('admin.pagos-facturacion');
