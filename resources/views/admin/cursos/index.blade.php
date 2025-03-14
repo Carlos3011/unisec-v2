@@ -49,21 +49,21 @@
                 <tbody class="divide-y divide-gray-700">
                     @forelse($cursos ?? [] as $curso)
                     <tr class="hover:bg-gray-800/50">
-                        <td class="px-4 py-3">{{ $curso->nombre }}</td>
-                        <td class="px-4 py-3">{{ $curso->categoria }}</td>
-                        <td class="px-4 py-3 text-center">{{ $curso->duracion }}</td>
+                        <td class="px-4 py-3">{{ $curso['nombre'] }}</td>
+                        <td class="px-4 py-3">{{ $curso['categoria'] }}</td>
+                        <td class="px-4 py-3 text-center">{{ $curso['duracion'] }}</td>
                         <td class="px-4 py-3 text-center">
-                            <span class="px-3 py-1 rounded-full text-xs {{ $curso->estado == 'activo' ? 'bg-green-500/20 text-green-500' : 'bg-gray-500/20 text-gray-500' }}">
-                                {{ ucfirst($curso->estado) }}
+                            <span class="px-3 py-1 rounded-full text-xs {{ $curso['estado'] == 'activo' ? 'bg-green-500/20 text-green-500' : 'bg-gray-500/20 text-gray-500' }}">
+                                {{ ucfirst($curso['estado']) }}
                             </span>
                         </td>
-                        <td class="px-4 py-3 text-center">{{ $curso->inscritos_count }}</td>
+                        <td class="px-4 py-3 text-center">{{ $curso['inscritos_count'] }}</td>
                         <td class="px-4 py-3 text-center">
                             <div class="flex justify-center space-x-2">
-                                <a href="{{ route('admin.cursos.edit', $curso) }}" class="text-blue-400 hover:text-blue-300">
+                                <a href="{{ route('admin.cursos.edit', $curso['id']) }}" class="text-blue-400 hover:text-blue-300">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('admin.cursos.destroy', $curso) }}" method="POST" class="inline">
+                                <form action="{{ route('admin.cursos.destroy', $curso['id']) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-400 hover:text-red-300" onclick="return confirm('¿Estás seguro de eliminar este curso?')">

@@ -86,6 +86,12 @@
                     class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
+            <div>
+                <label for="fecha_fin" class="block text-sm font-medium mb-2">Fecha de Fin</label>
+                <input type="date" name="fecha_fin" id="fecha_fin" value="{{ old('fecha_fin', $curso->fecha_fin) }}" required
+                    class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
             <div class="flex items-center">
                 <input type="checkbox" name="activo" id="activo" class="mr-2" {{ old('activo', $curso->activo) ? 'checked' : '' }}>
                 <label for="activo" class="text-sm font-medium">Curso Activo</label>
@@ -93,7 +99,7 @@
         </div>
 
         <div class="flex justify-end space-x-4">
-            <a href="{{ route('admin.cursos') }}" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">
+            <a href="{{ route('admin.cursos.index') }}" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">
                 Cancelar
             </a>
             <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
