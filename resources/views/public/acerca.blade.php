@@ -253,6 +253,79 @@
 
 
 <!-- SECCIÓN NUESTRO EQUIPO -->
+@php
+$presidente = [
+    'nombre' => 'HERMES MORENO ÁLVAREZ',
+    'cargo' => 'Presidente UNISEC México',
+    'descripcion' => 'Líder visionario en el desarrollo aeroespacial y la educación espacial en México.',
+    'imagen' => 'team/ejemplo.jpg',
+    'linkedin' => '#',
+    'email' => 'presidente@unisec.mx'
+];
+
+$secciones = [
+    [
+        'nombre' => 'Sección Norte',
+        'director' => [
+            'nombre' => 'ANTONIO GÓMEZ ROA',
+            'cargo' => 'Universidad Autónoma de Baja California',
+            'descripcion' => 'Coordinación de proyectos espaciales en la región norte del país.',
+            'imagen' => 'team/ejemplo.jpg',
+            'email' => 'norte.director@unisec.mx'
+        ],
+        'equipo' => [
+            [
+                'nombre' => 'SILVIA KARINA REYES LIO',
+                'cargo' => 'Instituto Tcnológico de Nogales Sonora',
+                'descripcion' => 'Especialista en sistemas de propulsión espacial.',
+                'imagen' => 'team/ejemplo.jpg',
+                'email' => 'norte.investigacion@unisec.mx'
+            ],
+            [
+                'nombre' => 'OSCAR MARTÍNEZ HERNÁNDEZ',
+                'cargo' => 'Líder de Proyectos',
+                'descripcion' => 'Experto en diseño de nanosatélites.',
+                'imagen' => 'team/ejemplo.jpg',
+                'email' => 'norte.proyectos@unisec.mx'
+            ]
+        ]
+    ],
+    [
+        'nombre' => 'Sección Centro',
+        'director' => [
+            'nombre' => 'JORGE ALFREDO FERRER PÉREZ',
+            'cargo' => 'UNAM - QUERÉTARO',
+            'descripcion' => 'Gestión de investigación y desarrollo en la zona central.',
+            'imagen' => 'team/ejemplo.jpg',
+            'email' => 'centro.director@unisec.mx'
+        ],
+        'equipo' => [
+   
+        ]
+    ],
+    [
+        'nombre' => 'Sección Sur',
+        'director' => [
+            'nombre' => 'ROSA MARÍA MARTÍNEZ GALVÁN',
+            'cargo' => 'Instituto Tecnológico de Puebla',
+            'descripcion' => 'Desarrollo de programas espaciales en la región sur.',
+            'imagen' => 'team/ejemplo.jpg',
+            'email' => 'sur.director@unisec.mx'
+        ],
+        'equipo' => [
+            [
+                'nombre' => 'JOSUÉ MANCILLA CEREZO',
+                'cargo' => 'Instituto Tecnológico Superior de Tepeaca',
+                'descripcion' => 'Especialista en astrofísica aplicada.',
+                'imagen' => 'team/ejemplo.jpg',
+                'email' => 'sur.investigacion@unisec.mx'
+            ]
+        ]
+    ]
+];
+@endphp
+
+<!-- SECCIÓN NUESTRO EQUIPO -->
 <section class="relative py-24 bg-gradient-to-b from-space-900 to-space-950/80 overflow-hidden">
   <div class="container mx-auto px-6 lg:px-12">
     <div class="text-center mb-16">
@@ -263,115 +336,106 @@
         </h2>
       </div>
       <p class="text-lg text-gray-300/80 max-w-3xl mx-auto leading-relaxed tracking-wide">
-        Expertos multidisciplinarios unidos por la pasión por el espacio y la tecnología de vanguardia.
+        Estructura organizacional de UNISEC México, unidos por la pasión espacial y la innovación tecnológica.
       </p>
     </div>
 
-    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3 xl:gap-12">
-      <!-- Tarjeta de Miembro -->
-      @php
-        $equipo = [
-          [
-            'nombre' => 'Dr. Juan Pérez',
-            'cargo' => 'Director de Innovación',
-            'descripcion' => 'Especialista en propulsión espacial con más de 15 años de experiencia.',
-            'imagen' => 'ejemplo.jpg',
-            'linkedin' => 'https://linkedin.com/in/juanperez',
-            'github' => 'https://github.com/juanperez',
-            'email' => 'juanperez@example.com'
-          ],
-          [
-            'nombre' => 'Dra. Ana Gómez',
-            'cargo' => 'Jefa de Investigación',
-            'descripcion' => 'Experta en diseño de satélites y exploración interplanetaria.',
-            'imagen' => 'ejemplo.jpg',
-            'linkedin' => 'https://linkedin.com/in/anagomez',
-            'github' => null,
-            'email' => 'anagomez@example.com'
-          ],
-          [
-            'nombre' => 'Ing. Carlos Ramírez',
-            'cargo' => 'Especialista en Sistemas',
-            'descripcion' => 'Desarrollador de software para simulaciones espaciales avanzadas.',
-            'imagen' => 'ejemplo.jpg',
-            'linkedin' => 'https://linkedin.com/in/carlosramirez',
-            'github' => 'https://github.com/carlosramirez',
-            'email' => 'carlosramirez@example.com'
-          ],
-          [
-            'nombre' => 'Dr. Laura Mendoza',
-            'cargo' => 'Astrónoma Senior',
-            'descripcion' => 'Investigadora en astrofísica y dinámica orbital.',
-            'imagen' => 'ejemplo.jpg',
-            'linkedin' => 'https://linkedin.com/in/lauramendoza',
-            'github' => null,
-            'email' => 'lauramendoza@example.com'
-          ],
-          [
-            'nombre' => 'MSc. Pablo Torres',
-            'cargo' => 'Ingeniero Aeroespacial',
-            'descripcion' => 'Diseñador de sistemas de navegación para misiones espaciales.',
-            'imagen' => 'ejemplo.jpg',
-            'linkedin' => 'https://linkedin.com/in/pablotorres',
-            'github' => 'https://github.com/pablotorres',
-            'email' => 'pablotorres@example.com'
-          ],
-          [
-            'nombre' => 'Dra. Sofía Herrera',
-            'cargo' => 'Neurocientífica Espacial',
-            'descripcion' => 'Experta en los efectos del espacio en la neurofisiología humana.',
-            'imagen' => 'ejemplo.jpg',
-            'linkedin' => 'https://linkedin.com/in/sofiaherrera',
-            'github' => null,
-            'email' => 'sofiaherrera@example.com'
-          ],
-        ];
-      @endphp
-
-      @foreach($equipo as $index => $miembro)
-      <div class="group relative bg-space-800/40 backdrop-blur-lg rounded-2xl border border-space-500/20 hover:border-primary/40 transition-all duration-300 ease-in-out hover:scale-[1.05] hover:rotate-1 shadow-xl shadow-space-900/50 overflow-hidden"
-           data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
-
+    <!-- Presidente -->
+    <div class="mb-10">
+      <div class="max-w-md mx-auto bg-space-500/20 backdrop-blur-xl rounded-2xl border-2 border-primary/60 shadow-2xl shadow-primary/20 overflow-hidden transform hover:scale-[1.03] hover:border-primary transition-all duration-500 group">
         <div class="relative overflow-hidden">
-          <img src="{{ asset('images/team/' . $miembro['imagen']) }}" alt="{{ $miembro['nombre'] }}" 
-               class="w-full h-80 object-cover grayscale-[40%] group-hover:grayscale-0 transition-all duration-500">
-          <div class="absolute inset-0 bg-gradient-to-t from-space-900/90 via-space-900/40 group-hover:via-space-900/20"></div>
+          <img src="{{ asset('images/' . $presidente['imagen']) }}" alt="{{ $presidente['nombre'] }}" 
+               class="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-space-900 via-space-900/60 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-500"></div>
         </div>
         
-        <div class="p-6 relative">
-          <div class="mb-4">
-            <h3 class="text-2xl font-bold text-white mb-1 tracking-wide">{{ $miembro['nombre'] }}</h3>
-            <p class="text-primary/90 font-medium text-sm">{{ $miembro['cargo'] }}</p>
-          </div>
-          <p class="text-gray-300/80 text-sm leading-relaxed mb-5">
-            {{ $miembro['descripcion'] }}
+        <div class="p-8 relative text-center">
+          <h3 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300 mb-2 tracking-wide">{{ $presidente['nombre'] }}</h3>
+          <p class="text-primary font-medium text-lg mb-4">{{ $presidente['cargo'] }}</p>
+          <p class="text-gray-300/90 text-base leading-relaxed mb-6">
+            {{ $presidente['descripcion'] }}
           </p>
           
-          <div class="flex space-x-3">
-            @if($miembro['linkedin'])
-              <a href="{{ $miembro['linkedin'] }}" target="_blank" class="p-2 rounded-lg bg-space-700/40 hover:bg-primary/30 transition-all">
-                <i class="fab fa-linkedin text-gray-300 hover:text-primary text-lg"></i>
-              </a>
-            @endif
-            @if($miembro['github'])
-              <a href="{{ $miembro['github'] }}" target="_blank" class="p-2 rounded-lg bg-space-700/40 hover:bg-primary/30 transition-all">
-                <i class="fab fa-github text-gray-300 hover:text-primary text-lg"></i>
-              </a>
-            @endif
-            @if($miembro['email'])
-              <a href="mailto:{{ $miembro['email'] }}" class="p-2 rounded-lg bg-space-700/40 hover:bg-primary/30 transition-all">
-                <i class="fas fa-envelope text-gray-300 hover:text-primary text-lg"></i>
-              </a>
-            @endif
+          <div class="flex justify-center space-x-4">
+            <a href="{{ $presidente['linkedin'] }}" target="_blank" class="p-3 rounded-xl bg-space-700/40 hover:bg-primary/30 transform hover:scale-110 transition-all duration-300">
+              <i class="fab fa-linkedin text-gray-300 hover:text-primary text-xl"></i>
+            </a>
+            <a href="mailto:{{ $presidente['email'] }}" class="p-3 rounded-xl bg-space-700/40 hover:bg-primary/30 transform hover:scale-110 transition-all duration-300">
+              <i class="fas fa-envelope text-gray-300 hover:text-primary text-xl"></i>
+            </a>
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Efecto de borde dinámico -->
-        <div class="absolute inset-0 rounded-2xl pointer-events-none">
-          <div class="absolute inset-0 border-2 border-space-500/20 group-hover:border-primary/40 rounded-2xl transition-all duration-300"></div>
+    <!-- Línea conectora vertical -->
+    <div class="w-px h-24 bg-primary/90 mx-auto mb-10"></div>
+
+    <!-- Secciones Regionales -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+      <!-- Línea conectora horizontal -->
+      <div class="absolute top-0 left-1/4 right-1/4 h-px bg-primary/90 hidden md:block"></div>
+
+      @foreach($secciones as $seccion)
+      <!-- {{ $seccion['nombre'] }} -->
+      <div class="space-y-12">
+        <div class="text-center mb-8">
+          <h3 class="text-2xl font-bold text-primary mb-2">{{ $seccion['nombre'] }}</h3>
+          <div class="w-px h-12 bg-primary/30 mx-auto"></div>
+        </div>
+
+        <!-- Director Regional -->
+        <div class="relative">
+          <div class="bg-space-500/20 backdrop-blur-xl rounded-2xl border-2 border-primary/40 hover:border-primary/60 transition-all p-8 transform hover:scale-[1.03] hover:shadow-2xl hover:shadow-primary/20 group">
+            <div class="mb-6 relative overflow-hidden rounded-xl">
+              <img src="{{ asset('images/' . $seccion['director']['imagen']) }}" 
+                   alt="{{ $seccion['director']['nombre'] }}" 
+                   class="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-space-900 via-space-900/60 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-500"></div>
+            </div>
+            <h4 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300 mb-3">{{ $seccion['director']['nombre'] }}</h4>
+            <p class="text-primary font-medium text-lg mb-3">{{ $seccion['director']['cargo'] }}</p>
+            <p class="text-gray-300/90 text-base leading-relaxed mb-4">{{ $seccion['director']['descripcion'] }}</p>
+            <div class="flex justify-center space-x-4">
+              <a href="mailto:{{ $seccion['director']['email'] }}" class="p-3 rounded-xl bg-space-700/40 hover:bg-primary/30 transform hover:scale-110 transition-all duration-300">
+                <i class="fas fa-envelope text-gray-300 hover:text-primary text-xl"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Línea conectora vertical desde el director -->
+          <div class="w-px h-12 bg-gradient-to-b from-primary/90 to-primary/30 mx-auto my-8"></div>
+        </div>
+
+        <!-- Equipo Regional -->
+        <div class="space-y-8">
+          @foreach($seccion['equipo'] as $miembro)
+          <div class="relative">
+            <!-- Línea conectora vertical -->
+            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-gradient-to-b from-primary/90 to-primary/90"></div>
+            
+            <div class="bg-space-500/20 backdrop-blur-xl rounded-2xl border-2 border-primary/30 hover:border-primary/50 transition-all p-6 transform hover:scale-[1.03] hover:shadow-xl hover:shadow-primary/20 group">
+              <div class="mb-4 relative overflow-hidden rounded-xl">
+                <img src="{{ asset('images/' . $miembro['imagen']) }}" 
+                     alt="{{ $miembro['nombre'] }}" 
+                     class="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-space-900 via-space-900/60 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-500"></div>
+              </div>
+              <h4 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300 mb-2">{{ $miembro['nombre'] }}</h4>
+              <p class="text-primary font-medium text-base mb-2">{{ $miembro['cargo'] }}</p>
+              <p class="text-gray-300/90 text-sm leading-relaxed mb-4">{{ $miembro['descripcion'] }}</p>
+              <div class="flex justify-center space-x-4">
+                <a href="mailto:{{ $miembro['email'] }}" class="p-2 rounded-lg bg-space-700/40 hover:bg-primary/30 transform hover:scale-110 transition-all duration-300">
+                  <i class="fas fa-envelope text-gray-300 hover:text-primary text-lg"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          @endforeach
         </div>
       </div>
       @endforeach
+
     </div>
   </div>
 </section>
