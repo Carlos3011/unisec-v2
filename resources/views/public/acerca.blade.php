@@ -326,11 +326,10 @@
 <!-- SECCIÓN NUESTRO EQUIPO -->
 @php
 $presidente = [
-    'nombre' => 'Dr. Hermes Moreno Alvarez',
+    'nombre' => 'HERMES MORENO ÁLVAREZ',
     'cargo' => 'Presidente UNISEC México',
     'descripcion' => 'Líder visionario en el desarrollo aeroespacial y la educación espacial en México.',
-    'imagen' => 'team/hermes-moreno.jpg',
-    'linkedin' => '#',
+    'imagen' => 'team/ejemplo.jpg',
     'email' => 'presidente@unisec.mx'
 ];
 
@@ -338,99 +337,51 @@ $secciones = [
     [
         'nombre' => 'Sección Norte',
         'director' => [
-            'nombre' => 'Dr. Ricardo Martínez',
-            'cargo' => 'Director Regional Norte',
+            'nombre' => 'ANTONIO GÓMEZ ROA',
+            'cargo' => 'Universidad Autónoma de Baja California',
             'descripcion' => 'Coordinación de proyectos espaciales en la región norte del país.',
-            'imagen' => 'team/ricardo-martinez.jpg',
+            'imagen' => 'team/ejemplo.jpg',
             'email' => 'norte.director@unisec.mx'
         ],
         'equipo' => [
             [
-                'nombre' => 'Dra. Ana Torres',
-                'cargo' => 'Coordinadora de Investigación',
+                'nombre' => 'SILVIA KARINA REYES LIO',
+                'cargo' => 'Instituto Tecnológico de Nogales Sonora',
                 'descripcion' => 'Especialista en sistemas de propulsión espacial.',
-                'imagen' => 'team/placeholder.jpg',
+                'imagen' => 'team/ejemplo.jpg',
                 'email' => 'norte.investigacion@unisec.mx'
-            ],
-            [
-                'nombre' => 'Ing. Miguel Ángel Ruiz',
-                'cargo' => 'Líder de Proyectos',
-                'descripcion' => 'Experto en diseño de nanosatélites.',
-                'imagen' => 'team/placeholder.jpg',
-                'email' => 'norte.proyectos@unisec.mx'
-            ],
-            [
-                'nombre' => 'M.C. Isabel Ramírez',
-                'cargo' => 'Coordinadora Académica',
-                'descripcion' => 'Especialista en educación espacial.',
-                'imagen' => 'team/placeholder.jpg',
-                'email' => 'norte.academica@unisec.mx'
             ]
         ]
     ],
     [
         'nombre' => 'Sección Centro',
         'director' => [
-            'nombre' => 'Dra. Laura Mendoza',
-            'cargo' => 'Directora Regional Centro',
+            'nombre' => 'JORGE ALFREDO FERRER PÉREZ',
+            'cargo' => 'UNAM - QUERÉTARO',
             'descripcion' => 'Gestión de investigación y desarrollo en la zona central.',
-            'imagen' => 'team/laura-mendoza.jpg',
+            'imagen' => 'team/ejemplo.jpg',
             'email' => 'centro.director@unisec.mx'
         ],
         'equipo' => [
-            [
-                'nombre' => 'Dr. Roberto Vega',
-                'cargo' => 'Coordinador de Innovación',
-                'descripcion' => 'Especialista en tecnologías satelitales.',
-                'imagen' => 'team/placeholder.jpg',
-                'email' => 'centro.innovacion@unisec.mx'
-            ],
-            [
-                'nombre' => 'Ing. Carmen Ortiz',
-                'cargo' => 'Líder de Desarrollo',
-                'descripcion' => 'Experta en sistemas embebidos espaciales.',
-                'imagen' => 'team/placeholder.jpg',
-                'email' => 'centro.desarrollo@unisec.mx'
-            ],
-            [
-                'nombre' => 'M.C. Daniel López',
-                'cargo' => 'Coordinador de Vinculación',
-                'descripcion' => 'Especialista en relaciones institucionales.',
-                'imagen' => 'team/placeholder.jpg',
-                'email' => 'centro.vinculacion@unisec.mx'
-            ]
+            
         ]
     ],
     [
         'nombre' => 'Sección Sur',
         'director' => [
-            'nombre' => 'Dr. Carlos Ramírez',
-            'cargo' => 'Director Regional Sur',
+            'nombre' => 'ROSA MARÍA MARTÍNEZ GALVÁN',
+            'cargo' => 'Instituto Tecnológico de Puebla',
             'descripcion' => 'Desarrollo de programas espaciales en la región sur.',
-            'imagen' => 'team/carlos-ramirez.jpg',
+            'imagen' => 'team/ejemplo.jpg',
             'email' => 'sur.director@unisec.mx'
         ],
         'equipo' => [
             [
-                'nombre' => 'Dra. Patricia Morales',
-                'cargo' => 'Coordinadora de Investigación',
+                'nombre' => 'JOSUÉ MANCILLA CEREZO',
+                'cargo' => 'Instituto Tecnológico Superior de Tepeaca',
                 'descripcion' => 'Especialista en astrofísica aplicada.',
-                'imagen' => 'team/placeholder.jpg',
+                'imagen' => 'team/ejemplo.jpg',
                 'email' => 'sur.investigacion@unisec.mx'
-            ],
-            [
-                'nombre' => 'Ing. Fernando Díaz',
-                'cargo' => 'Líder de Proyectos',
-                'descripcion' => 'Experto en instrumentación espacial.',
-                'imagen' => 'team/placeholder.jpg',
-                'email' => 'sur.proyectos@unisec.mx'
-            ],
-            [
-                'nombre' => 'M.C. Gabriela Soto',
-                'cargo' => 'Coordinadora de Desarrollo',
-                'descripcion' => 'Especialista en software espacial.',
-                'imagen' => 'team/placeholder.jpg',
-                'email' => 'sur.desarrollo@unisec.mx'
             ]
         ]
     ]
@@ -469,9 +420,6 @@ $secciones = [
           </p>
           
           <div class="flex justify-center space-x-4">
-            <a href="{{ $presidente['linkedin'] }}" target="_blank" class="p-3 rounded-xl bg-space-700/40 hover:bg-primary/30 transform hover:scale-110 transition-all duration-300">
-              <i class="fab fa-linkedin text-gray-300 hover:text-primary text-xl"></i>
-            </a>
             <a href="mailto:{{ $presidente['email'] }}" class="p-3 rounded-xl bg-space-700/40 hover:bg-primary/30 transform hover:scale-110 transition-all duration-300">
               <i class="fas fa-envelope text-gray-300 hover:text-primary text-xl"></i>
             </a>
