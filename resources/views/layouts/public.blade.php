@@ -96,8 +96,7 @@
       <!-- Información de contacto -->
       <div>
         <h3 class="text-gray-100 text-lg font-semibold mb-4">Contacto</h3>
-        <p class="text-sm"><i class="fas fa-phone-alt mr-2"></i>+1 (555) 123-4567</p>
-        <p class="text-sm"><i class="fas fa-envelope mr-2"></i>contacto@unisec.aero</p>
+        <p class="text-sm"><i class="fas fa-envelope mr-2"></i>unisecmx@unisecmexico.com</p>
       </div>
 
       <!-- Redes Sociales -->
@@ -119,7 +118,7 @@
 
     <!-- Copyright -->
     <div class="pt-8 text-center text-sm text-gray-500">
-      &copy; {{ date('Y') }} UniSec Aerospace Consortium. Todos los derechos reservados.
+      &copy; {{ date('Y') }} UNISEC México. Todos los derechos reservados.
     </div>
   </footer>
 

@@ -262,101 +262,156 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- SECCIÓN NOTICIAS -->
 <section class="relative py-24 bg-gradient-to-br from-cosmic-500 via-cosmic-700 to-black overflow-hidden" data-aos="fade-up">
     <div class="absolute inset-0 pointer-events-none">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.05),_transparent_60%)]"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.05),_transparent_60%)]">
+        </div>
     </div>
 
     <div class="max-w-7xl mx-auto px-6 relative z-10">
-        <div class="text-center mb-16">
-            <div class="inline-flex relative">
-                <span class="absolute -inset-4 bg-galactic-500/40 blur-3xl rounded-full"></span>
-                <h2 id="typed-text-gallery-title" class="text-5xl md:text-6xl lg:text-7xl bg-gradient-to-r from-accent-300 to-primary bg-clip-text text-transparent font-extrabold mb-6 relative text-glow">
-                    Últimas Noticias
+        
+        @php
+            // Arreglo de noticias directamente en la vista
+            $noticias = [
+                [
+                    'tipo' => 'actual',
+                    'titulo' => 'Descubrimiento de un nuevo exoplaneta habitable',
+                    'descripcion' => 'Astrónomos han detectado un exoplaneta con características similares a la Tierra en la zona habitable de su estrella.',
+                    'fecha' => '2025-03-10',
+                    'categoria' => 'Astronomía',
+                    'img' => 'spacex-despegue.jpg'
+                ],
+                [
+                    'tipo' => 'actual',
+                    'titulo' => 'NASA prueba motor de fusión nuclear',
+                    'descripcion' => 'La NASA ha completado la primera prueba de un motor de fusión nuclear para viajes espaciales interplanetarios.',
+                    'fecha' => '2025-03-12',
+                    'categoria' => 'Exploración Espacial',
+                    'img' => 'spacex-despegue.jpg'
+                ],
+                [
+                    'tipo' => 'actual',
+                    'titulo' => 'NASA prueba motor de fusión nuclear',
+                    'descripcion' => 'La NASA ha completado la primera prueba de un motor de fusión nuclear para viajes espaciales interplanetarios.',
+                    'fecha' => '2025-03-12',
+                    'categoria' => 'Exploración Espacial',
+                    'img' => 'spacex-despegue.jpg'
+                ],
+                [
+                    'tipo' => 'historica',
+                    'titulo' => '50 años del aterrizaje en la Luna',
+                    'descripcion' => 'Se conmemoran 50 años desde que el Apolo 11 llevó al hombre a la Luna, un evento que cambió la historia.',
+                    'fecha' => '2025-03-15',
+                    'categoria' => 'Historia Espacial',
+                    'img' => 'spacex-despegue.jpg'
+                ],
+                [
+                    'tipo' => 'historica',
+                    'titulo' => '50 años del aterrizaje en la Luna',
+                    'descripcion' => 'Se conmemoran 50 años desde que el Apolo 11 llevó al hombre a la Luna, un evento que cambió la historia.',
+                    'fecha' => '2025-03-15',
+                    'categoria' => 'Historia Espacial',
+                    'img' => 'spacex-despegue.jpg'
+                ],
+                [
+                    'tipo' => 'historica',
+                    'titulo' => '50 años del aterrizaje en la Luna',
+                    'descripcion' => 'Se conmemoran 50 años desde que el Apolo 11 llevó al hombre a la Luna, un evento que cambió la historia.',
+                    'fecha' => '2025-03-15',
+                    'categoria' => 'Historia Espacial',
+                    'img' => 'spacex-despegue.jpg'
+                ]
+            ];
+
+            // Filtrar noticias por tipo
+            $noticiasActuales = array_filter($noticias, fn($n) => $n['tipo'] === 'actual');
+            $noticiasCulturalesHistoricas = array_filter($noticias, fn($n) => in_array($n['tipo'], ['historica', 'cultural']));
+        @endphp
+
+        <!-- Noticias Actuales -->
+        <div class="mb-24">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl lg:text-7xl bg-gradient-to-r from-accent-300 to-primary bg-clip-text text-transparent font-extrabold mb-6 text-glow">
+                    Noticias Actuales
                 </h2>
+                <p class="text-tech-300 max-w-xl mx-auto text-lg">
+                    Mantente informado con nuestros últimos avances y logros.
+                </p>
             </div>
-            <p class="text-tech-300 max-w-xl mx-auto text-lg">
-                Mantente informado con nuestros avances y logros.
-            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                @foreach($noticiasActuales as $noticia)
+                    <article class="group relative bg-tech-700/30 rounded-2xl border border-tech-500 hover:border-secondary transition-all duration-500 hover:-translate-y-2 shadow-xl hover:shadow-accent-500/40 overflow-hidden"
+                             data-aos="fade-up" data-aos-delay="{{ ($loop->index + 1) * 100 }}">
+                        <div class="relative overflow-hidden h-52 sm:h-64 md:h-72">
+                            <img src="{{ asset('images/' . $noticia['img']) }}" 
+                                 alt="{{ $noticia['titulo'] }}"
+                                 class="w-full h-full object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                            <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        </div>
+
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-tech-300 mb-3">
+                                <span class="mr-4">📅 {{ $noticia['fecha'] }}</span>
+                                <span>{{ $noticia['categoria'] }}</span>
+                            </div>
+                            <h3 class="text-xl lg:text-2xl font-bold text-white mb-3 leading-tight transition-colors group-hover:text-accent-100">
+                                {{ $noticia['titulo'] }}
+                            </h3>
+                            <p class="text-tech-100 line-clamp-3">
+                                {{ $noticia['descripcion'] }}
+                            </p>
+                            <a href="#" class="inline-flex items-center mt-4 text-accent-500 hover:text-accent-300 font-semibold transition-all duration-300">
+                                Leer más 
+                            </a>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-            @php 
-                // Simulando datos dinámicos (puedes reemplazarlo con datos de base de datos)
-                $noticias = [
-                    [
-                        'img' => 'noticias/spacex-despegue.jpg',  // Ruta local
-                        'titulo' => 'Avances revolucionarios en propulsión espacial',
-                        'descripcion' => 'Nuestro equipo de ingeniería ha logrado un hito histórico en el desarrollo de motores de plasma de alta eficiencia...',
-                        'fecha' => '15 Mayo 2024',
-                        'categoria' => '🚀 Ingeniería Espacial'
-                    ],
-                    [
-                        'img' => 'noticias/spacex-despegue.jpg',  // Ruta local
-                        'titulo' => 'Desarrollo de nuevas tecnologías para misiones lunares',
-                        'descripcion' => 'Estamos trabajando en nuevas tecnologías para mejorar la seguridad y eficiencia de las misiones lunares...',
-                        'fecha' => '22 Mayo 2024',
-                        'categoria' => '🚀 Ingeniería Espacial'
-                    ],
-                    [
-                        'img' => 'noticias/spacex-despegue.jpg',  // Ruta local
-                        'titulo' => 'Investigación avanzada en motores de cohetes nucleares',
-                        'descripcion' => 'Avances en la investigación de nuevos tipos de propulsión para explorar más allá de nuestro sistema solar...',
-                        'fecha' => '5 Junio 2024',
-                        'categoria' => '🚀 Ingeniería Espacial'
-                    ],
-                    [
-                        'img' => 'noticias/spacex-despegue.jpg',  // Ruta local
-                        'titulo' => 'Investigación avanzada en motores de cohetes nucleares',
-                        'descripcion' => 'Avances en la investigación de nuevos tipos de propulsión para explorar más allá de nuestro sistema solar...',
-                        'fecha' => '5 Junio 2024',
-                        'categoria' => '🚀 Ingeniería Espacial'
-                    ],
-                    [
-                        'img' => 'noticias/spacex-despegue.jpg',  // Ruta local
-                        'titulo' => 'Investigación avanzada en motores de cohetes nucleares',
-                        'descripcion' => 'Avances en la investigación de nuevos tipos de propulsión para explorar más allá de nuestro sistema solar...',
-                        'fecha' => '5 Junio 2024',
-                        'categoria' => '🚀 Ingeniería Espacial'
-                    ],
-                    [
-                        'img' => 'noticias/spacex-despegue.jpg',  // Ruta local
-                        'titulo' => 'Investigación avanzada en motores de cohetes nucleares',
-                        'descripcion' => 'Avances en la investigación de nuevos tipos de propulsión para explorar más allá de nuestro sistema solar...',
-                        'fecha' => '5 Junio 2024',
-                        'categoria' => '🚀 Ingeniería Espacial'
-                    ],
-                ];
-            @endphp
+        <!-- Noticias Culturales e Históricas -->
+        <div>
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl lg:text-7xl bg-gradient-to-r from-primary to-accent-300 bg-clip-text text-transparent font-extrabold mb-6 text-glow">
+                    Cultura y Descubrimientos Espaciales
+                </h2>
+                <p class="text-tech-300 max-w-xl mx-auto text-lg">
+                    Explora los hitos históricos y los descubrimientos espaciales que han marcado nuestra travesía.
+                </p>
+            </div>
 
-            @foreach($noticias as $noticia)
-                <article class="group relative bg-tech-700/30 rounded-2xl border border-tech-500 hover:border-secondary transition-all duration-500 hover:-translate-y-2 shadow-xl hover:shadow-accent-500/40 overflow-hidden"
-                         data-aos="fade-up" data-aos-delay="{{ ($loop->index + 1) * 100 }}">
-                    <div class="relative overflow-hidden h-52 sm:h-64 md:h-72 lg:h-80">
-                        <img src="{{ asset('images/' . $noticia['img']) }}" 
-                             alt="{{ $noticia['titulo'] }}"
-                             class="w-full h-full object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-700 ease-in-out">
-                        <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    </div>
-
-                    <div class="p-6">
-                        <div class="flex items-center text-sm text-tech-300 mb-3">
-                            <span class="mr-4">📅 {{ $noticia['fecha'] }}</span>
-                            <span>{{ $noticia['categoria'] }}</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                @foreach($noticiasCulturalesHistoricas as $noticia)
+                    <article class="group relative bg-tech-900/50 rounded-2xl border border-primary/30 hover:border-primary transition-all duration-500 hover:-translate-y-2 shadow-xl hover:shadow-primary/40 overflow-hidden"
+                             data-aos="fade-up" data-aos-delay="{{ ($loop->index + 1) * 100 }}">
+                        <div class="relative overflow-hidden h-52 sm:h-64 md:h-72">
+                            <img src="{{ asset('images/' . $noticia['img']) }}" 
+                                 alt="{{ $noticia['titulo'] }}"
+                                 class="w-full h-full object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                            <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         </div>
-                        <h3 class="text-xl lg:text-2xl font-bold text-white mb-3 leading-tight transition-colors group-hover:text-accent-100">
-                            {{ $noticia['titulo'] }}
-                        </h3>
-                        <p class="text-tech-100 line-clamp-3">
-                            {{ $noticia['descripcion'] }}
-                        </p>
-                        <a href="#" class="inline-flex items-center mt-4 text-accent-500 hover:text-accent-300 font-semibold transition-all duration-300">
-                            Leer más 
-                        </a>
-                    </div>
-                </article>
-            @endforeach
+
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-primary/80 mb-3">
+                                <span class="mr-4">📅 {{ $noticia['fecha'] }}</span>
+                                <span>{{ $noticia['categoria'] }}</span>
+                            </div>
+                            <h3 class="text-xl lg:text-2xl font-bold text-white mb-3 leading-tight transition-colors group-hover:text-primary-100">
+                                {{ $noticia['titulo'] }}
+                            </h3>
+                            <p class="text-tech-100 line-clamp-3">
+                                {{ $noticia['descripcion'] }}
+                            </p>
+                            <a href="#" class="inline-flex items-center mt-4 text-primary-500 hover:text-primary-300 font-semibold transition-all duration-300">
+                                Leer más 
+                            </a>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
         </div>
     </div>
 </section>
+
 
 <!-- SEPARADOR ORGÁNICO -->
 <div class="h-48 bg-space-700 relative overflow-hidden">
@@ -577,5 +632,4 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
 </section>
-
 @endsection
