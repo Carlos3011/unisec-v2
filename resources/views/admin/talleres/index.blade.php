@@ -36,48 +36,43 @@
             <table class="w-full text-white">
                 <thead class="bg-gray-800 text-gray-300">
                     <tr>
-                        <th class="px-4 py-3 text-left">Nombre del Taller</th>
+                        <th class="px-4 py-3 text-left">Título</th>
+                        <th class="px-4 py-3 text-left">Descripción</th>
                         <th class="px-4 py-3 text-left">Categoría</th>
-                        <th class="px-4 py-3 text-center">Duración</th>
-                        <th class="px-4 py-3 text-center">Estado</th>
-                        <th class="px-4 py-3 text-center">Inscritos</th>
+                        <th class="px-4 py-3 text-left">Tema</th>
+                        <th class="px-4 py-3 text-left">Ponente</th>
+                        <th class="px-4 py-3 text-left">Costo</th>
+                        <th class="px-4 py-3 text-left">Fecha</th>
                         <th class="px-4 py-3 text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-700">
-                    @forelse($talleres ?? [] as $taller)
-                    <tr class="hover:bg-gray-800/50">
-                        <td class="px-4 py-3">{{ $taller->nombre }}</td>
-                        <td class="px-4 py-3">{{ $taller->categoria }}</td>
-                        <td class="px-4 py-3 text-center">{{ $taller->duracion }}</td>
-                        <td class="px-4 py-3 text-center">
-                            <span class="px-3 py-1 rounded-full text-xs {{ $taller->estado == 'activo' ? 'bg-green-500/20 text-green-500' : 'bg-gray-500/20 text-gray-500' }}">
-                                {{ ucfirst($taller->estado) }}
-                            </span>
-                        </td>
-                        <td class="px-4 py-3 text-center">{{ $taller->inscritos_count }}</td>
-                        <td class="px-4 py-3 text-center">
-                            <div class="flex justify-center space-x-2">
-                                <a href="{{ route('admin.talleres.edit', $taller) }}" class="text-blue-400 hover:text-blue-300">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('admin.talleres.destroy', $taller) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-400 hover:text-red-300" onclick="return confirm('¿Estás seguro de eliminar este taller?')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="px-4 py-3 text-center text-gray-400">
-                            No hay talleres registrados
-                        </td>
-                    </tr>
-                    @endforelse
+                    @foreach($talleres as $taller)
+                        <tr class="hover:bg-gray-800/50">
+                            <td class="px-4 py-3">{{ $taller->titulo }}</td>
+                            <td class="px-4 py-3">{{ Str::limit($taller->descripcion, 50) }}</td>
+                            <td class="px-4 py-3">{{ $taller->categoria->nombre }}</td>
+                            <td class="px-4 py-3">{{ $taller->tema->nombre }}</td>
+                            <td class="px-4 py-3">{{ $taller->ponente->nombre }}</td>
+                            <td class="px-4 py-3">${{ number_format($taller->costo, 2) }}</td>
+                            <td class="px-4 py-3">{{ $taller->fecha->format('d/m/Y') }}</td>
+                            <td class="px-4 py-3 text-center">
+                                <div class="flex justify-center space-x-2">
+                                    <!-- Acciones -->
+                                    <a href="{{ route('admin.talleres.edit', $taller->id) }}" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-md transition-colors">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('admin.talleres.destroy', $taller->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md transition-colors" onclick="return confirm('¿Estás seguro de eliminar este taller?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
