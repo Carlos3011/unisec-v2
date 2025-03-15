@@ -75,10 +75,7 @@
             </table>
         </div>
 
-        <!-- Paginación -->
-        <div class="mt-6">
-            {{ $ponentes->links() }}
-        </div>
+        
     </div>
 </div>
 @endsection

@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <article class="group relative bg-tech-700/30 rounded-2xl border border-tech-500 hover:border-secondary transition-all duration-500 hover:-translate-y-2 shadow-xl hover:shadow-accent-500/40 overflow-hidden"
                              data-aos="fade-up" data-aos-delay="{{ ($loop->index + 1) * 100 }}">
                         <div class="relative overflow-hidden h-52 sm:h-64 md:h-72">
-                            <img src="{{ asset('images/' . $noticia['img']) }}" 
+                            <img src="{{ asset('images/noticias/' . $noticia['img']) }}" 
                                  alt="{{ $noticia['titulo'] }}"
                                  class="w-full h-full object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-700 ease-in-out">
                             <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -384,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <article class="group relative bg-tech-900/50 rounded-2xl border border-primary/30 hover:border-primary transition-all duration-500 hover:-translate-y-2 shadow-xl hover:shadow-primary/40 overflow-hidden"
                              data-aos="fade-up" data-aos-delay="{{ ($loop->index + 1) * 100 }}">
                         <div class="relative overflow-hidden h-52 sm:h-64 md:h-72">
-                            <img src="{{ asset('images/' . $noticia['img']) }}" 
+                            <img src="{{ asset('images/noticias/' . $noticia['img']) }}" 
                                  alt="{{ $noticia['titulo'] }}"
                                  class="w-full h-full object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-700 ease-in-out">
                             <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
