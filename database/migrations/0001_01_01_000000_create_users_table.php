@@ -43,7 +43,8 @@ return new class extends Migration
         // Insertar roles por defecto
         DB::table('roles')->insert([
             ['nombre' => 'admin'],
-            ['nombre' => 'usuario']
+            ['nombre' => 'usuario'],
+            ['nombre' => 'evaluador']
         ]);
     }
 
