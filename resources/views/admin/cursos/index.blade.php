@@ -27,9 +27,10 @@
             </select>
             <select class="bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
                 <option value="">Estado</option>
+                <option value="pendiente">Pendiente</option>
                 <option value="activo">Activo</option>
-                <option value="inactivo">Inactivo</option>
                 <option value="proximo">Próximo</option>
+                <option value="inactivo">Inactivo</option>
             </select>
         </div>
 
@@ -38,8 +39,12 @@
             <table class="w-full text-white">
                 <thead class="bg-gray-800 text-gray-300">
                     <tr>
-                        <th class="px-4 py-3 text-left">Nombre del Curso</th>
+                        <th class="px-4 py-3 text-left">Titulo</th>
+                        <th class="px-4 py-3 text-left">Descripción</th>
                         <th class="px-4 py-3 text-left">Categoría</th>
+                        <th class="px-4 py-3 text-left">Tema</th>
+                        <th class="px-4 py-3 text-left">Ponente</th>
+                        <th class="px-4 py-3 text-center">Costo</th>
                         <th class="px-4 py-3 text-center">Duración</th>
                         <th class="px-4 py-3 text-center">Estado</th>
                         <th class="px-4 py-3 text-center">Inscritos</th>
@@ -50,10 +55,27 @@
                     @forelse($cursos ?? [] as $curso)
                     <tr class="hover:bg-gray-800/50">
                         <td class="px-4 py-3">{{ $curso['nombre'] }}</td>
+                        <td class="px-4 py-3">{{ Str::limit($curso['descripcion'], 50) }}</td>
                         <td class="px-4 py-3">{{ $curso['categoria'] }}</td>
+                        <td class="px-4 py-3">{{ $curso['tema'] }}</td>
+                        <td class="px-4 py-3">{{ $curso['ponente'] }}</td>
+                        <td class="px-4 py-3 text-center">${{ number_format($curso['costo'], 2) }}</td>
                         <td class="px-4 py-3 text-center">{{ $curso['duracion'] }}</td>
                         <td class="px-4 py-3 text-center">
-                            <span class="px-3 py-1 rounded-full text-xs {{ $curso['estado'] == 'activo' ? 'bg-green-500/20 text-green-500' : 'bg-gray-500/20 text-gray-500' }}">
+                            <span class="px-3 py-1 rounded-full text-xs
+                                @switch($curso['estado'])
+                                    @case('activo')
+                                        bg-green-500/20 text-green-500
+                                        @break
+                                    @case('pendiente')
+                                        bg-yellow-500/20 text-yellow-500
+                                        @break
+                                    @case('proximo')
+                                        bg-blue-500/20 text-blue-500
+                                        @break
+                                    @default
+                                        bg-gray-500/20 text-gray-500
+                                @endswitch">
                                 {{ ucfirst($curso['estado']) }}
                             </span>
                         </td>

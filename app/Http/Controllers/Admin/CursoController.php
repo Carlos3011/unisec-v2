@@ -23,20 +23,20 @@ class CursoController extends Controller
 
     public function index()
     {
-        $cursos = Curso::with(['categoria', 'inscripciones'])
+        $cursos = Curso::with(['categoria', 'inscripciones', 'tema', 'ponente'])
             ->withCount('inscripciones as inscritos_count')
             ->get()
             ->map(function($curso) {
-                $estado = 'inactivo';
-                if ($curso->fecha_fin >= now()) {
-                    $estado = $curso->fecha_inicio > now() ? 'proximo' : 'activo';
-                }
                 return [
                     'id' => $curso->id,
                     'nombre' => $curso->titulo,
+                    'descripcion' => $curso->descripcion,
                     'categoria' => $curso->categoria->nombre,
+                    'tema' => $curso->tema->nombre,
+                    'ponente' => $curso->ponente->nombre,
                     'duracion' => $this->calcularDuracion($curso->fecha_inicio, $curso->fecha_fin),
-                    'estado' => $estado,
+                    'costo' => $curso->costo,
+                    'estado' => $curso->estado,
                     'inscritos_count' => $curso->inscritos_count
                 ];
             });
@@ -70,6 +70,7 @@ class CursoController extends Controller
     {
         try {
             $validated = $request->validate([
+                'estado' => 'required|string|in:activo,inactivo,pendiente',
                 'titulo' => 'required|string|max:255',
                 'descripcion' => 'required|string',
                 'categoria_id' => 'required|exists:categorias,id',
@@ -103,6 +104,7 @@ class CursoController extends Controller
     {
         try {
             $validated = $request->validate([
+                'estado' => 'required|string|in:activo,inactivo,pendiente',
                 'titulo' => 'required|string|max:255',
                 'descripcion' => 'required|string',
                 'categoria_id' => 'required|exists:categorias,id',

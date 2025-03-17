@@ -17,10 +17,17 @@ class Curso extends Model
         'ponente_id',
         'costo',
         'fecha_inicio',
-        'fecha_fin'
+        'fecha_fin',
+        'estado'
     ];
 
+    protected $attributes = [
+        'estado' => 'pendiente'
+    ];
+
+
     protected $casts = [
+        'estado' => 'string',
         'fecha_inicio' => 'date',
         'fecha_fin' => 'date',
         'costo' => 'decimal:2'
@@ -30,10 +37,16 @@ class Curso extends Model
     {
         return $this->belongsTo(Categoria::class);
     }
+    public function tema(){
+        return $this->belongsTo(Tema::class);
+    }
+    public function ponente(){
+        return $this->belongsTo(Ponente::class);
+    }
 
     public function inscripciones()
     {
-        return $this->hasMany(Inscripcion::class);
+        return $this->hasMany(InscripcionCurso::class);
     }
 
     public function usuarios()
