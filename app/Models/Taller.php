@@ -19,13 +19,20 @@ class Taller extends Model
         'tema_id',
         'ponente_id',
         'costo',
-        'fecha'
+        'fecha',
+        'estado'
+    ];
+
+    protected $attributes = [
+        'estado' => 'pendiente'
     ];
 
     protected $casts = [
+        'estado' => 'string',
         'fecha' => 'date',
-        'costo' => 'decimal:2'
+        'costo' => 'decimal:2',
     ];
+
 
     public function categoria()
     {
@@ -40,5 +47,17 @@ class Taller extends Model
     public function ponente()
     {
         return $this->belongsTo(Ponente::class);
+    }
+
+    public function inscripciones()
+    {
+        return $this->hasMany(InscripcionTaller::class);
+    }
+
+    public function usuarios()
+    {
+        return $this->belongsToMany(User::class, 'inscripciones')
+            ->withPivot('estado', 'fecha_inscripcion')
+            ->withTimestamps();
     }
 }

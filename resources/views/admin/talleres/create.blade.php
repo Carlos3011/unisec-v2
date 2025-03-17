@@ -82,6 +82,15 @@
                 <input type="date" name="fecha" id="fecha" value="{{ old('fecha') }}" required
                     class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
+
+            <div>
+                <label for="estado" class="block text-sm font-medium mb-2">Estado</label>
+                <select name="estado" id="estado" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="pendiente" {{ old('estado', 'pendiente') == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
+                    <option value="activo" {{ old('estado') == 'activo' ? 'selected' : '' }}>Activo</option>
+                    <option value="inactivo" {{ old('estado') == 'inactivo' ? 'selected' : '' }}>Inactivo</option>
+                </select>
+            </div>
         </div>
 
         <div class="flex justify-end space-x-4">

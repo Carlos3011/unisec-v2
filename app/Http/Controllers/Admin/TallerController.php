@@ -13,8 +13,26 @@ class TallerController extends Controller
 {
     public function index()
     {
-        $talleres = Taller::with(['categoria', 'tema', 'ponente'])->get();
-        return view('admin.talleres.index', compact('talleres'));
+        $talleres = Taller::with(['categoria', 'inscripciones', 'tema', 'ponente'])
+        ->withCount('inscripciones as inscritos_count')
+        ->get()
+        ->map(function ($taller) {
+            return[
+                'id' => $taller->id,
+                'nombre' => $taller->titulo,
+                'descripcion' => $taller->descripcion,
+                'categoria' => $taller->categoria->nombre,
+                'tema' => $taller->tema->nombre,
+                'ponente' => $taller->ponente->nombre,
+                'costo' => $taller->costo,
+                'fecha' => $taller->fecha,
+                'estado' => $taller->estado,
+                'inscritos_count' => $taller->inscritos_count,
+            ];
+        });
+        $categorias = Categoria::all();
+        $temas = Tema::all();
+        return view('admin.talleres.index', compact('talleres', 'categorias', 'temas'));
     }
 
     public function create()
@@ -34,10 +52,16 @@ class TallerController extends Controller
             'tema_id' => 'required|exists:temas,id',
             'ponente_id' => 'required|exists:ponentes,id',
             'costo' => 'required|numeric|min:0',
-            'fecha' => 'required|date'
+            'fecha' => 'required|date',
+            'estado' => 'string|in:pendiente,activo,inactivo'
         ]);
 
-        Taller::create($request->all());
+        $data = $request->all();
+        if (!isset($data['estado'])) {
+            $data['estado'] = 'pendiente';
+        }
+
+        Taller::create($data);
 
         return redirect()->route('admin.talleres.index')
             ->with('success', 'Taller creado exitosamente.');
@@ -60,7 +84,8 @@ class TallerController extends Controller
             'tema_id' => 'required|exists:temas,id',
             'ponente_id' => 'required|exists:ponentes,id',
             'costo' => 'required|numeric|min:0',
-            'fecha' => 'required|date'
+            'fecha' => 'required|date',
+            'estado' => 'string|in:pendiente,activo,inactivo'
         ]);
 
         $taller->update($request->all());

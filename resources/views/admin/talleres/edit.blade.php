@@ -110,6 +110,14 @@
                             class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
                     </div>
                 </div>
+                <div class="space-y-2">
+                    <label for="estado" class="block text-sm font-medium text-white">Estado <span class="text-red-500">*</span></label>
+                    <select name="estado" id="estado" required class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
+                        <option value="pendiente" {{ old('estado', $taller->estado) == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
+                        <option value="activo" {{ old('estado', $taller->estado) == 'activo' ? 'selected' : '' }}>Activo</option>
+                        <option value="inactivo" {{ old('estado', $taller->estado) == 'inactivo' ? 'selected' : '' }}>Inactivo</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -124,3 +132,4 @@
     </form>
 </div>
 @endsection
+
