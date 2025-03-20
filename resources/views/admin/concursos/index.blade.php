@@ -60,57 +60,57 @@ use Carbon\Carbon;
                 </thead>
                 <tbody class="divide-y divide-gray-700">
                     @forelse($concursos ?? [] as $concurso)
-                    <tr class="hover:bg-gray-800/50">
-                        <td class="px-4 py-3">{{ $concurso['titulo'] }}</td>
-                        <td class="px-4 py-3">{{ Str::limit($concurso['reglas'], 50) }}</td>
-                        <td class="px-4 py-3">{{ Str::limit($concurso['premios'], 50) }}</td>
-                        <td class="px-4 py-3">{{ $concurso['categoria'] }}</td>
-                        <td class="px-4 py-3">{{ $concurso['tema'] }}</td>
-                        <td class="px-4 py-3 text-center">{{ Carbon::parse($concurso['fecha_inicio'])->format('d/m/Y') }}</td>
-                        <td class="px-4 py-3 text-center">{{ Carbon::parse($concurso['fecha_fin'])->format('d/m/Y') }}</td>
-                        <td class="px-4 py-3 text-center">
-                            <span class="px-3 py-1 rounded-full text-xs
-                                @switch($concurso['estado'])
-                                    @case('activo')
-                                        bg-green-500/20 text-green-500
-                                        @break
-                                    @case('pendiente')
-                                        bg-yellow-500/20 text-yellow-500
-                                        @break
-                                    @case('proximo')
-                                        bg-blue-500/20 text-blue-500
-                                        @break
-                                    @case('finalizado')
-                                        bg-gray-500/20 text-gray-500
-                                        @break
-                                    @default
-                                        bg-gray-500/20 text-gray-500
-                                @endswitch">
-                                {{ ucfirst($concurso['estado']) }}
-                            </span>
-                        </td>
-                        <td class="px-4 py-3 text-center">{{ $concurso['inscritos_count'] }}</td>
-                        <td class="px-4 py-3 text-center">
-                            <div class="flex justify-center space-x-2">
-                                <a href="{{ route('admin.concursos.edit', $concurso['id']) }}" class="text-blue-400 hover:text-blue-300">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('admin.concursos.destroy', $concurso['id']) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-400 hover:text-red-300" onclick="return confirm('¿Estás seguro de eliminar este concurso?')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="8" class="px-4 py-3 text-center text-gray-400">
-                            No hay concursos registrados
-                        </td>
-                    </tr>
+                        <tr class="hover:bg-gray-800/50">
+                            <td class="px-4 py-3">{{ $concurso->titulo }}</td>
+                            <td class="px-4 py-3">{{ Str::limit($concurso->reglas, 50) }}</td>
+                            <td class="px-4 py-3">{{ Str::limit($concurso->premios, 50) }}</td>
+                            <td class="px-4 py-3">{{ $concurso->categoria->nombre }}</td>
+                            <td class="px-4 py-3">{{ $concurso->tema->nombre }}</td>
+                            <td class="px-4 py-3 text-center">{{ Carbon::parse($concurso->fecha_inicio)->format('d/m/Y') }}</td>
+                            <td class="px-4 py-3 text-center">{{ Carbon::parse($concurso->fecha_fin)->format('d/m/Y') }}</td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="px-3 py-1 rounded-full text-xs
+                                    @switch($concurso->estado)
+                                        @case('activo')
+                                            bg-green-500/20 text-green-500
+                                            @break
+                                        @case('pendiente')
+                                            bg-yellow-500/20 text-yellow-500
+                                            @break
+                                        @case('proximo')
+                                            bg-blue-500/20 text-blue-500
+                                            @break
+                                        @case('finalizado')
+                                            bg-gray-500/20 text-gray-500
+                                            @break
+                                        @default
+                                            bg-gray-500/20 text-gray-500
+                                    @endswitch">
+                                    {{ ucfirst($concurso->estado) }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-center">{{ $concurso->inscritos_count }}</td>
+                            <td class="px-4 py-3 text-center">
+                                <div class="flex justify-center space-x-2">
+                                    <a href="{{ route('admin.concursos.edit', $concurso['id']) }}" class="text-blue-400 hover:text-blue-300">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('admin.concursos.destroy', $concurso['id']) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-400 hover:text-red-300" onclick="return confirm('¿Estás seguro de eliminar este concurso?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="8" class="px-4 py-3 text-center text-gray-400">
+                                No hay concursos registrados
+                            </td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
