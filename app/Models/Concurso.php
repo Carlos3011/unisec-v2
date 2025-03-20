@@ -47,4 +47,9 @@ class Concurso extends Model
     {
         return $this->hasMany(InscripcionConcurso::class);
     }
+
+    public function convocatorias()
+    {
+        return $this->morphMany(Convocatoria::class, 'evento');
+    }
 }
