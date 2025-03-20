@@ -13,8 +13,6 @@ use App\Http\Controllers\Admin\PonentesController;
 use App\Http\Controllers\Admin\TemaController;
 use App\Http\Controllers\Admin\TallerController;
 use App\Http\Controllers\Admin\ConcursoController;
-use App\Http\Controllers\Admin\ConvocatoriaController;
-use App\Http\Controllers\Admin\FechaImportanteController;
 
 Route::controller(PublicController::class)->group(function () {
     Route::get('/', 'inicio')->name('inicio');
@@ -100,22 +98,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/pagos-facturacion', [AdminController::class, 'pagosFacturacion'])->name('admin.pagos-facturacion');
     Route::get('/admin/reportes-estadisticas', [AdminController::class, 'reportesEstadisticas'])->name('admin.reportes-estadisticas');
 
-    // Rutas para la gestión de convocatorias
-    Route::get('/admin/convocatorias', [ConvocatoriaController::class, 'index'])->name('admin.convocatorias.index');
-    Route::get('/admin/convocatorias/create', [ConvocatoriaController::class, 'create'])->name('admin.convocatorias.create');
-    Route::post('/admin/convocatorias', [ConvocatoriaController::class, 'store'])->name('admin.convocatorias.store');
-    Route::get('/admin/convocatorias/{convocatoria}', [ConvocatoriaController::class, 'show'])->name('admin.convocatorias.show');
-    Route::get('/admin/convocatorias/{convocatoria}/edit', [ConvocatoriaController::class, 'edit'])->name('admin.convocatorias.edit');
-    Route::put('/admin/convocatorias/{convocatoria}', [ConvocatoriaController::class, 'update'])->name('admin.convocatorias.update');
-    Route::delete('/admin/convocatorias/{convocatoria}', [ConvocatoriaController::class, 'destroy'])->name('admin.convocatorias.destroy');
-
-    // Rutas para la gestión de fechas importantes
-    Route::get('/admin/fechas-importantes', [FechaImportanteController::class, 'index'])->name('admin.fechas-importantes.index');
-    Route::get('/admin/fechas-importantes/create', [FechaImportanteController::class, 'create'])->name('admin.fechas-importantes.create');
-    Route::post('/admin/fechas-importantes', [FechaImportanteController::class, 'store'])->name('admin.fechas-importantes.store');
-    Route::get('/admin/fechas-importantes/{fecha}/edit', [FechaImportanteController::class, 'edit'])->name('admin.fechas-importantes.edit');
-    Route::put('/admin/fechas-importantes/{fecha}', [FechaImportanteController::class, 'update'])->name('admin.fechas-importantes.update');
-    Route::delete('/admin/fechas-importantes/{fecha}', [FechaImportanteController::class, 'destroy'])->name('admin.fechas-importantes.destroy');
+    
 });
 
 // Grupo de rutas para Usuarios
