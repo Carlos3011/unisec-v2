@@ -28,21 +28,26 @@ class Convocatoria extends Model
 
     public function curso()
     {
-        return $this->belongsTo(Curso::class, 'evento_id')->where('tipo_evento', 'curso');
+        return $this->morphTo('evento', 'evento_type', 'evento_id')->where('evento_type', Curso::class);
     }
 
     public function taller()
     {
-        return $this->belongsTo(Taller::class, 'evento_id')->where('tipo_evento', 'taller');
+        return $this->morphTo('evento', 'evento_type', 'evento_id')->where('evento_type', Taller::class);
     }
 
     public function congreso()
     {
-        return $this->belongsTo(Congreso::class, 'evento_id')->where('tipo_evento', 'congreso');
+        return $this->morphTo('evento', 'evento_type', 'evento_id')->where('evento_type', Congreso::class);
     }
 
     public function concurso()
     {
-        return $this->belongsTo(Concurso::class, 'evento_id')->where('tipo_evento', 'concurso');
+        return $this->morphTo('evento', 'evento_type', 'evento_id')->where('evento_type', Concurso::class);
+    }
+
+    public function fechasImportantes()
+    {
+        return $this->hasMany(FechaImportante::class);
     }
 }
