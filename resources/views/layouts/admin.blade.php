@@ -42,7 +42,7 @@
             <a href="{{ route('admin.cursos.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Cursos</a>
             <a href="{{ route('admin.talleres.index')}}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Talleres</a>
             <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Ponencias</a>
-            <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Concursos</a>
+            <a href="{{ route('admin.concursos.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Concursos</a>
           </div>
         </div>
 
@@ -56,8 +56,7 @@
             <i class="fas fa-chevron-up" x-show="open"></i>
           </button>
           <div x-show="open" class="pl-8 space-y-2" x-collapse>
-            <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Convocatorias</a>
-            <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Fechas Importantes</a>
+            <a href="{{ route('admin.convocatorias.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Convocatorias</a>
           </div>
         </div>
 
