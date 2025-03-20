@@ -73,10 +73,7 @@
             </table>
         </div>
 
-        <!-- Paginación -->
-        <div class="mt-6">
-            {{ $temas->links() }}
-        </div>
+        
     </div>
 </div>
 @endsection
