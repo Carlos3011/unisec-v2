@@ -142,7 +142,7 @@
         <div class="text-center mb-16">
             <h2 class="text-5xl font-extrabold text-white drop-shadow-md animate-text-glow">Nuestra Misión, Visión y Objetivos</h2>
             <p class="text-gray-300 text-xl max-w-3xl mx-auto mt-4">
-                UNISEC-MX facilita y promueve las actividades prácticas de desarrollo aéreo y espacial a nivel universitario, tales como el diseño, desarrollo, fabricación, armado, lanzamiento y operación de micro/nano/pico satélites, cohetes sonda y aeronaves incluyendo sus cargas útiles.
+                UNISEC-MX facilita y promueve las actividades prácticas de desarrollo aéreo y espacial a nivel universitario, tales como el diseño, desarrollo, fabricación, armado, lanzamiento y operación de micro/nano/pico satélites, cohetes sonda y aeronaves incluyendo sus cargas útiles
             </p>
         </div>
 
@@ -188,110 +188,13 @@
         </div>
     </div>
 
-    <!-- Estilos Personalizados -->
-    <style>
-        .glass-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 2.5rem;
-            text-align: left;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            position: relative;
-            min-height: 600px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: 0.5s;
-        }
-
-        .glass-card:hover {
-            border-color: rgba(0, 255, 255, 0.4);
-            box-shadow: 0 15px 45px rgba(0, 255, 255, 0.2);
-            transform: translateY(-8px);
-        }
-
-        .glass-card:hover::before {
-            left: 100%;
-        }
-
-        .glass-card h3 {
-            font-size: 2.25rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, #fff, #a5f3fc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            transition: all 0.3s ease;
-        }
-
-        .glass-card p, .glass-card ul {
-            font-size: 1.1rem;
-            line-height: 1.75;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 1rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-
-        .glass-card ul li {
-            margin-bottom: 0.75rem;
-            position: relative;
-            padding-left: 1.5rem;
-        }
-
-        .glass-card ul li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: #a5f3fc;
-            font-size: 1.5rem;
-            line-height: 1;
-        }
-
-        .icon-container {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-            transition: all 0.4s ease;
-        }
-
-        .glass-card:hover .icon-container {
-            transform: scale(1.1) rotate(5deg);
-            border-color: rgba(0, 255, 255, 0.4);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-        }
-
-        .animate-text-glow {
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
-                         0 0 40px rgba(76, 175, 255, 0.5),
-                         0 0 60px rgba(76, 175, 255, 0.3);
-        }
-    </style>
-</section>
-
+<!-- SEPARADOR ORGÁNICO -->
+<div class="h-48 bg-space-700 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-60"></div>
+    <div class="absolute inset-0 animate-orbital-movement">
+        <div class="w-48 h-48 bg-secondary/20 rounded-full blur-3xl"></div>
+    </div>
+</div>
 
 <!-- MENSAJE DEL PRESIDENTE -->
 <section class="relative py-24 bg-gradient-to-br from-cosmic-500 via-cosmic-700 to-black overflow-hidden" data-aos="zoom-in" data-aos-duration="1000">
@@ -540,8 +443,220 @@ $secciones = [
     </div>
 </section>
 
+<!-- EVENTOS ANTERIORES -->
+<section id="eventos" class="relative py-32 bg-gradient-to-br from-space-950 via-cosmic-900 to-space-950 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-5xl font-extrabold text-white drop-shadow-md animate-text-glow">Eventos Anteriores</h2>
+            <p class="text-gray-300 text-xl max-w-3xl mx-auto mt-4">
+                Revive los momentos más destacados de nuestros eventos pasados
+            </p>
+        </div>
+
+        <div class="relative overflow-hidden max-w-5xl mx-auto" x-data="{ activeSlide: 0, totalSlides: 0, isPlaying: true }" x-init="totalSlides = $refs.carousel.children.length; setInterval(() => { if (isPlaying) { activeSlide = (activeSlide === totalSlides - 1) ? 0 : activeSlide + 1; } }, 2000)">
+            <!-- Carrusel Principal -->
+            <div class="relative" @mouseenter="isPlaying = false" @mouseleave="isPlaying = true">
+                <!-- Flecha Izquierda -->
+                <button @click="activeSlide = (activeSlide === 0) ? totalSlides - 1 : activeSlide - 1" 
+                        class="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-secondary-500/20 hover:bg-secondary-500/40 text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300 group hover:scale-110 hover:shadow-glow">
+                    <i class="fas fa-chevron-left text-2xl group-hover:text-cyan-400 transition-colors"></i>
+                </button>
+            
+                <!-- Flecha Derecha -->
+                <button @click="activeSlide = (activeSlide === totalSlides - 1) ? 0 : activeSlide + 1" 
+                        class="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-secondary-500/20 hover:bg-secondary-500/40 text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300 group hover:scale-110 hover:shadow-glow">
+                    <i class="fas fa-chevron-right text-2xl group-hover:text-cyan-400 transition-colors"></i>
+                </button>
+            
+                <div class="overflow-hidden">
+                    <div x-ref="carousel" class="flex transition-transform duration-500 ease-out" :style="`transform: translateX(-${activeSlide * 100}%)`">
+                        @php
+                            $directory = public_path('images/galeria de imagenes');
+                            $imagenes = array_map(function($file) {
+                                return ['ruta' => 'galeria de imagenes/' . $file];
+                            }, array_filter(scandir($directory), function($file) {
+                                return !in_array($file, ['.', '..']) && in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png']);
+                            }));
+                            shuffle($imagenes);
+                        @endphp
+
+                        @foreach($imagenes as $index => $imagen)
+                        <div class="w-full flex-shrink-0" :class="{ 'hidden': $el.offsetParent === null }">
+                            <div class="relative aspect-w-16 aspect-h-9 max-w-4xl mx-auto">
+                                <img src="{{ asset('images/' . $imagen['ruta']) }}" alt="Galería de eventos" class="w-full h-[500px] object-cover rounded-xl">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Controles de Navegación -->
+                <button @click="activeSlide = (activeSlide === 0) ? totalSlides - 1 : activeSlide - 1" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <button @click="activeSlide = (activeSlide === totalSlides - 1) ? 0 : activeSlide + 1" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
 
 
+            </div>
+
+            <!-- Miniaturas -->
+            <div class="mt-4 px-4">
+                <div class="flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
+                    @foreach($imagenes as $index => $imagen)
+                    <button @click="activeSlide = {{ $index }}" class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden" :class="{ 'ring-2 ring-cyan-400': activeSlide === {{ $index }} }">
+                        <img src="{{ asset('images/' . $imagen['ruta']) }}" alt="Miniatura" class="w-full h-full object-cover">
+                    </button>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Estilos Personalizados -->
+    <style>
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        [x-cloak] {
+            display: none;
+        }
+        .cosmic-gallery-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+            transition: all 0.5s ease-in-out;
+        }
+
+        .cosmic-gallery-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(76, 175, 255, 0.4);
+        }
+
+        .cosmic-gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .cosmic-gallery-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: left;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0, 255, 255, 0.4);
+            box-shadow: 0 15px 45px rgba(0, 255, 255, 0.2);
+            transform: translateY(-8px);
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card h3 {
+            font-size: 2.25rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #a5f3fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card p, .glass-card ul {
+            font-size: 1.1rem;
+            line-height: 1.75;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .glass-card ul li {
+            margin-bottom: 0.75rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .glass-card ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #a5f3fc;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .icon-container {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            transition: all 0.4s ease;
+        }
+
+        .glass-card:hover .icon-container {
+            transform: scale(1.1) rotate(5deg);
+            border-color: rgba(0, 255, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .animate-text-glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+                         0 0 40px rgba(76, 175, 255, 0.5),
+                         0 0 60px rgba(76, 175, 255, 0.3);
+        }
+    </style>
+</section>
 
 <!-- NUESTROS VALORES - MEJORADO Y CENTRADO -->
 <section id="valores" class="py-24 bg-gray-900" data-aos="fade-up">

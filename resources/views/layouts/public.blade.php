@@ -75,7 +75,7 @@
       <!-- Logo y descripción -->
       <div class="space-y-4">
         <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-32 h-auto mx-auto sm:mx-0">
-        <p class="text-sm text-gray-400">Innovación aeroespacial para un futuro sostenible.</p>
+        <p class="text-sm text-gray-400">Innovación aeroespacial para un futuro sostenible</p>
       </div>
 
       <!-- Menú de navegación -->
