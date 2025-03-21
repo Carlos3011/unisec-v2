@@ -10,9 +10,9 @@
         <img src="{{ asset('images/sistema-solar.webp') }}" alt="Blog Hero" class="w-full h-full object-cover opacity-30">
     </div>
     <div class="relative container mx-auto px-6 text-center">
-        <h1 class="text-6xl font-bold text-white mb-4 drop-shadow-lg">Blog de UniSec</h1>
+        <h1 class="text-6xl font-bold text-white mb-4 drop-shadow-lg">Blog de UNISEC</h1>
         <p class="text-xl text-white max-w-2xl mx-auto">
-            Últimas noticias y artículos de interés sobre exploración espacial, tecnología y avances en la industria aeroespacial.
+            Últimas noticias y artículos de interés sobre exploración espacial, tecnología y avances en la industria aeroespacial
         </p>
     </div>
 </section>
@@ -25,8 +25,8 @@
             <article class="bg-gray-800 rounded-2xl overflow-hidden shadow-lg transform transition duration-300 hover:scale-105">
                 <img src="{{ asset('images/exoplanetas.jpg') }}" alt="Artículo 1" class="w-full h-48 object-cover">
                 <div class="p-6">
-                    <h2 class="text-2xl font-bold text-white mb-2">Descubriendo Nuevos Horizontes en la Astronomía</h2>
-                    <p class="text-gray-300 mb-4">
+                    <h2 class="text-2xl font-bold text-white mb-2 text-justify">Descubriendo Nuevos Horizontes en la Astronomía</h2>
+                    <p class="text-gray-300 mb-4 text-justify">
                         Explora cómo los avances tecnológicos están transformando nuestra comprensión del universo y abriendo nuevas posibilidades en la astronomía.
                     </p>
                     <a href="#" class="text-primary font-semibold hover:underline">Leer más</a>
@@ -36,8 +36,8 @@
             <article class="bg-gray-800 rounded-2xl overflow-hidden shadow-lg transform transition duration-300 hover:scale-105">
                 <img src="{{ asset('images/exoplanetas.jpg') }}" alt="Artículo 2" class="w-full h-48 object-cover">
                 <div class="p-6">
-                    <h2 class="text-2xl font-bold text-white mb-2">Innovación en Robótica Espacial</h2>
-                    <p class="text-gray-300 mb-4">
+                    <h2 class="text-2xl font-bold text-white mb-2 text-justify">Innovación en Robótica Espacial</h2>
+                    <p class="text-gray-300 mb-4 text-justify">
                         Descubre cómo la robótica está revolucionando la exploración espacial y abriendo el camino a nuevas misiones interplanetarias.
                     </p>
                     <a href="#" class="text-primary font-semibold hover:underline">Leer más</a>
@@ -47,8 +47,8 @@
             <article class="bg-gray-800 rounded-2xl overflow-hidden shadow-lg transform transition duration-300 hover:scale-105">
                 <img src="{{ asset('images/exoplanetas.jpg') }}" alt="Artículo 3" class="w-full h-48 object-cover">
                 <div class="p-6">
-                    <h2 class="text-2xl font-bold text-white mb-2">El Futuro de la Comunicación Satelital</h2>
-                    <p class="text-gray-300 mb-4">
+                    <h2 class="text-2xl font-bold text-white mb-2 text-justify">El Futuro de la Comunicación Satelital</h2>
+                    <p class="text-gray-300 mb-4 text-justify">
                         Conoce las últimas tendencias y tecnologías que están redefiniendo el mundo de las comunicaciones satelitales.
                     </p>
                     <a href="#" class="text-primary font-semibold hover:underline">Leer más</a>
@@ -58,8 +58,8 @@
             <article class="bg-gray-800 rounded-2xl overflow-hidden shadow-lg transform transition duration-300 hover:scale-105">
                 <img src="{{ asset('images/exoplanetas.jpg') }}" alt="Artículo 4" class="w-full h-48 object-cover">
                 <div class="p-6">
-                    <h2 class="text-2xl font-bold text-white mb-2">Avances en Exploración Planetaria</h2>
-                    <p class="text-gray-300 mb-4">
+                    <h2 class="text-2xl font-bold text-white mb-2 text-justify">Avances en Exploración Planetaria</h2>
+                    <p class="text-gray-300 mb-4 text-justify">
                         Descubre los descubrimientos recientes que están cambiando la forma en que entendemos los planetas de nuestro sistema solar y más allá.
                     </p>
                     <a href="#" class="text-primary font-semibold hover:underline">Leer más</a>
@@ -69,8 +69,8 @@
             <article class="bg-gray-800 rounded-2xl overflow-hidden shadow-lg transform transition duration-300 hover:scale-105">
                 <img src="{{ asset('images/exoplanetas.jpg') }}" alt="Artículo 5" class="w-full h-48 object-cover">
                 <div class="p-6">
-                    <h2 class="text-2xl font-bold text-white mb-2">Innovación y Sostenibilidad en el Espacio</h2>
-                    <p class="text-gray-300 mb-4">
+                    <h2 class="text-2xl font-bold text-white mb-2 text-justify">Innovación y Sostenibilidad en el Espacio</h2>
+                    <p class="text-gray-300 mb-4 text-justify">
                         Analizamos cómo las nuevas tecnologías están ayudando a crear soluciones sostenibles en la exploración espacial.
                     </p>
                     <a href="#" class="text-primary font-semibold hover:underline">Leer más</a>
@@ -80,8 +80,8 @@
             <article class="bg-gray-800 rounded-2xl overflow-hidden shadow-lg transform transition duration-300 hover:scale-105">
                 <img src="{{ asset('images/exoplanetas.jpg') }}" alt="Artículo 6" class="w-full h-48 object-cover">
                 <div class="p-6">
-                    <h2 class="text-2xl font-bold text-white mb-2">El Rol de la Inteligencia Artificial en el Espacio</h2>
-                    <p class="text-gray-300 mb-4">
+                    <h2 class="text-2xl font-bold text-white mb-2 text-justify">El Rol de la Inteligencia Artificial en el Espacio</h2>
+                    <p class="text-gray-300 mb-4 text-justify">
                         Explora cómo la inteligencia artificial está revolucionando la forma en que exploramos y comprendemos el cosmos.
                     </p>
                     <a href="#" class="text-primary font-semibold hover:underline">Leer más</a>

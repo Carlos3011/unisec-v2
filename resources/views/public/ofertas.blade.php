@@ -22,7 +22,7 @@
 
         <!-- Subtítulo -->
         <p class="text-lg sm:text-xl md:text-2xl text-white max-w-3xl mx-auto leading-relaxed font-light" data-aos="fade-up" data-aos-delay="200">
-            Explora programas educativos de vanguardia diseñados para llevarte más allá de los límites del conocimiento espacial.
+            Explora programas educativos de vanguardia diseñados para llevarte más allá de los límites del conocimiento espacial
         </p>
 
         <!-- Botón de acción -->
@@ -78,7 +78,7 @@
         <div class="text-center mb-12">
             <h2 class="text-4xl font-semibold text-white mb-4">Nuestros Programas Académicos</h2>
             <p class="text-white text-lg max-w-3xl mx-auto">
-                Explora cursos y programas especializados en tecnología y ciencias espaciales.
+                Explora cursos y programas especializados en tecnología y ciencias espaciales
             </p>
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <h3 class="text-xl font-semibold text-white mb-2">Curso de Astronomía Avanzada</h3>
-                <p class="text-white text-sm">Explora los secretos del universo con clases interactivas y observaciones prácticas.</p>
+                <p class="text-white text-sm">Explora los secretos del universo con clases interactivas y observaciones prácticas</p>
             </a>
             <!-- Tarjeta 2 -->
             <a href="#" class="group p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700 transition-all duration-300 hover:border-cyan-400 hover:shadow-2xl">
@@ -100,7 +100,7 @@
                     </div>
                 </div>
                 <h3 class="text-xl font-semibold text-white mb-2">Diplomado en Robótica Espacial</h3>
-                <p class="text-white text-sm">Domina la automatización y el control para desarrollar tecnologías espaciales de vanguardia.</p>
+                <p class="text-white text-sm">Domina la automatización y el control para desarrollar tecnologías espaciales de vanguardia</p>
             </a>
             <!-- Tarjeta 3 -->
             <a href="#" class="group p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700 transition-all duration-300 hover:border-cyan-400 hover:shadow-2xl">
@@ -110,7 +110,7 @@
                     </div>
                 </div>
                 <h3 class="text-xl font-semibold text-white mb-2">Seminario de Ingeniería Aeroespacial</h3>
-                <p class="text-white text-sm">Conoce las estrategias y tecnologías que impulsan el desarrollo en la industria aeroespacial.</p>
+                <p class="text-white text-sm">Conoce las estrategias y tecnologías que impulsan el desarrollo en la industria aeroespacial</p>
             </a>
             <!-- Tarjeta 4 -->
             <a href="#" class="group p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700 transition-all duration-300 hover:border-cyan-400 hover:shadow-2xl">
@@ -120,7 +120,7 @@
                     </div>
                 </div>
                 <h3 class="text-xl font-semibold text-white mb-2">Maestría en Ciencias Espaciales</h3>
-                <p class="text-white text-sm">Avanza en tu carrera con un programa de posgrado enfocado en investigación y desarrollo espacial.</p>
+                <p class="text-white text-sm">Avanza en tu carrera con un programa de posgrado enfocado en investigación y desarrollo espacial</p>
             </a>
             <!-- Tarjeta 5 -->
             <a href="#" class="group p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700 transition-all duration-300 hover:border-cyan-400 hover:shadow-2xl">
@@ -130,7 +130,7 @@
                     </div>
                 </div>
                 <h3 class="text-xl font-semibold text-white mb-2">Taller de Innovación Tecnológica</h3>
-                <p class="text-white text-sm">Desarrolla proyectos disruptivos y soluciones innovadoras en el ámbito espacial.</p>
+                <p class="text-white text-sm">Desarrolla proyectos disruptivos y soluciones innovadoras en el ámbito espacial</p>
             </a>
             <!-- Tarjeta 6 -->
             <a href="#" class="group p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700 transition-all duration-300 hover:border-cyan-400 hover:shadow-2xl">
@@ -140,7 +140,7 @@
                     </div>
                 </div>
                 <h3 class="text-xl font-semibold text-white mb-2">Curso de Satélites y Comunicaciones</h3>
-                <p class="text-white text-sm">Aprende los fundamentos de las comunicaciones satelitales y su impacto en la conectividad global.</p>
+                <p class="text-white text-sm">Aprende los fundamentos de las comunicaciones satelitales y su impacto en la conectividad global</p>
             </a>
         </div>
     </div>
@@ -161,7 +161,7 @@
         <div class="text-center mb-16">
             <h2 class="text-5xl font-bold text-white mb-4">¿Por qué elegir nuestros programas?</h2>
             <p class="text-white text-xl max-w-3xl mx-auto">
-                Ofrecemos una formación integral con docentes expertos, proyectos innovadores y una red internacional de contactos que te impulsará a alcanzar tus metas.
+                Ofrecemos una formación integral con docentes expertos, proyectos innovadores y una red internacional de contactos que te impulsará a alcanzar tus metas
             </p>
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -172,7 +172,7 @@
                 </div>
                 <h3 class="text-2xl font-bold text-white mb-2">Docentes Expertos</h3>
                 <p class="text-white text-sm">
-                    Aprende de profesionales destacados con experiencia en la industria espacial y científica, para asegurar una formación de calidad.
+                    Aprende de profesionales destacados con experiencia en la industria espacial y científica, para asegurar una formación de calidad
                 </p>
             </div>
             <!-- Beneficio 2 -->
@@ -182,7 +182,7 @@
                 </div>
                 <h3 class="text-2xl font-bold text-white mb-2">Investigación Avanzada</h3>
                 <p class="text-white text-sm">
-                    Accede a proyectos de investigación pioneros, desarrollando soluciones innovadoras para el futuro de la tecnología espacial.
+                    Accede a proyectos de investigación pioneros, desarrollando soluciones innovadoras para el futuro de la tecnología espacial
                 </p>
             </div>
             <!-- Beneficio 3 -->
@@ -192,7 +192,7 @@
                 </div>
                 <h3 class="text-2xl font-bold text-white mb-2">Conexiones Globales</h3>
                 <p class="text-white text-sm">
-                    Forma parte de una comunidad internacional, con acceso a contactos, conferencias y oportunidades de colaboración global.
+                    Forma parte de una comunidad internacional, con acceso a contactos, conferencias y oportunidades de colaboración global
                 </p>
             </div>
         </div>
@@ -203,7 +203,7 @@
                 <div class="w-full h-80 bg-cover bg-center rounded-lg" style="background-image: url('{{ asset('images/planetas-sistema-solar.webp') }}');"></div>
                 <div class="absolute inset-0 bg-black opacity-50 rounded-lg"></div>
                 <div class="absolute inset-0 flex items-center justify-center">
-                    <p class="text-white text-2xl font-semibold">Cursos y talleres con módulos flexibles para adaptarse a tu horario y necesidades.</p>
+                    <p class="text-white text-2xl font-semibold">Cursos y talleres con módulos flexibles para adaptarse a tu horario y necesidades</p>
                 </div>
             </div>
         </div>
@@ -226,7 +226,7 @@
         <div class="text-center mb-16">
             <h2 class="text-5xl font-bold text-white mb-4">Testimonios</h2>
             <p class="text-white text-xl max-w-3xl mx-auto">
-                Conoce la experiencia de nuestros estudiantes y cómo nuestros programas han impulsado su éxito.
+                Conoce la experiencia de nuestros estudiantes y cómo nuestros programas han impulsado su éxito
             </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -270,7 +270,7 @@
         <div class="text-center mb-16">
             <h2 class="text-5xl font-bold text-white mb-4">Preguntas Frecuentes</h2>
             <p class="text-white text-xl max-w-3xl mx-auto">
-                Resolvemos tus dudas sobre nuestros programas y el proceso de inscripción.
+                Resolvemos tus dudas sobre nuestros programas y el proceso de inscripción
             </p>
         </div>
         <div class="space-y-6">
@@ -319,7 +319,7 @@
     <div class="max-w-7xl mx-auto px-6 text-center">
         <h2 class="text-5xl font-bold text-white mb-4 text-glow animate__animated animate__fadeInUp">¿Listo para transformar tu futuro?</h2>
         <p class="text-xl text-white mb-8 max-w-3xl mx-auto">
-            Inscríbete ahora y forma parte de la vanguardia en la exploración espacial. Da el siguiente paso hacia una educación de excelencia.
+            Inscríbete ahora y forma parte de la vanguardia en la exploración espacial. Da el siguiente paso hacia una educación de excelencia
         </p>
         <div class="flex justify-center">
             <a href="#" class="inline-block bg-cosmic text-white font-bold py-3 px-8 rounded-full shadow-xl hover:scale-105 hover:shadow-2xl transition-all duration-300 transform">
