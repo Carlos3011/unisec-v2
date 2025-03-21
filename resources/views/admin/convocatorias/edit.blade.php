@@ -22,8 +22,20 @@
     @endif
 
     <form action="{{ route('admin.convocatorias.update', $convocatoria) }}" method="POST" enctype="multipart/form-data" class="space-y-6" x-data="{
-        eventoType: '{{ $convocatoria->evento_type }}',
-        fechasImportantes: {{ json_encode($convocatoria->fechasImportantes->map(fn($fecha) => ['titulo' => $fecha->titulo, 'fecha' => $fecha->fecha->format('Y-m-d')])) }},
+        currentTab: 'general',
+        progress: 20,
+        tabs: {
+            general: true,
+            requisitos: false,
+            documentos: false,
+            evaluacion: false,
+            archivos: false
+        },
+        updateProgress() {
+            const completedTabs = Object.values(this.tabs).filter(Boolean).length;
+            this.progress = (completedTabs / Object.keys(this.tabs).length) * 100;
+        },
+        fechasImportantes: {{ Js::from($convocatoria->fechasImportantes) }},
         addFecha() {
             this.fechasImportantes.push({ titulo: '', fecha: '' });
         },
@@ -36,122 +48,268 @@
         @csrf
         @method('PUT')
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Barra de Progreso -->
+        <div class="w-full bg-gray-700 rounded-full h-2.5 mb-6">
+            <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-300" x-bind:style="'width: ' + progress + '%'"></div>
+        </div>
+
+        <!-- Navegación de Pestañas -->
+        <nav class="flex space-x-4 mb-6 border-b border-gray-700 pb-4">
+            <button type="button" @click="currentTab = 'general'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'general'}" class="text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-info-circle mr-2"></i>General
+            </button>
+            <button type="button" @click="currentTab = 'fechas'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'fechas'}" class="text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-calendar mr-2"></i>Fechas Importantes
+            </button>
+            <button type="button" @click="currentTab = 'requisitos'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'requisitos'}" class="text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-list-check mr-2"></i>Requisitos
+            </button>
+            <button type="button" @click="currentTab = 'documentos'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'documentos'}" class="text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-file-lines mr-2"></i>Documentación
+            </button>
+            <button type="button" @click="currentTab = 'evaluacion'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'evaluacion'}" class="text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-star mr-2"></i>Evaluación
+            </button>
+            <button type="button" @click="currentTab = 'archivos'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'archivos'}" class="text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-upload mr-2"></i>Archivos
+            </button>
+        </nav>
+
+        <!-- Contenido de Pestañas -->
+        <div x-show="currentTab === 'fechas'" class="space-y-6 animate-fade-in">
             <div class="space-y-4">
-                <div>
-                    <label for="titulo" class="block text-sm font-medium text-gray-300">Título</label>
-                    <input type="text" name="titulo" id="titulo" value="{{ $convocatoria->titulo }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
-                </div>
-
-                <div>
-                    <label for="descripcion" class="block text-sm font-medium text-gray-300">Descripción</label>
-                    <textarea name="descripcion" id="descripcion" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>{{ $convocatoria->descripcion }}</textarea>
-                </div>
-
-                <div>
-                    <label for="evento_type" class="block text-sm font-medium text-gray-300">Tipo de Evento</label>
-                    <select name="evento_type" id="evento_type" x-model="eventoType" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
-                        <option value="congreso" {{ $convocatoria->evento_type === 'congreso' ? 'selected' : '' }}>Congreso</option>
-                        <option value="curso" {{ $convocatoria->evento_type === 'curso' ? 'selected' : '' }}>Curso</option>
-                        <option value="taller" {{ $convocatoria->evento_type === 'taller' ? 'selected' : '' }}>Taller</option>
-                        <option value="concurso" {{ $convocatoria->evento_type === 'concurso' ? 'selected' : '' }}>Concurso</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label for="evento_id" class="block text-sm font-medium text-gray-300">Selecciona el evento</label>
-                    <select name="evento_id" id="evento_id" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
-                        <option value="">-- Selecciona un evento --</option>
-                        
-                        <template x-if="eventoType === 'curso'">
-                            @foreach ($cursos as $curso)
-                                <option value="{{ $curso->id }}" {{ $convocatoria->evento_type === 'curso' && $convocatoria->evento_id === $curso->id ? 'selected' : '' }}>{{ $curso->titulo }}</option>
-                            @endforeach
-                        </template>
-                        
-                        <template x-if="eventoType === 'taller'">
-                            @foreach ($talleres as $taller)
-                                <option value="{{ $taller->id }}" {{ $convocatoria->evento_type === 'taller' && $convocatoria->evento_id === $taller->id ? 'selected' : '' }}>{{ $taller->titulo }}</option>
-                            @endforeach
-                        </template>
-                        
-                        <template x-if="eventoType === 'congreso'">
-                            @foreach ($congresos as $congreso)
-                                <option value="{{ $congreso->id }}" {{ $convocatoria->evento_type === 'congreso' && $convocatoria->evento_id === $congreso->id ? 'selected' : '' }}>{{ $congreso->nombre }}</option>
-                            @endforeach
-                        </template>
-                        
-                        <template x-if="eventoType === 'concurso'">
-                            @foreach ($concursos as $concurso)
-                                <option value="{{ $concurso->id }}" {{ $convocatoria->evento_type === 'concurso' && $convocatoria->evento_id === $concurso->id ? 'selected' : '' }}>{{ $concurso->titulo }}</option>
-                            @endforeach
-                        </template>
-                    </select>
-                </div>
-            </div>
-
-            <div class="space-y-4">
-                <div>
-                    <label for="imagen" class="block text-sm font-medium text-gray-300">Imagen</label>
-                    @if($convocatoria->imagen)
-                        <div class="mb-2">
-                            <img src="{{ Storage::url($convocatoria->imagen) }}" alt="Imagen actual" class="w-32 h-32 object-cover rounded-lg">
+                <template x-for="(fecha, index) in fechasImportantes" :key="index">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-700/50 rounded-lg">
+                        <div>
+                            <label :for="'fecha_titulo_' + index" class="block text-sm font-medium text-gray-300">Título del Evento</label>
+                            <input type="text" :name="'fechas_importantes[' + index + '][titulo]'" :id="'fecha_titulo_' + index" x-model="fecha.titulo" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
                         </div>
-                    @endif
-                    <input type="file" name="imagen" id="imagen" accept="image/*" class="mt-1 block w-full text-sm text-gray-300
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded-md file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-blue-500 file:text-white
-                        hover:file:bg-blue-600">
-                </div>
-
-                <div>
-                    <label for="archivo_pdf" class="block text-sm font-medium text-gray-300">Archivo PDF</label>
-                    @if($convocatoria->archivo_pdf)
-                        <div class="mb-2 flex items-center space-x-2">
-                            <i class="fas fa-file-pdf text-red-400"></i>
-                            <a href="{{ Storage::url($convocatoria->archivo_pdf) }}" target="_blank" class="text-blue-400 hover:text-blue-300">Ver PDF actual</a>
+                        <div>
+                            <label :for="'fecha_fecha_' + index" class="block text-sm font-medium text-gray-300">Fecha</label>
+                            <input type="date" :name="'fechas_importantes[' + index + '][fecha]'" :id="'fecha_fecha_' + index" x-model="fecha.fecha" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
                         </div>
-                    @endif
-                    <input type="file" name="archivo_pdf" id="archivo_pdf" accept=".pdf" class="mt-1 block w-full text-sm text-gray-300
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded-md file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-blue-500 file:text-white
-                        hover:file:bg-blue-600">
-                </div>
-
-                <div class="border-t border-gray-600 pt-4">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-medium text-white">Fechas Importantes</h3>
-                        <button type="button" @click="addFecha" class="inline-flex items-center px-3 py-1 bg-blue-600 rounded-md text-xs font-medium text-white hover:bg-blue-700 transition-colors duration-150">
-                            <i class="fas fa-plus mr-1"></i> Agregar Fecha
-                        </button>
-                    </div>
-
-                    <template x-for="(fecha, index) in fechasImportantes" :key="index">
-                        <div class="flex items-center space-x-4 mb-4">
-                            <div class="flex-1">
-                                <input type="text" :name="`fechas_importantes[${index}][titulo]`" x-model="fecha.titulo" placeholder="Título del evento" class="block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
-                            </div>
-                            <div class="flex-1">
-                                <input type="date" :name="`fechas_importantes[${index}][fecha]`" x-model="fecha.fecha" class="block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
-                            </div>
-                            <button type="button" @click="removeFecha(index)" class="text-red-400 hover:text-red-500" :disabled="fechasImportantes.length === 1">
-                                <i class="fas fa-trash"></i>
+                        <div class="md:col-span-2 flex justify-end">
+                            <button type="button" @click="removeFecha(index)" class="inline-flex items-center px-3 py-1 bg-red-600/20 text-red-400 rounded-lg text-sm hover:bg-red-600/30 transition-all">
+                                <i class="fas fa-trash mr-2"></i> Eliminar
                             </button>
                         </div>
-                    </template>
+                    </div>
+                </template>
+
+                <div class="flex justify-center">
+                    <button type="button" @click="addFecha()" class="inline-flex items-center px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg text-sm hover:bg-blue-600/30 transition-all">
+                        <i class="fas fa-plus mr-2"></i> Agregar Fecha Importante
+                    </button>
                 </div>
             </div>
         </div>
 
-        <div class="flex justify-end pt-6 border-t border-gray-600">
-            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
-                <i class="fas fa-save mr-2"></i> Actualizar Convocatoria
+        <div x-show="currentTab === 'general'" class="space-y-6 animate-fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="nombre_evento" class="block text-sm font-medium text-gray-300">Nombre del Evento</label>
+                    <input type="text" name="nombre_evento" id="nombre_evento" value="{{ old('nombre_evento', $convocatoria->nombre_evento) }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
+                    @error('nombre_evento')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="sede" class="block text-sm font-medium text-gray-300">Sede</label>
+                    <input type="text" name="sede" id="sede" value="{{ old('sede', $convocatoria->sede) }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
+                    @error('sede')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="dirigido_a" class="block text-sm font-medium text-gray-300">Dirigido a</label>
+                    <input type="text" name="dirigido_a" id="dirigido_a" value="{{ old('dirigido_a', $convocatoria->dirigido_a) }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">
+                    @error('dirigido_a')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="contacto_email" class="block text-sm font-medium text-gray-300">Email de Contacto</label>
+                    <input type="email" name="contacto_email" id="contacto_email" value="{{ old('contacto_email', $convocatoria->contacto_email) }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">
+                    @error('contacto_email')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="max_integrantes" class="block text-sm font-medium text-gray-300">Máximo de Integrantes</label>
+                    <input type="number" name="max_integrantes" id="max_integrantes" value="{{ old('max_integrantes', $convocatoria->max_integrantes) }}" min="1" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">
+                    @error('max_integrantes')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="asesor_requerido" class="block text-sm font-medium text-gray-300">¿Requiere Asesor?</label>
+                    <select name="asesor_requerido" id="asesor_requerido" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">
+                        <option value="1" {{ old('asesor_requerido', $convocatoria->asesor_requerido) ? 'selected' : '' }}>Sí</option>
+                        <option value="0" {{ old('asesor_requerido', $convocatoria->asesor_requerido) === false ? 'selected' : '' }}>No</option>
+                    </select>
+                    @error('asesor_requerido')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
+        <div x-show="currentTab === 'requisitos'" class="space-y-6 animate-fade-in">
+            <div>
+                <label for="requisitos" class="block text-sm font-medium text-gray-300">Requisitos</label>
+                <textarea name="requisitos" id="requisitos" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>{{ old('requisitos', $convocatoria->requisitos) }}</textarea>
+                @error('requisitos')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div>
+                <label for="etapas_mision" class="block text-sm font-medium text-gray-300">Etapas de la Misión</label>
+                <textarea name="etapas_mision" id="etapas_mision" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>{{ old('etapas_mision', $convocatoria->etapas_mision) }}</textarea>
+                @error('etapas_mision')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div>
+                <label for="pruebas_requeridas" class="block text-sm font-medium text-gray-300">Pruebas Requeridas</label>
+                <textarea name="pruebas_requeridas" id="pruebas_requeridas" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>{{ old('pruebas_requeridas', $convocatoria->pruebas_requeridas) }}</textarea>
+                @error('pruebas_requeridas')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+
+        <div x-show="currentTab === 'documentos'" class="space-y-6 animate-fade-in">
+            <div>
+                <label for="documentacion_requerida" class="block text-sm font-medium text-gray-300">Documentación Requerida</label>
+                <input type="text" name="documentacion_requerida" id="documentacion_requerida" value="{{ old('documentacion_requerida', $convocatoria->documentacion_requerida) }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">
+                @error('documentacion_requerida')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+
+        <div x-show="currentTab === 'evaluacion'" class="space-y-6 animate-fade-in">
+            <div>
+                <label for="criterios_evaluacion" class="block text-sm font-medium text-gray-300">Criterios de Evaluación</label>
+                <textarea name="criterios_evaluacion" id="criterios_evaluacion" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">{{ old('criterios_evaluacion', $convocatoria->criterios_evaluacion) }}</textarea>
+                @error('criterios_evaluacion')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div>
+                <label for="proceso_evaluacion" class="block text-sm font-medium text-gray-300">Proceso de Evaluación</label>
+                <textarea name="proceso_evaluacion" id="proceso_evaluacion" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">{{ old('proceso_evaluacion', $convocatoria->proceso_evaluacion) }}</textarea>
+                @error('proceso_evaluacion')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+
+        <div x-show="currentTab === 'archivos'" class="space-y-6 animate-fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="archivo_pdf" class="block text-sm font-medium text-gray-300">Archivo PDF</label>
+                    <input type="file" name="archivo_pdf" id="archivo_pdf" accept=".pdf" class="mt-1 block w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500/20 file:text-blue-400 hover:file:bg-blue-500/30 file:cursor-pointer">
+                    @error('archivo_pdf')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                    @if($convocatoria->archivo_pdf)
+                        <div class="mt-2 text-sm text-gray-400">Archivo actual: {{ basename($convocatoria->archivo_pdf) }}</div>
+                    @endif
+                </div>
+
+                <div>
+                    <label for="imagen_portada" class="block text-sm font-medium text-gray-300">Imagen de Portada</label>
+                    <input type="file" name="imagen_portada" id="imagen_portada" accept="image/*" class="mt-1 block w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500/20 file:text-blue-400 hover:file:bg-blue-500/30 file:cursor-pointer">
+                    @error('imagen_portada')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                    @if($convocatoria->imagen_portada)
+                        <div class="mt-2 text-sm text-gray-400">Imagen actual: {{ basename($convocatoria->imagen_portada) }}</div>
+                    @endif
+                </div>
+
+                <div>
+                    <label for="archivo_pdr" class="block text-sm font-medium text-gray-300">Archivo PDR</label>
+                    <input type="file" name="archivo_pdr" id="archivo_pdr" class="mt-1 block w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500/20 file:text-blue-400 hover:file:bg-blue-500/30 file:cursor-pointer">
+                    @error('archivo_pdr')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                    @if($convocatoria->archivo_pdr)
+                        <div class="mt-2 text-sm text-gray-400">Archivo actual: {{ basename($convocatoria->archivo_pdr) }}</div>
+                    @endif
+                </div>
+
+                <div>
+                    <label for="archivo_cdr" class="block text-sm font-medium text-gray-300">Archivo CDR</label>
+                    <input type="file" name="archivo_cdr" id="archivo_cdr" class="mt-1 block w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500/20 file:text-blue-400 hover:file:bg-blue-500/30 file:cursor-pointer">
+                    @error('archivo_cdr')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                    @if($convocatoria->archivo_cdr)
+                        <div class="mt-2 text-sm text-gray-400">Archivo actual: {{ basename($convocatoria->archivo_cdr) }}</div>
+                    @endif
+                </div>
+
+                <div>
+                    <label for="archivo_pfr" class="block text-sm font-medium text-gray-300">Archivo PFR</label>
+                    <input type="file" name="archivo_pfr" id="archivo_pfr" class="mt-1 block w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500/20 file:text-blue-400 hover:file:bg-blue-500/30 file:cursor-pointer">
+                    @error('archivo_pfr')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                    @if($convocatoria->archivo_pfr)
+                        <div class="mt-2 text-sm text-gray-400">Archivo actual: {{ basename($convocatoria->archivo_pfr) }}</div>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-end space-x-4 pt-6 border-t border-gray-700">
+            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-500 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-400 active:bg-blue-600 transition-all duration-150">
+                <i class="fas fa-save mr-2"></i> Guardar Cambios
             </button>
         </div>
     </form>
 </div>
+
+@push('scripts')
+<script>
+function eliminarArchivo(archivoId) {
+    if (confirm('¿Estás seguro de que deseas eliminar este archivo?')) {
+        fetch(`/admin/convocatorias/archivo/${archivoId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.reload();
+            } else {
+                alert('Error al eliminar el archivo');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al eliminar el archivo');
+        });
+    }
+}
+</script>
+@endpush
+
 @endsection

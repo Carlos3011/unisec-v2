@@ -22,7 +22,19 @@
     @endif
 
     <form action="{{ route('admin.convocatorias.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6" x-data="{
-        eventoType: '',
+        currentTab: 'general',
+        progress: 20,
+        tabs: {
+            general: true,
+            requisitos: false,
+            documentos: false,
+            evaluacion: false,
+            archivos: false
+        },
+        updateProgress() {
+            const completedTabs = Object.values(this.tabs).filter(Boolean).length;
+            this.progress = (completedTabs / Object.keys(this.tabs).length) * 100;
+        },
         fechasImportantes: [{ titulo: '', fecha: '' }],
         addFecha() {
             this.fechasImportantes.push({ titulo: '', fecha: '' });
@@ -35,112 +47,297 @@
     }">
         @csrf
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-4">
+        <!-- Barra de Progreso -->
+        <div class="w-full bg-gray-700 rounded-full h-2.5 mb-6">
+            <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-300" x-bind:style="'width: ' + progress + '%'"></div>
+        </div>
+
+        <!-- Navegación de Pestañas -->
+        <nav class="flex space-x-4 mb-6 border-b border-gray-700 pb-4">
+            <button type="button" @click="currentTab = 'general'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'general'}" class="text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-info-circle mr-2"></i>General
+            </button>
+            <button type="button" @click="currentTab = 'fechas'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'fechas'}" class="text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-calendar mr-2"></i>Fechas Importantes
+            </button>
+            <button type="button" @click="currentTab = 'requisitos'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'requisitos'}" class="text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-list-check mr-2"></i>Requisitos
+            </button>
+            <button type="button" @click="currentTab = 'documentos'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'documentos'}" class="text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-file-lines mr-2"></i>Documentación
+            </button>
+            <button type="button" @click="currentTab = 'evaluacion'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'evaluacion'}" class="text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-star mr-2"></i>Evaluación
+            </button>
+            <button type="button" @click="currentTab = 'archivos'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'archivos'}" class="text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-upload mr-2"></i>Archivos
+            </button>
+        </nav>
+
+        <!-- Contenido de Pestañas -->
+        <div x-show="currentTab === 'fechas'" class="space-y-6 animate-fade-in">
+    <div class="space-y-4">
+        <template x-for="(fecha, index) in fechasImportantes" :key="index">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-700/50 rounded-lg">
                 <div>
-                    <label for="titulo" class="block text-sm font-medium text-gray-300">Título</label>
-                    <input type="text" name="titulo" id="titulo" value="{{ old('titulo') }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
+                    <label :for="'fecha_titulo_' + index" class="block text-sm font-medium text-gray-300">Título del Evento</label>
+                    <input type="text" :name="'fechas_importantes[' + index + '][titulo]'" :id="'fecha_titulo_' + index" x-model="fecha.titulo" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
+                </div>
+                <div>
+                    <label :for="'fecha_fecha_' + index" class="block text-sm font-medium text-gray-300">Fecha</label>
+                    <input type="date" :name="'fechas_importantes[' + index + '][fecha]'" :id="'fecha_fecha_' + index" x-model="fecha.fecha" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
+                </div>
+                <div class="md:col-span-2 flex justify-end">
+                    <button type="button" @click="removeFecha(index)" class="inline-flex items-center px-3 py-1 bg-red-600/20 text-red-400 rounded-lg text-sm hover:bg-red-600/30 transition-all">
+                        <i class="fas fa-trash mr-2"></i> Eliminar
+                    </button>
+                </div>
+            </div>
+        </template>
+
+        <div class="flex justify-center">
+            <button type="button" @click="addFecha()" class="inline-flex items-center px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg text-sm hover:bg-blue-600/30 transition-all">
+                <i class="fas fa-plus mr-2"></i> Agregar Fecha Importante
+            </button>
+        </div>
+    </div>
+</div>
+
+<div x-show="currentTab === 'general'" class="space-y-6 animate-fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="nombre_evento" class="block text-sm font-medium text-gray-300">Nombre del Evento</label>
+                    <input type="text" name="nombre_evento" id="nombre_evento" value="{{ old('nombre_evento') }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
+                    @error('nombre_evento')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div>
-                    <label for="descripcion" class="block text-sm font-medium text-gray-300">Descripción</label>
-                    <textarea name="descripcion" id="descripcion" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>{{ old('descripcion') }}</textarea>
-                </div>
-
-                <div>
-                    <label for="evento_type" class="block text-sm font-medium text-gray-300">Tipo de Evento</label>
-                    <select name="evento_type" id="evento_type" x-model="eventoType" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
-                        <option value="">-- Selecciona un tipo --</option>
-                        <option value="congreso">Congreso</option>
-                        <option value="curso">Curso</option>
-                        <option value="taller">Taller</option>
-                        <option value="concurso">Concurso</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label for="evento_id" class="block text-sm font-medium text-gray-300">Selecciona el evento</label>
-                    <select name="evento_id" id="evento_id" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
-                        <option value="">-- Selecciona un evento --</option>
-                        
-                        <template x-if="eventoType === 'curso'">
-                            @foreach ($cursos as $curso)
-                                <option value="{{ $curso->id }}">{{ $curso->titulo }}</option>
-                            @endforeach
-                        </template>
-                        
-                        <template x-if="eventoType === 'taller'">
-                            @foreach ($talleres as $taller)
-                                <option value="{{ $taller->id }}">{{ $taller->titulo }}</option>
-                            @endforeach
-                        </template>
-                        
-                        <template x-if="eventoType === 'congreso'">
-                            @foreach ($congresos as $congreso)
-                                <option value="{{ $congreso->id }}">{{ $congreso->nombre }}</option>
-                            @endforeach
-                        </template>
-                        
-                        <template x-if="eventoType === 'concurso'">
-                            @foreach ($concursos as $concurso)
-                                <option value="{{ $concurso->id }}">{{ $concurso->titulo }}</option>
-                            @endforeach
-                        </template>
-                    </select>
+                    <label for="sede" class="block text-sm font-medium text-gray-300">Sede</label>
+                    <input type="text" name="sede" id="sede" value="{{ old('sede') }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
+                    @error('sede')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 
-            <div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label for="imagen" class="block text-sm font-medium text-gray-300">Imagen (opcional)</label>
-                    <input type="file" name="imagen" id="imagen" accept="image/*" class="mt-1 block w-full text-sm text-gray-300
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded-md file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-blue-500 file:text-white
-                        hover:file:bg-blue-600">
+                    <label for="dirigido_a" class="block text-sm font-medium text-gray-300">Dirigido a</label>
+                    <input type="text" name="dirigido_a" id="dirigido_a" value="{{ old('dirigido_a', 'Estudiantes de nivel licenciatura') }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">
+                    @error('dirigido_a')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div>
-                    <label for="archivo_pdf" class="block text-sm font-medium text-gray-300">Archivo PDF (opcional)</label>
-                    <input type="file" name="archivo_pdf" id="archivo_pdf" accept=".pdf" class="mt-1 block w-full text-sm text-gray-300
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded-md file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-blue-500 file:text-white
-                        hover:file:bg-blue-600">
+                    <label for="contacto_email" class="block text-sm font-medium text-gray-300">Email de Contacto</label>
+                    <input type="email" name="contacto_email" id="contacto_email" value="{{ old('contacto_email') }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">
+                    @error('contacto_email')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="max_integrantes" class="block text-sm font-medium text-gray-300">Máximo de Integrantes</label>
+                    <input type="number" name="max_integrantes" id="max_integrantes" value="{{ old('max_integrantes', 5) }}" min="1" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">
+                    @error('max_integrantes')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
-                <div class="border-t border-gray-600 pt-4">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-medium text-white">Fechas Importantes</h3>
-                        <button type="button" @click="addFecha" class="inline-flex items-center px-3 py-1 bg-blue-600 rounded-md text-xs font-medium text-white hover:bg-blue-700 transition-colors duration-150">
-                            <i class="fas fa-plus mr-1"></i> Agregar Fecha
-                        </button>
-                    </div>
-
-                    <template x-for="(fecha, index) in fechasImportantes" :key="index">
-                        <div class="flex items-center space-x-4 mb-4">
-                            <div class="flex-1">
-                                <input type="text" :name="`fechas_importantes[${index}][titulo]`" x-model="fecha.titulo" placeholder="Título del evento" class="block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
-                            </div>
-                            <div class="flex-1">
-                                <input type="date" :name="`fechas_importantes[${index}][fecha]`" x-model="fecha.fecha" class="block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
-                            </div>
-                            <button type="button" @click="removeFecha(index)" class="text-red-400 hover:text-red-500" :disabled="fechasImportantes.length === 1">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </template>
+                <div>
+                    <label for="asesor_requerido" class="block text-sm font-medium text-gray-300">¿Requiere Asesor?</label>
+                    <select name="asesor_requerido" id="asesor_requerido" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">
+                        <option value="1" {{ old('asesor_requerido', true) ? 'selected' : '' }}>Sí</option>
+                        <option value="0" {{ old('asesor_requerido') === '0' ? 'selected' : '' }}>No</option>
+                    </select>
+                    @error('asesor_requerido')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
         </div>
 
-        <div class="flex justify-end pt-6 border-t border-gray-600">
-            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
-                <i class="fas fa-save mr-2"></i> Guardar Convocatoria
+        <div x-show="currentTab === 'requisitos'" class="space-y-6 animate-fade-in">
+            <div>
+                <label for="requisitos" class="block text-sm font-medium text-gray-300">Requisitos</label>
+                <textarea name="requisitos" id="requisitos" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>{{ old('requisitos') }}</textarea>
+                @error('requisitos')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div>
+                <label for="etapas_mision" class="block text-sm font-medium text-gray-300">Etapas de la Misión</label>
+                <textarea name="etapas_mision" id="etapas_mision" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>{{ old('etapas_mision') }}</textarea>
+                @error('etapas_mision')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div>
+                <label for="pruebas_requeridas" class="block text-sm font-medium text-gray-300">Pruebas Requeridas</label>
+                <textarea name="pruebas_requeridas" id="pruebas_requeridas" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>{{ old('pruebas_requeridas') }}</textarea>
+                @error('pruebas_requeridas')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+
+        <div x-show="currentTab === 'documentos'" class="space-y-6 animate-fade-in">
+            <div>
+                <label for="documentacion_requerida" class="block text-sm font-medium text-gray-300">Documentación Requerida</label>
+                <input type="text" name="documentacion_requerida" id="documentacion_requerida" value="{{ old('documentacion_requerida', 'PDR, CDR, PFR') }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">
+                @error('documentacion_requerida')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+
+        <div x-show="currentTab === 'evaluacion'" class="space-y-6 animate-fade-in">
+            <div>
+                <label for="criterios_evaluacion" class="block text-sm font-medium text-gray-300">Criterios de Evaluación</label>
+                <textarea name="criterios_evaluacion" id="criterios_evaluacion" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>{{ old('criterios_evaluacion') }}</textarea>
+                @error('criterios_evaluacion')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div>
+                <label for="premiacion" class="block text-sm font-medium text-gray-300">Premiación</label>
+                <textarea name="premiacion" id="premiacion" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">{{ old('premiacion') }}</textarea>
+                @error('premiacion')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div>
+                <label for="penalizaciones" class="block text-sm font-medium text-gray-300">Penalizaciones</label>
+                <textarea name="penalizaciones" id="penalizaciones" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">{{ old('penalizaciones') }}</textarea>
+                @error('penalizaciones')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+
+        <div x-show="currentTab === 'archivos'" class="space-y-6 animate-fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div>
+                        <label for="archivo_pdf" class="block text-sm font-medium text-gray-300">Archivo PDF General</label>
+                        <div class="mt-1 flex justify-center px-6 py-4 border-2 border-dashed rounded-md border-gray-600 hover:border-blue-500 transition-all cursor-pointer">
+                            <div class="space-y-1 text-center">
+                                <i class="fas fa-file-pdf text-4xl text-gray-400"></i>
+                                <div class="flex text-sm text-gray-400">
+                                    <label for="archivo_pdf" class="relative cursor-pointer rounded-md font-medium text-blue-500 hover:text-blue-400 focus-within:outline-none">
+                                        <span>Subir archivo</span>
+                                        <input type="file" name="archivo_pdf" id="archivo_pdf" accept=".pdf" class="sr-only">
+                                    </label>
+                                    <p class="pl-1">o arrastrar y soltar</p>
+                                </div>
+                                <p class="text-xs text-gray-400">PDF hasta 10MB</p>
+                            </div>
+                        </div>
+                        @error('archivo_pdf')
+                            <span class="text-red-400 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="imagen_portada" class="block text-sm font-medium text-gray-300">Imagen de Portada</label>
+                        <div class="mt-1 flex justify-center px-6 py-4 border-2 border-dashed rounded-md border-gray-600 hover:border-blue-500 transition-all cursor-pointer relative">
+                            <div class="space-y-1 text-center" x-data="{ imageUrl: '' }" x-on:change="imageUrl = URL.createObjectURL($event.target.files[0])">
+                                <template x-if="!imageUrl">
+                                    <div>
+                                        <i class="fas fa-image text-4xl text-gray-400"></i>
+                                        <div class="flex text-sm text-gray-400">
+                                            <label for="imagen_portada" class="relative cursor-pointer rounded-md font-medium text-blue-500 hover:text-blue-400 focus-within:outline-none">
+                                                <span>Subir imagen</span>
+                                                <input type="file" name="imagen_portada" id="imagen_portada" accept="image/*" class="sr-only">
+                                            </label>
+                                            <p class="pl-1">o arrastrar y soltar</p>
+                                        </div>
+                                        <p class="text-xs text-gray-400">PNG, JPG, GIF hasta 10MB</p>
+                                    </div>
+                                </template>
+                                <template x-if="imageUrl">
+                                    <div>
+                                        <img :src="imageUrl" class="mx-auto h-32 w-auto object-cover rounded-lg">
+                                        <button type="button" @click="imageUrl = ''" class="mt-2 text-sm text-red-500 hover:text-red-400">Eliminar</button>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        @error('imagen_portada')
+                            <span class="text-red-400 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label for="archivo_pdr" class="block text-sm font-medium text-gray-300">Archivo PDR</label>
+                    <input type="file" name="archivo_pdr" id="archivo_pdr" accept=".pdf,.doc,.docx" class="mt-1 block w-full text-sm text-gray-300
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-500 file:text-white
+                        hover:file:bg-blue-600">
+                    @error('archivo_pdr')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="archivo_cdr" class="block text-sm font-medium text-gray-300">Archivo CDR</label>
+                    <input type="file" name="archivo_cdr" id="archivo_cdr" accept=".pdf,.doc,.docx" class="mt-1 block w-full text-sm text-gray-300
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-500 file:text-white
+                        hover:file:bg-blue-600">
+                    @error('archivo_cdr')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="archivo_pfr" class="block text-sm font-medium text-gray-300">Archivo PFR</label>
+                    <input type="file" name="archivo_pfr" id="archivo_pfr" accept=".pdf,.doc,.docx" class="mt-1 block w-full text-sm text-gray-300
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-500 file:text-white
+                        hover:file:bg-blue-600">
+                    @error('archivo_pfr')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de Navegación -->
+        <div class="flex justify-between mt-8">
+            <button type="button" @click="currentTab = ['general', 'requisitos', 'documentos', 'evaluacion', 'archivos'][Math.max(0, ['general', 'requisitos', 'documentos', 'evaluacion', 'archivos'].indexOf(currentTab) - 1)]" class="inline-flex items-center px-4 py-2 bg-gray-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 transition-all duration-150" x-show="currentTab !== 'general'">
+                <i class="fas fa-arrow-left mr-2"></i> Anterior
             </button>
+            <template x-if="currentTab !== 'archivos'">
+                <button type="button" @click="currentTab = ['general', 'requisitos', 'documentos', 'evaluacion', 'archivos'][['general', 'requisitos', 'documentos', 'evaluacion', 'archivos'].indexOf(currentTab) + 1]; tabs[currentTab] = true; updateProgress()" class="inline-flex items-center px-4 py-2 bg-blue-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 transition-all duration-150 ml-auto">
+                    Siguiente <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </template>
+            <template x-if="currentTab === 'archivos'">
+                <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 transition-all duration-150 ml-auto">
+                    <i class="fas fa-save mr-2"></i> Guardar Convocatoria
+                </button>
+            </template>
         </div>
     </form>
 </div>
 @endsection
+

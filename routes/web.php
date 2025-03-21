@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\PonentesController;
 use App\Http\Controllers\Admin\TemaController;
 use App\Http\Controllers\Admin\TallerController;
 use App\Http\Controllers\Admin\ConcursoController;
+use App\Http\Controllers\Admin\ConvocatoriaConcursoController;
 
 Route::controller(PublicController::class)->group(function () {
     Route::get('/', 'inicio')->name('inicio');
@@ -35,6 +36,15 @@ Route::get('/dashboard', function () {
 // Grupo de rutas para Administradores
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    
+    // Rutas para la gestión de convocatorias
+    Route::get('/admin/convocatorias', [ConvocatoriaConcursoController::class, 'index'])->name('admin.convocatorias.index');
+    Route::get('/admin/convocatorias/create', [ConvocatoriaConcursoController::class, 'create'])->name('admin.convocatorias.create');
+    Route::post('/admin/convocatorias', [ConvocatoriaConcursoController::class, 'store'])->name('admin.convocatorias.store');
+    Route::get('/admin/convocatorias/{convocatoria}', [ConvocatoriaConcursoController::class, 'show'])->name('admin.convocatorias.show');
+    Route::get('/admin/convocatorias/{convocatoria}/edit', [ConvocatoriaConcursoController::class, 'edit'])->name('admin.convocatorias.edit');
+    Route::put('/admin/convocatorias/{convocatoria}', [ConvocatoriaConcursoController::class, 'update'])->name('admin.convocatorias.update');
+    Route::delete('/admin/convocatorias/{convocatoria}', [ConvocatoriaConcursoController::class, 'destroy'])->name('admin.convocatorias.destroy');
     
     // Rutas para la gestión de usuarios
     Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
