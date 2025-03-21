@@ -7,7 +7,8 @@
 <section class="relative bg-gradient-to-br from-cosmic-300 via-space-700 to-cosmic-900 py-24 text-center" data-aos="fade-down">
     <div class="container mx-auto px-6">
         <h1 class="text-5xl font-extrabold text-white drop-shadow-lg">Contáctanos</h1>
-        <p class="text-lg text-gray-200 mt-4 max-w-2xl mx-auto">Estamos aquí para responder a cualquier pregunta que tengas. ¡Envíanos un mensaje y te responderemos lo antes posible!</p>
+        <p class="text-lg text-gray-200 mt-4 max-w-2xl mx-auto">Estamos aquí para responder a cualquier pregunta que tengas</p>
+        <p class="text-lg text-gray-200 mt-2 max-w-2xl mx-auto">¡Envíanos un mensaje y te responderemos lo antes posible!</p>
     </div>
 </section>
 

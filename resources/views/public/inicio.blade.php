@@ -17,7 +17,7 @@
                 Mediante la Innovación
             </h1>
             <p class="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-                Consorcio internacional líder en ingeniería aeroespacial avanzada y desarrollo de tecnologías espaciales sostenibles.
+                Consorcio internacional líder en ingeniería aeroespacial avanzada y desarrollo de tecnologías espaciales sostenibles
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
                 <a href="#inscripcion" class="relative px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-white bg-secondary hover:bg-cyan-400 transition-all duration-300 shadow-lg flex items-center gap-2">
@@ -74,7 +74,7 @@
                 </h2>
             </div>
             <p class="text-base sm:text-lg text-tech-300 max-w-2xl mx-auto">
-                Descubre nuestros contenidos destacados y sumérgete en el universo.
+                Descubre nuestros contenidos destacados y sumérgete en el universo
             </p>
         </div>
 
@@ -96,9 +96,9 @@
         <div class="flex overflow-x-auto pb-6 space-x-4 scrollbar-hide" id="video-carousel">
             @foreach([
                 ['id' => '3g8i7fFp5bc', 'title' => 'Long March-6A launches SpaceSail Polar Orbit 01'],
-                ['id' => 'gmA1Gr_JNio', 'title' => 'Una vista de satelites orbitando desde un órbita baja.'],
+                ['id' => 'gmA1Gr_JNio', 'title' => 'Una vista de satelites orbitando desde un órbita baja'],
                 ['id' => 'px31OjiqoNM', 'title' => 'Comunicaciones Satelitales Avanzadas'],
-                ['id' => '-BGXRGoEnAc', 'title' => 'Diseño de Satélites a Medida'],
+                ['id' => '5voQfQOTem8', 'title' => '¿Cómo construir un satélite?'],
             ] as $video)
             <div 
                 class="flex-shrink-0 w-52 sm:w-64 cursor-pointer video-carousel-item transition-all duration-300 border border-tech-500 rounded-lg overflow-hidden bg-tech-700 hover:scale-105"
@@ -192,12 +192,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             @php
                 $imagenes = [
-                    ["nombre" => "Lanzamiento Histórico", "archivo" => "spacex-rocket.jpg", "descripcion" => "El despegue que cambió la historia."],
-                    ["nombre" => "Telescopio James Webb", "archivo" => "nebulosa-morada.jpg", "descripcion" => "Explorando el universo con nuevas imágenes."],
-                    ["nombre" => "Satélite en órbita", "archivo" => "satelite.jpg", "descripcion" => "Tecnología avanzada en el espacio."],
-                    ["nombre" => "La Tierra desde el espacio", "archivo" => "earth.jpg", "descripcion" => "Vista única de nuestro planeta."],
-                    ["nombre" => "Anillos de Saturno", "archivo" => "saturno.jpg", "descripcion" => "Impresionante visión del cosmos."],
-                    ["nombre" => "El sol", "archivo" => "sol.jpg", "descripcion" => "Una maravilla del universo profundo."],
+                    ["nombre" => "Lanzamiento Histórico", "archivo" => "spacex-rocket.jpg", "descripcion" => "El despegue que cambió la historia"],
+                    ["nombre" => "Telescopio James Webb", "archivo" => "nebulosa-morada.jpg", "descripcion" => "Explorando el universo con nuevas imágenes"],
+                    ["nombre" => "Satélite en órbita", "archivo" => "satelite.jpg", "descripcion" => "Tecnología avanzada en el espacio"],
+                    ["nombre" => "La Tierra desde el espacio", "archivo" => "earth.jpg", "descripcion" => "Vista única de nuestro planeta"],
+                    ["nombre" => "Anillos de Saturno", "archivo" => "saturno.jpg", "descripcion" => "Impresionante visión del cosmos"],
+                    ["nombre" => "El sol", "archivo" => "sol.jpg", "descripcion" => "Una maravilla del universo profundo"],
                 ];
             @endphp
 
@@ -359,7 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <p class="text-tech-100 line-clamp-3">
                                 {{ $noticia['descripcion'] }}
                             </p>
-                            <a href="#" class="inline-flex items-center mt-4 text-accent-500 hover:text-accent-300 font-semibold transition-all duration-300">
+                            <a href="#" class="inline-flex items-center mt-4 text-primary-500 hover:text-primary-300 font-semibold transition-all duration-300">
                                 Leer más 
                             </a>
                         </div>
@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <p class="text-tech-100 line-clamp-3">
                                 {{ $noticia['descripcion'] }}
                             </p>
-                            <a href="#" class="inline-flex items-center mt-4 text-primary-500 hover:text-primary-300 font-semibold transition-all duration-300">
+                            <a href="#" class="inline-flex items-center mt-4 text-blue-500 hover:text-blue-300 font-semibold transition-all duration-300">
                                 Leer más 
                             </a>
                         </div>
@@ -477,10 +477,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <ul class="space-y-8 border-l-4 border-secondary/80 pl-8">
                 @foreach([
-                    ['title' => 'Planificación Estratégica', 'text' => 'Diseñamos estrategias para alcanzar tus metas espaciales.'],
-                    ['title' => 'Innovación Tecnológica', 'text' => 'Te ayudamos a implementar tecnología de vanguardia en tus proyectos.'],
-                    ['title' => 'Formación Profesional', 'text' => 'Capacitamos a tu equipo en las últimas tendencias en ingeniería espacial.'],
-                    ['title' => 'Colaboración Internacional', 'text' => 'Facilitamos alianzas estratégicas a nivel global para potenciar tu proyecto.']
+                    ['title' => 'Planificación Estratégica', 'text' => 'Diseñamos estrategias para alcanzar tus metas espaciales'],
+                    ['title' => 'Innovación Tecnológica', 'text' => 'Te ayudamos a implementar tecnología de vanguardia en tus proyectos'],
+                    ['title' => 'Formación Profesional', 'text' => 'Capacitamos a tu equipo en las últimas tendencias en ingeniería espacial'],
+                    ['title' => 'Colaboración Internacional', 'text' => 'Facilitamos alianzas estratégicas a nivel global para potenciar tu proyecto']
                 ] as $index => $item)
                 <li class="relative pl-4 group" data-aos="fade-up" data-aos-delay="{{ 300 + ($index * 100) }}">
                     <div class="absolute -left-4 top-0 h-full w-1 bg-secondary-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
