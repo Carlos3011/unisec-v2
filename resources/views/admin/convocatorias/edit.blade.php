@@ -218,21 +218,32 @@
         </div>
 
         <div x-show="currentTab === 'archivos'" class="space-y-6 animate-fade-in">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="archivo_pdf" class="block text-sm font-medium text-gray-300">Archivo PDF</label>
-                    <input type="file" name="archivo_pdf" id="archivo_pdf" accept=".pdf" class="mt-1 block w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500/20 file:text-blue-400 hover:file:bg-blue-500/30 file:cursor-pointer">
-                    @error('archivo_pdf')
-                        <span class="text-red-400 text-sm">{{ $message }}</span>
-                    @enderror
-                    @if($convocatoria->archivo_pdf)
-                        <div class="mt-2 text-sm text-gray-400">Archivo actual: {{ basename($convocatoria->archivo_pdf) }}</div>
-                    @endif
-                </div>
-
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                     <label for="imagen_portada" class="block text-sm font-medium text-gray-300">Imagen de Portada</label>
-                    <input type="file" name="imagen_portada" id="imagen_portada" accept="image/*" class="mt-1 block w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500/20 file:text-blue-400 hover:file:bg-blue-500/30 file:cursor-pointer">
+                    <div class="mt-1 flex justify-center px-6 py-4 border-2 border-dashed rounded-md border-gray-600 hover:border-blue-500 transition-all cursor-pointer relative">
+                        <div class="space-y-1 text-center" x-data="{ imageUrl: '' }" x-on:change="imageUrl = URL.createObjectURL($event.target.files[0])">
+                            <template x-if="!imageUrl">
+                                <div>
+                                    <i class="fas fa-image text-4xl text-gray-400"></i>
+                                    <div class="flex text-sm text-gray-400">
+                                        <label for="imagen_portada" class="relative cursor-pointer rounded-md font-medium text-blue-500 hover:text-blue-400 focus-within:outline-none">
+                                            <span>Subir imagen</span>
+                                            <input type="file" name="imagen_portada" id="imagen_portada" accept="image/*" class="sr-only">
+                                        </label>
+                                        <p class="pl-1">o arrastrar y soltar</p>
+                                    </div>
+                                    <p class="text-xs text-gray-400">PNG, JPG, GIF hasta 10MB</p>
+                                </div>
+                            </template>
+                            <template x-if="imageUrl">
+                                <div>
+                                    <img :src="imageUrl" class="mx-auto h-32 w-auto object-cover rounded-lg">
+                                    <button type="button" @click="imageUrl = ''" class="mt-2 text-sm text-red-500 hover:text-red-400">Eliminar</button>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
                     @error('imagen_portada')
                         <span class="text-red-400 text-sm">{{ $message }}</span>
                     @enderror
@@ -242,8 +253,29 @@
                 </div>
 
                 <div>
+                    <label for="archivo_convocatoria" class="block text-sm font-medium text-gray-300">Archivo Convocatoria</label>
+                    <input type="file" name="archivo_convocatoria" id="archivo_convocatoria" accept=".pdf" class="mt-1 block w-full text-sm text-gray-300
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-500 file:text-white
+                        hover:file:bg-blue-600">
+                    @error('archivo_convocatoria')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                    @if($convocatoria->archivo_convocatoria)
+                        <div class="mt-2 text-sm text-gray-400">Archivo actual: {{ basename($convocatoria->archivo_convocatoria) }}</div>
+                    @endif
+                </div>
+
+                <div>
                     <label for="archivo_pdr" class="block text-sm font-medium text-gray-300">Archivo PDR</label>
-                    <input type="file" name="archivo_pdr" id="archivo_pdr" class="mt-1 block w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500/20 file:text-blue-400 hover:file:bg-blue-500/30 file:cursor-pointer">
+                    <input type="file" name="archivo_pdr" id="archivo_pdr" class="mt-1 block w-full text-sm text-gray-300
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-500 file:text-white
+                        hover:file:bg-blue-600">
                     @error('archivo_pdr')
                         <span class="text-red-400 text-sm">{{ $message }}</span>
                     @enderror
@@ -254,7 +286,12 @@
 
                 <div>
                     <label for="archivo_cdr" class="block text-sm font-medium text-gray-300">Archivo CDR</label>
-                    <input type="file" name="archivo_cdr" id="archivo_cdr" class="mt-1 block w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500/20 file:text-blue-400 hover:file:bg-blue-500/30 file:cursor-pointer">
+                    <input type="file" name="archivo_cdr" id="archivo_cdr" class="mt-1 block w-full text-sm text-gray-300
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-500 file:text-white
+                        hover:file:bg-blue-600">
                     @error('archivo_cdr')
                         <span class="text-red-400 text-sm">{{ $message }}</span>
                     @enderror
@@ -265,12 +302,33 @@
 
                 <div>
                     <label for="archivo_pfr" class="block text-sm font-medium text-gray-300">Archivo PFR</label>
-                    <input type="file" name="archivo_pfr" id="archivo_pfr" class="mt-1 block w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500/20 file:text-blue-400 hover:file:bg-blue-500/30 file:cursor-pointer">
+                    <input type="file" name="archivo_pfr" id="archivo_pfr" class="mt-1 block w-full text-sm text-gray-300
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-500 file:text-white
+                        hover:file:bg-blue-600">
                     @error('archivo_pfr')
                         <span class="text-red-400 text-sm">{{ $message }}</span>
                     @enderror
                     @if($convocatoria->archivo_pfr)
                         <div class="mt-2 text-sm text-gray-400">Archivo actual: {{ basename($convocatoria->archivo_pfr) }}</div>
+                    @endif
+                </div>
+
+                <div>
+                    <label for="archivo_articulo" class="block text-sm font-medium text-gray-300">Archivo Articulo</label>
+                    <input type="file" name="archivo_articulo" id="archivo_articulo" class="mt-1 block w-full text-sm text-gray-300
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-500 file:text-white
+                        hover:file:bg-blue-600">
+                    @error('archivo_articulo')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                    @if($convocatoria->archivo_articulo)
+                        <div class="mt-2 text-sm text-gray-400">Archivo actual: {{ basename($convocatoria->archivo_articulo) }}</div>
                     @endif
                 </div>
             </div>

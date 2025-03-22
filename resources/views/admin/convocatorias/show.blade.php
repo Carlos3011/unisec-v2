@@ -142,8 +142,8 @@
             <i class="fas fa-file-alt mr-2 text-blue-400"></i>Documentos
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            @if($convocatoria->archivo_pdf)
-                <a href="{{ Storage::url($convocatoria->archivo_pdf) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
+            @if($convocatoria->archivo_convocatoria)
+                <a href="{{ Storage::url($convocatoria->archivo_convocatoria) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
                     <i class="fas fa-file-pdf text-red-400 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
                     <span class="text-white">Documento General PDF</span>
                 </a>
@@ -164,6 +164,12 @@
                 <a href="{{ Storage::url($convocatoria->archivo_pfr) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
                     <i class="fas fa-file text-purple-400 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
                     <span class="text-white">Documento PFR</span>
+                </a>
+            @endif
+            @if($convocatoria->archivo_articulo)
+                <a href="{{ Storage::url($convocatoria->archivo_articulo) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
+                    <i class="fas fa-file text-yellow-400 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-white">Documento Articulo</span>
                 </a>
             @endif
         </div>
