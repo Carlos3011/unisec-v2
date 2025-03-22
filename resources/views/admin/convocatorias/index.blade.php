@@ -5,10 +5,12 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 space-y-4 md:space-y-0">
         <h1 class="text-2xl font-light text-white">Gestión de Convocatorias</h1>
         <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
-            <div class="relative w-full md:w-64">
-                <input x-model="search" type="text" placeholder="Buscar..." class="w-full h-10 pl-10 pr-4 rounded-lg bg-gray-800 border-0 text-gray-300 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 transition-all duration-200">
-                <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
-            </div>
+            <form method="GET" action="{{ route('admin.convocatorias.index') }}" class="relative w-full md:w-64">
+                <input type="text" name="search" placeholder="Buscar..." value="{{ request('search') }}" class="w-full h-10 pl-10 pr-4 rounded-lg bg-gray-800 border-0 text-gray-300 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 transition-all duration-200">
+                <button type="submit" class="absolute left-3 top-3 text-gray-500">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
             <a href="{{ route('admin.convocatorias.create') }}" class="flex items-center justify-center h-10 px-4 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all duration-200">
                 <i class="fas fa-plus text-sm mr-2"></i>Nueva Convocatoria
             </a>
@@ -30,11 +32,11 @@
     <div class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($convocatorias as $convocatoria)
-                <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg overflow-hidden hover:ring-2 transition-all duration-300 shadow-xl border-l-4 border-blue-500/50">
+                <div class="bg-gradient-to-br from-gray-800 to-blue-900 rounded-lg overflow-hidden hover:ring-2 transition-all duration-300 shadow-xl border-l-4 border-blue-500/50">
                     <div class="p-6 space-y-4">
                         <div class="flex items-start justify-between">
                             <h3 class="text-lg font-medium text-white">{{ $convocatoria->nombre_evento }}</h3>
-                            <span class="px-3 py-1 text-xs font-medium rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 shadow-lg">
+                            <span class="px-3 py-1 text-xs font-medium rounded-full bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 shadow-lg">
                                 <i class="fas fa-trophy mr-1"></i>
                                 Concurso
                             </span>
@@ -73,8 +75,13 @@
             @empty
                 <div class="col-span-full p-8 text-center">
                     <i class="fas fa-folder-open text-4xl text-gray-600 mb-4"></i>
-                    <p class="text-gray-400">No hay convocatorias registradas</p>
-                    <a href="{{ route('admin.convocatorias.create') }}" class="inline-block mt-4 text-blue-400 hover:text-blue-300">Crear nueva convocatoria</a>
+                    @if(request('search'))
+                        <p class="text-gray-400">No se encontraron convocatorias con "{{ request('search') }}"</p>
+                        <a href="{{ route('admin.convocatorias.index') }}" class="inline-block mt-4 text-blue-400 hover:text-blue-300">Ver todas las convocatorias</a>
+                    @else
+                        <p class="text-gray-400">No hay convocatorias registradas</p>
+                        <a href="{{ route('admin.convocatorias.create') }}" class="inline-block mt-4 text-blue-400 hover:text-blue-300">Crear nueva convocatoria</a>
+                    @endif
                 </div>
             @endforelse
         </div>

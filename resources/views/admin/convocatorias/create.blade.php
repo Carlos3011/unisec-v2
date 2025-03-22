@@ -225,40 +225,6 @@
         </div>
 
         <div x-show="currentTab === 'archivos'" class="space-y-6 animate-fade-in">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-4">
-                    <div>
-                        <label for="imagen_portada" class="block text-sm font-medium text-gray-300">Imagen de Portada</label>
-                        <div class="mt-1 flex justify-center px-6 py-4 border-2 border-dashed rounded-md border-gray-600 hover:border-blue-500 transition-all cursor-pointer relative">
-                            <div class="space-y-1 text-center" x-data="{ imageUrl: '' }" x-on:change="imageUrl = URL.createObjectURL($event.target.files[0])">
-                                <template x-if="!imageUrl">
-                                    <div>
-                                        <i class="fas fa-image text-4xl text-gray-400"></i>
-                                        <div class="flex text-sm text-gray-400">
-                                            <label for="imagen_portada" class="relative cursor-pointer rounded-md font-medium text-blue-500 hover:text-blue-400 focus-within:outline-none">
-                                                <span>Subir imagen</span>
-                                                <input type="file" name="imagen_portada" id="imagen_portada" accept="image/*" class="sr-only">
-                                            </label>
-                                            <p class="pl-1">o arrastrar y soltar</p>
-                                        </div>
-                                        <p class="text-xs text-gray-400">PNG, JPG, GIF hasta 10MB</p>
-                                    </div>
-                                </template>
-                                <template x-if="imageUrl">
-                                    <div>
-                                        <img :src="imageUrl" class="mx-auto h-32 w-auto object-cover rounded-lg">
-                                        <button type="button" @click="imageUrl = ''" class="mt-2 text-sm text-red-500 hover:text-red-400">Eliminar</button>
-                                    </div>
-                                </template>
-                            </div>
-                        </div>
-                        @error('imagen_portada')
-                            <span class="text-red-400 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                     <label for="archivo_convocatoria" class="block text-sm font-medium text-gray-300">Archivo Convocatoria</label>
@@ -281,6 +247,19 @@
                         file:bg-blue-500 file:text-white
                         hover:file:bg-blue-600">
                     @error('archivo_articulo')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="imagen_portada" class="block text-sm font-medium text-gray-300">Imagen Convocatoria</label>
+                    <input type="file" name="imagen_portada" id="imagen_portada" accept="image/*" class="mt-1 block w-full text-sm text-gray-300
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-500 file:text-white
+                        hover:file:bg-blue-600">
+                    @error('imagen_portada')
                         <span class="text-red-400 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
@@ -330,11 +309,11 @@
 
         <!-- Botones de Navegación -->
         <div class="flex justify-between mt-8">
-            <button type="button" @click="currentTab = ['general', 'requisitos', 'documentos', 'evaluacion', 'archivos'][Math.max(0, ['general', 'requisitos', 'documentos', 'evaluacion', 'archivos'].indexOf(currentTab) - 1)]" class="inline-flex items-center px-4 py-2 bg-gray-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 transition-all duration-150" x-show="currentTab !== 'general'">
+            <button type="button" @click="currentTab = ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'][Math.max(0, ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'].indexOf(currentTab) - 1)]" class="inline-flex items-center px-4 py-2 bg-gray-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 transition-all duration-150" x-show="currentTab !== 'general'">
                 <i class="fas fa-arrow-left mr-2"></i> Anterior
             </button>
             <template x-if="currentTab !== 'archivos'">
-                <button type="button" @click="currentTab = ['general', 'requisitos', 'documentos', 'evaluacion', 'archivos'][['general', 'requisitos', 'documentos', 'evaluacion', 'archivos'].indexOf(currentTab) + 1]; tabs[currentTab] = true; updateProgress()" class="inline-flex items-center px-4 py-2 bg-blue-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 transition-all duration-150 ml-auto">
+                <button type="button" @click="currentTab = ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'][['general', 'fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'].indexOf(currentTab) + 1]; tabs[currentTab] = true; updateProgress()" class="inline-flex items-center px-4 py-2 bg-blue-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 transition-all duration-150 ml-auto">
                     Siguiente <i class="fas fa-arrow-right ml-2"></i>
                 </button>
             </template>

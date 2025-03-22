@@ -11,10 +11,18 @@ use Illuminate\Support\Facades\Storage;
 
 class ConvocatoriaConcursoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $convocatorias = ConvocatoriaConcurso::with(['fechasImportantes', 'imagenes'])->latest()->get();
-        return view('admin.convocatorias.index', compact('convocatorias'));
+        $search = $request->input('search');
+        
+        $convocatorias = ConvocatoriaConcurso::with(['fechasImportantes', 'imagenes'])
+            ->when($search, function($query) use ($search) {
+                return $query->where('nombre_evento', 'like', '%' . $search . '%');
+            })
+            ->latest()
+            ->get();
+        
+        return view('admin.convocatorias.index', compact('convocatorias', 'search'));
     }
 
     public function create()
@@ -58,23 +66,30 @@ class ConvocatoriaConcursoController extends Controller
 
         // Manejar archivos
         if ($request->hasFile('archivo_convocatoria')) {
+            Storage::disk('public')->makeDirectory('convocatorias/convocatoria');
             $convocatoria->archivo_convocatoria = $request->file('archivo_convocatoria')->store('convocatorias/convocatoria', 'public');
         }
         if ($request->hasFile('imagen_portada')) {
-            // Asegurar que el directorio existe
-            Storage::disk('public')->makeDirectory('convocatorias/portadas');
-            $convocatoria->imagen_portada = $request->file('imagen_portada')->store('convocatorias/portadas', 'public');
+            Storage::disk('public')->makeDirectory('convocatorias/portada');
+            $path = $request->file('imagen_portada')->store('convocatorias/portada', 'public');
+            if ($path) {
+                $convocatoria->imagen_portada = $path;
+            }
         }
         if ($request->hasFile('archivo_pdr')) {
+            Storage::disk('public')->makeDirectory('convocatorias/pdr');
             $convocatoria->archivo_pdr = $request->file('archivo_pdr')->store('convocatorias/pdr', 'public');
         }
         if ($request->hasFile('archivo_cdr')) {
+            Storage::disk('public')->makeDirectory('convocatorias/cdr');
             $convocatoria->archivo_cdr = $request->file('archivo_cdr')->store('convocatorias/cdr', 'public');
         }
         if ($request->hasFile('archivo_pfr')) {
+            Storage::disk('public')->makeDirectory('convocatorias/pfr');
             $convocatoria->archivo_pfr = $request->file('archivo_pfr')->store('convocatorias/pfr', 'public');
         }
         if ($request->hasFile('archivo_articulo')) {
+            Storage::disk('public')->makeDirectory('convocatorias/articulo');
             $convocatoria->archivo_articulo = $request->file('archivo_articulo')->store('convocatorias/articulo', 'public');
         }
 
@@ -128,7 +143,10 @@ class ConvocatoriaConcursoController extends Controller
             'criterios_evaluacion' => 'required|string',
             'premiacion' => 'nullable|string',
             'penalizaciones' => 'nullable|string',
-            'contacto_email' => 'nullable|email'
+            'contacto_email' => 'nullable|email',
+            'fechas_importantes' => 'required|array',
+            'fechas_importantes.*.titulo' => 'required|string',
+            'fechas_importantes.*.fecha' => 'required|date'
         ]);
 
         $convocatoria->update($request->except([
@@ -137,28 +155,40 @@ class ConvocatoriaConcursoController extends Controller
 
         // Actualizar archivos si se proporcionan nuevos
         if ($request->hasFile('archivo_convocatoria')) {
-            Storage::disk('public')->delete($convocatoria->archivo_convocatoria);
+            if ($convocatoria->archivo_convocatoria && Storage::disk('public')->exists($convocatoria->archivo_convocatoria)) {
+                Storage::disk('public')->delete($convocatoria->archivo_convocatoria);
+            }
             $convocatoria->archivo_convocatoria = $request->file('archivo_convocatoria')->store('convocatorias/pdf', 'public');
         }
         if ($request->hasFile('imagen_portada')) {
-            Storage::disk('public')->delete($convocatoria->imagen_portada);
-            Storage::disk('public')->makeDirectory('convocatorias/portadas');
-            $convocatoria->imagen_portada = $request->file('imagen_portada')->store('convocatorias/portadas', 'public');
+            if ($convocatoria->imagen_portada && Storage::disk('public')->exists($convocatoria->imagen_portada)) {
+                Storage::disk('public')->delete($convocatoria->imagen_portada);
+            }
+            Storage::disk('public')->makeDirectory('convocatorias/portada');
+            $convocatoria->imagen_portada = $request->file('imagen_portada')->store('convocatorias/portada', 'public');
         }
         if ($request->hasFile('archivo_pdr')) {
-            Storage::disk('public')->delete($convocatoria->archivo_pdr);
+            if ($convocatoria->archivo_pdr && Storage::disk('public')->exists($convocatoria->archivo_pdr)) {
+                Storage::disk('public')->delete($convocatoria->archivo_pdr);
+            }
             $convocatoria->archivo_pdr = $request->file('archivo_pdr')->store('convocatorias/pdr', 'public');
         }
         if ($request->hasFile('archivo_cdr')) {
-            Storage::disk('public')->delete($convocatoria->archivo_cdr);
+            if ($convocatoria->archivo_cdr && Storage::disk('public')->exists($convocatoria->archivo_cdr)) {
+                Storage::disk('public')->delete($convocatoria->archivo_cdr);
+            }
             $convocatoria->archivo_cdr = $request->file('archivo_cdr')->store('convocatorias/cdr', 'public');
         }
         if ($request->hasFile('archivo_pfr')) {
-            Storage::disk('public')->delete($convocatoria->archivo_pfr);
+            if ($convocatoria->archivo_pfr && Storage::disk('public')->exists($convocatoria->archivo_pfr)) {
+                Storage::disk('public')->delete($convocatoria->archivo_pfr);
+            }
             $convocatoria->archivo_pfr = $request->file('archivo_pfr')->store('convocatorias/pfr', 'public');
         }
         if ($request->hasFile('archivo_articulo')) {
-            Storage::disk('public')->delete($convocatoria->archivo_articulo);
+            if ($convocatoria->archivo_articulo && Storage::disk('public')->exists($convocatoria->archivo_articulo)) {
+                Storage::disk('public')->delete($convocatoria->archivo_articulo);
+            }
             $convocatoria->archivo_articulo = $request->file('archivo_articulo')->store('convocatorias/articulo', 'public');
         }
 

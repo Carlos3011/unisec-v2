@@ -35,7 +35,7 @@
             const completedTabs = Object.values(this.tabs).filter(Boolean).length;
             this.progress = (completedTabs / Object.keys(this.tabs).length) * 100;
         },
-        fechasImportantes: {{ Js::from($convocatoria->fechasImportantes) }},
+        fechasImportantes: {{ Js::from($convocatoria->fechasImportantes->map(fn($fecha) => ['titulo' => $fecha->titulo, 'fecha' => $fecha->fecha->format('Y-m-d')])) }},
         addFecha() {
             this.fechasImportantes.push({ titulo: '', fecha: '' });
         },
@@ -43,8 +43,8 @@
             if (this.fechasImportantes.length > 1) {
                 this.fechasImportantes.splice(index, 1);
             }
-        }
-    }">
+        }
+    }">
         @csrf
         @method('PUT')
 
@@ -219,37 +219,17 @@
 
         <div x-show="currentTab === 'archivos'" class="space-y-6 animate-fade-in">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                    <label for="imagen_portada" class="block text-sm font-medium text-gray-300">Imagen de Portada</label>
-                    <div class="mt-1 flex justify-center px-6 py-4 border-2 border-dashed rounded-md border-gray-600 hover:border-blue-500 transition-all cursor-pointer relative">
-                        <div class="space-y-1 text-center" x-data="{ imageUrl: '' }" x-on:change="imageUrl = URL.createObjectURL($event.target.files[0])">
-                            <template x-if="!imageUrl">
-                                <div>
-                                    <i class="fas fa-image text-4xl text-gray-400"></i>
-                                    <div class="flex text-sm text-gray-400">
-                                        <label for="imagen_portada" class="relative cursor-pointer rounded-md font-medium text-blue-500 hover:text-blue-400 focus-within:outline-none">
-                                            <span>Subir imagen</span>
-                                            <input type="file" name="imagen_portada" id="imagen_portada" accept="image/*" class="sr-only">
-                                        </label>
-                                        <p class="pl-1">o arrastrar y soltar</p>
-                                    </div>
-                                    <p class="text-xs text-gray-400">PNG, JPG, GIF hasta 10MB</p>
-                                </div>
-                            </template>
-                            <template x-if="imageUrl">
-                                <div>
-                                    <img :src="imageUrl" class="mx-auto h-32 w-auto object-cover rounded-lg">
-                                    <button type="button" @click="imageUrl = ''" class="mt-2 text-sm text-red-500 hover:text-red-400">Eliminar</button>
-                                </div>
-                            </template>
-                        </div>
-                    </div>
+            <div>
+                    <label for="imagen_portada" class="block text-sm font-medium text-gray-300">Imagen Convocatoria</label>
+                    <input type="file" name="imagen_portada" id="imagen_portada" accept="image/*" class="mt-1 block w-full text-sm text-gray-300
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-500 file:text-white
+                        hover:file:bg-blue-600">
                     @error('imagen_portada')
                         <span class="text-red-400 text-sm">{{ $message }}</span>
                     @enderror
-                    @if($convocatoria->imagen_portada)
-                        <div class="mt-2 text-sm text-gray-400">Imagen actual: {{ basename($convocatoria->imagen_portada) }}</div>
-                    @endif
                 </div>
 
                 <div>
@@ -333,11 +313,21 @@
                 </div>
             </div>
         </div>
-
-        <div class="flex justify-end space-x-4 pt-6 border-t border-gray-700">
-            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-500 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-400 active:bg-blue-600 transition-all duration-150">
-                <i class="fas fa-save mr-2"></i> Guardar Cambios
+ <!-- Botones de Navegación -->
+ <div class="flex justify-between mt-8">
+            <button type="button" @click="currentTab = ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'][Math.max(0, ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'].indexOf(currentTab) - 1)]" class="inline-flex items-center px-4 py-2 bg-gray-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 transition-all duration-150" x-show="currentTab !== 'general'">
+                <i class="fas fa-arrow-left mr-2"></i> Anterior
             </button>
+            <template x-if="currentTab !== 'archivos'">
+                <button type="button" @click="currentTab = ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'][['general', 'fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'].indexOf(currentTab) + 1]; tabs[currentTab] = true; updateProgress()" class="inline-flex items-center px-4 py-2 bg-blue-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 transition-all duration-150 ml-auto">
+                    Siguiente <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </template>
+            <template x-if="currentTab === 'archivos'">
+                <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 transition-all duration-150 ml-auto">
+                    <i class="fas fa-save mr-2"></i> Guardar Cambios
+                </button>
+            </template>
         </div>
     </form>
 </div>
