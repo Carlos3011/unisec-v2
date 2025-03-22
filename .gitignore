@@ -21,3 +21,6 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# Ignore PDF files in convocatorias directory and subdirectories
+/storage/app/public/convocatorias/**/*.pdf
