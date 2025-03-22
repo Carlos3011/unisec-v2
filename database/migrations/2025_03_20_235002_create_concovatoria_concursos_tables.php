@@ -26,12 +26,12 @@ return new class extends Migration
             $table->text('premiacion')->nullable();
             $table->text('penalizaciones')->nullable();
             $table->string('contacto_email')->nullable();
-            $table->string('archivo_pdf')->nullable(); // Para el archivo PDF general
+            $table->string('archivo_convocatoria')->nullable(); // Para el archivo PDF general
             $table->string('imagen_portada')->nullable();
             $table->string('archivo_pdr')->nullable();  // Campo para el archivo PDR
             $table->string('archivo_cdr')->nullable();  // Campo para el archivo CDR
             $table->string('archivo_pfr')->nullable();  // Campo para el archivo PFR
-            $table->string('articulos_requeridos')->nullable(); // Campo para los artículos requeridos
+            $table->string('archivo_articulo')->nullable(); // Campo para los artículos requeridos
             $table->timestamps();
         });
 

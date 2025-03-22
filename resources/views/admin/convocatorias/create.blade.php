@@ -228,26 +228,6 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <div>
-                        <label for="archivo_pdf" class="block text-sm font-medium text-gray-300">Archivo PDF General</label>
-                        <div class="mt-1 flex justify-center px-6 py-4 border-2 border-dashed rounded-md border-gray-600 hover:border-blue-500 transition-all cursor-pointer">
-                            <div class="space-y-1 text-center">
-                                <i class="fas fa-file-pdf text-4xl text-gray-400"></i>
-                                <div class="flex text-sm text-gray-400">
-                                    <label for="archivo_pdf" class="relative cursor-pointer rounded-md font-medium text-blue-500 hover:text-blue-400 focus-within:outline-none">
-                                        <span>Subir archivo</span>
-                                        <input type="file" name="archivo_pdf" id="archivo_pdf" accept=".pdf" class="sr-only">
-                                    </label>
-                                    <p class="pl-1">o arrastrar y soltar</p>
-                                </div>
-                                <p class="text-xs text-gray-400">PDF hasta 10MB</p>
-                            </div>
-                        </div>
-                        @error('archivo_pdf')
-                            <span class="text-red-400 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div>
                         <label for="imagen_portada" class="block text-sm font-medium text-gray-300">Imagen de Portada</label>
                         <div class="mt-1 flex justify-center px-6 py-4 border-2 border-dashed rounded-md border-gray-600 hover:border-blue-500 transition-all cursor-pointer relative">
                             <div class="space-y-1 text-center" x-data="{ imageUrl: '' }" x-on:change="imageUrl = URL.createObjectURL($event.target.files[0])">
@@ -281,8 +261,35 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
+                    <label for="archivo_convocatoria" class="block text-sm font-medium text-gray-300">Archivo Convocatoria</label>
+                    <input type="file" name="archivo_convocatoria" id="archivo_convocatoria" accept=".pdf" class="mt-1 block w-full text-sm text-gray-300
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-500 file:text-white
+                        hover:file:bg-blue-600">
+                    @error('archivo_convocatoria')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <label for="archivo_articulo" class="block text-sm font-medium text-gray-300">Archivo Articulo</label>
+                    <input type="file" name="archivo_articulo" id="archivo_articulo" accept=".pdf" class="mt-1 block w-full text-sm text-gray-300
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-500 file:text-white
+                        hover:file:bg-blue-600">
+                    @error('archivo_articulo')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
                     <label for="archivo_pdr" class="block text-sm font-medium text-gray-300">Archivo PDR</label>
-                    <input type="file" name="archivo_pdr" id="archivo_pdr" accept=".pdf,.doc,.docx" class="mt-1 block w-full text-sm text-gray-300
+                    <input type="file" name="archivo_pdr" id="archivo_pdr" accept=".pdf" class="mt-1 block w-full text-sm text-gray-300
                         file:mr-4 file:py-2 file:px-4
                         file:rounded-md file:border-0
                         file:text-sm file:font-semibold
@@ -295,7 +302,7 @@
 
                 <div>
                     <label for="archivo_cdr" class="block text-sm font-medium text-gray-300">Archivo CDR</label>
-                    <input type="file" name="archivo_cdr" id="archivo_cdr" accept=".pdf,.doc,.docx" class="mt-1 block w-full text-sm text-gray-300
+                    <input type="file" name="archivo_cdr" id="archivo_cdr" accept=".pdf" class="mt-1 block w-full text-sm text-gray-300
                         file:mr-4 file:py-2 file:px-4
                         file:rounded-md file:border-0
                         file:text-sm file:font-semibold
@@ -308,7 +315,7 @@
 
                 <div>
                     <label for="archivo_pfr" class="block text-sm font-medium text-gray-300">Archivo PFR</label>
-                    <input type="file" name="archivo_pfr" id="archivo_pfr" accept=".pdf,.doc,.docx" class="mt-1 block w-full text-sm text-gray-300
+                    <input type="file" name="archivo_pfr" id="archivo_pfr" accept=".pdf" class="mt-1 block w-full text-sm text-gray-300
                         file:mr-4 file:py-2 file:px-4
                         file:rounded-md file:border-0
                         file:text-sm file:font-semibold

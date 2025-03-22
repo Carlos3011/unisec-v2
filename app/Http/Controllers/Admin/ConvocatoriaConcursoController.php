@@ -38,12 +38,12 @@ class ConvocatoriaConcursoController extends Controller
             'premiacion' => 'nullable|string',
             'penalizaciones' => 'nullable|string',
             'contacto_email' => 'nullable|email',
-            'archivo_pdf' => 'nullable|mimes:pdf|max:10240',
+            'archivo_convocatoria' => 'nullable|mimes:pdf|max:10240',
             'imagen_portada' => 'nullable|image|max:2048',
-            'archivo_pdr' => 'nullable|mimes:pdf,doc,docx|max:10240',
-            'archivo_cdr' => 'nullable|mimes:pdf,doc,docx|max:10240',
-            'archivo_pfr' => 'nullable|mimes:pdf,doc,docx|max:10240',
-            'articulos_requeridos' => 'nullable|string',
+            'archivo_pdr' => 'nullable|mimes:pdf|max:10240',
+            'archivo_cdr' => 'nullable|mimes:pdf|max:10240',
+            'archivo_pfr' => 'nullable|mimes:pdf|max:10240',
+            'archivo_articulo' => 'nullable|mimes:pdf|max:10240',
             'fechas_importantes' => 'required|array',
             'fechas_importantes.*.titulo' => 'required|string',
             'fechas_importantes.*.fecha' => 'required|date',
@@ -52,27 +52,30 @@ class ConvocatoriaConcursoController extends Controller
         ]);
 
         $convocatoria = new ConvocatoriaConcurso($request->except([
-            'archivo_pdf', 'imagen_portada', 'archivo_pdr', 'archivo_cdr', 'archivo_pfr',
-            'fechas_importantes', 'imagenes'
+            'archivo_convocatoria', 'imagen_portada', 'archivo_pdr', 'archivo_cdr', 'archivo_pfr',
+            'archivo_articulo','fechas_importantes', 'imagenes'
         ]));
 
         // Manejar archivos
-        if ($request->hasFile('archivo_pdf')) {
-            $convocatoria->archivo_pdf = $request->file('archivo_pdf')->store('convocatorias/pdf', 'public');
+        if ($request->hasFile('archivo_convocatoria')) {
+            $convocatoria->archivo_convocatoria = $request->file('archivo_convocatoria')->store('convocatorias/convocatoria', 'public');
         }
         if ($request->hasFile('imagen_portada')) {
             // Asegurar que el directorio existe
-            Storage::disk('public')->makeDirectory('convocatorias/portada');
-            $convocatoria->imagen_portada = $request->file('imagen_portada')->store('convocatorias/portada', 'public');
+            Storage::disk('public')->makeDirectory('convocatorias/portadas');
+            $convocatoria->imagen_portada = $request->file('imagen_portada')->store('convocatorias/portadas', 'public');
         }
         if ($request->hasFile('archivo_pdr')) {
-            $convocatoria->archivo_pdr = $request->file('archivo_pdr')->store('convocatorias/documentos', 'public');
+            $convocatoria->archivo_pdr = $request->file('archivo_pdr')->store('convocatorias/pdr', 'public');
         }
         if ($request->hasFile('archivo_cdr')) {
-            $convocatoria->archivo_cdr = $request->file('archivo_cdr')->store('convocatorias/documentos', 'public');
+            $convocatoria->archivo_cdr = $request->file('archivo_cdr')->store('convocatorias/cdr', 'public');
         }
         if ($request->hasFile('archivo_pfr')) {
-            $convocatoria->archivo_pfr = $request->file('archivo_pfr')->store('convocatorias/documentos', 'public');
+            $convocatoria->archivo_pfr = $request->file('archivo_pfr')->store('convocatorias/pfr', 'public');
+        }
+        if ($request->hasFile('archivo_articulo')) {
+            $convocatoria->archivo_articulo = $request->file('archivo_articulo')->store('convocatorias/articulo', 'public');
         }
 
         $convocatoria->save();
@@ -129,30 +132,34 @@ class ConvocatoriaConcursoController extends Controller
         ]);
 
         $convocatoria->update($request->except([
-            'archivo_pdf', 'imagen_portada', 'archivo_pdr', 'archivo_cdr', 'archivo_pfr'
+            'archivo_convocatoria', 'imagen_portada', 'archivo_pdr', 'archivo_cdr', 'archivo_pfr','archivo_articulo'
         ]));
 
         // Actualizar archivos si se proporcionan nuevos
-        if ($request->hasFile('archivo_pdf')) {
-            Storage::disk('public')->delete($convocatoria->archivo_pdf);
-            $convocatoria->archivo_pdf = $request->file('archivo_pdf')->store('convocatorias/pdf', 'public');
+        if ($request->hasFile('archivo_convocatoria')) {
+            Storage::disk('public')->delete($convocatoria->archivo_convocatoria);
+            $convocatoria->archivo_convocatoria = $request->file('archivo_convocatoria')->store('convocatorias/pdf', 'public');
         }
         if ($request->hasFile('imagen_portada')) {
             Storage::disk('public')->delete($convocatoria->imagen_portada);
-            Storage::disk('public')->makeDirectory('convocatorias/portada');
-            $convocatoria->imagen_portada = $request->file('imagen_portada')->store('convocatorias/portada', 'public');
+            Storage::disk('public')->makeDirectory('convocatorias/portadas');
+            $convocatoria->imagen_portada = $request->file('imagen_portada')->store('convocatorias/portadas', 'public');
         }
         if ($request->hasFile('archivo_pdr')) {
             Storage::disk('public')->delete($convocatoria->archivo_pdr);
-            $convocatoria->archivo_pdr = $request->file('archivo_pdr')->store('convocatorias/documentos', 'public');
+            $convocatoria->archivo_pdr = $request->file('archivo_pdr')->store('convocatorias/pdr', 'public');
         }
         if ($request->hasFile('archivo_cdr')) {
             Storage::disk('public')->delete($convocatoria->archivo_cdr);
-            $convocatoria->archivo_cdr = $request->file('archivo_cdr')->store('convocatorias/documentos', 'public');
+            $convocatoria->archivo_cdr = $request->file('archivo_cdr')->store('convocatorias/cdr', 'public');
         }
         if ($request->hasFile('archivo_pfr')) {
             Storage::disk('public')->delete($convocatoria->archivo_pfr);
-            $convocatoria->archivo_pfr = $request->file('archivo_pfr')->store('convocatorias/documentos', 'public');
+            $convocatoria->archivo_pfr = $request->file('archivo_pfr')->store('convocatorias/pfr', 'public');
+        }
+        if ($request->hasFile('archivo_articulo')) {
+            Storage::disk('public')->delete($convocatoria->archivo_articulo);
+            $convocatoria->archivo_articulo = $request->file('archivo_articulo')->store('convocatorias/articulo', 'public');
         }
 
         $convocatoria->save();
@@ -168,11 +175,12 @@ class ConvocatoriaConcursoController extends Controller
             
             // Eliminar archivos asociados si existen
             $archivos = [
-                $convocatoria->archivo_pdf,
+                $convocatoria->archivo_convocatoria,
                 $convocatoria->imagen_portada,
                 $convocatoria->archivo_pdr,
                 $convocatoria->archivo_cdr,
-                $convocatoria->archivo_pfr
+                $convocatoria->archivo_pfr,
+                $convocatoria->archivo_articulo
             ];
             
             foreach ($archivos as $archivo) {
