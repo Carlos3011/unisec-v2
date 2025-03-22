@@ -19,6 +19,10 @@ Route::controller(PublicController::class)->group(function () {
     Route::get('/', 'inicio')->name('inicio');
     Route::get('/acerca', 'acerca')->name('acerca');
     Route::get('/ofertas', 'ofertas')->name('ofertas');
+
+    Route::get('/convocatorias','convocatorias')->name('convocatorias');
+    Route::get('/convocatorias/{convocatoria}', 'show')->name('convocatorias.show');
+    
     Route::get('/miembros', 'miembros')->name('miembros');
     Route::get('/blog', 'blog')->name('blog');
     Route::get('/contacto', 'contacto')->name('contacto');
@@ -114,7 +118,6 @@ Route::middleware(['auth'])->group(function () {
 // Grupo de rutas para Usuarios
 Route::middleware(['auth'])->group(function () {
     Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
-    // Rutas del Navbar de Usuario
     Route::get('/user/cursos', [UserController::class, 'cursos'])->name('user.cursos');
     Route::get('/user/talleres', [UserController::class, 'talleres'])->name('user.talleres');
     Route::get('/user/ponencias', [UserController::class, 'ponencias'])->name('user.ponencias');
