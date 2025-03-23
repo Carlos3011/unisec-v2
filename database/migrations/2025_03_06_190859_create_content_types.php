@@ -56,23 +56,10 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('concursos', function (Blueprint $table) {
-            $table->id();
-            $table->string('titulo');
-            $table->text('reglas');
-            $table->text('premios');
-            $table->foreignId('categoria_id')->constrained('categorias');
-            $table->foreignId('tema_id')->constrained('temas');
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
-            $table->timestamps();
-            $table->softDeletes();
-        });
     }
 
     public function down()
     {
-        Schema::dropIfExists('concursos');
         Schema::dropIfExists('ponencias');
         Schema::dropIfExists('talleres');
         Schema::dropIfExists('cursos');
