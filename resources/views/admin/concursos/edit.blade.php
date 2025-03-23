@@ -39,17 +39,7 @@
                         class="w-full px-4 py-3 bg-gray-800/70 border border-gray-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500/50 transition-all duration-200 placeholder-gray-500 text-white">
                 </div>
 
-                <div class="space-y-2">
-                    <label for="reglas" class="block text-sm font-medium text-white">Reglas <span class="text-red-500">*</span></label>
-                    <textarea name="reglas" id="reglas" rows="4" required
-                        class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">{{ old('reglas', $concurso->reglas) }}</textarea>
-                </div>
 
-                <div class="space-y-2">
-                    <label for="premios" class="block text-sm font-medium text-white">Premios <span class="text-red-500">*</span></label>
-                    <textarea name="premios" id="premios" rows="4" required
-                        class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">{{ old('premios', $concurso->premios) }}</textarea>
-                </div>
             </div>
 
             <!-- Clasificación -->
@@ -88,17 +78,7 @@
                 <h2 class="text-xl font-semibold text-white pl-3 border-l-4 border-green-500 mb-4"><span class="bg-gradient-to-r from-green-500 to-green-600 bg-clip-text text-transparent">Fechas y Estado</span></h2>
                 
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="space-y-2">
-                        <label for="fecha_inicio" class="block text-sm font-medium text-white">Fecha de Inicio <span class="text-red-500">*</span></label>
-                        <input type="date" name="fecha_inicio" id="fecha_inicio" value="{{ old('fecha_inicio', $concurso->fecha_inicio->format('Y-m-d')) }}" required
-                            class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
-                    </div>
 
-                    <div class="space-y-2">
-                        <label for="fecha_fin" class="block text-sm font-medium text-white">Fecha de Fin <span class="text-red-500">*</span></label>
-                        <input type="date" name="fecha_fin" id="fecha_fin" value="{{ old('fecha_fin', $concurso->fecha_fin->format('Y-m-d')) }}" required
-                            class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
-                    </div>
                 </div>
 
                 <div class="space-y-2">

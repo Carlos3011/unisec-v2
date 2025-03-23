@@ -13,7 +13,7 @@ class ConcursoController extends Controller
     public function index()
     {
         $concursos = Concurso::with(['categoria', 'inscripciones', 'tema'])
-        ->withCount('inscripciones as inscritos_count')
+        ->withCount(['inscripciones as inscritos_count', 'preRegistros as preregistrados_count'])
         ->get();
         $categorias = Categoria::all();
         $temas = Tema::all();
@@ -31,16 +31,12 @@ class ConcursoController extends Controller
     {
         $request->validate([
             'titulo' => 'required|string|max:255',
-            'reglas' => 'required|string',
-            'premios' => 'required|string',
             'categoria_id' => 'required|exists:categorias,id',
             'tema_id' => 'required|exists:temas,id',
-            'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date|after:fecha_inicio',
             'estado' => 'string|in:pendiente,activo,inactivo'
         ]);
 
-        $data = $request->all();
+        $data = $request->only(['titulo', 'categoria_id', 'tema_id', 'estado']);
         if (!isset($data['estado'])) {
             $data['estado'] = 'pendiente';
         }
@@ -62,16 +58,12 @@ class ConcursoController extends Controller
     {
         $request->validate([
             'titulo' => 'required|string|max:255',
-            'reglas' => 'required|string',
-            'premios' => 'required|string',
             'categoria_id' => 'required|exists:categorias,id',
             'tema_id' => 'required|exists:temas,id',
-            'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date|after:fecha_inicio',
             'estado' => 'string|in:pendiente,activo,inactivo'
         ]);
 
-        $concurso->update($request->all());
+        $concurso->update($request->only(['titulo', 'categoria_id', 'tema_id', 'estado']));
 
         return redirect()->route('admin.concursos.index')
             ->with('success', 'Concurso actualizado exitosamente.');
