@@ -14,12 +14,8 @@ class Concurso extends Model
 
     protected $fillable = [
         'titulo',
-        'reglas',
-        'premios',
         'categoria_id',
         'tema_id',
-        'fecha_inicio',
-        'fecha_fin',
         'estado'
     ];
 
@@ -28,9 +24,7 @@ class Concurso extends Model
     ];
 
     protected $casts = [
-        'estado' => 'string',
-        'fecha_inicio' => 'date',
-        'fecha_fin' => 'date'
+        'estado' => 'string'
     ];
 
     public function categoria()
@@ -50,6 +44,16 @@ class Concurso extends Model
 
     public function convocatorias()
     {
-        return $this->morphMany(Convocatoria::class, 'evento');
+        return $this->hasMany(ConvocatoriaConcurso::class);
+    }
+
+    public function preRegistros()
+    {
+        return $this->hasMany(PreRegistroConcurso::class);
+    }
+
+    public function pagos()
+    {
+        return $this->hasManyThrough(PagoConcurso::class, InscripcionConcurso::class);
     }
 }

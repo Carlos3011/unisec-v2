@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ConvocatoriaConcurso extends Model
 {
-    protected $table = 'convocatoria_concursos';
+    use SoftDeletes;
+    protected $table = 'convocatorias_concursos';
 
     protected $fillable = [
-        'nombre_evento',
+        'concurso_id',
         'sede',
         'dirigido_a',
         'max_integrantes',
@@ -23,13 +25,18 @@ class ConvocatoriaConcurso extends Model
         'premiacion',
         'penalizaciones',
         'contacto_email',
-        'archivo_pdf',
+        'archivo_convocatoria',
         'imagen_portada',
         'archivo_pdr',
         'archivo_cdr',
         'archivo_pfr',
-        'articulos_requeridos'
+        'archivo_articulo'
     ];
+
+    public function concurso()
+    {
+        return $this->belongsTo(Concurso::class);
+    }
 
     protected $casts = [
         'asesor_requerido' => 'boolean',
@@ -38,11 +45,11 @@ class ConvocatoriaConcurso extends Model
 
     public function fechasImportantes(): HasMany
     {
-        return $this->hasMany(FechaImportanteConcurso::class);
+        return $this->hasMany(FechaImportanteConcurso::class, 'convocatorias_concursos_id');
     }
 
     public function imagenes(): HasMany
     {
-        return $this->hasMany(ImagenConcurso::class);
+        return $this->hasMany(ImagenConcurso::class, 'convocatorias_concursos_id');
     }
 }
