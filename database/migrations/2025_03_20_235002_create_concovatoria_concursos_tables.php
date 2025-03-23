@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('penalizaciones')->nullable();
             $table->string('contacto_email')->nullable();
             $table->string('archivo_convocatoria')->nullable(); // Para el archivo PDF general
-            $table->string('imagen_portada')->nullable();
+            $table->string('imagen_portada')->nullable(); // Campo para la imagen de portada
             $table->string('archivo_pdr')->nullable();  // Campo para el archivo PDR
             $table->string('archivo_cdr')->nullable();  // Campo para el archivo CDR
             $table->string('archivo_pfr')->nullable();  // Campo para el archivo PFR
