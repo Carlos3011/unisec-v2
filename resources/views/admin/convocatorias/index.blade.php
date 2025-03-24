@@ -35,10 +35,9 @@
                 <div class="bg-gradient-to-br from-gray-800 to-blue-900 rounded-lg overflow-hidden hover:ring-2 transition-all duration-300 shadow-xl border-l-4 border-blue-500/50">
                     <div class="p-6 space-y-4">
                         <div class="flex items-start justify-between">
-                            <h3 class="text-lg font-medium text-white">{{ $convocatoria->nombre_evento }}</h3>
+                            <h3 class="text-lg font-medium text-white">{{ $convocatoria->concurso->titulo }}</h3>
                             <span class="px-3 py-1 text-xs font-medium rounded-full bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 shadow-lg">
                                 <i class="fas fa-trophy mr-1"></i>
-                                Concurso
                             </span>
                         </div>
                         

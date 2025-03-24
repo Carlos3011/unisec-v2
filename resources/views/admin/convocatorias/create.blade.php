@@ -76,39 +76,45 @@
 
         <!-- Contenido de Pestañas -->
         <div x-show="currentTab === 'fechas'" class="space-y-6 animate-fade-in">
-    <div class="space-y-4">
-        <template x-for="(fecha, index) in fechasImportantes" :key="index">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-700/50 rounded-lg">
-                <div>
-                    <label :for="'fecha_titulo_' + index" class="block text-sm font-medium text-gray-300">Título del Evento</label>
-                    <input type="text" :name="'fechas_importantes[' + index + '][titulo]'" :id="'fecha_titulo_' + index" x-model="fecha.titulo" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
-                </div>
-                <div>
-                    <label :for="'fecha_fecha_' + index" class="block text-sm font-medium text-gray-300">Fecha</label>
-                    <input type="date" :name="'fechas_importantes[' + index + '][fecha]'" :id="'fecha_fecha_' + index" x-model="fecha.fecha" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
-                </div>
-                <div class="md:col-span-2 flex justify-end">
-                    <button type="button" @click="removeFecha(index)" class="inline-flex items-center px-3 py-1 bg-red-600/20 text-red-400 rounded-lg text-sm hover:bg-red-600/30 transition-all">
-                        <i class="fas fa-trash mr-2"></i> Eliminar
+            <div class="space-y-4">
+                <template x-for="(fecha, index) in fechasImportantes" :key="index">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-700/50 rounded-lg">
+                        <div>
+                            <label :for="'fecha_titulo_' + index" class="block text-sm font-medium text-gray-300">Título del Evento</label>
+                            <input type="text" :name="'fechas_importantes[' + index + '][titulo]'" :id="'fecha_titulo_' + index" x-model="fecha.titulo" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
+                        </div>
+                        <div>
+                            <label :for="'fecha_fecha_' + index" class="block text-sm font-medium text-gray-300">Fecha</label>
+                            <input type="date" :name="'fechas_importantes[' + index + '][fecha]'" :id="'fecha_fecha_' + index" x-model="fecha.fecha" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
+                        </div>
+                        <div class="md:col-span-2 flex justify-end">
+                            <button type="button" @click="removeFecha(index)" class="inline-flex items-center px-3 py-1 bg-red-600/20 text-red-400 rounded-lg text-sm hover:bg-red-600/30 transition-all">
+                                <i class="fas fa-trash mr-2"></i> Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </template>
+
+                <div class="flex justify-center">
+                    <button type="button" @click="addFecha()" class="inline-flex items-center px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg text-sm hover:bg-blue-600/30 transition-all">
+                        <i class="fas fa-plus mr-2"></i> Agregar Fecha Importante
                     </button>
                 </div>
             </div>
-        </template>
-
-        <div class="flex justify-center">
-            <button type="button" @click="addFecha()" class="inline-flex items-center px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg text-sm hover:bg-blue-600/30 transition-all">
-                <i class="fas fa-plus mr-2"></i> Agregar Fecha Importante
-            </button>
         </div>
-    </div>
-</div>
 
-<div x-show="currentTab === 'general'" class="space-y-6 animate-fade-in">
+
+        <div x-show="currentTab === 'general'" class="space-y-6 animate-fade-in">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label for="nombre_evento" class="block text-sm font-medium text-gray-300">Nombre del Evento</label>
-                    <input type="text" name="nombre_evento" id="nombre_evento" value="{{ old('nombre_evento') }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
-                    @error('nombre_evento')
+                    <label for="concurso_id" class="block text-sm font-medium text-gray-300">Seleccionar Concurso</label>
+                    <select name="concurso_id" id="concurso_id" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
+                        <option value="">-- Selecciona un concurso --</option>
+                        @foreach ($concursos as $concurso)
+                            <option value="{{ $concurso->id }}" {{ old('concurso_id') == $concurso->id ? 'selected' : '' }}>{{ $concurso->titulo }}</option>
+                        @endforeach
+                    </select>
+                    @error('concurso_id')
                         <span class="text-red-400 text-sm">{{ $message }}</span>
                     @enderror
                 </div>

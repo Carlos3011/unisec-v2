@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ConvocatoriaConcurso;
 use App\Models\FechaImportanteConcurso;
 use App\Models\ImagenConcurso;
+use App\Models\Concurso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,13 +28,14 @@ class ConvocatoriaConcursoController extends Controller
 
     public function create()
     {
-        return view('admin.convocatorias.create');
+        $concursos = Concurso::where('estado', 'pendiente')->get();
+        return view('admin.convocatorias.create', compact('concursos'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_evento' => 'required|string|max:255',
+            'concurso_id' => 'required|exists:concursos,id',
             'sede' => 'required|string|max:255',
             'dirigido_a' => 'required|string|max:255',
             'max_integrantes' => 'required|integer|min:1',
@@ -97,7 +99,8 @@ class ConvocatoriaConcursoController extends Controller
 
         // Guardar fechas importantes
         foreach ($request->fechas_importantes as $fecha) {
-            $convocatoria->fechasImportantes()->create([
+            FechaImportanteConcurso::create([
+                'convocatorias_concursos_id' => $convocatoria->id,
                 'titulo' => $fecha['titulo'],
                 'fecha' => $fecha['fecha']
             ]);
@@ -120,18 +123,24 @@ class ConvocatoriaConcursoController extends Controller
 
     public function show(ConvocatoriaConcurso $convocatoria)
     {
-        return view('admin.convocatorias.show', compact('convocatoria'));
+        $concursos = Concurso::where('estado', 'pendiente')
+            ->orWhere('id', $convocatoria->concurso_id)
+            ->get();
+        return view('admin.convocatorias.show', compact('convocatoria', 'concursos'));
     }
 
     public function edit(ConvocatoriaConcurso $convocatoria)
     {
-        return view('admin.convocatorias.edit', compact('convocatoria'));
+        $concursos = Concurso::where('estado', 'pendiente')
+            ->orWhere('id', $convocatoria->concurso_id)
+            ->get();
+        return view('admin.convocatorias.edit', compact('convocatoria', 'concursos'));
     }
 
     public function update(Request $request, ConvocatoriaConcurso $convocatoria)
     {
         $request->validate([
-            'nombre_evento' => 'required|string|max:255',
+            'concurso_id' => 'required|exists:concursos,id',
             'sede' => 'required|string|max:255',
             'dirigido_a' => 'required|string|max:255',
             'max_integrantes' => 'required|integer|min:1',
@@ -144,14 +153,31 @@ class ConvocatoriaConcursoController extends Controller
             'premiacion' => 'nullable|string',
             'penalizaciones' => 'nullable|string',
             'contacto_email' => 'nullable|email',
+            'archivo_convocatoria' => 'nullable|mimes:pdf|max:10240',
+            'imagen_portada' => 'nullable|image|max:2048',
+            'archivo_pdr' => 'nullable|mimes:pdf|max:10240',
+            'archivo_cdr' => 'nullable|mimes:pdf|max:10240',
+            'archivo_pfr' => 'nullable|mimes:pdf|max:10240',
+            'archivo_articulo' => 'nullable|mimes:pdf|max:10240',
             'fechas_importantes' => 'required|array',
             'fechas_importantes.*.titulo' => 'required|string',
-            'fechas_importantes.*.fecha' => 'required|date'
+            'fechas_importantes.*.fecha' => 'required|date',
+            'imagenes' => 'nullable|array',
+            'imagenes.*' => 'image|max:2048'
         ]);
 
         $convocatoria->update($request->except([
-            'archivo_convocatoria', 'imagen_portada', 'archivo_pdr', 'archivo_cdr', 'archivo_pfr','archivo_articulo'
+            'archivo_convocatoria', 'imagen_portada', 'archivo_pdr', 'archivo_cdr', 'archivo_pfr','archivo_articulo', 'fechas_importantes'
         ]));
+
+        // Actualizar fechas importantes
+        $convocatoria->fechasImportantes()->delete(); // Eliminar fechas existentes
+        foreach ($request->fechas_importantes as $fecha) {
+            $convocatoria->fechasImportantes()->create([
+                'titulo' => $fecha['titulo'],
+                'fecha' => $fecha['fecha']
+            ]);
+        }
 
         // Actualizar archivos si se proporcionan nuevos
         if ($request->hasFile('archivo_convocatoria')) {
