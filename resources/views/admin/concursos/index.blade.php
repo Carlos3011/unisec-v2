@@ -47,13 +47,10 @@ use Carbon\Carbon;
                 <thead class="bg-gray-800 text-gray-300">
                     <tr>
                         <th class="px-4 py-3 text-left">Título</th>
-                        <th class="px-4 py-3 text-left">Reglas</th>
-                        <th class="px-4 py-3 text-left">Premios</th>
                         <th class="px-4 py-3 text-left">Categoría</th>
                         <th class="px-4 py-3 text-left">Tema</th>
-                        <th class="px-4 py-3 text-center">Fecha Inicio</th>
-                        <th class="px-4 py-3 text-center">Fecha Fin</th>
                         <th class="px-4 py-3 text-center">Estado</th>
+                        <th class="px-4 py-3 text-center">Pre-registrados</th>
                         <th class="px-4 py-3 text-center">Inscritos</th>
                         <th class="px-4 py-3 text-center">Acciones</th>
                     </tr>
@@ -62,12 +59,8 @@ use Carbon\Carbon;
                     @forelse($concursos ?? [] as $concurso)
                         <tr class="hover:bg-gray-800/50">
                             <td class="px-4 py-3">{{ $concurso->titulo }}</td>
-                            <td class="px-4 py-3">{{ Str::limit($concurso->reglas, 50) }}</td>
-                            <td class="px-4 py-3">{{ Str::limit($concurso->premios, 50) }}</td>
                             <td class="px-4 py-3">{{ $concurso->categoria->nombre }}</td>
                             <td class="px-4 py-3">{{ $concurso->tema->nombre }}</td>
-                            <td class="px-4 py-3 text-center">{{ Carbon::parse($concurso->fecha_inicio)->format('d/m/Y') }}</td>
-                            <td class="px-4 py-3 text-center">{{ Carbon::parse($concurso->fecha_fin)->format('d/m/Y') }}</td>
                             <td class="px-4 py-3 text-center">
                                 <span class="px-3 py-1 rounded-full text-xs
                                     @switch($concurso->estado)
@@ -89,6 +82,7 @@ use Carbon\Carbon;
                                     {{ ucfirst($concurso->estado) }}
                                 </span>
                             </td>
+                            <td class="px-4 py-3 text-center">{{ $concurso->preregistrados_count }}</td>
                             <td class="px-4 py-3 text-center">{{ $concurso->inscritos_count }}</td>
                             <td class="px-4 py-3 text-center">
                                 <div class="flex justify-center space-x-2">

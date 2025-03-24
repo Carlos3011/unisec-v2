@@ -4,7 +4,7 @@
 <div class="bg-gray-800 bg-opacity-50 p-6 rounded-lg shadow-lg">
     <div class="flex items-center justify-between mb-6">
         <h1 class="text-3xl font-bold text-white flex items-center">
-            <i class="fas fa-bullhorn mr-3 text-blue-400"></i>{{ $convocatoria->nombre_evento }}
+            <i class="fas fa-bullhorn mr-3 text-blue-400"></i>{{ $convocatoria->concurso->titulo }}
         </h1>
         <div class="space-x-2">
             <a href="{{ route('admin.convocatorias.edit', $convocatoria) }}" class="inline-flex items-center px-4 py-2 bg-yellow-600/20 text-yellow-400 rounded-lg font-semibold text-xs uppercase tracking-widest hover:bg-yellow-600/30 transition-all duration-150">

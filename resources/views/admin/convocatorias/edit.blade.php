@@ -22,29 +22,28 @@
     @endif
 
     <form action="{{ route('admin.convocatorias.update', $convocatoria) }}" method="POST" enctype="multipart/form-data" class="space-y-6" x-data="{
-        currentTab: 'general',
-        progress: 20,
-        tabs: {
-            general: true,
-            requisitos: false,
-            documentos: false,
-            evaluacion: false,
-            archivos: false
-        },
-        updateProgress() {
-            const completedTabs = Object.values(this.tabs).filter(Boolean).length;
-            this.progress = (completedTabs / Object.keys(this.tabs).length) * 100;
-        },
-        fechasImportantes: {{ Js::from($convocatoria->fechasImportantes->map(fn($fecha) => ['titulo' => $fecha->titulo, 'fecha' => $fecha->fecha->format('Y-m-d')])) }},
-        addFecha() {
-            this.fechasImportantes.push({ titulo: '', fecha: '' });
-        },
-        removeFecha(index) {
-            if (this.fechasImportantes.length > 1) {
+            currentTab: 'general',
+            progress: 20,
+            tabs: {
+                general: true,
+                requisitos: false,
+                documentos: false,
+                evaluacion: false,
+                archivos: false
+            },
+            updateProgress() {
+                const completedTabs = Object.values(this.tabs).filter(Boolean).length;
+                this.progress = (completedTabs / Object.keys(this.tabs).length) * 100;
+            },
+            fechasImportantes: {{ Js::from($convocatoria->fechasImportantes->map(fn($fecha) => ['titulo' => $fecha->titulo, 'fecha' => $fecha->fecha->format('Y-m-d')])) }} || [],
+            addFecha() {
+                this.fechasImportantes.push({ titulo: '', fecha: '' });
+            },
+            removeFecha(index) {
                 this.fechasImportantes.splice(index, 1);
-            }
-        }
-    }">
+            },
+        }"
+    >
         @csrf
         @method('PUT')
 
@@ -106,10 +105,17 @@
 
         <div x-show="currentTab === 'general'" class="space-y-6 animate-fade-in">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
                 <div>
-                    <label for="nombre_evento" class="block text-sm font-medium text-gray-300">Nombre del Evento</label>
-                    <input type="text" name="nombre_evento" id="nombre_evento" value="{{ old('nombre_evento', $convocatoria->nombre_evento) }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
-                    @error('nombre_evento')
+                    <label for="concurso_id" class="block text-sm font-medium text-gray-300">Seleccionar Concurso</label>
+                    <select name="concurso_id" id="concurso_id" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500" required>
+                        <option value="">-- Selecciona un concurso --</option>
+                        @foreach ($concursos as $concurso)
+                            <option value="{{ $concurso->id }}" {{ old('concurso_id', $convocatoria->concurso_id) == $concurso->id ? 'selected' : '' }}>{{ $concurso->titulo }}</option>
+                        @endforeach
+                    </select>
+                    @error('concurso_id')
                         <span class="text-red-400 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
@@ -209,9 +215,16 @@
             </div>
 
             <div>
-                <label for="proceso_evaluacion" class="block text-sm font-medium text-gray-300">Proceso de Evaluación</label>
-                <textarea name="proceso_evaluacion" id="proceso_evaluacion" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">{{ old('proceso_evaluacion', $convocatoria->proceso_evaluacion) }}</textarea>
-                @error('proceso_evaluacion')
+                <label for="premiacion" class="block text-sm font-medium text-gray-300">Proceso de Evaluación</label>
+                <textarea name="premiacion" id="premiacion" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">{{ old('premiacion', $convocatoria->premiacion) }}</textarea>
+                @error('premiacion')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            <div>
+                <label for="penalizaciones" class="block text-sm font-medium text-gray-300">Penalizaciones</label>
+                <textarea name="penalizaciones" id="penalizaciones" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">{{ old('penalizaciones', $convocatoria->penalizaciones) }}</textarea>
+                @error('penalizaciones')
                     <span class="text-red-400 text-sm">{{ $message }}</span>
                 @enderror
             </div>
@@ -313,8 +326,8 @@
                 </div>
             </div>
         </div>
- <!-- Botones de Navegación -->
- <div class="flex justify-between mt-8">
+        <!-- Botones de Navegación -->
+        <div class="flex justify-between mt-8">
             <button type="button" @click="currentTab = ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'][Math.max(0, ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'].indexOf(currentTab) - 1)]" class="inline-flex items-center px-4 py-2 bg-gray-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 transition-all duration-150" x-show="currentTab !== 'general'">
                 <i class="fas fa-arrow-left mr-2"></i> Anterior
             </button>

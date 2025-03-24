@@ -35,17 +35,7 @@
                     class="w-full px-4 py-3 bg-gray-800/70 border border-gray-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500/50 transition-all duration-200 placeholder-gray-500 text-white">
             </div>
 
-            <div class="space-y-2">
-                <label for="reglas" class="block text-sm font-medium text-white">Reglas <span class="text-red-500">*</span></label>
-                <textarea name="reglas" id="reglas" rows="4" required
-                    class="w-full px-4 py-3 bg-gray-800/70 border border-gray-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500/50 transition-all duration-200 placeholder-gray-500 text-white">{{ old('reglas') }}</textarea>
-            </div>
 
-            <div class="space-y-2">
-                <label for="premios" class="block text-sm font-medium text-white">Premios <span class="text-red-500">*</span></label>
-                <textarea name="premios" id="premios" rows="4" required
-                    class="w-full px-4 py-3 bg-gray-800/70 border border-gray-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500/50 transition-all duration-200 placeholder-gray-500 text-white">{{ old('premios') }}</textarea>
-            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-2">
@@ -75,19 +65,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-2">
-                    <label for="fecha_inicio" class="block text-sm font-medium text-white">Fecha de Inicio <span class="text-red-500">*</span></label>
-                    <input type="date" name="fecha_inicio" id="fecha_inicio" value="{{ old('fecha_inicio') }}" required
-                        class="w-full px-4 py-3 bg-gray-800/70 border border-gray-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500/50 transition-all duration-200 text-white">
-                </div>
 
-                <div class="space-y-2">
-                    <label for="fecha_fin" class="block text-sm font-medium text-white">Fecha de Fin <span class="text-red-500">*</span></label>
-                    <input type="date" name="fecha_fin" id="fecha_fin" value="{{ old('fecha_fin') }}" required
-                        class="w-full px-4 py-3 bg-gray-800/70 border border-gray-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500/50 transition-all duration-200 text-white">
-                </div>
-            </div>
 
             <div class="space-y-2">
                 <label for="estado" class="block text-sm font-medium text-white">Estado <span class="text-red-500">*</span></label>

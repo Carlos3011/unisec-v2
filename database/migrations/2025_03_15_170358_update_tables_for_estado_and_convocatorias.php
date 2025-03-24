@@ -38,15 +38,6 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        // Crear la tabla de inscripciones para concursos
-        Schema::create('inscripciones_concursos', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade'); // Relación con la tabla 'users'
-            $table->foreignId('concurso_id')->constrained('concursos')->onDelete('cascade'); // Relación con la tabla 'concursos'
-            $table->enum('estado', ['pendiente', 'confirmada', 'cancelada'])->default('pendiente'); // Estado de la inscripción
-            $table->timestamps();
-            $table->softDeletes();
-        });
 
         // Crear la tabla de inscripciones para congresos
         Schema::create('inscripciones_congresos', function (Blueprint $table) {
@@ -71,11 +62,7 @@ return new class extends Migration
             $table->enum('estado', ['activo', 'inactivo', 'pendiente'])->default('pendiente');
         });
 
-        Schema::table('concursos', function (Blueprint $table) {
-            $table->enum('estado', ['activo', 'inactivo', 'pendiente'])->default('pendiente');
-        });
-
-       
+      
     }
 
     public function down()
@@ -101,7 +88,6 @@ return new class extends Migration
         Schema::dropIfExists('inscripciones_cursos');
         Schema::dropIfExists('inscripciones_talleres');
         Schema::dropIfExists('inscripciones_ponencias');
-        Schema::dropIfExists('inscripciones_concursos');
         Schema::dropIfExists('inscripciones_congresos');
 
         
