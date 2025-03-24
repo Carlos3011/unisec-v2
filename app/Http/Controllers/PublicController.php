@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ConvocatoriaConcurso;
+use App\Models\Concurso;
 
 class PublicController extends Controller
 {
@@ -23,12 +24,17 @@ class PublicController extends Controller
         $convocatorias = ConvocatoriaConcurso::with(['fechasImportantes'])
             ->orderBy('created_at', 'desc')
             ->get();
-        return view('public.convocatorias.index', compact('convocatorias'));
+
+        $concursos = Concurso::all();
+
+        return view('public.convocatorias.index', compact('convocatorias', 'concursos'));
     }
 
     public function show(ConvocatoriaConcurso $convocatoria) {
         $convocatoria->load(['fechasImportantes']);
-        return view('public.convocatorias.show', compact('convocatoria'));
+
+        $concursos = Concurso::all();
+        return view('public.convocatorias.show', compact('convocatoria', 'concursos'));
     }
 
     public function blog() {

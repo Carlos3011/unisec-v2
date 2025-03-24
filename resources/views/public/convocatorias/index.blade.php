@@ -42,7 +42,7 @@
                     @endif
 
                     <div class="p-8 text-white">
-                        <h2 class="text-2xl font-bold text-blue-300 mb-3 group-hover:text-blue-200 transition-colors duration-300">{{ $convocatoria->nombre_evento }}</h2>
+                        <h2 class="text-2xl font-bold text-white-300 mb-3 ">{{ $convocatoria->concurso->titulo }}</h2>
                         
                         <div class="space-y-3 mb-6">
                             <div class="flex items-center text-sm text-gray-300 bg-gray-800/30 rounded-md p-2">

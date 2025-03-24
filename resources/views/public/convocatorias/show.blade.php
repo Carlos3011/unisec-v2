@@ -6,10 +6,9 @@
 <div class="min-h-screen py-12 relative overflow-hidden bg-gradient-to-b from-space-950 to-cosmic-900">
     <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto bg-black/30 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 relative transition-all duration-300 hover:border-white/20">
-            <!-- Efecto de brillo en los bordes -->
-            
+           
             <!-- Encabezado -->
-            <div class="relative overflow-hidden mb-8">
+            <div class="relative overflow-hidden mb-6">
                 @if($convocatoria->imagen_portada)
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
                     <img src="{{ asset('storage/' . $convocatoria->imagen_portada) }}" 
@@ -17,7 +16,7 @@
                          class="w-full h-80 object-cover">
                 @endif
                 <div class="relative z-20 p-8">
-                    <h1 class="text-7xl font-bold text-white mb-4 text-center drop-shadow-lg">{{ $convocatoria->nombre_evento }}</h1>
+                    <h1 class="text-5xl font-bold text-white mb-4 text-center drop-shadow-lg">{{ $convocatoria->concurso->titulo }}</h1>
                     <div class="flex flex-wrap gap-4 text-sm text-white/90">
                         <div class="flex items-center space-x-3 bg-white/5 px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/10">
                             <i class="fas fa-rocket text-blue-400 text-xl"></i>

@@ -123,16 +123,14 @@ class ConvocatoriaConcursoController extends Controller
 
     public function show(ConvocatoriaConcurso $convocatoria)
     {
-        $concursos = Concurso::where('estado', 'pendiente')
-            ->orWhere('id', $convocatoria->concurso_id)
+        $concursos = Concurso::where('estado', 'activo')
             ->get();
         return view('admin.convocatorias.show', compact('convocatoria', 'concursos'));
     }
 
     public function edit(ConvocatoriaConcurso $convocatoria)
     {
-        $concursos = Concurso::where('estado', 'pendiente')
-            ->orWhere('id', $convocatoria->concurso_id)
+        $concursos = Concurso::where('estado', 'activo')
             ->get();
         return view('admin.convocatorias.edit', compact('convocatoria', 'concursos'));
     }
