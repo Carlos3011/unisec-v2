@@ -80,9 +80,6 @@ return new class extends Migration
             $table->dropColumn('estado');
         });
 
-        Schema::table('concursos', function (Blueprint $table) {
-            $table->dropColumn('estado');
-        });
 
         // Eliminar las tablas de inscripciones
         Schema::dropIfExists('inscripciones_cursos');
