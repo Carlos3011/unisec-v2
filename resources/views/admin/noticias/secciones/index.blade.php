@@ -56,10 +56,38 @@
                                     <form action="{{ route('admin.noticias.secciones.destroy', $seccion) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-400 hover:text-red-300" onclick="return confirm('¿Está seguro de que desea eliminar esta sección?')">
+                                        <button type="button" class="text-red-400 hover:text-red-300 delete-seccion" data-id="{{ $seccion->id }}">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const deleteBtns = document.querySelectorAll('.delete-seccion');
+                                            
+                                            deleteBtns.forEach(btn => {
+                                                btn.addEventListener('click', function() {
+                                                    const seccionId = this.dataset.id;
+                                                    const form = this.closest('form');
+                                                    
+                                                    Swal.fire({
+                                                        title: '¿Estás seguro?',
+                                                        text: 'Esta acción eliminará la sección permanentemente',
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonColor: '#EF4444',
+                                                        cancelButtonColor: '#6B7280',
+                                                        confirmButtonText: 'Sí, eliminar',
+                                                        cancelButtonText: 'Cancelar'
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            form.submit();
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        });
+                                    </script>
                                 </div>
                             </td>
                         </tr>
