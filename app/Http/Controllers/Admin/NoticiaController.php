@@ -13,13 +13,13 @@ class NoticiaController extends Controller
     public function index()
     {
         $noticias = Noticia::with('seccionNoticia')->latest('fecha_publicacion')->get();
-        return view('admin.noticias.index', compact('noticias'));
+        return view('admin.noticias.noticia.index', compact('noticias'));
     }
 
     public function create()
     {
         $secciones = SeccionNoticia::all();
-        return view('admin.noticias.create', compact('secciones'));
+        return view('admin.noticias.noticia.create', compact('secciones'));
     }
 
     public function store(Request $request)
@@ -47,14 +47,14 @@ class NoticiaController extends Controller
 
         Noticia::create($data);
 
-        return redirect()->route('admin.noticias.index')
+        return redirect()->route('admin.noticias.noticia.index')
             ->with('success', 'Noticia creada exitosamente');
     }
 
     public function edit(Noticia $noticia)
     {
         $secciones = SeccionNoticia::all();
-        return view('admin.noticias.edit', compact('noticia', 'secciones'));
+        return view('admin.noticias.noticia.edit', compact('noticia', 'secciones'));
     }
 
     public function update(Request $request, Noticia $noticia)
@@ -85,7 +85,7 @@ class NoticiaController extends Controller
 
         $noticia->update($data);
 
-        return redirect()->route('admin.noticias.index')
+        return redirect()->route('admin.noticias.noticia.index')
             ->with('success', 'Noticia actualizada exitosamente');
     }
 
@@ -97,7 +97,7 @@ class NoticiaController extends Controller
 
         $noticia->delete();
 
-        return redirect()->route('admin.noticias.index')
+        return redirect()->route('admin.noticias.noticia.index')
             ->with('success', 'Noticia eliminada exitosamente');
     }
 }

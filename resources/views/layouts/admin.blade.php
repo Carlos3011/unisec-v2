@@ -55,7 +55,7 @@
          <div x-data="{ open: false }">
           <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
             <div class="flex items-center space-x-3">
-              <i class="fa-solid fa-file-invoice"></i>
+              <i class="fas fa-newspaper"></i>
               <span class="font-medium">Gestión Noticias</span>
             </div>
             <i class="fas fa-chevron-down" x-show="!open"></i>
@@ -63,7 +63,7 @@
           </button>
           <div x-show="open" class="pl-8 space-y-2" x-collapse>
             <a href="{{ route('admin.noticias.secciones.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Secciones</a>
-            <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Noticias</a>
+            <a href="{{ route('admin.noticias.noticia.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Noticias</a>
           </div>
         </div>
 

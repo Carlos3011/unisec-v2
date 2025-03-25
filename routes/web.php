@@ -124,12 +124,12 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/secciones/{seccion}', [SeccionNoticiaController::class, 'destroy'])->name('admin.noticias.secciones.destroy');
 
     // Rutas para la gestión de noticias
-    Route::get('/admin/noticias', [NoticiaController::class, 'index'])->name('admin.noticias.index');
-    Route::get('/admin/noticias/create', [NoticiaController::class, 'create'])->name('admin.noticias.create');
-    Route::post('/admin/noticias', [NoticiaController::class, 'store'])->name('admin.noticias.store');
-    Route::get('/admin/noticias/{noticia}/edit', [NoticiaController::class, 'edit'])->name('admin.noticias.edit');
-    Route::put('/admin/noticias/{noticia}', [NoticiaController::class, 'update'])->name('admin.noticias.update');
-    Route::delete('/admin/noticias/{noticia}', [NoticiaController::class, 'destroy'])->name('admin.noticias.destroy');
+    Route::get('/admin/noticias', [NoticiaController::class, 'index'])->name('admin.noticias.noticia.index');
+    Route::get('/admin/noticias/create', [NoticiaController::class, 'create'])->name('admin.noticias.noticia.create');
+    Route::post('/admin/noticias', [NoticiaController::class, 'store'])->name('admin.noticias.noticia.store');
+    Route::get('/admin/noticias/{noticia}/edit', [NoticiaController::class, 'edit'])->name('admin.noticias.noticia.edit');
+    Route::put('/admin/noticias/{noticia}', [NoticiaController::class, 'update'])->name('admin.noticias.noticia.update');
+    Route::delete('/admin/noticias/{noticia}', [NoticiaController::class, 'destroy'])->name('admin.noticias.noticia.destroy');
 
     
 });
