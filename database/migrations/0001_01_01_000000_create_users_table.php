@@ -46,6 +46,28 @@ return new class extends Migration
             ['nombre' => 'usuario'],
             ['nombre' => 'evaluador']
         ]);
+
+        // Insertar usuarios de prueba
+        DB::table('users')->insert([
+            [
+                'name' => 'Admin Test',
+                'email' => 'admin@test.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('admin123'),
+                'role_id' => 1, // rol admin
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'User Test',
+                'email' => 'user@test.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('user123'),
+                'role_id' => 2, // rol usuario
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        ]);
     }
 
     public function down(): void
