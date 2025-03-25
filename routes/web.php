@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\TemaController;
 use App\Http\Controllers\Admin\TallerController;
 use App\Http\Controllers\Admin\ConcursoController;
 use App\Http\Controllers\Admin\ConvocatoriaConcursoController;
+use App\Http\Controllers\Admin\SeccionNoticiaController;
+use App\Http\Controllers\Admin\NoticiaController;
 
 Route::controller(PublicController::class)->group(function () {
     Route::get('/', 'inicio')->name('inicio');
@@ -111,6 +113,23 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/becas', [AdminController::class, 'becas'])->name('admin.becas');
     Route::get('/admin/pagos-facturacion', [AdminController::class, 'pagosFacturacion'])->name('admin.pagos-facturacion');
     Route::get('/admin/reportes-estadisticas', [AdminController::class, 'reportesEstadisticas'])->name('admin.reportes-estadisticas');
+
+
+    // Rutas para la gestión de secciones de noticias
+    Route::get('/admin/secciones', [SeccionNoticiaController::class, 'index'])->name('admin.noticias.secciones.index');
+    Route::get('/admin/secciones/create', [SeccionNoticiaController::class, 'create'])->name('admin.noticias.secciones.create');
+    Route::post('/admin/secciones', [SeccionNoticiaController::class, 'store'])->name('admin.noticias.secciones.store');
+    Route::get('/admin/secciones/{seccion}/edit', [SeccionNoticiaController::class, 'edit'])->name('admin.noticias.secciones.edit');
+    Route::put('/admin/secciones/{seccion}', [SeccionNoticiaController::class, 'update'])->name('admin.noticias.secciones.update');
+    Route::delete('/admin/secciones/{seccion}', [SeccionNoticiaController::class, 'destroy'])->name('admin.noticias.secciones.destroy');
+
+    // Rutas para la gestión de noticias
+    Route::get('/admin/noticias', [NoticiaController::class, 'index'])->name('admin.noticias.index');
+    Route::get('/admin/noticias/create', [NoticiaController::class, 'create'])->name('admin.noticias.create');
+    Route::post('/admin/noticias', [NoticiaController::class, 'store'])->name('admin.noticias.store');
+    Route::get('/admin/noticias/{noticia}/edit', [NoticiaController::class, 'edit'])->name('admin.noticias.edit');
+    Route::put('/admin/noticias/{noticia}', [NoticiaController::class, 'update'])->name('admin.noticias.update');
+    Route::delete('/admin/noticias/{noticia}', [NoticiaController::class, 'destroy'])->name('admin.noticias.destroy');
 
     
 });

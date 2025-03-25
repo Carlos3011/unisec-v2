@@ -26,7 +26,11 @@
           <i class="fas fa-home text-lg"></i>
           <span class="ml-3 font-medium">Dashboard</span>
         </a>
+
+       
+
         
+        <!-- Gestion de Academica -->
         <div x-data="{ open: false }">
           <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
             <div class="flex items-center space-x-3">
@@ -43,6 +47,23 @@
             <a href="{{ route('admin.talleres.index')}}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Talleres</a>
             <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Ponencias</a>
             <a href="{{ route('admin.concursos.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Concursos</a>
+          </div>
+        </div>
+
+
+         <!-- Gestion de Noticias -->
+         <div x-data="{ open: false }">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-file-invoice"></i>
+              <span class="font-medium">Gestión Noticias</span>
+            </div>
+            <i class="fas fa-chevron-down" x-show="!open"></i>
+            <i class="fas fa-chevron-up" x-show="open"></i>
+          </button>
+          <div x-show="open" class="pl-8 space-y-2" x-collapse>
+            <a href="{{ route('admin.noticias.secciones.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Secciones</a>
+            <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Noticias</a>
           </div>
         </div>
 
