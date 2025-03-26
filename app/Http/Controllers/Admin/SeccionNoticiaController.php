@@ -11,7 +11,8 @@ class SeccionNoticiaController extends Controller
     public function index()
     {
         $secciones = SeccionNoticia::withCount('noticias')->get();
-        return view('admin.noticias.secciones.index', compact('secciones'));
+        $seccionesEliminadas = SeccionNoticia::onlyTrashed()->withCount('noticias')->get();
+        return view('admin.noticias.secciones.index', compact('secciones', 'seccionesEliminadas'));
     }
 
     public function create()
@@ -59,5 +60,14 @@ class SeccionNoticiaController extends Controller
 
         return redirect()->route('admin.noticias.secciones.index')
             ->with('success', 'Sección eliminada exitosamente');
+    }
+
+    public function restore($id)
+    {
+        $seccion = SeccionNoticia::onlyTrashed()->findOrFail($id);
+        $seccion->restore();
+
+        return redirect()->route('admin.noticias.secciones.index')
+            ->with('success', 'Sección restaurada exitosamente');
     }
 }

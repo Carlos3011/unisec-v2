@@ -122,6 +122,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/secciones/{seccion}/edit', [SeccionNoticiaController::class, 'edit'])->name('admin.noticias.secciones.edit');
     Route::put('/admin/secciones/{seccion}', [SeccionNoticiaController::class, 'update'])->name('admin.noticias.secciones.update');
     Route::delete('/admin/secciones/{seccion}', [SeccionNoticiaController::class, 'destroy'])->name('admin.noticias.secciones.destroy');
+    Route::post('/admin/secciones/{id}/restore', [SeccionNoticiaController::class, 'restore'])->name('admin.noticias.secciones.restore');
 
     // Rutas para la gestión de noticias
     Route::get('/admin/noticias', [NoticiaController::class, 'index'])->name('admin.noticias.noticia.index');
