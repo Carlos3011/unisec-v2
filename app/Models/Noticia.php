@@ -25,7 +25,7 @@ class Noticia extends Model
     ];
 
     protected $casts = [
-        'fecha_publicacion' => 'date'
+        'fecha_publicacion' => 'datetime'
     ];
 
     public function seccionNoticia()

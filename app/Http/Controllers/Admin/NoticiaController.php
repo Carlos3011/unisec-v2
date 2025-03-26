@@ -25,7 +25,7 @@ class NoticiaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'seccion_noticias_id' => 'required|exists:seccion_noticias,id',
+            'seccion_id' => 'required|exists:seccion_noticias,id',
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'contenido' => 'required|string',
@@ -33,16 +33,15 @@ class NoticiaController extends Controller
             'imagen' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'descripcion_imagen' => 'required|string|max:255',
             'autor_imagen' => 'required|string|max:255',
-            'fecha_publicacion' => 'required|date'
+            'fecha_publicacion' => 'required|date_format:Y-m-d'
         ]);
 
-        $data = $request->except('imagen');
+        $data = $request->except(['imagen']);
+        $data['seccion_noticias_id'] = $request->seccion_id;
 
         if ($request->hasFile('imagen')) {
-            $imagen = $request->file('imagen');
-            $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
-            $imagen->storeAs('public/noticias', $nombreImagen);
-            $data['imagen'] = $nombreImagen;
+            Storage::disk('public')->makeDirectory('noticias');
+            $data['imagen'] = $request->file('imagen')->store('noticias', 'public');
         }
 
         Noticia::create($data);
@@ -60,7 +59,7 @@ class NoticiaController extends Controller
     public function update(Request $request, Noticia $noticia)
     {
         $request->validate([
-            'seccion_noticias_id' => 'required|exists:seccion_noticias,id',
+            'seccion_id' => 'required|exists:seccion_noticias,id',
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'contenido' => 'required|string',
@@ -68,19 +67,18 @@ class NoticiaController extends Controller
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'descripcion_imagen' => 'required|string|max:255',
             'autor_imagen' => 'required|string|max:255',
-            'fecha_publicacion' => 'required|date'
+            'fecha_publicacion' => 'required|date_format:Y-m-d'
         ]);
 
-        $data = $request->except('imagen');
+        $data = $request->except(['imagen']);
+        $data['seccion_noticias_id'] = $request->seccion_id;
 
         if ($request->hasFile('imagen')) {
             if ($noticia->imagen) {
-                Storage::delete('public/noticias/' . $noticia->imagen);
+                Storage::disk('public')->delete($noticia->imagen);
             }
-            $imagen = $request->file('imagen');
-            $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
-            $imagen->storeAs('public/noticias', $nombreImagen);
-            $data['imagen'] = $nombreImagen;
+            Storage::disk('public')->makeDirectory('noticias');
+            $data['imagen'] = $request->file('imagen')->store('noticias', 'public');
         }
 
         $noticia->update($data);
@@ -92,7 +90,7 @@ class NoticiaController extends Controller
     public function destroy(Noticia $noticia)
     {
         if ($noticia->imagen) {
-            Storage::delete('public/noticias/' . $noticia->imagen);
+            Storage::disk('public')->delete($noticia->imagen);
         }
 
         $noticia->delete();
