@@ -42,16 +42,19 @@
                     class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 @error('seccion_id') border-red-500 @enderror">
                     <option value="">Selecciona una sección</option>
                     @foreach($secciones as $seccion)
-                        <option value="{{ $seccion->id }}" {{ old('seccion_id', $noticia->seccion_id) == $seccion->id ? 'selected' : '' }}>
+                        <option value="{{ $seccion->id }}" {{ old('seccion_id', $noticia->seccion_noticias_id) == $seccion->id ? 'selected' : '' }}>
                             {{ $seccion->titulo }}
                         </option>
                     @endforeach
                 </select>
+                @error('seccion_id')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
             </div>
 
             <div>
                 <label for="fecha_publicacion" class="block text-sm font-medium text-gray-300 mb-2">Fecha de Publicación</label>
-                <input type="date" name="fecha_publicacion" id="fecha_publicacion" value="{{ old('fecha_publicacion', $noticia->fecha_publicacion) }}" required
+                <input type="date" name="fecha_publicacion" id="fecha_publicacion" value="{{ old('fecha_publicacion', $noticia->fecha_publicacion ? $noticia->fecha_publicacion->format('Y-m-d') : now()->format('Y-m-d')) }}" required
                     class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 @error('fecha_publicacion') border-red-500 @enderror">
             </div>
 
@@ -125,4 +128,16 @@
         </div>
     </form>
 </div>
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const preview = document.getElementById('imagePreview');
+            const image = preview.querySelector('img');
+            preview.classList.remove('hidden');
+            image.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 @endsection

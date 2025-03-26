@@ -28,7 +28,7 @@ class ConvocatoriaConcursoController extends Controller
 
     public function create()
     {
-        $concursos = Concurso::where('estado', 'pendiente')->get();
+        $concursos = Concurso::where('estado', 'activo')->get();
         return view('admin.convocatorias.create', compact('concursos'));
     }
 
