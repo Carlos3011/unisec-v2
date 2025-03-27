@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ConvocatoriaConcurso;
 use App\Models\Concurso;
+use App\Models\Noticia;
 
 class PublicController extends Controller
 {
@@ -38,7 +39,15 @@ class PublicController extends Controller
     }
 
     public function blog() {
-        return view('public.blog');
+        $noticias = Noticia::with(['seccionNoticia'])
+            ->orderBy('fecha_publicacion', 'desc')
+            ->get();
+
+        return view('public.blog.noticias.index', compact('noticias'));
+    }
+
+    public function showNoticia(Noticia $noticia) {
+        return view('public.blog.noticias.show', compact('noticia'));
     }
 
     public function contacto() {

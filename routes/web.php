@@ -27,6 +27,7 @@ Route::controller(PublicController::class)->group(function () {
     
     Route::get('/miembros', 'miembros')->name('miembros');
     Route::get('/blog', 'blog')->name('blog');
+    Route::get('/noticias/{noticia}', 'showNoticia')->name('noticias.show');
     Route::get('/contacto', 'contacto')->name('contacto');
 });
 
