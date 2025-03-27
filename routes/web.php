@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin\ConvocatoriaConcursoController;
 use App\Http\Controllers\Admin\SeccionNoticiaController;
 use App\Http\Controllers\Admin\NoticiaController;
 
+use App\Http\Middleware\RoleMiddleware;
+
 Route::controller(PublicController::class)->group(function () {
     Route::get('/', 'inicio')->name('inicio');
     Route::get('/acerca', 'acerca')->name('acerca');
@@ -43,7 +45,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Grupo de rutas para Administradores
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     
     // Rutas para la gestión de convocatorias
@@ -136,7 +138,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Grupo de rutas para Usuarios
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:usuario'])->group(function () {
     Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
     Route::get('/user/cursos', [UserController::class, 'cursos'])->name('user.cursos');
     Route::get('/user/talleres', [UserController::class, 'talleres'])->name('user.talleres');
