@@ -26,8 +26,10 @@ Route::controller(PublicController::class)->group(function () {
     Route::get('/convocatorias/{convocatoria}', 'show')->name('convocatorias.show');
     
     Route::get('/miembros', 'miembros')->name('miembros');
+
     Route::get('/blog', 'blog')->name('blog');
     Route::get('/noticias/{noticia}', 'showNoticia')->name('noticias.show');
+    
     Route::get('/contacto', 'contacto')->name('contacto');
 });
 
@@ -85,7 +87,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/cursos/{curso}', [CursoController::class, 'update'])->name('admin.cursos.update');
     Route::delete('/admin/cursos/{curso}', [CursoController::class, 'destroy'])->name('admin.cursos.destroy');    
     
-   
     // Rutas para la gestión de ponentes
     Route::get('/admin/ponentes', [PonentesController::class, 'index'])->name('admin.ponentes.index');
     Route::get('/admin/ponentes/create', [PonentesController::class, 'create'])->name('admin.ponentes.create');
@@ -102,14 +103,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/talleres/{taller}', [TallerController::class, 'update'])->name('admin.talleres.update');
     Route::delete('/admin/talleres/{taller}', [TallerController::class, 'destroy'])->name('admin.talleres.destroy');
 
-    // Rutas para la gestión de secciones de noticias
-    Route::get('/admin/noticias/secciones', [SeccionNoticiaController::class, 'index'])->name('admin.noticias.secciones.index');
-    Route::get('/admin/noticias/secciones/create', [SeccionNoticiaController::class, 'create'])->name('admin.noticias.secciones.create');
-    Route::post('/admin/noticias/secciones', [SeccionNoticiaController::class, 'store'])->name('admin.noticias.secciones.store');
-    Route::get('/admin/noticias/secciones/{seccion}/edit', [SeccionNoticiaController::class, 'edit'])->name('admin.noticias.secciones.edit');
-    Route::put('/admin/noticias/secciones/{seccion}', [SeccionNoticiaController::class, 'update'])->name('admin.noticias.secciones.update');
-    Route::delete('/admin/noticias/secciones/{seccion}', [SeccionNoticiaController::class, 'destroy'])->name('admin.noticias.secciones.destroy');
-
     Route::get('/admin/concursos', [ConcursoController::class, 'index'])->name('admin.concursos.index');
     Route::get('/admin/concursos/create', [ConcursoController::class, 'create'])->name('admin.concursos.create');
     Route::post('/admin/concursos', [ConcursoController::class, 'store'])->name('admin.concursos.store');
@@ -121,7 +114,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/becas', [AdminController::class, 'becas'])->name('admin.becas');
     Route::get('/admin/pagos-facturacion', [AdminController::class, 'pagosFacturacion'])->name('admin.pagos-facturacion');
     Route::get('/admin/reportes-estadisticas', [AdminController::class, 'reportesEstadisticas'])->name('admin.reportes-estadisticas');
-
 
     // Rutas para la gestión de secciones de noticias
     Route::get('/admin/secciones', [SeccionNoticiaController::class, 'index'])->name('admin.noticias.secciones.index');

@@ -35,21 +35,6 @@
                 </a>
             </div>
         </div>
-        
-        <!-- Contador de logros con animación -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-16 sm:mt-24">
-            @foreach([
-                ["count" => 127, "label" => "Misiones exitosas"],
-                ["count" => 89, "label" => "Patentes registradas"],
-                ["count" => 235, "label" => "Colaboraciones globales"],
-                ["count" => 15, "label" => "Premios internacionales"]
-            ] as $stat)
-                <div class="text-center">
-                    <div class="text-3xl sm:text-4xl font-bold text-accent mb-1 sm:mb-2 counter" data-count="{{ $stat['count'] }}">0</div>
-                    <div class="text-xs sm:text-sm text-primary font-bold uppercase tracking-wide">{{ $stat["label"] }}</div>
-                </div>
-            @endforeach
-        </div>
     </div>
 </section>
 
@@ -422,25 +407,85 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <!-- SECCIÓN DE COLABORACIONES -->
-<section class="py-20 bg-gradient-to-br from-space-900 to-primary-dark relative overflow-hidden">
+<section class="py-20 bg-gray-800/90 relative overflow-hidden">
+    <style>
+        .logo-slider {
+            background: transparent;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .logo-slider::before, .logo-slider::after {
+            background: linear-gradient(to right, rgb(31 41 55 / 0.9) 0%, rgba(31, 41, 55, 0) 100%);
+            content: "";
+            height: 100%;
+            position: absolute;
+            width: 200px;
+            z-index: 2;
+        }
+        .logo-slider::after {
+            right: 0;
+            top: 0;
+            transform: rotateZ(180deg);
+        }
+        .logo-slider::before {
+            left: 0;
+            top: 0;
+        }
+        .logo-slide-track {
+            animation: logo-scroll 30s linear infinite;
+            display: flex;
+            width: calc(250px * 26);
+        }
+        .slide {
+            height: 150px;
+            width: 250px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes logo-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-250px * 8)); }
+        }
+        .logo-animation {
+            transition: all 0.3s ease;
+        }
+        .logo-animation:hover {
+            filter: brightness(100%);
+        }
+    </style>
     <!-- Background pattern for depth -->
-    <div class="absolute inset-0 bg-[url('/svg/grid.svg')] opacity-10"></div>
+    <div class="absolute inset-0 bg-[url('/svg/grid.svg')] opacity-10 animate-pulse"></div>
     
     <div class="max-w-7xl mx-auto px-6 relative z-10">
         <div class="text-center mb-20">
-            <h2 class="text-4xl font-bold text-white mb-6">Nuestra Red Global</h2>
+            <h2 class="text-4xl font-bold text-white mb-6 relative inline-block">
+                <span class="relative z-10">Nuestra Red Global</span>
+                <span class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-secondary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
+            </h2>
             <p class="text-gray-300 text-lg max-w-2xl mx-auto">Colaborando con líderes internacionales en la nueva era espacial</p>
         </div>
 
-        <div class="relative">
-            <div class="global-map-overlay"></div>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-12 relative z-10">
-                @foreach(['buap', 'ECITEC', 'FM', 'iest', 'IPN', 'ITESCA', 'ITPuebla', 'TecNM', 'tecm', 'uac', 'uanl', 'UNAM', 'unisec' ] as $agency)
-                <div class="flex items-center justify-center transform transition-all duration-300 hover:scale-125">
-                    <img src="/images/logos/{{ $agency }}.png" 
-                         alt="{{ strtoupper($agency) }}" 
-                         class="h-16 w-auto object-contain filter brightness-75 hover:brightness-100 transition-all duration-300">
-                </div>
+        <div class="logo-slider rounded-xl shadow-2xl overflow-hidden">
+            <div class="logo-slide-track">
+                <!-- Duplicamos los logos para crear el efecto infinito -->
+                @foreach(array_merge(
+                    ['buap', 'ECITEC', 'FM', 'iest', 'IPN', 'ITESCA', 'ITPuebla', 'TecNM', 'tecm', 'uac', 'uanl', 'UNAM', 'unisec'],
+                    ['buap', 'ECITEC', 'FM', 'iest', 'IPN', 'ITESCA', 'ITPuebla', 'TecNM', 'tecm', 'uac', 'uanl', 'UNAM', 'unisec']
+                ) as $logo)
+                    <div class="slide">
+                        <div class="group h-full w-full">
+                            <div class="relative transform transition-all duration-500 h-full w-full flex items-center justify-center">
+                                <div class="absolute inset-0 bg-white rounded-lg"></div>
+                                <img src="/images/logos/{{ $logo }}.png"
+                                     alt="{{ strtoupper($logo) }}"
+                                     class="h-28 w-auto object-contain relative z-10 filter brightness-90 group-hover:brightness-100 transition-all duration-500 logo-animation mx-auto">
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
             </div>
         </div>
