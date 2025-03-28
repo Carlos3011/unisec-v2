@@ -12,10 +12,17 @@ use App\Http\Controllers\Admin\CategoriaController;
 use App\Http\Controllers\Admin\PonentesController;
 use App\Http\Controllers\Admin\TemaController;
 use App\Http\Controllers\Admin\TallerController;
-use App\Http\Controllers\Admin\ConcursoController;
-use App\Http\Controllers\Admin\ConvocatoriaConcursoController;
+
 use App\Http\Controllers\Admin\SeccionNoticiaController;
 use App\Http\Controllers\Admin\NoticiaController;
+
+/*----
+| Controladores para la gestión de de concursos
+----*/ 
+use App\Http\Controllers\Admin\Concurso\ConcursoController;
+use App\Http\Controllers\Admin\Concurso\ConvocatoriaConcursoController;
+use App\Http\Controllers\Admin\Concurso\PreRegistroConcursoController;
+
 
 use App\Http\Middleware\RoleMiddleware;
 
@@ -48,14 +55,29 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     
-    // Rutas para la gestión de convocatorias
-    Route::get('/admin/convocatorias', [ConvocatoriaConcursoController::class, 'index'])->name('admin.convocatorias.index');
-    Route::get('/admin/convocatorias/create', [ConvocatoriaConcursoController::class, 'create'])->name('admin.convocatorias.create');
-    Route::post('/admin/convocatorias', [ConvocatoriaConcursoController::class, 'store'])->name('admin.convocatorias.store');
-    Route::get('/admin/convocatorias/{convocatoria}', [ConvocatoriaConcursoController::class, 'show'])->name('admin.convocatorias.show');
-    Route::get('/admin/convocatorias/{convocatoria}/edit', [ConvocatoriaConcursoController::class, 'edit'])->name('admin.convocatorias.edit');
-    Route::put('/admin/convocatorias/{convocatoria}', [ConvocatoriaConcursoController::class, 'update'])->name('admin.convocatorias.update');
-    Route::delete('/admin/convocatorias/{convocatoria}', [ConvocatoriaConcursoController::class, 'destroy'])->name('admin.convocatorias.destroy');
+    // Rutas para la gestión de todo lo relaciona con concursos
+    Route::get('/admin/concursos', [ConcursoController::class, 'index'])->name('admin.concursos.index');
+    Route::get('/admin/concursos/create', [ConcursoController::class, 'create'])->name('admin.concursos.create');
+    Route::post('/admin/concursos', [ConcursoController::class, 'store'])->name('admin.concursos.store');
+    Route::get('/admin/concursos/{concurso}/edit', [ConcursoController::class, 'edit'])->name('admin.concursos.edit');
+    Route::put('/admin/concursos/{concurso}', [ConcursoController::class, 'update'])->name('admin.concursos.update');
+    Route::delete('/admin/concursos/{concurso}', [ConcursoController::class, 'destroy'])->name('admin.concursos.destroy');
+
+    Route::get('/admin/convocatorias', [ConvocatoriaConcursoController::class, 'index'])->name('admin.concursos.convocatorias.index');
+    Route::get('/admin/convocatorias/create', [ConvocatoriaConcursoController::class, 'create'])->name('admin.concursos.convocatorias.create');
+    Route::post('/admin/convocatorias', [ConvocatoriaConcursoController::class, 'store'])->name('admin.concursos.convocatorias.store');
+    Route::get('/admin/convocatorias/{convocatoria}', [ConvocatoriaConcursoController::class, 'show'])->name('admin.concursos.convocatorias.show');
+    Route::get('/admin/convocatorias/{convocatoria}/edit', [ConvocatoriaConcursoController::class, 'edit'])->name('admin.concursos.convocatorias.edit');
+    Route::put('/admin/convocatorias/{convocatoria}', [ConvocatoriaConcursoController::class, 'update'])->name('admin.concursos.convocatorias.update');
+    Route::delete('/admin/convocatorias/{convocatoria}', [ConvocatoriaConcursoController::class, 'destroy'])->name('admin.concursos.convocatorias.destroy');
+
+    Route::get('/admin/pre-registros', [PreRegistroConcursoController::class, 'index'])->name('admin.concursos.pre-registros.index');
+    Route::get('/admin/pre-registros/{preRegistro}', [PreRegistroConcursoController::class, 'show'])->name('admin.concursos.pre-registros.show');
+    Route::get('/admin/pre-registros/{preRegistro}/edit', [PreRegistroConcursoController::class, 'edit'])->name('admin.concursos.pre-registros.edit');
+    Route::put('/admin/pre-registros/{preRegistro}', [PreRegistroConcursoController::class, 'update'])->name('admin.concursos.pre-registros.update');
+    Route::delete('/admin/pre-registros/{preRegistro}', [PreRegistroConcursoController::class, 'destroy'])->name('admin.concursos.pre-registros.destroy');
+    Route::put('/admin/pre-registros/{preRegistro}/estado', [PreRegistroConcursoController::class, 'updateEstado'])->name('admin.concursos.pre-registros.update-estado');
+    
     
     // Rutas para la gestión de usuarios
     Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
@@ -65,7 +87,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
     Route::delete('/admin/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
     
-    Route::get('/admin/categorias-temas', [AdminController::class, 'categoriasTemas'])->name('admin.categorias-temas');
 
     // Rutas para la gestión de temas
     Route::get('/admin/temas', [TemaController::class, 'index'])->name('admin.temas.index');
@@ -105,12 +126,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/talleres/{taller}', [TallerController::class, 'update'])->name('admin.talleres.update');
     Route::delete('/admin/talleres/{taller}', [TallerController::class, 'destroy'])->name('admin.talleres.destroy');
 
-    Route::get('/admin/concursos', [ConcursoController::class, 'index'])->name('admin.concursos.index');
-    Route::get('/admin/concursos/create', [ConcursoController::class, 'create'])->name('admin.concursos.create');
-    Route::post('/admin/concursos', [ConcursoController::class, 'store'])->name('admin.concursos.store');
-    Route::get('/admin/concursos/{concurso}/edit', [ConcursoController::class, 'edit'])->name('admin.concursos.edit');
-    Route::put('/admin/concursos/{concurso}', [ConcursoController::class, 'update'])->name('admin.concursos.update');
-    Route::delete('/admin/concursos/{concurso}', [ConcursoController::class, 'destroy'])->name('admin.concursos.destroy');
+    
 
     Route::get('/admin/congresos-eventos', [AdminController::class, 'congresosEventos'])->name('admin.congresos-eventos');
     Route::get('/admin/becas', [AdminController::class, 'becas'])->name('admin.becas');

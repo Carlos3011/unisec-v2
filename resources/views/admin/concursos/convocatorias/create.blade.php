@@ -6,7 +6,7 @@
         <h1 class="text-3xl font-bold text-white flex items-center">
             <i class="fas fa-bullhorn mr-3 text-blue-400"></i>Crear Convocatoria
         </h1>
-        <a href="{{ route('admin.convocatorias.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 transition-all duration-150">
+        <a href="{{ route('admin.concursos.convocatorias.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 transition-all duration-150">
             <i class="fas fa-arrow-left mr-2"></i> Volver
         </a>
     </div>
@@ -21,7 +21,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.convocatorias.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6" x-data="{
+    <form action="{{ route('admin.concursos.convocatorias.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6" x-data="{
         currentTab: 'general',
         progress: 20,
         tabs: {

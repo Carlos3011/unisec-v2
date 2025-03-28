@@ -7,10 +7,10 @@
             <i class="fas fa-bullhorn mr-3 text-blue-400"></i>{{ $convocatoria->concurso->titulo }}
         </h1>
         <div class="space-x-2">
-            <a href="{{ route('admin.convocatorias.edit', $convocatoria) }}" class="inline-flex items-center px-4 py-2 bg-yellow-600/20 text-yellow-400 rounded-lg font-semibold text-xs uppercase tracking-widest hover:bg-yellow-600/30 transition-all duration-150">
+            <a href="{{ route('admin.concursos.convocatorias.edit', $convocatoria) }}" class="inline-flex items-center px-4 py-2 bg-yellow-600/20 text-yellow-400 rounded-lg font-semibold text-xs uppercase tracking-widest hover:bg-yellow-600/30 transition-all duration-150">
                 <i class="fas fa-edit mr-2"></i> Editar
             </a>
-            <a href="{{ route('admin.convocatorias.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 transition-all duration-150">
+            <a href="{{ route('admin.concursos.convocatorias.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 transition-all duration-150">
                 <i class="fas fa-arrow-left mr-2"></i> Volver
             </a>
         </div>

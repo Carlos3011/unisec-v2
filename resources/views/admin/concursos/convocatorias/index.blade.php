@@ -5,13 +5,13 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 space-y-4 md:space-y-0">
         <h1 class="text-2xl font-light text-white">Gestión de Convocatorias</h1>
         <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
-            <form method="GET" action="{{ route('admin.convocatorias.index') }}" class="relative w-full md:w-64">
+            <form method="GET" action="{{ route('admin.concursos.convocatorias.index') }}" class="relative w-full md:w-64">
                 <input type="text" name="search" placeholder="Buscar..." value="{{ request('search') }}" class="w-full h-10 pl-10 pr-4 rounded-lg bg-gray-800 border-0 text-gray-300 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 transition-all duration-200">
                 <button type="submit" class="absolute left-3 top-3 text-gray-500">
                     <i class="fas fa-search"></i>
                 </button>
             </form>
-            <a href="{{ route('admin.convocatorias.create') }}" class="flex items-center justify-center h-10 px-4 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all duration-200">
+            <a href="{{ route('admin.concursos.convocatorias.create') }}" class="flex items-center justify-center h-10 px-4 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all duration-200">
                 <i class="fas fa-plus text-sm mr-2"></i>Nueva Convocatoria
             </a>
         </div>
@@ -60,10 +60,10 @@
                     </div>
 
                     <div class="px-6 py-4 bg-gray-800/50 border-t border-gray-700 flex justify-end space-x-2">
-                        <a href="{{ route('admin.convocatorias.show', $convocatoria) }}" class="p-2 text-gray-400 hover:text-blue-400 transition-colors" title="Ver detalles">
+                        <a href="{{ route('admin.concursos.convocatorias.show', $convocatoria) }}" class="p-2 text-gray-400 hover:text-blue-400 transition-colors" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('admin.convocatorias.edit', $convocatoria) }}" class="p-2 text-gray-400 hover:text-yellow-400 transition-colors" title="Editar">
+                        <a href="{{ route('admin.concursos.convocatorias.edit', $convocatoria) }}" class="p-2 text-gray-400 hover:text-yellow-400 transition-colors" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
                         <button data-id="{{ $convocatoria->id }}" class="btn-eliminar p-2 text-gray-400 hover:text-red-400 transition-colors" title="Eliminar">
@@ -76,10 +76,10 @@
                     <i class="fas fa-folder-open text-4xl text-gray-600 mb-4"></i>
                     @if(request('search'))
                         <p class="text-gray-400">No se encontraron convocatorias con "{{ request('search') }}"</p>
-                        <a href="{{ route('admin.convocatorias.index') }}" class="inline-block mt-4 text-blue-400 hover:text-blue-300">Ver todas las convocatorias</a>
+                        <a href="{{ route('admin.concursos.convocatorias.index') }}" class="inline-block mt-4 text-blue-400 hover:text-blue-300">Ver todas las convocatorias</a>
                     @else
                         <p class="text-gray-400">No hay convocatorias registradas</p>
-                        <a href="{{ route('admin.convocatorias.create') }}" class="inline-block mt-4 text-blue-400 hover:text-blue-300">Crear nueva convocatoria</a>
+                        <a href="{{ route('admin.concursos.convocatorias.create') }}" class="inline-block mt-4 text-blue-400 hover:text-blue-300">Crear nueva convocatoria</a>
                     @endif
                 </div>
             @endforelse
@@ -103,7 +103,7 @@
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        fetch(`{{ route('admin.convocatorias.destroy', '') }}/${id}`, {
+                        fetch(`{{ route('admin.concursos.convocatorias.destroy', '') }}/${id}`, {
                             method: 'DELETE',
                             headers: {
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,

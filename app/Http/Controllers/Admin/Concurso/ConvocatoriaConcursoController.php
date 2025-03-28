@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Concurso;
 
 use App\Http\Controllers\Controller;
 use App\Models\ConvocatoriaConcurso;
@@ -23,13 +23,13 @@ class ConvocatoriaConcursoController extends Controller
             ->latest()
             ->get();
         
-        return view('admin.convocatorias.index', compact('convocatorias', 'search'));
+        return view('admin.concursos.convocatorias.index', compact('convocatorias', 'search'));
     }
 
     public function create()
     {
         $concursos = Concurso::where('estado', 'activo')->get();
-        return view('admin.convocatorias.create', compact('concursos'));
+        return view('admin.concursos.convocatorias.create', compact('concursos'));
     }
 
     public function store(Request $request)
@@ -117,7 +117,7 @@ class ConvocatoriaConcursoController extends Controller
             }
         }
 
-        return redirect()->route('admin.convocatorias.index')
+        return redirect()->route('admin.concursos.convocatorias.index')
             ->with('success', 'Convocatoria creada exitosamente');
     }
 
@@ -125,14 +125,14 @@ class ConvocatoriaConcursoController extends Controller
     {
         $concursos = Concurso::where('estado', 'activo')
             ->get();
-        return view('admin.convocatorias.show', compact('convocatoria', 'concursos'));
+        return view('admin.concursos.convocatorias.show', compact('convocatoria', 'concursos'));
     }
 
     public function edit(ConvocatoriaConcurso $convocatoria)
     {
         $concursos = Concurso::where('estado', 'activo')
             ->get();
-        return view('admin.convocatorias.edit', compact('convocatoria', 'concursos'));
+        return view('admin.concursos.convocatorias.edit', compact('convocatoria', 'concursos'));
     }
 
     public function update(Request $request, ConvocatoriaConcurso $convocatoria)
@@ -218,7 +218,7 @@ class ConvocatoriaConcursoController extends Controller
 
         $convocatoria->save();
 
-        return redirect()->route('admin.convocatorias.index')
+        return redirect()->route('admin.concursos.convocatorias.index')
             ->with('success', 'Convocatoria actualizada exitosamente');
     }
 
