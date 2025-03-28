@@ -23,6 +23,10 @@ use App\Http\Controllers\Admin\Concurso\ConcursoController;
 use App\Http\Controllers\Admin\Concurso\ConvocatoriaConcursoController;
 use App\Http\Controllers\Admin\Concurso\PreRegistroConcursoController;
 
+use App\Http\Controllers\User\Concurso\ConcursoUserController;
+use App\Http\Controllers\User\Concurso\ConvocatoriaUserController;
+use App\Http\Controllers\User\Concurso\PreRegistroUserController;
+
 
 use App\Http\Middleware\RoleMiddleware;
 
@@ -159,7 +163,24 @@ Route::middleware(['auth', 'role:usuario'])->group(function () {
     Route::get('/user/cursos', [UserController::class, 'cursos'])->name('user.cursos');
     Route::get('/user/talleres', [UserController::class, 'talleres'])->name('user.talleres');
     Route::get('/user/ponencias', [UserController::class, 'ponencias'])->name('user.ponencias');
-    Route::get('/user/concursos', [UserController::class, 'concursos'])->name('user.concursos');
+        // Rutas para la gestión de concursos del usuario
+    Route::get('/user/concursos', [ConcursoUserController::class, 'index'])->name('user.concursos.index');
+    Route::get('/user/concursos/{concurso}', [ConcursoUserController::class, 'show'])->name('user.concursos.show');
+
+    // Rutas para la gestión de convocatorias del usuario
+    Route::get('/user/convocatorias', [ConvocatoriaUserController::class, 'index'])->name('user.concursos.convocatorias.index');
+    Route::get('/user/convocatorias/{convocatoria}', [ConvocatoriaUserController::class, 'show'])->name('user.concursos.convocatorias.show');
+
+    // Rutas para la gestión de pre-registros del usuario
+    Route::get('/user/pre-registros', [PreRegistroUserController::class, 'index'])->name('user.concursos.pre-registros.index');
+    Route::get('/user/pre-registros/create/{convocatoria}', [PreRegistroUserController::class, 'create'])->name('user.concursos.pre-registros.create');
+    Route::post('/user/pre-registros', [PreRegistroUserController::class, 'store'])->name('user.concursos.pre-registros.store');
+    Route::get('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'show'])->name('user.concursos.pre-registros.show');
+    Route::get('/user/pre-registros/{preRegistro}/edit', [PreRegistroUserController::class, 'edit'])->name('user.concursos.pre-registros.edit');
+    Route::put('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'update'])->name('user.concursos.pre-registros.update');
+    Route::delete('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'destroy'])->name('user.concursos.pre-registros.destroy');
+
+    
     Route::get('/user/inscripciones', [UserController::class, 'inscripciones'])->name('user.inscripciones');
     Route::get('/user/certificados', [UserController::class, 'certificados'])->name('user.certificados');
     Route::get('/user/pagos', [UserController::class, 'pagos'])->name('user.pagos');
