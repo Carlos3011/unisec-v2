@@ -8,11 +8,14 @@ use App\Models\Concurso;
 use App\Models\ConvocatoriaConcurso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PreRegistroUserController extends Controller
 {
+    use AuthorizesRequests;
     public function index()
     {
+        $this->authorize('viewAny', PreRegistroConcurso::class);
         $preRegistros = PreRegistroConcurso::with('concurso')
             ->where('usuario_id', Auth::id())
             ->latest()
@@ -27,6 +30,7 @@ class PreRegistroUserController extends Controller
 
     public function create($convocatoria)
     {
+        $this->authorize('create', PreRegistroConcurso::class);
         $convocatoria = ConvocatoriaConcurso::findOrFail($convocatoria);
         $concurso = $convocatoria->concurso;
         $concursos = collect([$concurso]);
@@ -78,6 +82,14 @@ class PreRegistroUserController extends Controller
         $preRegistro->load('concurso');
         
         return view('user.concursos.pre-registros.show', compact('preRegistro'));
+    }
+
+    public function edit(PreRegistroConcurso $preRegistro)
+    {
+        $this->authorize('update', $preRegistro);
+        $preRegistro->load('concurso');
+        
+        return view('user.concursos.pre-registros.edit', compact('preRegistro'));
     }
 
     public function update(Request $request, PreRegistroConcurso $preRegistro)

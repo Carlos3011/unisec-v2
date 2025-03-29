@@ -63,15 +63,6 @@
                                     @if($preRegistro->estado === 'pendiente')
                                         <a href="{{ route('user.concursos.pre-registros.edit', $preRegistro) }}"
                                             class="text-yellow-600 hover:text-yellow-900 mr-3">Editar</a>
-                                        <form action="{{ route('user.concursos.pre-registros.destroy', $preRegistro) }}" method="POST"
-                                            class="inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-900"
-                                                onclick="return confirm('¿Estás seguro de que deseas eliminar este pre-registro?')">
-                                                Eliminar
-                                            </button>
-                                        </form>
                                     @endif
                                 </td>
                             </tr>
