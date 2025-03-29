@@ -19,7 +19,7 @@ use App\Http\Controllers\Admin\NoticiaController;
 
 /*----
 | Controladores para la gestión de de concursos
-----*/ 
+----*/
 use App\Http\Controllers\Admin\Concurso\ConcursoController;
 use App\Http\Controllers\Admin\Concurso\ConvocatoriaConcursoController;
 use App\Http\Controllers\Admin\Concurso\PreRegistroConcursoController;
@@ -36,14 +36,14 @@ Route::controller(PublicController::class)->group(function () {
     Route::get('/acerca', 'acerca')->name('acerca');
     Route::get('/ofertas', 'ofertas')->name('ofertas');
 
-    Route::get('/convocatorias','convocatorias')->name('convocatorias');
+    Route::get('/convocatorias', 'convocatorias')->name('convocatorias');
     Route::get('/convocatorias/{convocatoria}', 'show')->name('convocatorias.show');
-    
+
     Route::get('/miembros', 'miembros')->name('miembros');
 
     Route::get('/blog', 'blog')->name('blog');
     Route::get('/noticias/{noticia}', 'showNoticia')->name('noticias.show');
-    
+
     Route::get('/contacto', 'contacto')->name('contacto');
 });
 
@@ -52,14 +52,14 @@ Route::get('/dashboard', function () {
     if (Auth::user()->isAdmin()) {
         return redirect()->route('admin.dashboard');
     } else {
-        return redirect()->route('user.dashboard');
+        return redirect()->route('user.inicio');
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Grupo de rutas para Administradores
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    
+
     // Rutas para la gestión de todo lo relaciona con concursos
     Route::get('/admin/concursos', [ConcursoController::class, 'index'])->name('admin.concursos.index');
     Route::get('/admin/concursos/create', [ConcursoController::class, 'create'])->name('admin.concursos.create');
@@ -82,8 +82,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/pre-registros/{preRegistro}', [PreRegistroConcursoController::class, 'update'])->name('admin.concursos.pre-registros.update');
     Route::delete('/admin/pre-registros/{preRegistro}', [PreRegistroConcursoController::class, 'destroy'])->name('admin.concursos.pre-registros.destroy');
     Route::put('/admin/pre-registros/{preRegistro}/estado', [PreRegistroConcursoController::class, 'updateEstado'])->name('admin.concursos.pre-registros.update-estado');
-    
-    
+
+
     // Rutas para la gestión de usuarios
     Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
     Route::get('/admin/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
@@ -91,7 +91,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
     Route::put('/admin/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
     Route::delete('/admin/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
-    
+
 
     // Rutas para la gestión de temas
     Route::get('/admin/temas', [TemaController::class, 'index'])->name('admin.temas.index');
@@ -113,8 +113,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/cursos', [CursoController::class, 'store'])->name('admin.cursos.store');
     Route::get('/admin/cursos/{curso}/edit', [CursoController::class, 'edit'])->name('admin.cursos.edit');
     Route::put('/admin/cursos/{curso}', [CursoController::class, 'update'])->name('admin.cursos.update');
-    Route::delete('/admin/cursos/{curso}', [CursoController::class, 'destroy'])->name('admin.cursos.destroy');    
-    
+    Route::delete('/admin/cursos/{curso}', [CursoController::class, 'destroy'])->name('admin.cursos.destroy');
+
     // Rutas para la gestión de ponentes
     Route::get('/admin/ponentes', [PonentesController::class, 'index'])->name('admin.ponentes.index');
     Route::get('/admin/ponentes/create', [PonentesController::class, 'create'])->name('admin.ponentes.create');
@@ -131,7 +131,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/talleres/{taller}', [TallerController::class, 'update'])->name('admin.talleres.update');
     Route::delete('/admin/talleres/{taller}', [TallerController::class, 'destroy'])->name('admin.talleres.destroy');
 
-    
+
 
     Route::get('/admin/congresos-eventos', [AdminController::class, 'congresosEventos'])->name('admin.congresos-eventos');
     Route::get('/admin/becas', [AdminController::class, 'becas'])->name('admin.becas');
@@ -155,19 +155,27 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/noticias/{noticia}', [NoticiaController::class, 'update'])->name('admin.noticias.noticia.update');
     Route::delete('/admin/noticias/{noticia}', [NoticiaController::class, 'destroy'])->name('admin.noticias.noticia.destroy');
 
-    
+
 });
 
 // Grupo de rutas para Usuarios
 Route::middleware(['auth', 'role:usuario'])->group(function () {
-    Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+    Route::get('/user/inicio', [UserController::class, 'index'])->name('user.inicio');
+
+    //Ruta para la pagina del sistema solar
+    Route::get('/user/espacio', [UserController::class, 'espacio'])->name('user.espacio');
+
+    //Ruta para la pagina de noticias
+    Route::get('/user/noticias', [UserController::class, 'noticia'])->name('user.noticias');
+    Route::get('/user/noticias/{noticia}', [UserController::class, 'showNoticia'])->name('user.noticias.show');
+
     Route::get('/user/cursos', [UserController::class, 'cursos'])->name('user.cursos');
     Route::get('/user/talleres', [UserController::class, 'talleres'])->name('user.talleres');
     Route::get('/user/ponencias', [UserController::class, 'ponencias'])->name('user.ponencias');
-        // Rutas para la gestión de concursos del usuario
+
+    // Rutas para la gestión de concursos del usuario
     Route::get('/user/concursos', [ConcursoUserController::class, 'index'])->name('user.concursos.index');
     Route::get('/user/concursos/{concurso}', [ConcursoUserController::class, 'show'])->name('user.concursos.show');
-
     // Rutas para la gestión de convocatorias del usuario
     Route::get('/user/convocatorias', [ConvocatoriaUserController::class, 'index'])->name('user.concursos.convocatorias.index');
     Route::get('/user/convocatorias/{convocatoria}', [ConvocatoriaUserController::class, 'show'])->name('user.concursos.convocatorias.show');
@@ -175,13 +183,15 @@ Route::middleware(['auth', 'role:usuario'])->group(function () {
     // Rutas para la gestión de pre-registros del usuario
     Route::get('/user/pre-registros', [PreRegistroUserController::class, 'index'])->name('user.concursos.pre-registros.index');
     Route::get('/user/pre-registros/create/{convocatoria}', [PreRegistroUserController::class, 'create'])->name('user.concursos.pre-registros.create');
+
+
     Route::post('/user/pre-registros', [PreRegistroUserController::class, 'store'])->name('user.concursos.pre-registros.store');
     Route::get('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'show'])->name('user.concursos.pre-registros.show');
     Route::get('/user/pre-registros/{preRegistro}/edit', [PreRegistroUserController::class, 'edit'])->name('user.concursos.pre-registros.edit');
     Route::put('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'update'])->name('user.concursos.pre-registros.update');
     Route::delete('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'destroy'])->name('user.concursos.pre-registros.destroy');
 
-    
+
     Route::get('/user/inscripciones', [UserController::class, 'inscripciones'])->name('user.inscripciones');
     Route::get('/user/certificados', [UserController::class, 'certificados'])->name('user.certificados');
     Route::get('/user/pagos', [UserController::class, 'pagos'])->name('user.pagos');
@@ -198,5 +208,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 

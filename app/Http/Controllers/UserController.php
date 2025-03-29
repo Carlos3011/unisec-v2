@@ -2,51 +2,94 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
+use App\Models\Concurso;
+use App\Models\Noticia;
 
 class UserController extends Controller
 {
-    public function index() {
-        return view('user.dashboard');
+    public function index()
+    {
+        // Obtener concursos activos con sus relaciones
+        $concursos = Concurso::with(['categoria', 'tema', 'convocatorias.fechasImportantes'])
+            ->where('estado', 'activo')
+            ->latest()
+            ->get();
+
+        // Obtener las últimas noticias
+        $noticias = Noticia::with('seccionNoticia')
+            ->latest('fecha_publicacion')
+            ->take(2)
+            ->get();
+
+
+        return view('user.inicio', compact('concursos', 'noticias'));
     }
 
-    public function cursos() {
+    public function espacio()
+    {
+        return view('user.espacio');
+    }
+    public function noticia()
+    {
+        $noticias = Noticia::with('seccionNoticia')
+            ->orderBy('fecha_publicacion', 'desc')
+            ->get();
+        return view('user.noticias.index', compact('noticias'));
+    }
+
+    public function showNoticia(Noticia $noticia)
+    {
+        return view('user.noticias.show', compact('noticia'));
+    }
+
+    public function cursos()
+    {
         return view('user.cursos');
     }
 
-    public function talleres() {
+    public function talleres()
+    {
         return view('user.talleres');
     }
 
-    public function ponencias() {
+    public function ponencias()
+    {
         return view('user.ponencias');
     }
 
-    public function concursos() {
+    public function concursos()
+    {
         return redirect()->route('user.concursos.index');
     }
 
-    public function inscripciones() {
+    public function inscripciones()
+    {
         return view('user.inscripciones');
     }
 
-    public function certificados() {
+    public function certificados()
+    {
         return view('user.certificados');
     }
 
-    public function pagos() {
+    public function pagos()
+    {
         return view('user.pagos');
     }
 
-    public function resenas() {
+    public function resenas()
+    {
         return view('user.resenas');
     }
 
-    public function eventos() {
+    public function eventos()
+    {
         return view('user.eventos');
     }
 
-    public function soporte() {
+    public function soporte()
+    {
         return view('user.soporte');
     }
 }
