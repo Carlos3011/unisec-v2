@@ -3,11 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ConvocatoriaConcurso extends Model
 {
+    public function concurso(): BelongsTo
+    {
+        return $this->belongsTo(Concurso::class, 'concurso_id');
+    }
     use SoftDeletes;
     protected $table = 'convocatorias_concursos';
 
@@ -33,10 +38,6 @@ class ConvocatoriaConcurso extends Model
         'archivo_articulo'
     ];
 
-    public function concurso()
-    {
-        return $this->belongsTo(Concurso::class);
-    }
 
     protected $casts = [
         'asesor_requerido' => 'boolean',
