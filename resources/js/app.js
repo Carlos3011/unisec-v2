@@ -58,10 +58,10 @@ resizeCanvas();
 let stars = Array.from({ length: 150 }, () => ({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    radius: Math.random() * 2 + 0.5,
+    radius: Math.random() * 0.8 + 0.25, // Radio reducido para partículas más pequeñas
     speedX: Math.random() * 0.3 - 0.15,  // Movimiento horizontal leve
-    speedY: Math.random() * 0.6 + 0.2,  // Movimiento vertical más pronunciado
-    opacity: Math.random() * 0.5 + 0.5,
+    speedY: Math.random() * 0.4 + 0.1,  // Movimiento vertical suavizado
+    opacity: Math.random() * 0.45 + 0.45,
     twinkleSpeed: Math.random() * 0.05 + 0.02  // Velocidad de parpadeo
 }));
 
