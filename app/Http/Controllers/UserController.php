@@ -23,7 +23,7 @@ class UserController extends Controller
     }
 
     public function concursos() {
-        return view('user.concursos');
+        return redirect()->route('user.concursos.index');
     }
 
     public function inscripciones() {

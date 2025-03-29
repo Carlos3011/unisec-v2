@@ -50,7 +50,7 @@
                           <a href="{{ route('user.cursos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Cursos</a>
                           <a href="{{ route('user.talleres') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Talleres</a>
                           <a href="{{ route('user.ponencias') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Ponencias</a>
-                          <a href="{{ route('user.concursos') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Concursos</a>
+                          <a href="{{ route('user.concursos.index') }}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Concursos</a>
                       </div>
                   </div>
 
@@ -106,7 +106,7 @@
               <a href="{{ route('user.cursos') }}" class="block text-gray-300 hover:text-white">Cursos</a>
               <a href="{{ route('user.talleres') }}" class="block text-gray-300 hover:text-white">Talleres</a>
               <a href="{{ route('user.ponencias') }}" class="block text-gray-300 hover:text-white">Ponencias</a>
-              <a href="{{ route('user.concursos') }}" class="block text-gray-300 hover:text-white">Concursos</a>
+              <a href="{{ route('user.concursos.index') }}" class="block text-gray-300 hover:text-white">Concursos</a>
             </div>
           </div>
           <div x-data="{ dropdown: false }">

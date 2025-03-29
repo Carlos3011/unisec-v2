@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User\Concurso;
 use App\Http\Controllers\Controller;
 use App\Models\PreRegistroConcurso;
 use App\Models\Concurso;
+use App\Models\ConvocatoriaConcurso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,23 +13,25 @@ class PreRegistroUserController extends Controller
 {
     public function index()
     {
-        $preRegistros = PreRegistroConcurso::with(['concurso'])
-            ->where('user_id', Auth::id())
+        $preRegistros = PreRegistroConcurso::with('concurso')
+            ->where('usuario_id', Auth::id())
             ->latest()
             ->paginate(10);
+
+        $convocatoria = ConvocatoriaConcurso::whereHas('concurso', function($query) {
+            $query->where('estado', 'activo');
+        })->first();
         
-        return view('user.concursos.pre-registros.index', compact('preRegistros'));
+        return view('user.concursos.pre-registros.index', compact('preRegistros', 'convocatoria'));
     }
 
-    public function create()
+    public function create($convocatoria)
     {
-        $concursos = Concurso::where('estado', 'activo')
-            ->whereDoesntHave('preRegistros', function($query) {
-                $query->where('user_id', Auth::id());
-            })
-            ->get();
+        $convocatoria = ConvocatoriaConcurso::findOrFail($convocatoria);
+        $concurso = $convocatoria->concurso;
+        $concursos = collect([$concurso]);
 
-        return view('user.concursos.pre-registros.create', compact('concursos'));
+        return view('user.concursos.pre-registros.create', compact('concursos', 'convocatoria'));
     }
 
     public function store(Request $request)
@@ -42,9 +45,21 @@ class PreRegistroUserController extends Controller
             'comentarios' => 'nullable|string'
         ]);
 
+        // Verificar si el usuario ya tiene un pre-registro activo para este concurso
+        $existingPreRegistro = PreRegistroConcurso::where('usuario_id', Auth::id())
+            ->where('concurso_id', $request->concurso_id)
+            ->whereNull('deleted_at')
+            ->first();
+
+        if ($existingPreRegistro) {
+            return redirect()->route('user.concursos.pre-registros.index')
+                ->with('error', 'Ya tienes un pre-registro para este concurso.');
+        }
+
         $preRegistro = PreRegistroConcurso::create([
-            'user_id' => Auth::id(),
+            'usuario_id' => Auth::id(),
             'concurso_id' => $request->concurso_id,
+            
             'nombre_equipo' => $request->nombre_equipo,
             'integrantes' => $request->integrantes,
             'asesor' => $request->asesor,

@@ -13,7 +13,7 @@ class ConcursoUserController extends Controller
 {
     public function index()
     {
-        $concursos = Concurso::with(['categoria', 'tema', 'convocatoria'])
+        $concursos = Concurso::with(['categoria', 'tema', 'convocatorias'])
             ->where('estado', 'activo')
             ->get();
 
@@ -27,7 +27,7 @@ class ConcursoUserController extends Controller
                 ->with('error', 'El concurso no está disponible.');
         }
 
-        $convocatoria = $concurso->convocatoria;
+        $convocatoria = $concurso->convocatorias->first();
         
         return view('user.concursos.show', compact('concurso', 'convocatoria'));
     }
@@ -39,7 +39,7 @@ class ConcursoUserController extends Controller
                 ->with('error', 'El concurso no está disponible.');
         }
 
-        $convocatoria = $concurso->convocatoria;
+        $convocatoria = $concurso->convocatorias->first();
         if (!$convocatoria) {
             return redirect()->route('user.concursos.show', $concurso)
                 ->with('error', 'La convocatoria no está disponible.');

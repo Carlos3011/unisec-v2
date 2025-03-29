@@ -47,4 +47,7 @@ class PreRegistroConcurso extends Model
     {
         return $this->belongsTo(Concurso::class, 'concurso_id');
     }
+
+
+
 }
