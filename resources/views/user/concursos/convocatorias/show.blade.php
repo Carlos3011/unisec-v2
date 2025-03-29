@@ -26,17 +26,29 @@
                     <h1 class="text-5xl font-bold text-white mb-4 text-center drop-shadow-lg">{{ $convocatoria->concurso->titulo }}</h1>
                     <div class="flex flex-wrap gap-4 text-sm text-white/90 justify-center">
                         <div class="flex items-center space-x-3 bg-white/5 px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/10">
-                            <i class="fas fa-map-marker-alt text-blue-400 text-xl"></i>
+                            <i class="fas fa-rocket text-blue-400 text-xl"></i>
                             <span class="text-lg font-medium">{{ $convocatoria->sede }}</span>
                         </div>
                         <div class="flex items-center space-x-3 bg-white/5 px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/10">
-                            <i class="fas fa-users text-purple-400 text-xl"></i>
+                            <i class="fas fa-users-gear text-blue-400 text-xl"></i>
                             <span class="text-lg font-medium">{{ $convocatoria->dirigido_a }}</span>
                         </div>
                         <div class="flex items-center space-x-3 bg-white/5 px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/10">
                             <i class="fas fa-user-friends text-blue-400 text-xl"></i>
                             <span class="text-lg font-medium">Máximo {{ $convocatoria->max_integrantes }} integrantes</span>
                         </div>
+                        @if($convocatoria->asesor_requerido)
+                            <div class="flex items-center space-x-3 bg-white/5 px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/10">
+                                <i class="fas fa-user-astronaut text-blue-400 text-xl"></i>
+                                <span class="text-lg font-medium">Requiere asesor</span>
+                            </div>
+                        @endif
+                        @if($convocatoria->contacto_email)
+                            <div class="flex items-center space-x-3 bg-white/5 px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/10">
+                                <i class="fas fa-envelope text-blue-400 text-xl"></i>
+                                <span class="text-lg font-medium">{{ $convocatoria->contacto_email }}</span>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -66,6 +78,72 @@
                     </h2>
                     <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify">
                         {!! $convocatoria->requisitos !!}
+                    </div>
+                </div>
+                @endif
+
+                @if($convocatoria->etapas_mision)
+                <div class="bg-white/5 rounded-xl p-6 border border-white/10 transition-all duration-300 hover:bg-white/10 hover:border-white/20">
+                    <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-tasks mr-2 text-blue-400"></i>Etapas de la Misión
+                    </h2>
+                    <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify">
+                        {!! $convocatoria->etapas_mision !!}
+                    </div>
+                </div>
+                @endif
+
+                @if($convocatoria->pruebas_requeridas)
+                <div class="bg-white/5 rounded-xl p-6 border border-white/10 transition-all duration-300 hover:bg-white/10 hover:border-white/20">
+                    <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-vial mr-2 text-blue-400"></i>Pruebas Requeridas
+                    </h2>
+                    <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify">
+                        {!! $convocatoria->pruebas_requeridas !!}
+                    </div>
+                </div>
+                @endif
+
+                @if($convocatoria->documentacion_requerida)
+                <div class="bg-white/5 rounded-xl p-6 border border-white/10 transition-all duration-300 hover:bg-white/10 hover:border-white/20">
+                    <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-rocket mr-2 text-blue-400"></i>Documentación Requerida
+                    </h2>
+                    <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify">
+                        {!! $convocatoria->documentacion_requerida !!}
+                    </div>
+                </div>
+                @endif
+
+                @if($convocatoria->criterios_evaluacion)
+                <div class="bg-white/5 rounded-xl p-6 border border-white/10 transition-all duration-300 hover:bg-white/10 hover:border-white/20">
+                    <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-star mr-2 text-blue-400"></i>Criterios de Evaluación
+                    </h2>
+                    <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify">
+                        {!! $convocatoria->criterios_evaluacion !!}
+                    </div>
+                </div>
+                @endif
+
+                @if($convocatoria->premiacion)
+                <div class="bg-white/5 rounded-xl p-6 border border-white/10 transition-all duration-300 hover:bg-white/10 hover:border-white/20">
+                    <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-trophy mr-2 text-blue-400"></i>Premiación
+                    </h2>
+                    <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify">
+                        {!! $convocatoria->premiacion !!}
+                    </div>
+                </div>
+                @endif
+
+                @if($convocatoria->penalizaciones)
+                <div class="bg-white/5 rounded-xl p-6 border border-white/10 transition-all duration-300 hover:bg-white/10 hover:border-white/20">
+                    <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-exclamation-triangle mr-2 text-blue-400"></i>Penalizaciones
+                    </h2>
+                    <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify">
+                        {!! $convocatoria->penalizaciones !!}
                     </div>
                 </div>
                 @endif
