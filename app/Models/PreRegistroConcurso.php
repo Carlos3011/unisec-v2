@@ -48,6 +48,14 @@ class PreRegistroConcurso extends Model
         return $this->belongsTo(Concurso::class, 'concurso_id');
     }
 
+    /**
+     * Obtiene los integrantes del equipo asociados al pre-registro.
+     */
+    public function integrantes()
+    {
+        return $this->hasMany(IntegranteEquipoConcurso::class, 'pre_registro_concurso_id');
+    }
+
 
 
 }
