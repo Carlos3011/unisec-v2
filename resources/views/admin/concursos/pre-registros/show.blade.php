@@ -90,11 +90,52 @@
                 </div>
             </div>
 
-            <!-- Comentarios -->
+            <!-- Evaluación PDR -->
             <div class="bg-gray-800/50 rounded-xl p-6">
-                <h2 class="text-xl font-semibold text-white mb-4">Comentarios</h2>
+                <h2 class="text-xl font-semibold text-white mb-4">Evaluación PDR</h2>
                 <div class="space-y-4">
-                    <p class="text-white whitespace-pre-line">{{ $preRegistro->comentarios ?: 'Sin comentarios' }}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400 text-sm">Estado PDR:</span>
+                        <span class="px-3 py-1 rounded-full text-xs inline-block
+                            @switch($preRegistro->estado_pdr)
+                                @case('aprobado')
+                                    bg-green-500/20 text-green-500
+                                    @break
+                                @case('pendiente')
+                                    bg-yellow-500/20 text-yellow-500
+                                    @break
+                                @case('rechazado')
+                                    bg-red-500/20 text-red-500
+                                    @break
+                            @endswitch">
+                            {{ ucfirst($preRegistro->estado_pdr) }}
+                        </span>
+                    </div>
+                    @if($preRegistro->archivo_pdr)
+                        <div class="mt-2">
+                            <a href="{{ route('admin.concursos.pre-registros.download-pdr', $preRegistro) }}" 
+                               class="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-300">
+                                <i class="fas fa-download"></i>
+                                <span>Descargar PDR</span>
+                            </a>
+                        </div>
+                    @else
+                        <p class="text-gray-400 italic">No hay archivo PDR disponible</p>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Comentarios de Evaluación -->
+            <div class="bg-gray-800/50 rounded-xl p-6">
+                <h2 class="text-xl font-semibold text-white mb-4">Comentarios de Evaluación</h2>
+                <div class="space-y-4">
+                    <form id="evaluacionForm" class="space-y-4">
+                        <div>
+                            <label for="comentarios_evaluacion" class="block text-sm font-medium text-gray-400 mb-2">Comentarios del Evaluador</label>
+                            <textarea id="comentarios_evaluacion" name="comentarios_evaluacion" rows="4"
+                                      class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ $preRegistro->comentarios_evaluacion }}</textarea>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

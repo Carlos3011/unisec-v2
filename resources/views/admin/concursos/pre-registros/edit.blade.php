@@ -82,9 +82,19 @@
                     </div>
 
                     <div>
-                        <label for="comentarios" class="block text-sm font-medium text-gray-400 mb-1">Comentarios</label>
-                        <textarea name="comentarios" id="comentarios" rows="4" 
-                                  class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('comentarios', $preRegistro->comentarios) }}</textarea>
+                        <label for="estado_pdr" class="block text-sm font-medium text-gray-400 mb-1">Estado PDR</label>
+                        <select name="estado_pdr" id="estado_pdr" 
+                                class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <option value="pendiente" {{ old('estado_pdr', $preRegistro->estado_pdr) === 'pendiente' ? 'selected' : '' }}>Pendiente</option>
+                            <option value="aprobado" {{ old('estado_pdr', $preRegistro->estado_pdr) === 'aprobado' ? 'selected' : '' }}>Aprobado</option>
+                            <option value="rechazado" {{ old('estado_pdr', $preRegistro->estado_pdr) === 'rechazado' ? 'selected' : '' }}>Rechazado</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="comentarios_evaluacion" class="block text-sm font-medium text-gray-400 mb-1">Comentarios de Evaluación</label>
+                        <textarea name="comentarios_evaluacion" id="comentarios_evaluacion" rows="4" 
+                                  class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('comentarios_evaluacion', $preRegistro->comentarios_evaluacion) }}</textarea>
                     </div>
                 </div>
             </div>

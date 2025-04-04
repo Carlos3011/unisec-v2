@@ -82,6 +82,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/pre-registros/{preRegistro}', [PreRegistroConcursoController::class, 'update'])->name('admin.concursos.pre-registros.update');
     Route::delete('/admin/pre-registros/{preRegistro}', [PreRegistroConcursoController::class, 'destroy'])->name('admin.concursos.pre-registros.destroy');
     Route::put('/admin/pre-registros/{preRegistro}/estado', [PreRegistroConcursoController::class, 'updateEstado'])->name('admin.concursos.pre-registros.update-estado');
+    Route::get('/admin/pre-registros/{preRegistro}/download-pdr', [PreRegistroConcursoController::class, 'downloadPdr'])->name('admin.concursos.pre-registros.download-pdr');
 
 
     // Rutas para la gestión de usuarios
