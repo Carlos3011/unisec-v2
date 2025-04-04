@@ -19,18 +19,28 @@ class PreRegistroConcurso extends Model
         'integrantes',
         'asesor',
         'institucion',
-        'comentarios',
-        'estado'
+        'estado',
+        'archivo_pdr',
+        'estado_pdr',
+        'comentarios_pdr',
+        'integrantes_data'
     ];
 
     protected $casts = [
         'integrantes' => 'integer',
-        'estado' => 'string'
+        'estado' => 'string',
+        'estado_pdr' => 'string',
+        'integrantes_data' => 'array'
     ];
 
     const ESTADO_PENDIENTE = 'pendiente';
     const ESTADO_VALIDADO = 'validado';
     const ESTADO_RECHAZADO = 'rechazado';
+
+    const ESTADO_PDR_PENDIENTE = 'pendiente';
+    const ESTADO_PDR_EN_REVISION = 'en revisión';
+    const ESTADO_PDR_APROBADO = 'aprobado';
+    const ESTADO_PDR_RECHAZADO = 'rechazado';
 
     /**
      * Obtiene el usuario asociado al pre-registro.

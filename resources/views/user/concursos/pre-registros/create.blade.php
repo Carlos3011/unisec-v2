@@ -1,5 +1,7 @@
 @extends('layouts.user')
 
+@section('titulo', 'Crear Pre-registro')
+
 @section('contenido')
 <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
     <div class="w-full sm:max-w-md mt-6 px-10 py-10 bg-gradient-to-br from-gray-900 to-black shadow-md overflow-hidden sm:rounded-lg hover:border-orange-400/60 transition-all duration-500 ease-out border border-blue-500/40 relative group group-hover:-translate-y-0.5">
@@ -21,7 +23,7 @@
             </div>
         @endif
 
-        <form action="{{ route('user.concursos.pre-registros.store') }}" method="POST" class="space-y-6">
+        <form action="{{ route('user.concursos.pre-registros.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
             
 
@@ -41,25 +43,140 @@
 
             <div>
                 <label for="integrantes" class="block text-sm font-medium text-white mb-1">Número de Integrantes</label>
-                <input type="number" name="integrantes" id="integrantes" value="{{ old('integrantes') }}" required min="1"
+                <input type="number" name="integrantes" id="integrantes" value="{{ old('integrantes', 1) }}" required min="1" max="5"
+                    class="mt-1 block w-full rounded-md border-gray-300 bg-gray-800/50 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    onchange="actualizarIntegrantes(this.value)">
+            </div>
+
+            <div id="integrantes-container" class="space-y-6">
+                <!-- Los campos de los integrantes se generarán aquí dinámicamente -->
+            </div>
+
+            <script>
+                function actualizarIntegrantes(cantidad) {
+                    cantidad = Math.min(Math.max(parseInt(cantidad) || 1, 1), 5);
+                    document.getElementById('integrantes').value = cantidad;
+                    const container = document.getElementById('integrantes-container');
+                    container.innerHTML = '';
+                    
+                    for (let i = 0; i < cantidad; i++) {
+                        const integranteHtml = `
+                            <div class="bg-gray-800/30 p-4 rounded-lg border border-gray-700 space-y-4">
+                                <div class="flex justify-between items-center cursor-pointer" onclick="toggleIntegrante(${i})">
+                                    <h3 class="text-white font-medium">Integrante ${i + 1}</h3>
+                                    <button type="button" class="text-white hover:text-orange-400 transition-colors">
+                                        <i id="icon-${i}" class="fas fa-chevron-up transform transition-transform duration-300"></i>
+                                    </button>
+                                </div>
+                                
+                                <div id="content-${i}" class="space-y-4 transition-all duration-300 overflow-hidden" style="max-height: ${i === 0 ? 'none' : '0px'}">
+                                    <div>
+                                        <label class="block text-sm font-medium text-white mb-1">Nombre Completo</label>
+                                        <input type="text" name="integrantes_data[${i}][nombre_completo]" required
+                                            value="${i === 0 ? '{{ ($user->name) }}' : ''}"
+                                            class="mt-1 block w-full rounded-md border-gray-300 bg-gray-800/50 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-white mb-1">Matrícula</label>
+                                        <input type="text" name="integrantes_data[${i}][matricula]" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 bg-gray-800/50 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-white mb-1">Carrera</label>
+                                        <input type="text" name="integrantes_data[${i}][carrera]" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 bg-gray-800/50 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-white mb-1">Correo Institucional</label>
+                                        <input type="email" name="integrantes_data[${i}][correo_institucional]" required
+                                            value="${i === 0 ? '{{ ($user->email) }}' : ''}"
+                                            class="mt-1 block w-full rounded-md border-gray-300 bg-gray-800/50 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-white mb-1">Periodo Académico</label>
+                                        <input type="number" name="integrantes_data[${i}][periodo_academico]" required min="1"
+                                            class="mt-1 block w-full rounded-md border-gray-300 bg-gray-800/50 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-white mb-1">Tipo de Periodo</label>
+                                        <select name="integrantes_data[${i}][tipo_periodo]" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 bg-gray-800/50 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                            <option value="semestre">Semestre</option>
+                                            <option value="cuatrimestre">Cuatrimestre</option>
+                                            <option value="trimestre">Trimestre</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        container.insertAdjacentHTML('beforeend', integranteHtml);
+                        
+                        // Establecer la rotación inicial del icono
+                        const icon = document.getElementById(`icon-${i}`);
+                        icon.style.transform = i === 0 ? 'rotate(180deg)' : 'rotate(0deg)';
+                    }
+                }
+
+                function toggleIntegrante(index) {
+                    const content = document.getElementById(`content-${index}`);
+                    const icon = document.getElementById(`icon-${index}`);
+                    
+                    if (content.style.maxHeight !== '0px') {
+                        content.style.maxHeight = '0px';
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                }
+
+                // Inicializar los campos de integrantes al cargar la página
+                document.addEventListener('DOMContentLoaded', function() {
+                    const cantidadInicial = document.getElementById('integrantes').value;
+                    actualizarIntegrantes(cantidadInicial);
+                    
+                    // Inicializar el estado de los paneles: primer panel expandido, los demás colapsados
+                    setTimeout(() => {
+                        const cantidad = document.getElementById('integrantes').value;
+                        for (let i = 0; i < cantidad; i++) {
+                            const content = document.getElementById(`content-${i}`);
+                            const icon = document.getElementById(`icon-${i}`);
+                            
+                            if (i === 0) {
+                                // Expandir el primer panel
+                                content.style.maxHeight = content.scrollHeight + 'px';
+                                icon.style.transform = 'rotate(180deg)';
+                            } else {
+                                // Colapsar los demás paneles
+                                content.style.maxHeight = '0px';
+                                icon.style.transform = 'rotate(0deg)';
+                            }
+                        }
+                    }, 100);
+                });
+            </script>
+
+            <div>
+                <label for="asesor" class="block text-sm font-medium text-white mb-1">Asesor</label>
+                <input type="text" name="asesor" id="asesor" value="{{ old('asesor') }}" required
                     class="mt-1 block w-full rounded-md border-gray-300 bg-gray-800/50 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
             </div>
 
             <div>
-                <label for="asesor" class="block text-sm font-medium text-white mb-1">Asesor (Opcional)</label>
-                <input type="text" name="asesor" id="asesor" value="{{ old('asesor') }}"
+                <label for="institucion" class="block text-sm font-medium text-white mb-1">Institución</label>
+                <input type="text" name="institucion" id="institucion" value="{{ old('institucion') }}" required
                     class="mt-1 block w-full rounded-md border-gray-300 bg-gray-800/50 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
             </div>
 
             <div>
-                <label for="institucion" class="block text-sm font-medium text-white mb-1">Institución (Opcional)</label>
-                <input type="text" name="institucion" id="institucion" value="{{ old('institucion') }}"
+                <label for="archivo_pdr" class="block text-sm font-medium text-white mb-1">Archivo PDR (PDF, DOC, DOCX - Max 10MB)</label>
+                <input type="file" name="archivo_pdr" id="archivo_pdr" accept=".pdf,.doc,.docx" required
                     class="mt-1 block w-full rounded-md border-gray-300 bg-gray-800/50 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-            </div>
-
-            <div>
-                <label for="comentarios" class="block text-sm font-medium text-white mb-1">Comentarios (Opcional)</label>
-                <textarea name="comentarios" id="comentarios" rows="5" class="mt-1 block w-full h-32 rounded-md border-gray-300 bg-gray-800/50 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('comentarios') }}</textarea>
             </div>
 
             <div class="flex justify-between">

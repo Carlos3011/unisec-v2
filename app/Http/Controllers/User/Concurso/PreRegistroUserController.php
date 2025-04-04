@@ -9,6 +9,7 @@ use App\Models\ConvocatoriaConcurso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
 
 class PreRegistroUserController extends Controller
 {
@@ -34,8 +35,11 @@ class PreRegistroUserController extends Controller
         $convocatoria = ConvocatoriaConcurso::findOrFail($convocatoria);
         $concurso = $convocatoria->concurso;
         $concursos = collect([$concurso]);
+        
+        // Obtener el usuario autenticado para pre-llenar el formulario
+        $user = Auth::user();
 
-        return view('user.concursos.pre-registros.create', compact('concursos', 'convocatoria'));
+        return view('user.concursos.pre-registros.create', compact('concursos', 'convocatoria', 'user'));
     }
 
     public function store(Request $request)
@@ -46,7 +50,15 @@ class PreRegistroUserController extends Controller
             'integrantes' => 'required|integer|min:1',
             'asesor' => 'nullable|string|max:255',
             'institucion' => 'nullable|string|max:255',
-            'comentarios' => 'nullable|string'
+            'estado_pdr' => 'nullable|string',
+            'archivo_pdr' => 'required|file|mimes:pdf,doc,docx|max:10240',
+            'integrantes_data' => 'required|array|min:1',
+            'integrantes_data.*.nombre_completo' => 'required|string|max:255',
+            'integrantes_data.*.matricula' => 'required|string|max:50',
+            'integrantes_data.*.carrera' => 'required|string|max:255',
+            'integrantes_data.*.correo_institucional' => 'required|email|max:255',
+            'integrantes_data.*.periodo_academico' => 'required|integer|min:1',
+            'integrantes_data.*.tipo_periodo' => 'required|in:semestre,cuatrimestre,trimestre'
         ]);
 
         // Verificar si el usuario ya tiene un pre-registro activo para este concurso
@@ -63,13 +75,15 @@ class PreRegistroUserController extends Controller
         $preRegistro = PreRegistroConcurso::create([
             'usuario_id' => Auth::id(),
             'concurso_id' => $request->concurso_id,
-            
             'nombre_equipo' => $request->nombre_equipo,
-            'integrantes' => $request->integrantes,
+            'integrantes' => count($request->integrantes_data),
             'asesor' => $request->asesor,
             'institucion' => $request->institucion,
             'comentarios' => $request->comentarios,
-            'estado' => 'pendiente'
+            'estado_pdr' => 'pendiente',
+            'estado' => 'pendiente',
+            'archivo_pdr' => $this->storeFile($request->file('archivo_pdr')),
+            'integrantes_data' => $request->integrantes_data
         ]);
 
         return redirect()->route('user.concursos.pre-registros.index')
@@ -83,6 +97,7 @@ class PreRegistroUserController extends Controller
         
         return view('user.concursos.pre-registros.show', compact('preRegistro'));
     }
+
 
     public function edit(PreRegistroConcurso $preRegistro)
     {
@@ -106,18 +121,77 @@ class PreRegistroUserController extends Controller
             'integrantes' => 'required|integer|min:1',
             'asesor' => 'nullable|string|max:255',
             'institucion' => 'nullable|string|max:255',
-            'comentarios' => 'nullable|string'
+            'comentarios' => 'nullable|string',
+            'estado_pdr' => 'nullable|string',
+            'archivo_pdr' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
+            'integrantes_data' => 'required|array|min:1',
+            'integrantes_data.*.nombre_completo' => 'required|string|max:255',
+            'integrantes_data.*.matricula' => 'required|string|max:50',
+            'integrantes_data.*.carrera' => 'required|string|max:255',
+            'integrantes_data.*.correo_institucional' => 'required|email|max:255',
+            'integrantes_data.*.periodo_academico' => 'required|integer|min:1',
+            'integrantes_data.*.tipo_periodo' => 'required|in:semestre,cuatrimestre,trimestre'
         ]);
 
-        $preRegistro->update($request->only([
-            'nombre_equipo',
-            'integrantes',
-            'asesor',
-            'institucion',
-            'comentarios'
-        ]));
+        $updateData = [
+            'nombre_equipo' => $request->nombre_equipo,
+            'integrantes' => count($request->integrantes_data),
+            'asesor' => $request->asesor,
+            'institucion' => $request->institucion,
+            'integrantes_data' => $request->integrantes_data
+        ];
+
+        // Mantener el estado_pdr actual si no se proporciona uno nuevo
+        if ($request->has('estado_pdr')) {
+            $updateData['estado_pdr'] = $request->estado_pdr;
+        }
+
+        // Manejar la actualización del archivo PDR
+        if ($request->hasFile('archivo_pdr')) {
+            // Eliminar el archivo anterior si existe
+            if ($preRegistro->archivo_pdr) {
+                Storage::disk('public')->delete($preRegistro->archivo_pdr);
+            }
+            // Almacenar el nuevo archivo
+            $updateData['archivo_pdr'] = $this->storeFile($request->file('archivo_pdr'));
+        }
+
+        $preRegistro->update($updateData);
 
         return redirect()->route('user.concursos.pre-registros.show', $preRegistro)
             ->with('success', 'Pre-registro actualizado exitosamente');
+    }
+
+    /**
+     * Almacena un archivo en el sistema de archivos.
+     *
+     * @param \Illuminate\Http\UploadedFile|null $file
+     * @return string|null
+     */
+    private function storeFile($file)
+    {
+        if (!$file) {
+            return null;
+        }
+
+        $path = Storage::disk('public')->put('pdr_files', $file);
+        return $path;
+    }
+
+    /**
+     * Descarga el archivo PDR.
+     *
+     * @param PreRegistroConcurso $preRegistro
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function downloadPDR(PreRegistroConcurso $preRegistro)
+    {
+        $this->authorize('view', $preRegistro);
+
+        if (!$preRegistro->archivo_pdr) {
+            return back()->with('error', 'No hay archivo PDR disponible.');
+        }
+
+        return Storage::disk('public')->download($preRegistro->archivo_pdr);
     }
 }

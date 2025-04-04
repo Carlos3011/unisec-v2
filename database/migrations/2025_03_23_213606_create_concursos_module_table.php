@@ -95,39 +95,11 @@ return new class extends Migration
             $table->enum('estado_pdr', ['pendiente', 'en revisión', 'aprobado', 'rechazado'])->default('pendiente');  // Estado de evaluación del PDR
             $table->text('comentarios_pdr')->nullable();  // Comentarios sobre el PDR
             
-            // Campos para CDR
-            $table->string('archivo_cdr')->nullable();  // Archivo CDR
-            $table->enum('estado_cdr', ['pendiente', 'en revisión', 'aprobado', 'rechazado'])->default('pendiente');  // Estado de evaluación del CDR
-            $table->text('comentarios_cdr')->nullable();  // Comentarios sobre el CDR
-            
-            // Campos para PFR
-            $table->string('archivo_pfr')->nullable();  // Archivo PFR
-            $table->enum('estado_pfr', ['pendiente', 'en revisión', 'aprobado', 'rechazado'])->default('pendiente');  // Estado de evaluación del PFR
-            $table->text('comentarios_pfr')->nullable();  // Comentarios sobre el PFR
-            
-            // Campos para Artículo
-            $table->string('archivo_articulo')->nullable();  // Archivo del artículo
-            $table->enum('estado_articulo', ['pendiente', 'en revisión', 'aprobado', 'rechazado'])->default('pendiente');  // Estado de evaluación del artículo
-            $table->text('comentarios_articulo')->nullable();  // Comentarios sobre el artículo
+            // Campo JSON para almacenar los datos de los integrantes
+            $table->json('integrantes_data')->nullable();  // Almacena los datos de los integrantes en formato JSON
             
             $table->timestamps();  // Registra las fechas de creación y actualización.
             $table->softDeletes();  // Permite el borrado suave de los pre-registros.
-        });
-
-        // Creación de la tabla 'integrantes_equipo_concurso' para almacenar los nombres de los integrantes del equipo.
-        Schema::create('integrantes_equipo_concurso', function (Blueprint $table) {
-            $table->id();  // Clave primaria.
-            $table->foreignId('pre_registro_concurso_id')->constrained('pre_registro_concursos')->onDelete('cascade');  // Relación con la tabla pre_registro_concursos.
-            $table->string('nombre_integrante');  // Nombre del integrante del equipo.
-            $table->string('matricula');  // Matrícula o identificador único del estudiante.
-            $table->string('carrera');  // Programa académico que cursa el estudiante.
-            $table->string('institucion');  // Institución educativa a la que pertenece.
-            $table->string('correo_institucional')->unique();  // Correo electrónico institucional del estudiante.
-            $table->string('documento_institucional');  // Documento que valida la pertenencia a la institución.
-            $table->integer('periodo_academico')->unsigned();  // Número del periodo académico que cursa el estudiante.
-            $table->enum('tipo_periodo', ['semestre', 'cuatrimestre'])->default('semestre');  // Tipo de periodo académico.
-            $table->timestamps();  // Registra las fechas de creación y actualización.
-            $table->softDeletes();  // Permite el borrado suave de los integrantes.
         });
 
         // Creación de la tabla 'pagos_concursos' para registrar los pagos realizados por los participantes en los concursos.
@@ -150,7 +122,6 @@ return new class extends Migration
     {
         // Eliminación de las tablas creadas en caso de revertir la migración.
         Schema::dropIfExists('pagos_concursos');
-        Schema::dropIfExists('integrantes_equipo_concurso');
         Schema::dropIfExists('pre_registro_concursos');
         Schema::dropIfExists('inscripciones_concursos');
         Schema::dropIfExists('imagenes_concursos');

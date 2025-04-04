@@ -188,6 +188,7 @@ Route::middleware(['auth', 'role:usuario'])->group(function () {
     Route::post('/user/pre-registros', [PreRegistroUserController::class, 'store'])->name('user.concursos.pre-registros.store');
     Route::get('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'show'])->name('user.concursos.pre-registros.show');
     Route::get('/user/pre-registros/{preRegistro}/edit', [PreRegistroUserController::class, 'edit'])->name('user.concursos.pre-registros.edit');
+    Route::get('/user/pre-registros/{preRegistro}/download-pdr', [PreRegistroUserController::class, 'downloadPdr'])->name('user.concursos.pre-registros.download-pdr');
     Route::put('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'update'])->name('user.concursos.pre-registros.update');
     Route::delete('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'destroy'])->name('user.concursos.pre-registros.destroy');
 
