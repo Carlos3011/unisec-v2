@@ -3,8 +3,8 @@
 @section('titulo', 'Editar Pre-registro')
 
 @section('contenido')
-<div class="relative z-10 min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-    <div class="w-full sm:max-w-2xl mt-6 px-10 py-10 bg-gradient-to-br from-gray-900 via-orange-900/20 to-black shadow-2xl overflow-hidden sm:rounded-xl hover:border-orange-400/60 transition-all duration-500 ease-out border border-orange-500/40 relative group hover:-translate-y-1 backdrop-blur-sm">
+<div class="min-h-screen flex flex-col sm:justify-center items-center p-4 sm:p-6">
+    <div class="w-full max-w-2xl mx-auto mt-6 px-4 sm:px-10 py-8 sm:py-10 bg-gradient-to-br from-gray-900 via-orange-900/20 to-black shadow-md overflow-hidden rounded-lg sm:rounded-xl hover:border-orange-400/60 transition-all duration-500 ease-out border border-orange-500/40 relative group hover:-translate-y-0.5 backdrop-blur-sm">
         <h2 class="text-2xl font-bold mb-6 text-center text-white">Editar Pre-registro</h2>
 
         @if ($errors->any())
