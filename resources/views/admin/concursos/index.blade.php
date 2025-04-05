@@ -48,7 +48,6 @@ use Carbon\Carbon;
                     <tr>
                         <th class="px-4 py-3 text-left">Título</th>
                         <th class="px-4 py-3 text-left">Categoría</th>
-                        <th class="px-4 py-3 text-left">Tema</th>
                         <th class="px-4 py-3 text-center">Estado</th>
                         <th class="px-4 py-3 text-center">Pre-registrados</th>
                         <th class="px-4 py-3 text-center">Inscritos</th>
@@ -60,7 +59,6 @@ use Carbon\Carbon;
                         <tr class="hover:bg-gray-800/50">
                             <td class="px-4 py-3">{{ $concurso->titulo }}</td>
                             <td class="px-4 py-3">{{ $concurso->categoria->nombre }}</td>
-                            <td class="px-4 py-3">{{ $concurso->tema->nombre }}</td>
                             <td class="px-4 py-3 text-center">
                                 <span class="px-3 py-1 rounded-full text-xs
                                     @switch($concurso->estado)

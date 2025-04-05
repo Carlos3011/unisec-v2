@@ -16,7 +16,7 @@ class Ponencia extends Model
         'titulo',
         'descripcion',
         'categoria_id',
-        'tema_id',
+
         'ponente_id',
         'fecha',
         'estado'
@@ -36,10 +36,7 @@ class Ponencia extends Model
         return $this->belongsTo(Categoria::class);
     }
 
-    public function tema()
-    {
-        return $this->belongsTo(Tema::class);
-    }
+
 
     public function ponente()
     {

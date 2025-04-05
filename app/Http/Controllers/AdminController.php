@@ -16,10 +16,6 @@ class AdminController extends Controller
         return view('admin.usuarios');
     }
 
-    public function categoriasTemas()
-    {
-        return view('admin.categorias-temas');
-    }
 
     public function cursos()
     {

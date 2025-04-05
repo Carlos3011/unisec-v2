@@ -15,7 +15,7 @@ class Concurso extends Model
     protected $fillable = [
         'titulo',
         'categoria_id',
-        'tema_id',
+    
         'estado'
     ];
 
@@ -32,10 +32,7 @@ class Concurso extends Model
         return $this->belongsTo(Categoria::class);
     }
 
-    public function tema()
-    {
-        return $this->belongsTo(Tema::class);
-    }
+
 
     public function inscripciones()
     {

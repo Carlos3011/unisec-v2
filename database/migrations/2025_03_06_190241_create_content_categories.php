@@ -15,19 +15,10 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        Schema::create('temas', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre');
-            $table->text('descripcion');
-            $table->timestamps();
-            $table->softDeletes();
-        });
     }
 
     public function down()
     {
-        Schema::dropIfExists('temas');
         Schema::dropIfExists('categorias');
     }
 };

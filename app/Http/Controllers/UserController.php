@@ -11,7 +11,7 @@ class UserController extends Controller
     public function index()
     {
         // Obtener concursos activos con sus relaciones
-        $concursos = Concurso::with(['categoria', 'tema', 'convocatorias.fechasImportantes'])
+        $concursos = Concurso::with(['categoria', 'convocatorias.fechasImportantes'])
             ->where('estado', 'activo')
             ->latest()
             ->get();

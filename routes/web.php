@@ -93,15 +93,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
     Route::delete('/admin/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
 
-
-    // Rutas para la gestión de temas
-    Route::get('/admin/temas', [TemaController::class, 'index'])->name('admin.temas.index');
-    Route::get('/admin/temas/create', [TemaController::class, 'create'])->name('admin.temas.create');
-    Route::post('/admin/temas', [TemaController::class, 'store'])->name('admin.temas.store');
-    Route::get('/admin/temas/{tema}/edit', [TemaController::class, 'edit'])->name('admin.temas.edit');
-    Route::put('/admin/temas/{tema}', [TemaController::class, 'update'])->name('admin.temas.update');
-    Route::delete('/admin/temas/{tema}', [TemaController::class, 'destroy'])->name('admin.temas.destroy');
-
     // Rutas para la gestión de categorías
     Route::get('/admin/categorias', [CategoriaController::class, 'index'])->name('admin.categorias.index');
     Route::post('/admin/categorias', [CategoriaController::class, 'store'])->name('admin.categorias.store');

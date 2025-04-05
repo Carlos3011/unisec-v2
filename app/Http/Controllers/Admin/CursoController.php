@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Curso;
 use App\Models\Categoria;
-use App\Models\Tema;
 use App\Models\Ponente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +22,7 @@ class CursoController extends Controller
 
     public function index()
     {
-        $cursos = Curso::with(['categoria', 'inscripciones', 'tema', 'ponente'])
+        $cursos = Curso::with(['categoria', 'inscripciones', 'ponente'])
             ->withCount('inscripciones as inscritos_count')
             ->get()
             ->map(function($curso) {
@@ -32,7 +31,6 @@ class CursoController extends Controller
                     'nombre' => $curso->titulo,
                     'descripcion' => $curso->descripcion,
                     'categoria' => $curso->categoria->nombre,
-                    'tema' => $curso->tema->nombre,
                     'ponente' => $curso->ponente->nombre,
                     'duracion' => $this->calcularDuracion($curso->fecha_inicio, $curso->fecha_fin),
                     'costo' => $curso->costo,
@@ -41,18 +39,15 @@ class CursoController extends Controller
                 ];
             });
         $categorias = Categoria::all();
-        $temas = Tema::all();
-        return view('admin.cursos.index', compact('cursos', 'categorias', 'temas'));
+        return view('admin.cursos.index', compact('cursos', 'categorias'));
     }
 
     public function create()
     {
         $categorias = Categoria::all();
-        $temas = Tema::all();
         $ponentes = Ponente::all();
         return view('admin.cursos.create')->with([
             'categorias' => $categorias,
-            'temas' => $temas,
             'ponentes' => $ponentes
         ]);
     }
@@ -60,9 +55,8 @@ class CursoController extends Controller
     public function edit(Curso $curso)
     {
         $categorias = Categoria::all();
-        $temas = Tema::all();
         $ponentes = Ponente::all();
-        return view('admin.cursos.edit', compact('curso', 'categorias', 'temas', 'ponentes'));
+        return view('admin.cursos.edit', compact('curso', 'categorias', 'ponentes'));
     }
     
 
@@ -74,7 +68,7 @@ class CursoController extends Controller
                 'titulo' => 'required|string|max:255',
                 'descripcion' => 'required|string',
                 'categoria_id' => 'required|exists:categorias,id',
-                'tema_id' => 'required|exists:temas,id',
+
                 'ponente_id' => 'required|exists:ponentes,id',
                 'costo' => 'required|numeric|min:0',
                 'fecha_inicio' => 'required|date',
@@ -96,7 +90,7 @@ class CursoController extends Controller
     {
         return response()->json([
             'success' => true,
-            'curso' => $curso->load('categoria', 'tema', 'ponente')
+            'curso' => $curso->load('categoria', 'ponente')
         ]);
     }
 
@@ -108,7 +102,7 @@ class CursoController extends Controller
                 'titulo' => 'required|string|max:255',
                 'descripcion' => 'required|string',
                 'categoria_id' => 'required|exists:categorias,id',
-                'tema_id' => 'required|exists:temas,id',
+
                 'ponente_id' => 'required|exists:ponentes,id',
                 'costo' => 'required|numeric|min:0',
                 'fecha_inicio' => 'required|date',

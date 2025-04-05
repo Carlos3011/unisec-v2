@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();  // Creación de la columna 'id' como clave primaria.
             $table->string('titulo');  // Título del concurso.
             $table->foreignId('categoria_id')->constrained('categorias')->onDelete('cascade');  // Relación con la tabla 'categorias', eliminando concursos si se elimina la categoría.
-            $table->foreignId('tema_id')->constrained('temas')->onDelete('cascade');  // Relación con la tabla 'temas', eliminando concursos si se elimina el tema.
+
             $table->enum('estado', ['activo', 'inactivo', 'pendiente'])->default('pendiente');  // Estado del concurso, con valor por defecto 'pendiente'.
             $table->timestamps();  // Registra las fechas de creación y actualización.
             $table->softDeletes();  // Permite el borrado suave (no físico) de registros.

@@ -51,18 +51,7 @@
                     </select>
                 </div>
 
-                <div class="space-y-2">
-                    <label for="tema_id" class="block text-sm font-medium text-white">Tema <span class="text-red-500">*</span></label>
-                    <select name="tema_id" id="tema_id" required
-                        class="w-full px-4 py-3 bg-gray-800/70 border border-gray-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500/50 transition-all duration-200 text-white">
-                        <option value="">Seleccionar tema</option>
-                        @foreach($temas as $tema)
-                            <option value="{{ $tema->id }}" {{ old('tema_id') == $tema->id ? 'selected' : '' }}>
-                                {{ $tema->nombre }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+
             </div>
 
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\User\Concurso;
 use App\Http\Controllers\Controller;
 use App\Models\Concurso;
 use App\Models\Categoria;
-use App\Models\Tema;
 use App\Models\ConvocatoriaConcurso;
 use Illuminate\Http\Request;
 
@@ -13,7 +12,7 @@ class ConcursoUserController extends Controller
 {
     public function index()
     {
-        $concursos = Concurso::with(['categoria', 'tema', 'convocatorias'])
+        $concursos = Concurso::with(['categoria', 'convocatorias'])
             ->where('estado', 'activo')
             ->get();
 
@@ -52,24 +51,10 @@ class ConcursoUserController extends Controller
     {
         $categoria_id = $request->input('categoria_id');
         
-        $concursos = Concurso::with(['categoria', 'tema'])
+        $concursos = Concurso::with(['categoria'])
             ->where('estado', 'activo')
             ->when($categoria_id, function($query) use ($categoria_id) {
                 return $query->where('categoria_id', $categoria_id);
-            })
-            ->get();
-
-        return response()->json($concursos);
-    }
-
-    public function filterByTema(Request $request)
-    {
-        $tema_id = $request->input('tema_id');
-        
-        $concursos = Concurso::with(['categoria', 'tema'])
-            ->where('estado', 'activo')
-            ->when($tema_id, function($query) use ($tema_id) {
-                return $query->where('tema_id', $tema_id);
             })
             ->get();
 

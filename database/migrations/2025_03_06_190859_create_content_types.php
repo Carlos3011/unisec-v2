@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('titulo');
             $table->text('descripcion');
             $table->foreignId('categoria_id')->constrained('categorias');
-            $table->foreignId('tema_id')->constrained('temas');
             $table->foreignId('ponente_id')->constrained('ponentes');
             $table->decimal('costo', 10, 2);
             $table->date('fecha_inicio');
@@ -36,7 +35,6 @@ return new class extends Migration
             $table->string('titulo');
             $table->text('descripcion');
             $table->foreignId('categoria_id')->constrained('categorias');
-            $table->foreignId('tema_id')->constrained('temas');
             $table->foreignId('ponente_id')->constrained('ponentes');
             $table->decimal('costo', 10, 2);
             $table->date('fecha');
@@ -49,7 +47,6 @@ return new class extends Migration
             $table->string('titulo');
             $table->text('descripcion');
             $table->foreignId('categoria_id')->constrained('categorias');
-            $table->foreignId('tema_id')->constrained('temas');
             $table->foreignId('ponente_id')->constrained('ponentes');
             $table->date('fecha');
             $table->timestamps();
