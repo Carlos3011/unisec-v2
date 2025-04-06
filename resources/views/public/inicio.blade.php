@@ -23,27 +23,7 @@
                     Consorcio internacional líder en ingeniería aeroespacial avanzada y desarrollo de tecnologías espaciales
                     sostenibles
                 </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
-                    <a href="#inscripcion"
-                        class="relative px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-white bg-secondary hover:bg-cyan-400 transition-all duration-300 shadow-lg flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                            <path fill-rule="evenodd"
-                                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        Ver programas académicos
-                    </a>
-                    <a href="#innovaciones"
-                        class="relative border-2 border-primary px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-white hover:bg-primary/10 transition-all duration-300 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        Video institucional
-                    </a>
-                </div>
+
             </div>
         </div>
     </section>
@@ -268,174 +248,43 @@
     <!-- SECCIÓN NOTICIAS -->
     <section class="relative py-24 bg-gradient-to-br from-cosmic-500 via-cosmic-700 to-black overflow-hidden"
         data-aos="fade-up">
-        <div class="absolute inset-0 pointer-events-none">
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.05),_transparent_60%)]">
-            </div>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-
-            @php
-                // Arreglo de noticias directamente en la vista
-                $noticias = [
-                    [
-                        'tipo' => 'actual',
-                        'titulo' => 'Descubrimiento de un nuevo exoplaneta habitable',
-                        'descripcion' =>
-                            'Astrónomos han detectado un exoplaneta con características similares a la Tierra en la zona habitable de su estrella.',
-                        'fecha' => '2025-03-10',
-                        'categoria' => 'Astronomía',
-                        'img' => 'spacex-despegue.jpg',
-                    ],
-                    [
-                        'tipo' => 'actual',
-                        'titulo' => 'NASA prueba motor de fusión nuclear',
-                        'descripcion' =>
-                            'La NASA ha completado la primera prueba de un motor de fusión nuclear para viajes espaciales interplanetarios.',
-                        'fecha' => '2025-03-12',
-                        'categoria' => 'Exploración Espacial',
-                        'img' => 'spacex-despegue.jpg',
-                    ],
-                    [
-                        'tipo' => 'actual',
-                        'titulo' => 'NASA prueba motor de fusión nuclear',
-                        'descripcion' =>
-                            'La NASA ha completado la primera prueba de un motor de fusión nuclear para viajes espaciales interplanetarios.',
-                        'fecha' => '2025-03-12',
-                        'categoria' => 'Exploración Espacial',
-                        'img' => 'spacex-despegue.jpg',
-                    ],
-                    [
-                        'tipo' => 'historica',
-                        'titulo' => '50 años del aterrizaje en la Luna',
-                        'descripcion' =>
-                            'Se conmemoran 50 años desde que el Apolo 11 llevó al hombre a la Luna, un evento que cambió la historia.',
-                        'fecha' => '2025-03-15',
-                        'categoria' => 'Historia Espacial',
-                        'img' => 'spacex-despegue.jpg',
-                    ],
-                    [
-                        'tipo' => 'historica',
-                        'titulo' => '50 años del aterrizaje en la Luna',
-                        'descripcion' =>
-                            'Se conmemoran 50 años desde que el Apolo 11 llevó al hombre a la Luna, un evento que cambió la historia.',
-                        'fecha' => '2025-03-15',
-                        'categoria' => 'Historia Espacial',
-                        'img' => 'spacex-despegue.jpg',
-                    ],
-                    [
-                        'tipo' => 'historica',
-                        'titulo' => '50 años del aterrizaje en la Luna',
-                        'descripcion' =>
-                            'Se conmemoran 50 años desde que el Apolo 11 llevó al hombre a la Luna, un evento que cambió la historia.',
-                        'fecha' => '2025-03-15',
-                        'categoria' => 'Historia Espacial',
-                        'img' => 'spacex-despegue.jpg',
-                    ],
-                ];
-
-                // Filtrar noticias por tipo
-                $noticiasActuales = array_filter($noticias, fn($n) => $n['tipo'] === 'actual');
-                $noticiasCulturalesHistoricas = array_filter(
-                    $noticias,
-                    fn($n) => in_array($n['tipo'], ['historica', 'cultural']),
-                );
-            @endphp
-
-            <!-- Noticias Actuales -->
-            <div class="mb-24">
-                <div class="text-center mb-16">
-                    <h2
-                        class="text-5xl md:text-6xl lg:text-7xl bg-gradient-to-r from-accent-300 to-primary bg-clip-text text-transparent font-extrabold mb-6 text-glow">
-                        Noticias Actuales
-                    </h2>
-                    <p class="text-tech-300 max-w-xl mx-auto text-lg">
-                        Mantente informado con nuestros últimos avances y logros.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                    @foreach ($noticiasActuales as $noticia)
-                        <article
-                            class="group relative bg-tech-700/30 rounded-2xl border border-tech-500 hover:border-secondary transition-all duration-500 hover:-translate-y-2 shadow-xl hover:shadow-accent-500/40 overflow-hidden"
-                            data-aos="fade-up" data-aos-delay="{{ ($loop->index + 1) * 100 }}">
-                            <div class="relative overflow-hidden h-52 sm:h-64 md:h-72">
-                                <img src="{{ asset('images/noticias/' . $noticia['img']) }}"
-                                    alt="{{ $noticia['titulo'] }}"
-                                    class="w-full h-full object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-700 ease-in-out">
-                                <div
-                                    class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                </div>
-                            </div>
-
-                            <div class="p-6">
-                                <div class="flex items-center text-sm text-tech-300 mb-3">
-                                    <span class="mr-4">📅 {{ $noticia['fecha'] }}</span>
-                                    <span>{{ $noticia['categoria'] }}</span>
-                                </div>
-                                <h3
-                                    class="text-xl lg:text-2xl font-bold text-white mb-3 leading-tight transition-colors group-hover:text-accent-100">
-                                    {{ $noticia['titulo'] }}
-                                </h3>
-                                <p class="text-tech-100 line-clamp-3">
-                                    {{ $noticia['descripcion'] }}
-                                </p>
-                                <a href="#"
-                                    class="inline-flex items-center mt-4 text-primary-500 hover:text-primary-300 font-semibold transition-all duration-300">
-                                    Leer más
-                                </a>
-                            </div>
-                        </article>
-                    @endforeach
-                </div>
+        <div class="container mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold text-white mb-4">Últimas Noticias</h2>
+                <p class="text-xl text-gray-300">Mantente informado sobre las últimas novedades en el sector espacial</p>
             </div>
 
-            <!-- Noticias Culturales e Históricas -->
-            <div>
-                <div class="text-center mb-16">
-                    <h2
-                        class="text-5xl md:text-6xl lg:text-7xl bg-gradient-to-r from-primary to-accent-300 bg-clip-text text-transparent font-extrabold mb-6 text-glow">
-                        Cultura y Descubrimientos Espaciales
-                    </h2>
-                    <p class="text-tech-300 max-w-xl mx-auto text-lg">
-                        Explora los hitos históricos y los descubrimientos espaciales que han marcado nuestra travesía.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                    @foreach ($noticiasCulturalesHistoricas as $noticia)
-                        <article
-                            class="group relative bg-tech-900/50 rounded-2xl border border-primary/30 hover:border-primary transition-all duration-500 hover:-translate-y-2 shadow-xl hover:shadow-primary/40 overflow-hidden"
-                            data-aos="fade-up" data-aos-delay="{{ ($loop->index + 1) * 100 }}">
-                            <div class="relative overflow-hidden h-52 sm:h-64 md:h-72">
-                                <img src="{{ asset('images/noticias/' . $noticia['img']) }}"
-                                    alt="{{ $noticia['titulo'] }}"
-                                    class="w-full h-full object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-700 ease-in-out">
-                                <div
-                                    class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                </div>
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                @forelse ($noticias as $noticia)
+                    <article class="bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] hover:ring-2 hover:ring-blue-500/50">
+                        @if($noticia->imagen)
+                            <img src="{{ asset('storage/' . $noticia->imagen) }}" alt="{{ $noticia->titulo }}" class="w-full h-48 object-cover">
+                        @else
+                            <img src="{{ asset('images/exoplanetas.jpg') }}" alt="Imagen por defecto" class="w-full h-48 object-cover">
+                        @endif
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2 line-clamp-2">{{ $noticia->titulo }}</h3>
+                            <p class="text-gray-300 mb-4 line-clamp-3">
+                                {{ Str::limit($noticia->descripcion, 150) }}
+                            </p>
+                            <div class="flex justify-between items-center text-sm text-gray-400 mb-4">
+                                <span>{{ $noticia->fecha_publicacion->format('d/m/Y') }}</span>
+                                <span class="bg-primary/80 px-2 py-1 rounded text-white">{{ $noticia->seccionNoticia->titulo }}</span>
                             </div>
+                            <a href="{{ route('noticias.show', $noticia->id) }}" class="inline-block text-primary font-semibold hover:text-primary-light transition-colors duration-200">Leer más →</a>
+                        </div>
+                    </article>
+                @empty
+                    <div class="col-span-3 text-center py-8">
+                        <p class="text-gray-300 text-xl">No hay noticias disponibles en este momento.</p>
+                    </div>
+                @endforelse
+            </div>
 
-                            <div class="p-6">
-                                <div class="flex items-center text-sm text-primary/80 mb-3">
-                                    <span class="mr-4">📅 {{ $noticia['fecha'] }}</span>
-                                    <span>{{ $noticia['categoria'] }}</span>
-                                </div>
-                                <h3
-                                    class="text-xl lg:text-2xl font-bold text-white mb-3 leading-tight transition-colors group-hover:text-primary-100">
-                                    {{ $noticia['titulo'] }}
-                                </h3>
-                                <p class="text-tech-100 line-clamp-3">
-                                    {{ $noticia['descripcion'] }}
-                                </p>
-                                <a href="#"
-                                    class="inline-flex items-center mt-4 text-blue-500 hover:text-blue-300 font-semibold transition-all duration-300">
-                                    Leer más
-                                </a>
-                            </div>
-                        </article>
-                    @endforeach
-                </div>
+            <div class="text-center mt-12">
+                <a href="{{ route('blog') }}" class="inline-block px-8 py-3 bg-primary text-white rounded-full hover:bg-primary-dark transition-colors duration-300 transform hover:scale-105">
+                    Ver todas las noticias
+                </a>
             </div>
         </div>
     </section>
@@ -450,7 +299,7 @@
     </div>
 
     <!-- SECCIÓN DE COLABORACIONES -->
-    <section class="py-20 bg-gray-800/90 relative overflow-hidden">
+    <section class="py-20  relative overflow-hidden">
         <style>
             .logo-slider {
                 background: transparent;
@@ -520,11 +369,11 @@
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="text-center mb-20">
                 <h2 class="text-4xl font-bold text-white mb-6 relative inline-block">
-                    <span class="relative z-10">Nuestra Red Global</span>
+                    <span class="relative z-10">Nuestra Red Nacional</span>
                     <span
                         class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-secondary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
                 </h2>
-                <p class="text-gray-300 text-lg max-w-2xl mx-auto">Colaborando con líderes internacionales en la nueva era
+                <p class="text-gray-300 text-lg max-w-2xl mx-auto">Colaborando con líderes nacionales en la nueva era
                     espacial</p>
             </div>
 
@@ -660,96 +509,64 @@
             <!-- Encabezado de la Sección -->
             <div class="flex flex-col md:flex-row justify-between items-center mb-16">
                 <div class="md:w-1/2 mb-8 md:mb-0" data-aos="fade-right">
-                    <h2 class="text-4xl font-extrabold text-white mb-6">Próximos Eventos</h2>
-                    <p class="text-gray-300 text-lg">Calendario de lanzamientos y eventos importantes</p>
-                </div>
-                <div class="md:w-1/2 text-right" data-aos="fade-left">
-                    <a href="#"
-                        class="inline-flex items-center text-primary hover:text-secondary font-semibold transition-all duration-300 group">
-                        Ver calendario completo
-                        <svg class="w-4 h-4 ml-2 transition-all duration-300 transform group-hover:translate-x-1"
-                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </a>
+                    <h2 class="text-5xl font-extrabold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent mb-6">Próximos Eventos</h2>
                 </div>
             </div>
 
             <!-- Tarjetas de Eventos -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                @php
-                    // Simulando los próximos eventos de manera estática
-                    $events = [
-                        [
-                            'title' => 'Voyager XIV',
-                            'rocket' => 'Nova-9 Heavy',
-                            'category' => 'Ciencia Planetaria',
-                            'launch_date' => '15 Agosto 2024',
-                            'platform' => 'SLC-40, Cabo Cañaveral',
-                            'progress' => 85,
-                        ],
-                        [
-                            'title' => 'Lunar Exploration',
-                            'rocket' => 'Falcon Heavy',
-                            'category' => 'Exploración Lunar',
-                            'launch_date' => '30 Septiembre 2024',
-                            'platform' => 'LC-39A, Cabo Cañaveral',
-                            'progress' => 60,
-                        ],
-                    ];
-                @endphp
-
-                @foreach ($events as $index => $event)
-                    <div class="relative group" data-aos="fade-up" data-aos-delay="{{ 200 * ($index + 1) }}">
-                        <div
-                            class="bg-cosmic-700 rounded-2xl p-8 border border-cosmic-500 transition-all duration-300 transform group-hover:-translate-y-2 group-hover:scale-105 backdrop-blur-cosmic shadow-lg group-hover:shadow-2xl">
-                            <!-- Información Principal -->
-                            <div class="flex items-center justify-between mb-6">
-                                <div class="flex items-center">
-                                    <div
-                                        class="w-14 h-14 bg-cosmic-500 rounded-full flex items-center justify-center mr-4 shadow-md">
-                                        <span
-                                            class="text-secondary font-bold text-2xl">{{ strtoupper(substr($event['title'], 0, 1)) }}</span>
+                @if($convocatorias->count() > 0)
+                    @foreach($convocatorias as $convocatoria)
+                        <div class="relative" data-aos="fade-up" data-aos-delay="{{ $loop->index * 200 }}">
+                            <div class="bg-cosmic-800/90 backdrop-blur-lg rounded-2xl p-8 border-2 border-cosmic-600 shadow-xl">
+                                <!-- Información Principal -->
+                                <div class="flex items-center justify-between mb-8">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-16 h-16 bg-gradient-to-br from-cosmic-600 to-cosmic-400 rounded-2xl flex items-center justify-center shadow-lg">
+                                            <span class="text-white font-bold text-2xl">{{ strtoupper(substr($convocatoria->concurso->titulo, 0, 1)) }}</span>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-white mb-1">{{ $convocatoria->concurso->titulo }}</h3>
+                                            <p class="text-white">{{ $convocatoria->sede }}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h3 class="text-2xl font-semibold text-white">{{ $event['title'] }}</h3>
-                                        <p class="text-gray-400 text-sm">Cohete: {{ $event['rocket'] }}</p>
+                                    <span class="text-sm text-white px-4 py-2 rounded-xl font-medium">{{ $convocatoria->dirigido_a }}</span>
+                                </div>
+
+                                <!-- Información Adicional -->
+                                @if($convocatoria->fechasImportantes->isNotEmpty())
+                                    <div class="space-y-3 mb-8">
+                                        <h4 class="text-white font-semibold mb-4">Fechas Importantes</h4>
+                                        @foreach($convocatoria->fechasImportantes->take(2) as $fecha)
+                                            <div class="flex items-center text-sm bg-cosmic-700/50 rounded-xl p-4 border border-cosmic-500">
+                                                <i class="fas fa-calendar-alt text-secondary mr-4 text-lg"></i>
+                                                <div>
+                                                    <span class="font-medium text-white">{{ $fecha->titulo }}</span>
+                                                    <span class="ml-2 text-white">{{ \Carbon\Carbon::parse($fecha->fecha)->format('d/m/Y') }}</span>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                </div>
-                                <span
-                                    class="text-sm bg-primary/20 text-primary px-3 py-1 rounded-full">{{ $event['category'] }}</span>
-                            </div>
+                                @endif
 
-                            <!-- Información Adicional -->
-                            <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
-                                <div>
-                                    <div class="mb-1">Fecha de lanzamiento</div>
-                                    <div class="text-white font-medium">{{ $event['launch_date'] }}</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="mb-1">Plataforma</div>
-                                    <div class="text-white font-medium">{{ $event['platform'] }}</div>
-                                </div>
-                            </div>
-
-                            <!-- Barra de Progreso -->
-                            <div class="mt-6 relative pt-4">
-                                <div class="flex justify-between text-xs text-gray-500 mb-2">
-                                    <span>Preparación</span>
-                                    <span>{{ $event['progress'] }}%</span>
-                                </div>
-                                <div class="w-full bg-cosmic-500 rounded-full h-2 overflow-hidden">
-                                    <div class="bg-secondary rounded-full h-2 transition-all duration-500"
-                                        style="width: {{ $event['progress'] }}%"></div>
+                                <div class="flex justify-end">
+                                    <a href="{{ route('convocatorias.show', $convocatoria) }}" 
+                                       class="inline-flex items-center px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white rounded-xl font-medium shadow-lg transition-colors duration-300">
+                                        <i class="fas fa-info-circle mr-2"></i>Ver Detalles
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <!-- Elemento decorativo con Blur -->
-                        <div
-                            class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-secondary-700/5 via-primary-100/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    @endforeach
+                @else
+                    <div class="col-span-2 text-center py-12">
+                        <div class="bg-cosmic-800/50 backdrop-blur-lg rounded-2xl p-8 max-w-2xl mx-auto border-2 border-cosmic-600">
+                            <i class="fas fa-calendar-times text-6xl text-cosmic-400 mb-6"></i>
+                            <h2 class="text-2xl font-bold text-white mb-4">No hay eventos próximos</h2>
+                            <p class="text-cosmic-200">En este momento no hay eventos programados. Por favor, vuelve a consultar más tarde.</p>
                         </div>
                     </div>
-                @endforeach
+                @endif
             </div>
         </div>
     </section>

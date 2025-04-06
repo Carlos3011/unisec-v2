@@ -27,91 +27,109 @@
 
         <!-- Logo -->
         <a href="{{ route('inicio') }}" class="flex items-center">
-          <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-32 h-auto">
+          <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-64 h-auto">
         </a>
 
         <!-- Menú principal (versión escritorio) -->
         <div class="hidden lg:flex items-center space-x-6">
           <a href="{{ route('user.inicio') }}"
-            class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2">
+            class="relative text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 transition-all duration-300 before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300 hover:before:w-full">
             <i class="fas fa-home"></i>
             <span>Inicio</span>
           </a>
 
           <a href="{{ route('user.espacio') }}"
-            class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2">
+            class="relative text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 transition-all duration-300 before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300 hover:before:w-full">
             <i class="fa-solid fa-user-astronaut"></i>
             <span>Espacio</span>
           </a>
 
           <a href="{{ route('user.noticias') }}"
-            class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2">
+            class="relative text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 transition-all duration-300 before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300 hover:before:w-full">
             <i class="fa-solid fa-newspaper"></i>
             <span>Noticias</span>
           </a>
 
           <!-- Dropdown de Eventos -->
-          <div class="relative" x-data="{ open: false }">
-            <button @click="open = !open"
-              class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none">
-              <i class="fas fa-graduation-cap"></i>
+          <div class="relative" x-data="{ open: false, timeout: null }" @mouseleave="timeout = setTimeout(() => open = false, 250)" @mouseenter="clearTimeout(timeout)">
+            <button @click="open = !open" @mouseenter="open = true"
+              class="relative text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none transition-all duration-300 before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300 hover:before:w-full group">
+              <i class="fas fa-graduation-cap transition-transform group-hover:scale-110 duration-300"></i>
               <span>Eventos</span>
-              <i class="fas fa-chevron-down"></i>
+              <i class="fas fa-chevron-down transition-transform duration-300" :class="{'rotate-180': open}"></i>
             </button>
-            <div x-show="open" @click.away="open = false"
-              class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-md shadow-xl py-2 z-50">
+            <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+              class="absolute left-0 mt-2 w-48 bg-gray-800/95 backdrop-blur-sm border border-gray-600/50 rounded-lg shadow-xl py-2 z-50">
               <a href="{{ route('user.cursos') }}"
-                class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Cursos</a>
+                class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg">
+                <i class="fas fa-book-open mr-2 opacity-75"></i>Cursos
+              </a>
               <a href="{{ route('user.talleres') }}"
-                class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Talleres</a>
+                class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200">
+                <i class="fas fa-tools mr-2 opacity-75"></i>Talleres
+              </a>
               <a href="{{ route('user.ponencias') }}"
-                class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Ponencias</a>
+                class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200">
+                <i class="fas fa-microphone mr-2 opacity-75"></i>Ponencias
+              </a>
               <a href="{{ route('user.concursos.index') }}"
-                class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Concursos</a>
+                class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200">
+                <i class="fas fa-trophy mr-2 opacity-75"></i>Concursos
+              </a>
             </div>
           </div>
 
           <!-- Dropdown de Pagos -->
-          <div class="relative" x-data="{ open: false }">
-            <button @click="open = !open"
-              class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none">
-              <i class="fas fa-tags"></i>
+          <div class="relative" x-data="{ open: false, timeout: null }" @mouseleave="timeout = setTimeout(() => open = false, 300)" @mouseenter="clearTimeout(timeout)">
+            <button @click="open = !open" @mouseenter="open = true"
+              class="relative text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none transition-all duration-300 before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300 hover:before:w-full group">
+              <i class="fas fa-tags transition-transform group-hover:scale-110 duration-300"></i>
               <span>Pagos</span>
-              <i class="fas fa-chevron-down"></i>
+              <i class="fas fa-chevron-down transition-transform duration-300" :class="{'rotate-180': open}"></i>
             </button>
-            <div x-show="open" @click.away="open = false"
-              class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-md shadow-xl py-2 z-50">
+            <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+              class="absolute left-0 mt-2 w-48 bg-gray-800/95 backdrop-blur-sm border border-gray-600/50 rounded-lg shadow-xl py-2 z-50">
               <a href="{{ route('user.pagos') }}"
-                class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Pagos</a>
+                class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg">
+                <i class="fas fa-credit-card mr-2 opacity-75"></i>Mis Pagos
+              </a>
               <a href="{{ route('user.soporte') }}"
-                class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Soporte</a>
+                class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200">
+                <i class="fas fa-headset mr-2 opacity-75"></i>Soporte
+              </a>
             </div>
           </div>
 
           <!-- Dropdown de Usuario -->
-          <div class="relative" x-data="{ open: false }">
-            <button @click="open = !open"
-              class="text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none">
-              <i class="fas fa-user"></i>
+          <div class="relative" x-data="{ open: false, timeout: null }" @mouseleave="timeout = setTimeout(() => open = false, 300)" @mouseenter="clearTimeout(timeout)">
+            <button @click="open = !open" @mouseenter="open = true"
+              class="relative text-gray-200 hover:text-white px-3 py-2 text-sm font-medium flex items-center space-x-2 focus:outline-none transition-all duration-300 before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-0.5 before:bg-secondary-500 before:transition-all before:duration-300 hover:before:w-full group">
+              <i class="fas fa-user transition-transform group-hover:scale-110 duration-300"></i>
               <span>{{ Auth::user()->name }}</span>
-              <i class="fas fa-chevron-down"></i>
+              <i class="fas fa-chevron-down transition-transform duration-300" :class="{'rotate-180': open}"></i>
             </button>
-            <div x-show="open" @click.away="open = false"
-              class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-md shadow-xl py-2 z-50">
-              <a href="#" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Perfil</a>
-              <a href="{{ route('user.inscripciones') }}"
-                class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Inscripciones</a>
-              <a href="{{ route('user.certificados') }}"
-                class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Certificados</a>
-              <a href="{{ route('user.resenas') }}"
-                class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Reseñas</a>
-              <a href="{{ route('user.eventos') }}"
-                class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Mis Eventos</a>
+            <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+              class="absolute left-0 mt-2 w-48 bg-gray-800/95 backdrop-blur-sm border border-gray-600/50 rounded-lg shadow-xl py-2 z-50">
+              <a href="#" class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200 first:rounded-t-lg">
+                <i class="fas fa-user-circle mr-2 opacity-75"></i>Perfil
+              </a>
+              <a href="{{ route('user.inscripciones') }}" class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200">
+                <i class="fas fa-clipboard-list mr-2 opacity-75"></i>Mis Inscripciones
+              </a>
+              <a href="{{ route('user.certificados') }}" class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200">
+                <i class="fas fa-certificate mr-2 opacity-75"></i>Mis Certificados
+              </a>
+              <a href="{{ route('user.resenas') }}" class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200">
+                <i class="fas fa-star mr-2 opacity-75"></i>Mis Reseñas
+              </a>
+              <a href="{{ route('user.eventos') }}" class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200">
+                <i class="fas fa-calendar-alt mr-2 opacity-75"></i>Mis Eventos
+              </a>
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit"
-                  class="w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Cerrar
-                  Sesión</button>
+                <button type="submit" class="w-full text-left px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200 last:rounded-b-lg">
+                  <i class="fas fa-sign-out-alt mr-2 opacity-75"></i>Cerrar Sesión
+                </button>
               </form>
             </div>
           </div>
@@ -182,8 +200,8 @@
 
       <!-- Logo y descripción -->
       <div class="space-y-4">
-        <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-32 h-auto mx-auto sm:mx-0">
-        <p class="text-sm text-gray-400">Innovación aeroespacial para un futuro sostenible.</p>
+        <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-64 h-auto mx-auto sm:mx-0">
+        <p class="text-sm text-gray-400">Innovación cosmonáutica.</p>
       </div>
 
       <!-- Menú de navegación -->
@@ -204,8 +222,7 @@
       <!-- Información de contacto -->
       <div>
         <h3 class="text-gray-100 text-lg font-semibold mb-4">Contacto</h3>
-        <p class="text-sm"><i class="fas fa-phone-alt mr-2"></i>+1 (555) 123-4567</p>
-        <p class="text-sm"><i class="fas fa-envelope mr-2"></i>contacto@unisec.aero</p>
+        <p class="text-sm text-white"><i class="fas fa-envelope mr-2"></i>contacto@unisec.aero</p>
       </div>
 
       <!-- Redes Sociales -->
@@ -227,7 +244,7 @@
 
     <!-- Copyright -->
     <div class="pt-8 text-center text-sm text-gray-500">
-      &copy; {{ date('Y') }} UniSec Aerospace Consortium. Todos los derechos reservados.
+      &copy; {{ date('Y') }} UNISEC México. Todos los derechos reservados.
     </div>
   </footer>
 

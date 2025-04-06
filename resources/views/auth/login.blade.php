@@ -1,47 +1,55 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" class="space-y-6">
         @csrf
 
+        <!-- Session Status -->
+        <x-auth-session-status class="mb-4" :status="session('status')" />
+
         <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Correo  electrónico')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+        <div class="space-y-2">
+            <x-input-label for="email" :value="__('Correo electrónico')" class="text-white/90" />
+            <x-text-input id="email" 
+                class="block w-full bg-white/10 border-white/20 focus:border-primary focus:ring-primary text-white" 
+                type="email" 
+                name="email" 
+                :value="old('email')" 
+                required 
+                autofocus 
+                autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Contraseña')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
+        <div class="space-y-2">
+            <x-input-label for="password" :value="__('Contraseña')" class="text-white/90" />
+            <x-text-input id="password" 
+                class="block w-full bg-white/10 border-white/20 focus:border-primary focus:ring-primary text-white"
+                type="password"
+                name="password"
+                required 
+                autocomplete="current-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-primary-600 shadow-sm focus:ring-primary-500" name="remember">
-                <span class="ms-2 text-sm text-white">{{ __('Recordar mi sesión') }}</span>
-            </label>
-        </div>
+            <!-- Remember Me -->
+            <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 mt-6">
+                <div class="flex items-center">
+                    <input id="remember_me" 
+                        type="checkbox" 
+                        class="rounded-md border-white/20 bg-white/10 text-primary focus:ring-primary transition-all duration-300" 
+                        name="remember">
+                    <span class="ms-2 text-sm text-white/90 hover:text-primary transition-colors duration-300">{{ __('Recordar mi sesión') }}</span>
+                </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-white hover:text-cyan-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Olvidaste tu contraseña?') }}
-                </a>
-            @endif
+                @if (Route::has('password.request'))
+                    <a class="text-sm text-white/90 hover:text-primary transition-colors duration-300" 
+                        href="{{ route('password.request') }}">
+                        {{ __('Olvidaste tu contraseña?') }}
+                    </a>
+                @endif
+            </div>
 
-            <x-primary-button class="ms-3">
+            <x-primary-button class="w-full justify-center py-3 bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 rounded-xl">
                 {{ __('Iniciar sesión') }}
             </x-primary-button>
-        </div>
-    </form>
+        </form>
 </x-guest-layout>

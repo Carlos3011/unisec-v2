@@ -34,7 +34,7 @@ use App\Http\Middleware\RoleMiddleware;
 Route::controller(PublicController::class)->group(function () {
     Route::get('/', 'inicio')->name('inicio');
     Route::get('/acerca', 'acerca')->name('acerca');
-    Route::get('/ofertas', 'ofertas')->name('ofertas');
+    Route::get('/espacio', 'espacio')->name('espacio');
 
     Route::get('/convocatorias', 'convocatorias')->name('convocatorias');
     Route::get('/convocatorias/{convocatoria}', 'show')->name('convocatorias.show');

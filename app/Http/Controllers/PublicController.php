@@ -10,15 +10,24 @@ use App\Models\Noticia;
 class PublicController extends Controller
 {
     public function inicio() {
-        return view('public.inicio');
+        $convocatorias = ConvocatoriaConcurso::with(['fechasImportantes', 'concurso'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $noticias = Noticia::with(['seccionNoticia'])
+            ->orderBy('fecha_publicacion', 'desc')
+            ->take(3)
+            ->get();
+
+        return view('public.inicio', compact('convocatorias', 'noticias'));
     }
 
     public function acerca() {
         return view('public.acerca');
     }
 
-    public function ofertas() {
-        return view('public.ofertas');
+    public function espacio() {
+        return view('public.espacio');
     }
 
     public function convocatorias() {

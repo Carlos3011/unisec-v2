@@ -28,8 +28,8 @@
       <div class="flex justify-between items-center h-20">
         
         <!-- Logo -->
-        <a href="{{ route('inicio') }}" class="flex items-center">
-          <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-32 h-auto">
+        <a href="{{ route('inicio') }}" class="flex items-center mr-8">
+          <img src="{{ asset('images/logo.png') }}" alt="Logo de UNISEC" class="w-48 h-auto">
         </a>
 
         <!-- Menú principal -->
@@ -37,7 +37,7 @@
           @foreach([
             'inicio' => ['Inicio', 'fas fa-home'],
             'acerca' => ['Acerca de', 'fas fa-info-circle'], 
-            'ofertas' => ['Ofertas', 'fas fa-tags'],
+            'espacio' => ['Espacio', 'fa-solid fa-user-astronaut'],
             'convocatorias' => ['Convocatorias', 'fas fa-tags'], 
             'blog' => ['Blog', 'fas fa-blog'], 
             'contacto' => ['Contacto', 'fas fa-envelope'], 
@@ -65,7 +65,7 @@
         @foreach([
           'inicio' => ['Inicio', 'fas fa-home'],
           'acerca' => ['Acerca de', 'fas fa-info-circle'],
-          'ofertas' => ['Ofertas', 'fas fa-tags'],
+          'espacio' => ['Espacio', 'fa-solid fa-user-astronaut'],
           'convocatorias' => ['Convocatorias', 'fas fa-tags'],
           'blog' => ['Blog', 'fas fa-blog'], 
           'contacto' => ['Contacto', 
@@ -95,14 +95,14 @@
       <!-- Logo y descripción -->
       <div class="space-y-4">
         <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-32 h-auto mx-auto sm:mx-0">
-        <p class="text-sm text-gray-400">Innovación aeroespacial para un futuro sostenible</p>
+        <p class="text-sm text-white">Innovación cosmonáutica</p>
       </div>
 
       <!-- Menú de navegación -->
       <div>
         <h3 class="text-gray-100 text-lg font-semibold mb-4">Explorar</h3>
         <ul class="space-y-2">
-          @foreach(['ofertas' => 'Oportunidades', 'miembros' => 'Miembros', 'blog' => 'Blog Técnico'] as $route => $label)
+          @foreach(['espacio' => 'Espacio', 'miembros' => 'Miembros', 'blog' => 'Blog Técnico'] as $route => $label)
             <li>
               <a href="{{ route($route) }}" class="text-sm hover:text-white transition-colors">
                 {{ $label }}
@@ -116,7 +116,7 @@
       <!-- Información de contacto -->
       <div>
         <h3 class="text-gray-100 text-lg font-semibold mb-4">Contacto</h3>
-        <p class="text-sm"><i class="fas fa-envelope mr-2"></i>unisecmx@unisecmexico.com</p>
+        <p class="text-sm text-white"><i class="fas fa-envelope mr-2"></i>unisecmx@unisecmexico.com</p>
       </div>
 
       <!-- Redes Sociales -->
