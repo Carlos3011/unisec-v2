@@ -130,7 +130,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 @foreach($convocatoria->imagenes as $imagen)
                     <div class="relative group">
-                        <img src="{{ Storage::url($imagen->imagen) }}" class="w-full h-48 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105" alt="Imagen adicional">
+                        <img src="{{ asset($imagen->imagen) }}" class="w-full h-48 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105" alt="Imagen adicional">
                     </div>
                 @endforeach
             </div>

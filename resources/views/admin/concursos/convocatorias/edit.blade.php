@@ -234,12 +234,27 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
                     <label for="imagen_portada" class="block text-sm font-medium text-gray-300">Imagen Convocatoria</label>
-                    <input type="file" name="imagen_portada" id="imagen_portada" accept="image/*" class="mt-1 block w-full text-sm text-gray-300
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded-md file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-blue-500 file:text-white
-                        hover:file:bg-blue-600">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex-1">
+                            <input type="file" name="imagen_portada" id="imagen_portada" accept="image/*" class="mt-1 block w-full text-sm text-gray-300
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-blue-500 file:text-white
+                                hover:file:bg-blue-600"
+                                onchange="previewImage(event)">
+                            <p class="text-sm text-gray-400 mt-1">Deja este campo vacío si no deseas cambiar la imagen</p>
+                        </div>
+                        @if($convocatoria->imagen_portada)
+                            <div id="imagePreview" class="w-32 h-32 bg-gray-700 rounded-lg overflow-hidden">
+                                <img src="{{ asset($convocatoria->imagen_portada) }}" alt="Imagen actual" class="w-full h-full object-cover">
+                            </div>
+                        @else
+                            <div id="imagePreview" class="hidden w-32 h-32 bg-gray-700 rounded-lg overflow-hidden">
+                                <img src="#" alt="Vista previa" class="w-full h-full object-cover">
+                            </div>
+                        @endif
+                    </div>
                     @error('imagen_portada')
                         <span class="text-red-400 text-sm">{{ $message }}</span>
                     @enderror
@@ -372,5 +387,20 @@ function eliminarArchivo(archivoId) {
 }
 </script>
 @endpush
+
+@section('scripts')
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const preview = document.getElementById('imagePreview');
+            const image = preview.querySelector('img');
+            preview.classList.remove('hidden');
+            image.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+@endsection
 
 @endsection

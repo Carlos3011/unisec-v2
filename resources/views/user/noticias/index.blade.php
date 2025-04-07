@@ -28,7 +28,7 @@
                     <article
                         class="bg-gray-800 rounded-2xl overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] hover:ring-2 hover:ring-blue-500/50">
                         @if($noticia->imagen)
-                            <img src="{{ asset('storage/' . $noticia->imagen) }}" alt="{{ $noticia->titulo }}"
+                            <img src="{{ asset('uploads/noticias/' . $noticia->imagen) }}" alt="{{ $noticia->titulo }}"
                                 class="w-full h-48 object-cover">
                         @else
                             <img src="{{ asset('images/exoplanetas.jpg') }}" alt="Imagen por defecto"

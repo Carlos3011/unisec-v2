@@ -23,7 +23,7 @@
                 <article class="group bg-black/30 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 shadow-lg transform transition-all duration-500 hover:scale-[1.02] hover:border-white/20 hover:shadow-[0_0_40px_rgba(59,130,246,0.3)]">
                     <div class="relative overflow-hidden aspect-video">
                         @if($noticia->imagen)
-                            <img src="{{ asset('storage/' . $noticia->imagen) }}" alt="{{ $noticia->titulo }}" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110">
+                            <img src="{{ asset( $noticia->imagen) }}" alt="{{ $noticia->titulo }}" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110">
                         @else
                             <img src="{{ asset('images/exoplanetas.jpg') }}" alt="Imagen por defecto" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110">
                         @endif

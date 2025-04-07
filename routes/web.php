@@ -36,7 +36,7 @@ Route::controller(PublicController::class)->group(function () {
     Route::get('/acerca', 'acerca')->name('acerca');
     Route::get('/espacio', 'espacio')->name('espacio');
 
-    Route::get('/convocatorias', 'convocatorias')->name('convocatorias');
+    Route::get('/convocatorias', 'convocatorias')->name('convocatorias.index');
     Route::get('/convocatorias/{convocatoria}', 'show')->name('convocatorias.show');
 
     Route::get('/miembros', 'miembros')->name('miembros');

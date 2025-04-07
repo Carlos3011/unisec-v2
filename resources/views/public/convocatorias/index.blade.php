@@ -28,7 +28,7 @@
                     @if($convocatoria->imagen_portada)
                         <div class="relative h-56 overflow-hidden" x-data="{ imageLoaded: false }" x-init="setTimeout(() => imageLoaded = true, 500)">
                             <div class="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-800/60 animate-pulse" x-show="!imageLoaded"></div>
-                            <img src="{{ asset('storage/' . $convocatoria->imagen_portada) }}" 
+                            <img src="{{ asset($convocatoria->imagen_portada) }}" 
                                  alt="{{ $convocatoria->nombre_evento }}" 
                                  class="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out">
                             <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-90"></div>
@@ -60,7 +60,7 @@
                                 <span>Máx. {{ $convocatoria->max_integrantes }} integrantes</span>
                             </div>
                             @if($convocatoria->archivo_convocatoria)
-                                <a href="{{ asset('storage/' . $convocatoria->archivo_convocatoria) }}" target="_blank" 
+                                <a href="{{ asset($convocatoria->archivo_convocatoria) }}" target="_blank" 
                                    class="text-sm text-red-300 bg-red-500/10 px-4 py-2 rounded-lg backdrop-blur-sm border border-red-500/20 hover:bg-red-500/20 transition-all duration-300 inline-flex items-center">
                                     <i class="fas fa-file-pdf mr-2"></i>
                                     <span>Convocatoria Completa</span>

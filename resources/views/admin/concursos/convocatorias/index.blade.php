@@ -32,7 +32,18 @@
     <div class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($convocatorias as $convocatoria)
-                <div class="bg-gradient-to-br from-gray-800 to-blue-900 rounded-lg overflow-hidden hover:ring-2 transition-all duration-300 shadow-xl border-l-4 border-blue-500/50">
+                <div class="bg-gradient-to-br from-gray-800 to-blue-900 rounded-lg overflow-hidden hover:ring-2 transition-all duration-300 shadow-xl border-l-4 border-blue-500/50" x-data="{ imageLoaded: false }" x-init="setTimeout(() => imageLoaded = true, 500)">
+                    @if($convocatoria->imagen_portada)
+                        <div class="relative h-48 overflow-hidden bg-gray-800/50">
+                            <div class="absolute inset-0 skeleton-loading" x-show="!imageLoaded">
+                                <div class="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800/60 animate-pulse"></div>
+                            </div>
+                            <img src="{{ asset($convocatoria->imagen_portada) }}" 
+                                 alt="{{ $convocatoria->concurso->titulo }}" 
+                                 class="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent"></div>
+                        </div>
+                    @endif
                     <div class="p-6 space-y-4">
                         <div class="flex items-start justify-between">
                             <h3 class="text-lg font-medium text-white">{{ $convocatoria->concurso->titulo }}</h3>

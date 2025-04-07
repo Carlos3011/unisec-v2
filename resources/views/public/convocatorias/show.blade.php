@@ -8,7 +8,7 @@
         <div class="max-w-4xl mx-auto bg-black/30 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 relative transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)]">
              <!-- Navegación -->
              <div class="p-6">
-                <a href="{{route('convocatorias')}}" class="text-white/90 hover:text-white flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg w-fit transition-all duration-300 hover:bg-white/10">
+                <a href="{{route('convocatorias.index')}}" class="text-white/90 hover:text-white flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg w-fit transition-all duration-300 hover:bg-white/10">
                     <i class="fas fa-arrow-left"></i>
                     <span>Volver a Convocatorias</span>
                 </a>
@@ -17,7 +17,7 @@
             <div class="relative overflow-hidden mb-6">
                 @if($convocatoria->imagen_portada)
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-                    <img src="{{ Storage::url($convocatoria->imagen_portada) }}" 
+                    <img src="{{ asset($convocatoria->imagen_portada) }}" 
                          alt="{{ $convocatoria->concurso->titulo }}" 
                          class="w-full h-80 object-cover">
                 @endif
@@ -159,7 +159,7 @@
                                 <div class="flex flex-col items-center text-center space-y-3">
                                     <i class="fas fa-file-pdf text-red-400 text-3xl"></i>
                                     <span class="text-white/90 font-medium">Convocatoria</span>
-                                    <a href="{{ Storage::url($convocatoria->archivo_convocatoria) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors duration-200">
+                                    <a href="{{ asset($convocatoria->archivo_convocatoria) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors duration-200">
                                         <i class="fas fa-eye mr-2"></i>Visualizar
                                     </a>
                                 </div>
@@ -171,7 +171,7 @@
                                 <div class="flex flex-col items-center text-center space-y-3">
                                     <i class="fas fa-file-pdf text-blue-400 text-3xl"></i>
                                     <span class="text-white/90 font-medium">PDR</span>
-                                    <a href="{{ Storage::url($convocatoria->archivo_pdr) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors duration-200">
+                                    <a href="{{ asset($convocatoria->archivo_pdr) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors duration-200">
                                         <i class="fas fa-eye mr-2"></i>Visualizar
                                     </a>
                                 </div>
@@ -183,7 +183,7 @@
                                 <div class="flex flex-col items-center text-center space-y-3">
                                     <i class="fas fa-file-pdf text-green-400 text-3xl"></i>
                                     <span class="text-white/90 font-medium">CDR</span>
-                                    <a href="{{ Storage::url($convocatoria->archivo_cdr) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors duration-200">
+                                    <a href="{{ asset($convocatoria->archivo_cdr) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors duration-200">
                                         <i class="fas fa-eye mr-2"></i>Visualizar
                                     </a>
                                 </div>
@@ -195,7 +195,7 @@
                                 <div class="flex flex-col items-center text-center space-y-3">
                                     <i class="fas fa-file-pdf text-purple-400 text-3xl"></i>
                                     <span class="text-white/90 font-medium">PFR</span>
-                                    <a href="{{ Storage::url($convocatoria->archivo_pfr) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-purple-500/20 text-purple-400 rounded-lg hover:bg-purple-500/30 transition-colors duration-200">
+                                    <a href="{{ asset($convocatoria->archivo_pfr) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-purple-500/20 text-purple-400 rounded-lg hover:bg-purple-500/30 transition-colors duration-200">
                                         <i class="fas fa-eye mr-2"></i>Visualizar
                                     </a>
                                 </div>
@@ -207,7 +207,7 @@
                                 <div class="flex flex-col items-center text-center space-y-3">
                                     <i class="fas fa-file-pdf text-yellow-400 text-3xl"></i>
                                     <span class="text-white/90 font-medium">Artículo</span>
-                                    <a href="{{ Storage::url($convocatoria->archivo_articulo) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-yellow-500/20 text-yellow-400 rounded-lg hover:bg-yellow-500/30 transition-colors duration-200">
+                                    <a href="{{ asset($convocatoria->archivo_articulo) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-yellow-500/20 text-yellow-400 rounded-lg hover:bg-yellow-500/30 transition-colors duration-200">
                                         <i class="fas fa-eye mr-2"></i>Visualizar
                                     </a>
                                 </div>

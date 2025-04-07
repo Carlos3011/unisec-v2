@@ -200,7 +200,7 @@
                                     class="flex items-center space-x-4 p-2 rounded-xl hover:bg-white/5 transition-colors duration-300">
                                     <div class="flex-shrink-0 w-16 h-16 bg-black/40 rounded-xl overflow-hidden">
                                         @if($noticia->imagen)
-                                            <img src="{{ asset('storage/' . $noticia->imagen) }}" alt="{{ $noticia->titulo }}"
+                                            <img src="{{ asset( $noticia->imagen) }}" alt="{{ $noticia->titulo }}"
                                                 class="w-full h-full object-cover group-hover/news:scale-110 transition-transform duration-500">
                                         @else
                                             <img src="{{ asset('images/exoplanetas.jpg') }}" alt="Imagen por defecto"
