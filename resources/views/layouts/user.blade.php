@@ -208,7 +208,7 @@
       <div>
         <h3 class="text-gray-100 text-lg font-semibold mb-4">Explorar</h3>
         <ul class="space-y-2">
-          @foreach(['ofertas' => 'Oportunidades', 'miembros' => 'Miembros', 'blog' => 'Blog Técnico'] as $route => $label)
+          @foreach(['miembros' => 'Miembros', 'blog' => 'Blog Técnico'] as $route => $label)
         <li>
         <a href="{{ route($route) }}" class="text-sm hover:text-white transition-colors">
           {{ $label }}

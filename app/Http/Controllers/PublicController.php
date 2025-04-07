@@ -31,7 +31,7 @@ class PublicController extends Controller
     }
 
     public function convocatorias() {
-        $convocatorias = ConvocatoriaConcurso::with(['fechasImportantes'])
+        $convocatorias = ConvocatoriaConcurso::with(['fechasImportantes', 'concurso'])
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -41,7 +41,7 @@ class PublicController extends Controller
     }
 
     public function show(ConvocatoriaConcurso $convocatoria) {
-        $convocatoria->load(['fechasImportantes']);
+        $convocatoria->load(['fechasImportantes', 'concurso']);
 
         $concursos = Concurso::all();
         return view('public.convocatorias.show', compact('convocatoria', 'concursos'));

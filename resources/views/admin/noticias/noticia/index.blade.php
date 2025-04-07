@@ -55,7 +55,7 @@
                         <div class="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800/60 animate-pulse"></div>
                     </div>
                     @if($noticia->imagen)
-                        <img src="{{ Storage::url($noticia->imagen) }}" 
+                        <img src="{{ asset($noticia->imagen) }}" 
                              alt="{{ $noticia->titulo }}" 
                              class="w-full h-56 object-cover transform group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent"></div>

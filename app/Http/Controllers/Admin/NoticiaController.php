@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Noticia;
 use App\Models\SeccionNoticia;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+
 
 class NoticiaController extends Controller
 {
@@ -39,10 +39,21 @@ class NoticiaController extends Controller
         $data = $request->except(['imagen']);
         $data['seccion_noticias_id'] = $request->seccion_id;
 
+        // En el método store
         if ($request->hasFile('imagen')) {
-            Storage::disk('public')->makeDirectory('noticias');
-            $data['imagen'] = $request->file('imagen')->store('noticias', 'public');
+            $image = $request->file('imagen');
+            $directory = public_path('images/noticias');
+            if (!file_exists($directory)) {
+                mkdir($directory, 0755, true);
+            }
+            $randomName = time() . '_' . bin2hex(random_bytes(8)) . '.' . $image->getClientOriginalExtension();
+            $image->move($directory, $randomName);
+            $data['imagen'] = 'images/noticias/' . $randomName;
         }
+
+        $randomName = time() . '_' . bin2hex(random_bytes(8)) . '.' . $image->getClientOriginalExtension();
+        $image->move($directory, $randomName);
+        $data['imagen'] = 'images/noticias/' . $randomName;
 
         Noticia::create($data);
 
@@ -75,10 +86,19 @@ class NoticiaController extends Controller
 
         if ($request->hasFile('imagen')) {
             if ($noticia->imagen) {
-                Storage::disk('public')->delete($noticia->imagen);
+                if (file_exists(public_path($noticia->imagen))) {
+                    unlink(public_path($noticia->imagen));
+                }
             }
-            Storage::disk('public')->makeDirectory('noticias');
-            $data['imagen'] = $request->file('imagen')->store('noticias', 'public');
+            // Directorio ya se crea automáticamente en el método de almacenamiento
+            $image = $request->file('imagen');
+            $directory = public_path('images/noticias');
+            if (!file_exists($directory)) {
+                mkdir($directory, 0755, true);
+            }
+            $randomName = time() . '_' . bin2hex(random_bytes(8)) . '.' . $image->getClientOriginalExtension();
+            $image->move($directory, $randomName);
+            $data['imagen'] = 'images/noticias/' . $randomName;
         }
 
         $noticia->update($data);
@@ -89,11 +109,12 @@ class NoticiaController extends Controller
 
     public function destroy(Noticia $noticia)
     {
-        if ($noticia->imagen) {
-            Storage::disk('public')->delete($noticia->imagen);
-        }
 
-        $noticia->delete();
+        if ($noticia->imagen && file_exists(public_path($noticia->imagen))) {
+    unlink(public_path($noticia->imagen));
+}
+
+$noticia->delete();
 
         return redirect()->route('admin.noticias.noticia.index')
             ->with('success', 'Noticia eliminada exitosamente');

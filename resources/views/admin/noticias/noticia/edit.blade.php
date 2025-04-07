@@ -93,7 +93,7 @@
                         </div>
                         @if($noticia->imagen)
                             <div id="imagePreview" class="w-32 h-32 bg-gray-700 rounded-lg overflow-hidden">
-                                <img src="{{ asset('storage/' . $noticia->imagen) }}" alt="Imagen actual" class="w-full h-full object-cover">
+                                <img src="{{ asset($noticia->imagen) }}" alt="Imagen actual" class="w-full h-full object-cover">
                             </div>
                         @else
                             <div id="imagePreview" class="hidden w-32 h-32 bg-gray-700 rounded-lg overflow-hidden">

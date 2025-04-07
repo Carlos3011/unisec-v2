@@ -19,7 +19,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div class="bg-gray-700/50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
             @if($convocatoria->imagen_portada)
-                <img src="{{ Storage::url($convocatoria->imagen_portada) }}" class="w-full h-64 object-cover rounded-lg mb-4" alt="Imagen de portada">
+                <img src="{{ asset($convocatoria->imagen_portada) }}" class="w-full h-64 object-cover rounded-lg mb-4" alt="Imagen de portada">
             @endif
         </div>
         <div class="bg-gray-700/50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
@@ -143,31 +143,31 @@
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             @if($convocatoria->archivo_convocatoria)
-                <a href="{{ Storage::url($convocatoria->archivo_convocatoria) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
+                <a href="{{ asset($convocatoria->archivo_convocatoria) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
                     <i class="fas fa-file-pdf text-red-400 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
                     <span class="text-white">Documento General PDF</span>
                 </a>
             @endif
             @if($convocatoria->archivo_pdr)
-                <a href="{{ Storage::url($convocatoria->archivo_pdr) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
+                <a href="{{ asset($convocatoria->archivo_pdr) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
                     <i class="fas fa-file text-blue-400 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
                     <span class="text-white">Documento PDR</span>
                 </a>
             @endif
             @if($convocatoria->archivo_cdr)
-                <a href="{{ Storage::url($convocatoria->archivo_cdr) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
+                <a href="{{ asset($convocatoria->archivo_cdr) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
                     <i class="fas fa-file text-green-400 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
                     <span class="text-white">Documento CDR</span>
                 </a>
             @endif
             @if($convocatoria->archivo_pfr)
-                <a href="{{ Storage::url($convocatoria->archivo_pfr) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
+                <a href="{{ asset($convocatoria->archivo_pfr) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
                     <i class="fas fa-file text-purple-400 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
                     <span class="text-white">Documento PFR</span>
                 </a>
             @endif
             @if($convocatoria->archivo_articulo)
-                <a href="{{ Storage::url($convocatoria->archivo_articulo) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
+                <a href="{{ asset($convocatoria->archivo_articulo) }}" class="flex items-center p-4 bg-gray-600/50 rounded-lg hover:bg-gray-600/70 transition-all group" target="_blank">
                     <i class="fas fa-file text-yellow-400 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
                     <span class="text-white">Documento Articulo</span>
                 </a>
