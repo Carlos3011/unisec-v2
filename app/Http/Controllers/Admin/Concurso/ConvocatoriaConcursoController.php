@@ -248,25 +248,49 @@ if (!file_exists($dirArticulo)) {
             if ($convocatoria->archivo_pdr && file_exists(public_path($convocatoria->archivo_pdr))) {
                 unlink(public_path($convocatoria->archivo_pdr));
             }
-            $convocatoria->archivo_pdr = $request->file('archivo_pdr')->store('conv/pdr', 'public');
+            $directory = public_path('conv/pdr');
+            if (!file_exists($directory)) {
+                @mkdir($directory, 0755, true);
+            }
+            $randomName = time() . '_' . bin2hex(random_bytes(8)) . '.' . $request->file('archivo_pdr')->getClientOriginalExtension();
+            $request->file('archivo_pdr')->move($directory, $randomName);
+            $convocatoria->archivo_pdr = 'conv/pdr/' . $randomName;
         }
         if ($request->hasFile('archivo_cdr')) {
             if ($convocatoria->archivo_cdr && file_exists(public_path($convocatoria->archivo_cdr))) {
                 unlink(public_path($convocatoria->archivo_cdr));
             }
-            $convocatoria->archivo_cdr = $request->file('archivo_cdr')->store('conv/cdr', 'public');
+            $directory = public_path('conv/cdr');
+            if (!file_exists($directory)) {
+                @mkdir($directory, 0755, true);
+            }
+            $randomName = time() . '_' . bin2hex(random_bytes(8)) . '.' . $request->file('archivo_cdr')->getClientOriginalExtension();
+            $request->file('archivo_cdr')->move($directory, $randomName);
+            $convocatoria->archivo_cdr = 'conv/cdr/' . $randomName;
         }
         if ($request->hasFile('archivo_pfr')) {
             if ($convocatoria->archivo_pfr && file_exists(public_path($convocatoria->archivo_pfr))) {
                 unlink(public_path($convocatoria->archivo_pfr));
             }
-            $convocatoria->archivo_pfr = $request->file('archivo_pfr')->store('conv/pfr', 'public');
+            $directory = public_path('conv/pfr');
+            if (!file_exists($directory)) {
+                @mkdir($directory, 0755, true);
+            }
+            $randomName = time() . '_' . bin2hex(random_bytes(8)) . '.' . $request->file('archivo_pfr')->getClientOriginalExtension();
+            $request->file('archivo_pfr')->move($directory, $randomName);
+            $convocatoria->archivo_pfr = 'conv/pfr/' . $randomName;
         }
         if ($request->hasFile('archivo_articulo')) {
             if ($convocatoria->archivo_articulo && file_exists(public_path($convocatoria->archivo_articulo))) {
                 unlink(public_path($convocatoria->archivo_articulo));
             }
-            $convocatoria->archivo_articulo = $request->file('archivo_articulo')->store('conv/articulo', 'public');
+            $directory = public_path('conv/articulo');
+            if (!file_exists($directory)) {
+                @mkdir($directory, 0755, true);
+            }
+            $randomName = time() . '_' . bin2hex(random_bytes(8)) . '.' . $request->file('archivo_articulo')->getClientOriginalExtension();
+            $request->file('archivo_articulo')->move($directory, $randomName);
+            $convocatoria->archivo_articulo = 'conv/articulo/' . $randomName;
         }
 
         $convocatoria->save();
