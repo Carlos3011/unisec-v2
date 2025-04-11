@@ -56,6 +56,11 @@ Route::get('/dashboard', function () {
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Rutas para PayPal
+Route::post('/payment/create-order', [App\Http\Controllers\PaymentController::class, 'createOrder'])->name('payment.create-order');
+Route::post('/payment/capture-order', [App\Http\Controllers\PaymentController::class, 'captureOrder'])->name('payment.capture-order');
+Route::post('/payment/cancel-order', [App\Http\Controllers\PaymentController::class, 'cancelOrder'])->name('payment.cancel-order');
+
 // Grupo de rutas para Administradores
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
@@ -127,7 +132,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/admin/congresos-eventos', [AdminController::class, 'congresosEventos'])->name('admin.congresos-eventos');
     Route::get('/admin/becas', [AdminController::class, 'becas'])->name('admin.becas');
-    Route::get('/admin/pagos-facturacion', [AdminController::class, 'pagosFacturacion'])->name('admin.pagos-facturacion');
+    Route::get('/admin/pagos-facturacion', [App\Http\Controllers\Admin\AdminPayPalController::class, 'showTransactions'])->name('admin.pagos-facturacion');
     Route::get('/admin/reportes-estadisticas', [AdminController::class, 'reportesEstadisticas'])->name('admin.reportes-estadisticas');
 
     // Rutas para la gestión de secciones de noticias
@@ -150,8 +155,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 });
 
+// Rutas administrativas para PayPal
+Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin'], function() {
+    Route::get('/pagos', [\App\Http\Controllers\Admin\AdminPayPalController::class, 'showTransactions'])->name('admin.pagos.index');
+    Route::post('/pagos/webhook', [\App\Http\Controllers\Admin\AdminPayPalController::class, 'handleWebhook']);
+});
+
 // Grupo de rutas para Usuarios
 Route::middleware(['auth', 'role:usuario'])->group(function () {
+    // Rutas de pago con PayPal
+    Route::post('/payment/create-order', [PaymentController::class, 'createOrder']);
+    Route::post('/payment/capture-order', [PaymentController::class, 'captureOrder']);
+    Route::post('/payment/cancel-order', [PaymentController::class, 'cancelOrder']);
+
     Route::get('/user/inicio', [UserController::class, 'index'])->name('user.inicio');
 
     //Ruta para la pagina del sistema solar

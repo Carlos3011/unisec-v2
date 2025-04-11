@@ -1,0 +1,53 @@
+.payment-container {
+    background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.payment-amount {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.payment-description {
+    color: #e2e8f0;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.payment-button-container {
+    background: #ffffff;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.payment-status {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+.status-pending {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-completed {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.status-cancelled {
+    background-color: #fee2e2;
+    color: #991b1b;
+}

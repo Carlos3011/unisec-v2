@@ -75,7 +75,10 @@ class UserController extends Controller
 
     public function pagos()
     {
-        return view('user.pagos');
+        $pagosPendientes = auth()->user()->pagos()
+            ->where('estado', 'pendiente')
+            ->sum('monto');
+        return view('user.pagos-facturacion.index', compact('pagosPendientes'));
     }
 
     public function resenas()
