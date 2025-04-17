@@ -107,10 +107,23 @@
                                         <i class="fas fa-eye mr-2"></i>Ver Pre-registro
                                     </a>
                                 @else
-                                    <a href="{{ route('user.concursos.pre-registros.create', ['convocatoria' => $convocatoria->id]) }}" 
-                                       class="inline-flex items-center w-full justify-center px-6 py-3 bg-blue-600/90 text-white rounded-lg hover:bg-blue-500/90 transform transition-all duration-200 backdrop-blur-sm font-medium shadow-lg shadow-purple-500/20">
-                                        <i class="fas fa-user-plus mr-2"></i>Pre-registro
-                                    </a>
+                                    @php
+                                        $pagoConfirmado = \App\Models\PagoPreRegistro::where('usuario_id', Auth::id())
+                                            ->where('concurso_id', $concurso->id)
+                                            ->where('estado_pago', 'pagado')
+                                            ->exists();
+                                    @endphp
+                                    @if($pagoConfirmado)
+                                        <a href="{{ route('user.concursos.pre-registros.create', ['convocatoria' => $convocatoria->id]) }}" 
+                                           class="inline-flex items-center w-full justify-center px-6 py-3 bg-blue-600/90 text-white rounded-lg hover:bg-blue-500/90 transform transition-all duration-200 backdrop-blur-sm font-medium shadow-lg shadow-purple-500/20">
+                                            <i class="fas fa-user-plus mr-2"></i>Pre-registrarse
+                                        </a>
+                                    @else
+                                        <a href="{{ route('user.concursos.pagos.pre-registro', $convocatoria) }}" 
+                                           class="inline-flex items-center w-full justify-center px-6 py-3 bg-yellow-600/90 text-white rounded-lg hover:bg-yellow-500/90 transform transition-all duration-200 backdrop-blur-sm font-medium shadow-lg shadow-purple-500/20">
+                                            <i class="fas fa-credit-card mr-2"></i>Realizar Pago
+                                        </a>
+                                    @endif
                                 @endif
                             </div>
                         </div>

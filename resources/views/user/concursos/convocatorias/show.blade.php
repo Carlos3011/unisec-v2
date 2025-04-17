@@ -237,5 +237,52 @@
                 </div>
             </div>
         </div>
+
+        <!-- Botón de Pre-registro con PayPal -->
+        @auth
+            @php
+                $pagoConfirmado = \App\Models\PagoPreRegistro::where('usuario_id', Auth::id())
+                    ->where('concurso_id', $convocatoria->concurso->id)
+                    ->where('estado_pago', 'pagado')
+                    ->exists();
+            @endphp
+            <div class="fixed bottom-8 right-8 z-50">
+                @php
+                    $preRegistro = \App\Models\PreRegistroConcurso::where('usuario_id', Auth::id())
+                        ->where('concurso_id', $convocatoria->concurso->id)
+                        ->first();
+                @endphp
+
+                @if($pagoConfirmado)
+                    @if($preRegistro)
+                        <a href="{{ route('user.concursos.pre-registros.show', $preRegistro->id) }}"
+                           class="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-emerald-600 to-green-600 rounded-xl text-white font-semibold shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-eye text-2xl"></i>
+                            <span>Ver Pre-registro</span>
+                        </a>
+                    @else
+                        <a href="{{ route('user.concursos.pre-registros.create', ['convocatoria' => $convocatoria->id]) }}"
+                           class="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl text-white font-semibold shadow-lg hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-user-plus text-2xl"></i>
+                            <span>Completar Pre-registro</span>
+                        </a>
+                    @endif
+                @else
+                    <a href="{{ route('user.concursos.pagos.pre-registro', $convocatoria) }}" 
+                       class="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl text-white font-semibold shadow-lg hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105">
+                        <i class="fab fa-paypal text-2xl"></i>
+                        <span>Realizar Pre-registro</span>
+                    </a>
+                @endif
+            </div>
+        @else
+            <div class="fixed bottom-8 right-8 z-50">
+                <a href="{{ route('login') }}" 
+                   class="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 rounded-xl text-white font-semibold shadow-lg hover:shadow-gray-500/25 transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-sign-in-alt text-2xl"></i>
+                    <span>Iniciar Sesión para Pre-registrarse</span>
+                </a>
+            </div>
+        @endauth
     </div>
 @endsection

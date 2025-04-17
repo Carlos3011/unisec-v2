@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Storage;
+use App\Models\PagoPreRegistro;
 
 class PreRegistroUserController extends Controller
 {
@@ -72,9 +73,27 @@ class PreRegistroUserController extends Controller
                 ->with('error', 'Ya tienes un pre-registro para este concurso.');
         }
 
+        // Validar pago confirmado
+        $pagoConfirmado = PagoPreRegistro::where('usuario_id', Auth::id())
+            ->where('concurso_id', $request->concurso_id)
+            ->where('estado_pago', 'pagado')
+            ->first();
+
+        if (!$pagoConfirmado) {
+            return redirect()->back()
+                ->with('error', 'Debe tener un pago confirmado para realizar el pre-registro');
+        }
+
+        // Verificar pago confirmado
+        $pagoConfirmado = PagoPreRegistro::where('usuario_id', Auth::id())
+            ->where('concurso_id', $request->concurso_id)
+            ->where('estado_pago', 'pagado')
+            ->firstOrFail();
+
         $preRegistro = PreRegistroConcurso::create([
             'usuario_id' => Auth::id(),
             'concurso_id' => $request->concurso_id,
+            'pago_pre_registro_id' => $pagoConfirmado->id,
             'nombre_equipo' => $request->nombre_equipo,
             'integrantes' => count($request->integrantes_data),
             'asesor' => $request->asesor,

@@ -5,10 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\PagoPreRegistro;
 
 class PreRegistroConcurso extends Model
 {
     use HasFactory, SoftDeletes;
+
+    public function pagoPreRegistro()
+    {
+        return $this->belongsTo(PagoPreRegistro::class);
+    }
 
     protected $table = 'pre_registro_concursos';
 
@@ -45,10 +51,10 @@ class PreRegistroConcurso extends Model
         return $this->belongsTo(User::class);
  
     }
-    public function pagoPreRegistro()
-    {
-        return $this->belongsTo(PagoPreRegistro::class, 'pago_pre_registro_id');
-    }
+    // public function pagoPreRegistro()
+    // {
+    //     return $this->belongsTo(PagoPreRegistro::class, 'pago_pre_registro_id');
+    // }
 
     public function inscripcion()
     {

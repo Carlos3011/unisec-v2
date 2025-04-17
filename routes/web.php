@@ -28,8 +28,23 @@ use App\Http\Controllers\User\Concurso\ConcursoUserController;
 use App\Http\Controllers\User\Concurso\ConvocatoriaUserController;
 use App\Http\Controllers\User\Concurso\PreRegistroUserController;
 
+use App\Http\Controllers\PayPalController;
+
 
 use App\Http\Middleware\RoleMiddleware;
+
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('user/concursos/pagos')->group(function () {
+        // Vista del formulario de pago
+        Route::get('pre-registro/{convocatoria}', function(\App\Models\ConvocatoriaConcurso $convocatoria) {
+            return view('user.concursos.pagos.pre-registro', compact('convocatoria'));
+        })->name('user.concursos.pagos.pre-registro');
+
+        // Endpoints para PayPal
+        Route::post('create-order', [PayPalController::class, 'createOrder']);
+        Route::match(['get', 'post'], 'capture-order', [PayPalController::class, 'captureOrder']);
+    });
+});
 
 Route::controller(PublicController::class)->group(function () {
     Route::get('/', 'inicio')->name('inicio');

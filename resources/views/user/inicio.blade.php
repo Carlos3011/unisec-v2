@@ -132,24 +132,37 @@
                                 </div>
                                 <div class="flex space-x-2">
                                     <a href="{{ route('user.concursos.convocatorias.show', $convocatoria) }}"
-                                        class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-primary/10 text-primary/90 rounded-xl hover:bg-primary/20 transition-all duration-500">
+                                        class="inline-flex items-center justify-center px-4 py-2 bg-primary/10 text-primary/90 rounded-xl hover:bg-primary/20 transition-all duration-500">
                                         <i class="fas fa-info-circle mr-2"></i>Ver detalles
                                     </a>
                                     @php
-                                        $existingPreRegistro = \App\Models\PreRegistroConcurso::where('usuario_id', Auth::id())
+                                        $pagoConfirmado = \App\Models\PagoPreRegistro::where('usuario_id', Auth::id())
                                             ->where('concurso_id', $concurso->id)
-                                            ->whereNull('deleted_at')
-                                            ->first();
+                                            ->where('estado_pago', 'pagado')
+                                            ->exists();
                                     @endphp
-                                    @if($existingPreRegistro)
-                                        <a href="{{ route('user.concursos.pre-registros.show', $existingPreRegistro) }}"
-                                            class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-primary/10 text-primary/90 rounded-xl hover:bg-primary/20 transition-all duration-500">
-                                            <i class="fas fa-eye mr-2"></i>Ver Pre-registro
-                                        </a>
+                                    @php
+                                        $tienePreRegistro = \App\Models\PreRegistroConcurso::where('usuario_id', Auth::id())
+                                            ->where('concurso_id', $concurso->id)
+                                            ->exists();
+                                    @endphp
+
+                                    @if($pagoConfirmado)
+                                        @if($tienePreRegistro)
+                                            <a href="{{ route('user.concursos.convocatorias.show', $convocatoria) }}"
+                                            class="inline-flex items-center justify-center px-4 py-2 bg-green-500/20 text-green-400 rounded-xl hover:bg-green-500/30 transition-all duration-500">
+                                                <i class="fas fa-eye mr-2"></i>Ver Pre-registro
+                                            </a>
+                                        @else
+                                            <a href="{{ route('user.concursos.pre-registros.create', ['convocatoria' => $convocatoria->id]) }}" 
+                                            class="inline-flex items-center justify-center px-4 py-2 bg-blue-500/20 text-blue-400 rounded-xl hover:bg-blue-500/30 transition-all duration-500">
+                                                <i class="fas fa-user-plus mr-2"></i>Pre-registrarse
+                                            </a>
+                                        @endif
                                     @else
-                                        <a href="{{ route('user.concursos.pre-registros.create', ['convocatoria' => $convocatoria->id]) }}"
-                                            class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-primary/10 text-primary/90 rounded-xl hover:bg-primary/20 transition-all duration-500">
-                                            <i class="fas fa-user-plus mr-2"></i>Pre-registro
+                                        <a href="{{ route('user.concursos.pagos.pre-registro', $convocatoria) }}" 
+                                           class="inline-flex items-center justify-center px-4 py-2 bg-yellow-500/20 text-yellow-400 rounded-xl hover:bg-yellow-500/30 transition-all duration-500">
+                                            <i class="fas fa-credit-card mr-2"></i>Realizar Pago
                                         </a>
                                     @endif
                                 </div>
