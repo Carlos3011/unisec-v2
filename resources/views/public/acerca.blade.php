@@ -232,8 +232,7 @@ $presidente = [
     'nombre' => 'HERMES MORENO ÁLVAREZ',
     'cargo' => 'Presidente UNISEC México',
     'descripcion' => 'Líder visionario en el desarrollo aeroespacial y la educación espacial en México',
-    'imagen' => 'team/ejemplo.jpg',
-    'email' => 'presidente@unisec.mx'
+    'imagen' => 'team/ejemplo.jpg'
 ];
 
 $secciones = [
@@ -243,16 +242,14 @@ $secciones = [
             'nombre' => 'ANTONIO GÓMEZ ROA',
             'cargo' => 'Universidad Autónoma de Baja California',
             'descripcion' => 'Coordinación de proyectos espaciales en la región norte del país',
-            'imagen' => 'team/ejemplo.jpg',
-            'email' => 'norte.director@unisec.mx'
+            'imagen' => 'team/ejemplo.jpg'
         ],
         'equipo' => [
             [
                 'nombre' => 'SILVIA KARINA REYES LIO',
                 'cargo' => 'Instituto Tecnológico de Nogales Sonora',
                 'descripcion' => 'Especialista en sistemas de propulsión espacial',
-                'imagen' => 'team/ejemplo.jpg',
-                'email' => 'norte.investigacion@unisec.mx'
+                'imagen' => 'team/ejemplo.jpg'
             ]
         ]
     ],
@@ -262,8 +259,7 @@ $secciones = [
             'nombre' => 'JORGE ALFREDO FERRER PÉREZ',
             'cargo' => 'UNAM - QUERÉTARO',
             'descripcion' => 'Gestión de investigación y desarrollo en la zona central',
-            'imagen' => 'team/ejemplo.jpg',
-            'email' => 'centro.director@unisec.mx'
+            'imagen' => 'team/ejemplo.jpg'
         ],
         'equipo' => [
             
@@ -275,18 +271,9 @@ $secciones = [
             'nombre' => 'ROSA MARÍA MARTÍNEZ GALVÁN',
             'cargo' => 'Instituto Tecnológico de Puebla',
             'descripcion' => 'Desarrollo de programas espaciales en la región sur',
-            'imagen' => 'team/ejemplo.jpg',
-            'email' => 'sur.director@unisec.mx'
+            'imagen' => 'team/ejemplo.jpg'
         ],
-        'equipo' => [
-            [
-                'nombre' => 'JOSUÉ MANCILLA CEREZO',
-                'cargo' => 'Instituto Tecnológico Superior de Tepeaca',
-                'descripcion' => 'Especialista en astrofísica aplicada',
-                'imagen' => 'team/ejemplo.jpg',
-                'email' => 'sur.investigacion@unisec.mx'
-            ]
-        ]
+        'equipo' => []
     ]
 ];
 @endphp
@@ -322,11 +309,7 @@ $secciones = [
             {{ $presidente['descripcion'] }}
           </p>
           
-          <div class="flex justify-center space-x-4">
-            <a href="{{ $presidente['email'] }}" class="p-3 rounded-xl bg-space-700/40 hover:bg-primary/30 transform hover:scale-110 transition-all duration-300">
-              <i class="fas fa-envelope text-gray-300 hover:text-primary text-xl"></i>
-            </a>
-          </div>
+
         </div>
       </div>
     </div>
@@ -359,11 +342,7 @@ $secciones = [
             <h4 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300 mb-3">{{ $seccion['director']['nombre'] }}</h4>
             <p class="text-primary font-medium text-lg mb-3">{{ $seccion['director']['cargo'] }}</p>
             <p class="text-gray-300/90 text-base leading-relaxed mb-4">{{ $seccion['director']['descripcion'] }}</p>
-            <div class="flex justify-center space-x-4">
-              <a href="{{ $seccion['director']['email'] }}" class="p-3 rounded-xl bg-space-700/40 hover:bg-primary/30 transform hover:scale-110 transition-all duration-300">
-                <i class="fas fa-envelope text-gray-300 hover:text-primary text-xl"></i>
-              </a>
-            </div>
+
           </div>
 
           <!-- Línea conectora vertical desde el director -->
@@ -388,8 +367,6 @@ $secciones = [
               <p class="text-primary font-medium text-base mb-2">{{ $miembro['cargo'] }}</p>
               <p class="text-gray-300/90 text-sm leading-relaxed mb-4">{{ $miembro['descripcion'] }}</p>
               <div class="flex justify-center space-x-4">
-                <a href="{{ $miembro['email'] }}" class="p-2 rounded-lg bg-space-700/40 hover:bg-primary/30 transform hover:scale-110 transition-all duration-300">
-                  <i class="fas fa-envelope text-gray-300 hover:text-primary text-lg"></i>
                 </a>
               </div>
             </div>
