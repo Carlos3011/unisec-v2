@@ -1,0 +1,7 @@
+# Ignorar todo el contenido del directorio public
+*
+!/.gitignore
+!/.gitkeep
+
+# Mantener la estructura de directorios
+**/
