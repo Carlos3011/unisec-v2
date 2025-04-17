@@ -26,7 +26,7 @@
 
                         <div class="w-full h-56 relative overflow-hidden">
                             @if($convocatoria->imagen_portada)
-                                <img src="{{ Storage::url($convocatoria->imagen_portada) }}" 
+                                <img src="{{ asset($convocatoria->imagen_portada) }}" 
                                      alt="{{ $concurso->titulo }}" 
                                      class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
                                 <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
@@ -58,7 +58,7 @@
                                             <span>Máx. {{ $convocatoria->max_integrantes }} integrantes</span>
                                         </div>
                                         @if($convocatoria->archivo_convocatoria)
-                                            <a href="{{ Storage::url($convocatoria->archivo_convocatoria) }}" target="_blank" class="text-sm text-red-300 bg-red-500/10 px-3 py-2 rounded-lg backdrop-blur-sm hover:bg-red-500/20 transition-all duration-200">
+                                            <a href="{{ asset($convocatoria->archivo_convocatoria) }}" target="_blank" class="text-sm text-red-300 bg-red-500/10 px-3 py-2 rounded-lg backdrop-blur-sm hover:bg-red-500/20 transition-all duration-200">
                                                 <i class="fas fa-file-pdf mr-2"></i>
                                                 <span>Convocatoria Completa</span>
                                             </a>
@@ -87,7 +87,7 @@
                                 </a>
 
                                 @if($convocatoria->pdf_convocatoria)
-                                    <a href="{{ Storage::url($convocatoria->pdf_convocatoria) }}" 
+                                    <a href="{{ asset($convocatoria->pdf_convocatoria) }}" 
                                        target="_blank"
                                        class="inline-flex items-center w-full justify-center px-6 py-3 bg-red-600/90 text-white rounded-lg hover:bg-red-500/90 transform transition-all duration-200 backdrop-blur-sm font-medium shadow-lg shadow-red-500/20">
                                         <i class="fas fa-file-pdf mr-2"></i>Descargar Convocatoria

@@ -15,14 +15,14 @@ class ConvocatoriaConcursoController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        
+
         $convocatorias = ConvocatoriaConcurso::with(['fechasImportantes', 'imagenes'])
-            ->when($search, function($query) use ($search) {
+            ->when($search, function ($query) use ($search) {
                 return $query->where('nombre_evento', 'like', '%' . $search . '%');
             })
             ->latest()
             ->get();
-        
+
         return view('admin.concursos.convocatorias.index', compact('convocatorias', 'search'));
     }
 
@@ -58,74 +58,82 @@ class ConvocatoriaConcursoController extends Controller
             'fechas_importantes.*.titulo' => 'required|string',
             'fechas_importantes.*.fecha' => 'required|date',
             'imagenes' => 'nullable|array',
-            'imagenes.*' => 'image|max:2048'
+            'imagenes.*' => 'image|max:2048',
+            'costo_pre_registro' => 'nullable|numeric|min:0',
+            'costo_inscripcion' => 'nullable|numeric|min:0',
         ]);
 
         $convocatoria = new ConvocatoriaConcurso($request->except([
-            'archivo_convocatoria', 'imagen_portada', 'archivo_pdr', 'archivo_cdr', 'archivo_pfr',
-            'archivo_articulo','fechas_importantes', 'imagenes'
+            'archivo_convocatoria',
+            'imagen_portada',
+            'archivo_pdr',
+            'archivo_cdr',
+            'archivo_pfr',
+            'archivo_articulo',
+            'fechas_importantes',
+            'imagenes'
         ]));
 
         // Manejar archivos
         if ($request->hasFile('archivo_convocatoria')) {
             $dirConvocatoria = public_path('conv/convocatoria');
-if (!file_exists($dirConvocatoria)) {
-    @mkdir($dirConvocatoria, 0755, true);
-}
+            if (!file_exists($dirConvocatoria)) {
+                @mkdir($dirConvocatoria, 0755, true);
+            }
             $file = $request->file('archivo_convocatoria');
-            $fileName = time().'_'.$file->getClientOriginalName();
+            $fileName = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('conv/convocatoria'), $fileName);
-            $convocatoria->archivo_convocatoria = 'conv/convocatoria/'.$fileName;
+            $convocatoria->archivo_convocatoria = 'conv/convocatoria/' . $fileName;
         }
         if ($request->hasFile('imagen_portada')) {
             $dirPortada = public_path('conv/portada');
-if (!file_exists($dirPortada)) {
-    @mkdir($dirPortada, 0755, true);
-}
+            if (!file_exists($dirPortada)) {
+                @mkdir($dirPortada, 0755, true);
+            }
             $image = $request->file('imagen_portada');
-            $imageName = time().'_'.$image->getClientOriginalName();
+            $imageName = time() . '_' . $image->getClientOriginalName();
             $image->move(public_path('conv/portada'), $imageName);
-            $convocatoria->imagen_portada = 'conv/portada/'.$imageName;
+            $convocatoria->imagen_portada = 'conv/portada/' . $imageName;
         }
         if ($request->hasFile('archivo_pdr')) {
             $dirPdr = public_path('conv/pdr');
-if (!file_exists($dirPdr)) {
-    @mkdir($dirPdr, 0755, true);
-}
+            if (!file_exists($dirPdr)) {
+                @mkdir($dirPdr, 0755, true);
+            }
             $filePdr = $request->file('archivo_pdr');
-            $fileNamePdr = time().'_'.$filePdr->getClientOriginalName();
+            $fileNamePdr = time() . '_' . $filePdr->getClientOriginalName();
             $filePdr->move(public_path('conv/pdr'), $fileNamePdr);
-            $convocatoria->archivo_pdr = 'conv/pdr/'.$fileNamePdr;
+            $convocatoria->archivo_pdr = 'conv/pdr/' . $fileNamePdr;
         }
         if ($request->hasFile('archivo_cdr')) {
             $dirCdr = public_path('conv/cdr');
-if (!file_exists($dirCdr)) {
-    @mkdir($dirCdr, 0755, true);
-}
+            if (!file_exists($dirCdr)) {
+                @mkdir($dirCdr, 0755, true);
+            }
             $fileCdr = $request->file('archivo_cdr');
-            $fileNameCdr = time().'_'.$fileCdr->getClientOriginalName();
+            $fileNameCdr = time() . '_' . $fileCdr->getClientOriginalName();
             $fileCdr->move(public_path('conv/cdr'), $fileNameCdr);
-            $convocatoria->archivo_cdr = 'conv/cdr/'.$fileNameCdr;
+            $convocatoria->archivo_cdr = 'conv/cdr/' . $fileNameCdr;
         }
         if ($request->hasFile('archivo_pfr')) {
             $dirPfr = public_path('conv/pfr');
-if (!file_exists($dirPfr)) {
-    @mkdir($dirPfr, 0755, true);
-}
+            if (!file_exists($dirPfr)) {
+                @mkdir($dirPfr, 0755, true);
+            }
             $filePfr = $request->file('archivo_pfr');
-            $fileNamePfr = time().'_'.$filePfr->getClientOriginalName();
+            $fileNamePfr = time() . '_' . $filePfr->getClientOriginalName();
             $filePfr->move(public_path('conv/pfr'), $fileNamePfr);
-            $convocatoria->archivo_pfr = 'conv/pfr/'.$fileNamePfr;
+            $convocatoria->archivo_pfr = 'conv/pfr/' . $fileNamePfr;
         }
         if ($request->hasFile('archivo_articulo')) {
             $dirArticulo = public_path('conv/articulo');
-if (!file_exists($dirArticulo)) {
-    @mkdir($dirArticulo, 0755, true);
-}
+            if (!file_exists($dirArticulo)) {
+                @mkdir($dirArticulo, 0755, true);
+            }
             $fileArticulo = $request->file('archivo_articulo');
-            $fileNameArticulo = time().'_'.$fileArticulo->getClientOriginalName();
+            $fileNameArticulo = time() . '_' . $fileArticulo->getClientOriginalName();
             $fileArticulo->move(public_path('conv/articulo'), $fileNameArticulo);
-            $convocatoria->archivo_articulo = 'conv/articulo/'.$fileNameArticulo;
+            $convocatoria->archivo_articulo = 'conv/articulo/' . $fileNameArticulo;
         }
 
         $convocatoria->save();
@@ -199,11 +207,19 @@ if (!file_exists($dirArticulo)) {
             'fechas_importantes.*.titulo' => 'required|string',
             'fechas_importantes.*.fecha' => 'required|date',
             'imagenes' => 'nullable|array',
-            'imagenes.*' => 'image|max:2048'
+            'imagenes.*' => 'image|max:2048',
+            'costo_pre_registro' => 'nullable|numeric|min:0',
+            'costo_inscripcion' => 'nullable|numeric|min:0'
         ]);
 
         $convocatoria->update($request->except([
-            'archivo_convocatoria', 'imagen_portada', 'archivo_pdr', 'archivo_cdr', 'archivo_pfr','archivo_articulo', 'fechas_importantes'
+            'archivo_convocatoria',
+            'imagen_portada',
+            'archivo_pdr',
+            'archivo_cdr',
+            'archivo_pfr',
+            'archivo_articulo',
+            'fechas_importantes'
         ]));
 
         // Actualizar fechas importantes
@@ -218,9 +234,9 @@ if (!file_exists($dirArticulo)) {
         // Actualizar archivos si se proporcionan nuevos
         if ($request->hasFile('archivo_convocatoria')) {
             if ($convocatoria->archivo_convocatoria && file_exists(public_path($convocatoria->archivo_convocatoria))) {
-                if(file_exists(public_path($convocatoria->archivo_convocatoria))) {
-                unlink(public_path($convocatoria->archivo_convocatoria));
-            }
+                if (file_exists(public_path($convocatoria->archivo_convocatoria))) {
+                    unlink(public_path($convocatoria->archivo_convocatoria));
+                }
             }
             $directory = public_path('conv/pdf');
             if (!file_exists($directory)) {
@@ -232,9 +248,9 @@ if (!file_exists($dirArticulo)) {
         }
         if ($request->hasFile('imagen_portada')) {
             if ($convocatoria->imagen_portada && file_exists(public_path($convocatoria->imagen_portada))) {
-                if(file_exists(public_path($convocatoria->imagen_portada))) {
-                unlink(public_path($convocatoria->imagen_portada));
-            }
+                if (file_exists(public_path($convocatoria->imagen_portada))) {
+                    unlink(public_path($convocatoria->imagen_portada));
+                }
             }
             $directory = public_path('conv/portada');
             if (!file_exists($directory)) {
@@ -303,7 +319,7 @@ if (!file_exists($dirArticulo)) {
     {
         try {
             \DB::beginTransaction();
-            
+
             // Eliminar archivos asociados si existen
             $archivos = [
                 $convocatoria->archivo_convocatoria,
@@ -313,7 +329,7 @@ if (!file_exists($dirArticulo)) {
                 $convocatoria->archivo_pfr,
                 $convocatoria->archivo_articulo
             ];
-            
+
             foreach ($archivos as $archivo) {
                 if ($archivo && file_exists(public_path($archivo))) {
                     unlink(public_path($archivo));

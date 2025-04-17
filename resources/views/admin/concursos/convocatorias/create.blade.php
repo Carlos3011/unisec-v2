@@ -69,6 +69,9 @@
             <button type="button" @click="currentTab = 'evaluacion'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'evaluacion'}" class="text-gray-300 hover:text-white transition-all">
                 <i class="fas fa-star mr-2"></i>Evaluación
             </button>
+            <button type="button" @click="currentTab = 'pagos'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'pagos'}" class="text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-money-bill mr-2"></i>Pagos
+            </button>
             <button type="button" @click="currentTab = 'archivos'" :class="{'text-blue-500 border-b-2 border-blue-500 -mb-4 pb-4': currentTab === 'archivos'}" class="text-gray-300 hover:text-white transition-all">
                 <i class="fas fa-upload mr-2"></i>Archivos
             </button>
@@ -230,6 +233,26 @@
             </div>
         </div>
 
+        <div x-show="currentTab === 'pagos'" class="space-y-6 animate-fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="costo_pre_registro" class="block text-sm font-medium text-gray-300">Costo de Pre-registro</label>
+                    <input type="number" step="0.01" name="costo_pre_registro" id="costo_pre_registro" value="{{ old('costo_pre_registro', 0) }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">
+                    @error('costo_pre_registro')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="costo_inscripcion" class="block text-sm font-medium text-gray-300">Costo de Inscripción</label>
+                    <input type="number" step="0.01" name="costo_inscripcion" id="costo_inscripcion" value="{{ old('costo_inscripcion', 0) }}" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500">
+                    @error('costo_inscripcion')
+                        <span class="text-red-400 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
         <div x-show="currentTab === 'archivos'" class="space-y-6 animate-fade-in">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
@@ -315,11 +338,11 @@
 
         <!-- Botones de Navegación -->
         <div class="flex justify-between mt-8">
-            <button type="button" @click="currentTab = ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'][Math.max(0, ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'].indexOf(currentTab) - 1)]" class="inline-flex items-center px-4 py-2 bg-gray-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 transition-all duration-150" x-show="currentTab !== 'general'">
+            <button type="button" @click="currentTab = ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'pagos', 'archivos'][Math.max(0, ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'pagos', 'archivos'].indexOf(currentTab) - 1)]" class="inline-flex items-center px-4 py-2 bg-gray-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 transition-all duration-150" x-show="currentTab !== 'general'">
                 <i class="fas fa-arrow-left mr-2"></i> Anterior
             </button>
             <template x-if="currentTab !== 'archivos'">
-                <button type="button" @click="currentTab = ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'][['general', 'fechas', 'requisitos', 'documentos', 'evaluacion', 'archivos'].indexOf(currentTab) + 1]; tabs[currentTab] = true; updateProgress()" class="inline-flex items-center px-4 py-2 bg-blue-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 transition-all duration-150 ml-auto">
+                <button type="button" @click="currentTab = ['general','fechas', 'requisitos', 'documentos', 'evaluacion', 'pagos', 'archivos'][['general', 'fechas', 'requisitos', 'documentos', 'evaluacion', 'pagos', 'archivos'].indexOf(currentTab) + 1]; tabs[currentTab] = true; updateProgress()" class="inline-flex items-center px-4 py-2 bg-blue-600 rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 transition-all duration-150 ml-auto">
                     Siguiente <i class="fas fa-arrow-right ml-2"></i>
                 </button>
             </template>
@@ -332,4 +355,6 @@
     </form>
 </div>
 @endsection
+
+
 

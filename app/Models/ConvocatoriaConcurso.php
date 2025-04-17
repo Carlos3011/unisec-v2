@@ -35,13 +35,17 @@ class ConvocatoriaConcurso extends Model
         'archivo_pdr',
         'archivo_cdr',
         'archivo_pfr',
-        'archivo_articulo'
+        'archivo_articulo',
+        'costo_pre_registro',
+        'costo_inscripcion'
     ];
 
 
     protected $casts = [
         'asesor_requerido' => 'boolean',
-        'max_integrantes' => 'integer'
+        'max_integrantes' => 'integer',
+        'costo_pre_registro' => 'decimal:2',
+        'costo_inscripcion' => 'decimal:2'
     ];
 
     public function fechasImportantes(): HasMany

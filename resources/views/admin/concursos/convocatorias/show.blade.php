@@ -47,6 +47,14 @@
                     <dt class="text-gray-400 font-medium">Email de Contacto</dt>
                     <dd class="col-span-2 text-white">{{ $convocatoria->contacto_email ?? 'No especificado' }}</dd>
                 </div>
+                <div class="grid grid-cols-3 gap-4 items-center">
+                    <dt class="text-gray-400 font-medium">Costo Pre-registro</dt>
+                    <dd class="col-span-2 text-white">{{ $convocatoria->costo_pre_registro ? '$'.number_format($convocatoria->costo_pre_registro, 2) : 'Gratuito' }}</dd>
+                </div>
+                <div class="grid grid-cols-3 gap-4 items-center">
+                    <dt class="text-gray-400 font-medium">Costo Inscripción</dt>
+                    <dd class="col-span-2 text-white">{{ $convocatoria->costo_inscripcion ? '$'.number_format($convocatoria->costo_inscripcion, 2) : 'Gratuito' }}</dd>
+                </div>
             </dl>
         </div>
     </div>
