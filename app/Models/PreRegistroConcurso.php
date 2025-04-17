@@ -15,11 +15,11 @@ class PreRegistroConcurso extends Model
     protected $fillable = [
         'usuario_id',
         'concurso_id',
+        'pago_pre_registro_id',
         'nombre_equipo',
         'integrantes',
         'asesor',
         'institucion',
-        'estado',
         'archivo_pdr',
         'estado_pdr',
         'comentarios_pdr',
@@ -32,11 +32,6 @@ class PreRegistroConcurso extends Model
         'estado_pdr' => 'string',
         'integrantes_data' => 'array'
     ];
-
-    const ESTADO_PENDIENTE = 'pendiente';
-    const ESTADO_VALIDADO = 'validado';
-    const ESTADO_RECHAZADO = 'rechazado';
-
     const ESTADO_PDR_PENDIENTE = 'pendiente';
     const ESTADO_PDR_EN_REVISION = 'en revisión';
     const ESTADO_PDR_APROBADO = 'aprobado';
@@ -47,7 +42,22 @@ class PreRegistroConcurso extends Model
      */
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'usuario_id');
+        return $this->belongsTo(User::class);
+ 
+    }
+    public function pagoPreRegistro()
+    {
+        return $this->belongsTo(PagoPreRegistro::class, 'pago_pre_registro_id');
+    }
+
+    public function inscripcion()
+    {
+        return $this->hasOne(InscripcionConcurso::class);
+    }
+
+    public function pagoInscripcion()
+    {
+        return $this->hasOne(PagoInscripcion::class);
     }
 
     /**

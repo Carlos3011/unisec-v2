@@ -36,8 +36,8 @@ Route::controller(PublicController::class)->group(function () {
     Route::get('/acerca', 'acerca')->name('acerca');
     Route::get('/espacio', 'espacio')->name('espacio');
 
-    Route::get('/convocatorias', 'convocatorias')->name('convocatorias.index');
-    Route::get('/convocatorias/{convocatoria}', 'show')->name('convocatorias.show');
+    Route::get('/convocatorias-publicas', 'convocatorias')->name('convocatorias.index');
+    Route::get('/convocatorias-publicas/{convocatoria}', 'show')->name('convocatorias.show');
 
     Route::get('/miembros', 'miembros')->name('miembros');
 
@@ -175,7 +175,7 @@ Route::middleware(['auth', 'role:usuario'])->group(function () {
     // Rutas para la gestión de pre-registros del usuario
     Route::get('/user/pre-registros', [PreRegistroUserController::class, 'index'])->name('user.concursos.pre-registros.index');
     Route::get('/user/pre-registros/create/{convocatoria}', [PreRegistroUserController::class, 'create'])->name('user.concursos.pre-registros.create');
-
+    
 
     Route::post('/user/pre-registros', [PreRegistroUserController::class, 'store'])->name('user.concursos.pre-registros.store');
     Route::get('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'show'])->name('user.concursos.pre-registros.show');
