@@ -48,7 +48,7 @@ class PreRegistroUserController extends Controller
         $request->validate([
             'concurso_id' => 'required|exists:concursos,id',
             'nombre_equipo' => 'required|string|max:255',
-            'integrantes' => 'required|integer|min:1',
+            'integrantes' => 'required|integer|min:1|max:5',
             'asesor' => 'nullable|string|max:255',
             'institucion' => 'nullable|string|max:255',
             'estado_pdr' => 'nullable|string',
@@ -84,12 +84,7 @@ class PreRegistroUserController extends Controller
                 ->with('error', 'Debe tener un pago confirmado para realizar el pre-registro');
         }
 
-        // Verificar pago confirmado
-        $pagoConfirmado = PagoPreRegistro::where('usuario_id', Auth::id())
-            ->where('concurso_id', $request->concurso_id)
-            ->where('estado_pago', 'pagado')
-            ->firstOrFail();
-
+        // Crear el pre-registro
         $preRegistro = PreRegistroConcurso::create([
             'usuario_id' => Auth::id(),
             'concurso_id' => $request->concurso_id,
@@ -130,14 +125,9 @@ class PreRegistroUserController extends Controller
     {
         $this->authorize('update', $preRegistro);
 
-        if ($preRegistro->estado !== 'pendiente') {
-            return redirect()->route('user.concursos.pre-registros.show', $preRegistro)
-                ->with('error', 'No se puede modificar un pre-registro que ya ha sido procesado');
-        }
-
         $request->validate([
             'nombre_equipo' => 'required|string|max:255',
-            'integrantes' => 'required|integer|min:1',
+            'integrantes' => 'required|integer|min:1|max:5',
             'asesor' => 'nullable|string|max:255',
             'institucion' => 'nullable|string|max:255',
             'comentarios' => 'nullable|string',

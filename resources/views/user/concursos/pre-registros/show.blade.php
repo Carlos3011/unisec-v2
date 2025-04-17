@@ -1,5 +1,7 @@
 @extends('layouts.user')
 
+@section('titulo', 'Detalles del Pre-registro')
+
 @section('contenido')
 <div class="min-h-screen py-12 relative overflow-hidden bg-gradient-to-b from-space-950 to-cosmic-900">
     <div class="container mx-auto px-4">

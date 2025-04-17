@@ -190,8 +190,6 @@ Route::middleware(['auth', 'role:usuario'])->group(function () {
     // Rutas para la gestión de pre-registros del usuario
     Route::get('/user/pre-registros', [PreRegistroUserController::class, 'index'])->name('user.concursos.pre-registros.index');
     Route::get('/user/pre-registros/create/{convocatoria}', [PreRegistroUserController::class, 'create'])->name('user.concursos.pre-registros.create');
-    
-
     Route::post('/user/pre-registros', [PreRegistroUserController::class, 'store'])->name('user.concursos.pre-registros.store');
     Route::get('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'show'])->name('user.concursos.pre-registros.show');
     Route::get('/user/pre-registros/{preRegistro}/edit', [PreRegistroUserController::class, 'edit'])->name('user.concursos.pre-registros.edit');
