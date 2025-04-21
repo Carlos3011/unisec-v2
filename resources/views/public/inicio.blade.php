@@ -4,29 +4,66 @@
 
 @section('contenido')
 
-    <!-- Sección Hero Mejorada -->
-    <section class="relative min-h-screen flex items-center  via-space-700 to-black py-12 px-6">
-        <div class="relative max-w-7xl mx-auto text-center z-10" data-aos="zoom-in-up" data-aos-duration="1000">
-            <div class="mb-12">
+    <section
+        class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-space-900 via-cosmic-900 to-black py-20 px-6 sm:px-10">
+
+        <div class="max-w-7xl w-full z-10" data-aos="zoom-in-up" data-aos-duration="1000">
+            <div class="space-y-10 text-center">
+                <!-- Título principal -->
                 <h1
-                    class="text-4xl sm:text-6xl md:text-7xl font-bold bg-gradient-to-r from-secondary to-primary-100 bg-clip-text text-transparent mb-6">
+                    class="text-5xl sm:text-6xl md:text-7xl font-black bg-gradient-to-r from-primary-400 to-cyan-400 bg-clip-text text-transparent">
                     <span id="typed-text-hover-title"
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-600"></span>
+                        class="inline-block text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-600">
+                        Innovación
+                    </span>
                 </h1>
-                <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                <!-- Subtítulo con efecto typed -->
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
                     Revolucionando la
                     <span id="typed-text-hover"
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-accent-500 to-secondary-700"></span>
-                    Mediante la Innovación
-                </h1>
-                <p class="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-                    Consorcio internacional líder en ingeniería aeroespacial avanzada y desarrollo de tecnologías espaciales
-                    sostenibles
-                </p>
+                        class="inline-block text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-600">
+                        <!-- Aquí se inyectará el texto dinámico -->
+                    </span>
+                </h2>
 
+                <!-- Texto fijo + botones -->
+                <div class="space-y-6">
+                    <p class="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto">
+                        Convocatorias abiertas: Participa en nuestro Concurso de Innovación y asiste al Congreso Científico.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row justify-center gap-6 pt-2">
+                        <!-- Botón Concurso -->
+                        <a href="#"
+                            class="group relative p-6 sm:p-8 bg-gradient-to-br from-cyan-600/80 to-accent-600/80 rounded-2xl xl:rounded-3xl text-white transition-all duration-500 hover:scale-105 hover:shadow-xl">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-accent-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            </div>
+                            <div class="relative flex flex-col items-center space-y-3">
+                                <i class="fas fa-rocket text-4xl text-primary-200"></i>
+                                <span class="text-xl font-semibold">Concurso de Innovación</span>
+                                <span class="text-sm text-white/70">Demuestra tu ingenio</span>
+                            </div>
+                        </a>
+
+                        <!-- Botón Congreso -->
+                        <a href="#"
+                            class="group relative p-6 sm:p-8 bg-gradient-to-br from-cyan-600/80 to-accent-600/80 rounded-2xl xl:rounded-3xl text-white transition-all duration-500 hover:scale-105 hover:shadow-xl">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-accent-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            </div>
+                            <div class="relative flex flex-col items-center space-y-3">
+                                <i class="fas fa-satellite text-4xl text-cyan-200"></i>
+                                <span class="text-xl font-semibold">Congreso Científico</span>
+                                <span class="text-sm text-white/70">Reserva tu participación</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
 
 
     <!-- SEPARADOR ORGÁNICO -->
@@ -37,99 +74,83 @@
         </div>
     </div>
 
-    <!-- Galería de Videos Mejorada y Responsiva -->
-    <section class="py-16 bg-gradient-to-br relative overflow-hidden" data-aos="fade-up">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-            <!-- Encabezado con animación -->
-            <div class="text-center mb-12">
-                <div class="inline-flex relative">
-                    <span class="absolute -inset-4 bg-galactic-500/50 blur-3xl rounded-full"></span>
-                    <h2 id="typed-text-gallery-title"
-                        class="text-4xl sm:text-5xl md:text-6xl bg-gradient-to-r from-cyan-500 to-secondary bg-clip-text text-transparent font-bold mb-6 relative">
-                        Galería de Videos
-                    </h2>
-                </div>
-                <p class="text-base sm:text-lg text-tech-300 max-w-2xl mx-auto">
-                    Descubre nuestros contenidos destacados y sumérgete en el universo
-                </p>
-            </div>
-
-            <!-- Video Principal -->
-            <div class="mb-8 relative group">
-                <div
-                    class="aspect-video bg-gray-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-300 hover:scale-[1.02]">
-                    <iframe id="main-video-player" class="w-full h-full"
-                        src="https://www.youtube.com/embed/hI9HQfCAw64?modestbranding=1&rel=0" frameborder="0"
-                        allowfullscreen loading="lazy"></iframe>
+    <!-- PROXIMOS EVENTOS -->
+    <section class="py-20 " data-aos="fade-in">
+        <div class="max-w-7xl mx-auto px-6">
+            <!-- Encabezado de la Sección -->
+            <div class="flex flex-col md:flex-row justify-between items-center mb-16">
+                <div class="md:w-1/2 mb-8 md:mb-0" data-aos="fade-right">
+                    <h2
+                        class="text-5xl font-extrabold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent mb-6">
+                        Próximos Eventos</h2>
                 </div>
             </div>
 
-            <!-- Carrusel de Videos -->
-            <div class="flex overflow-x-auto pb-6 space-x-4 scrollbar-hide" id="video-carousel">
-                @foreach ([['id' => '3g8i7fFp5bc', 'title' => 'Long March-6A launches SpaceSail Polar Orbit 01'], ['id' => 'gmA1Gr_JNio', 'title' => 'Una vista de satelites orbitando desde un órbita baja'], ['id' => 'px31OjiqoNM', 'title' => 'Comunicaciones Satelitales Avanzadas'], ['id' => '5voQfQOTem8', 'title' => '¿Cómo construir un satélite?']] as $video)
-                    <div class="flex-shrink-0 w-52 sm:w-64 cursor-pointer video-carousel-item transition-all duration-300 border border-tech-500 rounded-lg overflow-hidden bg-tech-700 hover:scale-105"
-                        data-video-id="{{ $video['id'] }}">
-                        <div class="aspect-video bg-gray-800 relative">
-                            <img src="https://img.youtube.com/vi/{{ $video['id'] }}/hqdefault.jpg"
-                                alt="{{ $video['title'] }}"
-                                class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <button class="text-white bg-black/50 rounded-full p-3 hover:bg-black/70 transition-all">
-                                    <i class="fas fa-play text-xl"></i>
-                                </button>
+            <!-- Tarjetas de Eventos -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                @if($convocatorias->count() > 0)
+                    @foreach($convocatorias as $convocatoria)
+                        <div class="relative" data-aos="fade-up" data-aos-delay="{{ $loop->index * 200 }}">
+                            <div class="bg-cosmic-800/90 backdrop-blur-lg rounded-2xl p-8 border-2 border-cosmic-600 shadow-xl">
+                                <!-- Información Principal -->
+                                <div class="flex items-center justify-between mb-8">
+                                    <div class="flex items-center gap-4">
+                                        <div
+                                            class="w-16 h-16 bg-gradient-to-br from-cosmic-600 to-cosmic-400 rounded-2xl flex items-center justify-center shadow-lg">
+                                            <span
+                                                class="text-white font-bold text-2xl">{{ strtoupper(substr($convocatoria->concurso->titulo, 0, 1)) }}</span>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-white mb-1">{{ $convocatoria->concurso->titulo }}
+                                            </h3>
+                                            <p class="text-white">{{ $convocatoria->sede }}</p>
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="text-sm text-white px-4 py-2 rounded-xl font-medium">{{ $convocatoria->dirigido_a }}</span>
+                                </div>
+
+                                <!-- Información Adicional -->
+                                @if($convocatoria->fechasImportantes->isNotEmpty())
+                                    <div class="space-y-3 mb-8">
+                                        <h4 class="text-white font-semibold mb-4">Fechas Importantes</h4>
+                                        @foreach($convocatoria->fechasImportantes->take(2) as $fecha)
+                                            <div class="flex items-center text-sm bg-cosmic-700/50 rounded-xl p-4 border border-cosmic-500">
+                                                <i class="fas fa-calendar-alt text-secondary mr-4 text-lg"></i>
+                                                <div>
+                                                    <span class="font-medium text-white">{{ $fecha->titulo }}</span>
+                                                    <span
+                                                        class="ml-2 text-white">{{ \Carbon\Carbon::parse($fecha->fecha)->format('d/m/Y') }}</span>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                <div class="flex justify-end">
+                                    <a href="{{ route('convocatorias.show', $convocatoria) }}"
+                                        class="inline-flex items-center px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white rounded-xl font-medium shadow-lg transition-colors duration-300">
+                                        <i class="fas fa-info-circle mr-2"></i>Ver Detalles
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <div class="p-3 bg-cosmic-500">
-                            <h3 class="text-sm sm:text-md font-semibold text-primary line-clamp-2">
-                                {{ $video['title'] }}
-                            </h3>
+                    @endforeach
+                @else
+                    <div class="col-span-2 text-center py-12">
+                        <div
+                            class="bg-cosmic-800/50 backdrop-blur-lg rounded-2xl p-8 max-w-2xl mx-auto border-2 border-cosmic-600">
+                            <i class="fas fa-calendar-times text-6xl text-cosmic-400 mb-6"></i>
+                            <h2 class="text-2xl font-bold text-white mb-4">No hay eventos próximos</h2>
+                            <p class="text-cosmic-200">En este momento no hay eventos programados. Por favor, vuelve a consultar
+                                más tarde.</p>
                         </div>
                     </div>
-                @endforeach
+                @endif
             </div>
         </div>
-
-        <!-- Efecto Nebulosa -->
-        <div class="absolute inset-0 bg-gradient-to-br from-galactic-700 to-cosmic-500 opacity-20 pointer-events-none">
-        </div>
     </section>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const carouselItems = document.querySelectorAll('.video-carousel-item');
-            const mainVideo = document.getElementById('main-video-player');
-
-            carouselItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const videoId = this.dataset.videoId;
-                    mainVideo.src =
-                        `https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0`;
-                });
-            });
-        });
-    </script>
-
-    <style>
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .video-carousel-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
-        }
-
-        #video-carousel {
-            scroll-behavior: smooth;
-        }
-    </style>
-
-
+    
 
     <!-- SEPARADOR ORGÁNICO -->
     <div class="h-48 bg-space-700 relative overflow-hidden">
@@ -139,8 +160,10 @@
         </div>
     </div>
 
+
+
     <!-- Galería de Imágenes -->
-    <section class="py-24 bg-space-700" data-aos="fade-up">
+    <!-- <section class="py-24 bg-space-700" data-aos="fade-up">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-20">
                 <div class="inline-flex relative">
@@ -192,58 +215,49 @@
                 @endphp
 
                 @foreach ($imagenes as $index => $img)
-                    @php
-                        $rutaImagen = asset('images/space/' . $img['archivo']);
+                            @php
+                                $rutaImagen = asset('images/space/' . $img['archivo']);
 
-                        // Definir clases responsivas para tamaños adaptables
-                        $spanClass = match ($index % 6) {
-                            0 => 'lg:col-span-2 lg:row-span-2', // Imágenes grandes solo en pantallas grandes
-                            2, 4 => 'md:col-span-2', // Imágenes medianas horizontales en pantallas medianas
-                            default => 'col-span-1', // Tamaño normal en móviles
-                        };
-                    @endphp
+                                
+                                $spanClass = match ($index % 6) {
+                                    0 => 'lg:col-span-2 lg:row-span-2', 
+                                    2, 4 => 'md:col-span-2', 
+                                    default => 'col-span-1', 
+                                };
+                            @endphp
 
-                    <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 ease-in-out 
-                    {{ $spanClass }} hover:z-10"
-                        data-aos="zoom-in-up" data-aos-delay="{{ $loop->index * 150 }}"
-                        data-aos-anchor-placement="top-center">
-                        <div class="relative h-full w-full">
+                            <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 ease-in-out 
+                                                                                    {{ $spanClass }} hover:z-10" data-aos="zoom-in-up"
+                                data-aos-delay="{{ $loop->index * 150 }}" data-aos-anchor-placement="top-center">
+                                <div class="relative h-full w-full">
 
-                            <!-- Imagen con efecto de zoom -->
-                            <img src="{{ $rutaImagen }}" alt="{{ $img['nombre'] }}"
-                                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500 rounded-xl">
+                                    
+                                    <img src="{{ $rutaImagen }}" alt="{{ $img['nombre'] }}"
+                                        class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500 rounded-xl">
 
-                            <!-- Overlay con información -->
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <div
-                                    class="absolute bottom-0 left-0 right-0 p-4 space-y-2 translate-y-6 group-hover:translate-y-0 transition-all duration-500 delay-100">
-                                    <h3 class="text-lg md:text-xl font-bold text-white">
-                                        {{ $img['nombre'] }}
-                                    </h3>
-                                    <div class="bg-space-800/80 backdrop-blur-md p-3 rounded-lg">
-                                        <p class="text-white text-sm md:text-base">
-                                            {{ $img['descripcion'] }}
-                                        </p>
+                                    
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <div
+                                            class="absolute bottom-0 left-0 right-0 p-4 space-y-2 translate-y-6 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                                            <h3 class="text-lg md:text-xl font-bold text-white">
+                                                {{ $img['nombre'] }}
+                                            </h3>
+                                            <div class="bg-space-800/80 backdrop-blur-md p-3 rounded-lg">
+                                                <p class="text-white text-sm md:text-base">
+                                                    {{ $img['descripcion'] }}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
-
-                        </div>
-                    </div>
                 @endforeach
             </div>
         </div>
-    </section>
+    </section> -->
 
-
-    <!-- SEPARADOR ORGÁNICO -->
-    <div class="h-48 bg-space-700 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-50"></div>
-        <div class="absolute inset-0 animate-orbital-movement">
-            <div class="w-48 h-48 bg-secondary/20 rounded-full blur-3xl"></div>
-        </div>
-    </div>
 
     <!-- SECCIÓN NOTICIAS -->
     <section class="relative py-24 bg-gradient-to-br from-cosmic-500 via-cosmic-700 to-black overflow-hidden"
@@ -256,11 +270,13 @@
 
             <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 @forelse ($noticias as $noticia)
-                    <article class="bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] hover:ring-2 hover:ring-blue-500/50">
+                    <article
+                        class="bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] hover:ring-2 hover:ring-blue-500/50">
                         @if($noticia->imagen)
-                            <img src="{{ asset( $noticia->imagen) }}" alt="{{ $noticia->titulo }}" class="w-full h-48 object-cover">
+                            <img src="{{ asset($noticia->imagen) }}" alt="{{ $noticia->titulo }}" class="w-full h-48 object-cover">
                         @else
-                            <img src="{{ asset('images/exoplanetas.jpg') }}" alt="Imagen por defecto" class="w-full h-48 object-cover">
+                            <img src="{{ asset('images/exoplanetas.jpg') }}" alt="Imagen por defecto"
+                                class="w-full h-48 object-cover">
                         @endif
                         <div class="p-6">
                             <h3 class="text-xl font-bold text-white mb-2 line-clamp-2">{{ $noticia->titulo }}</h3>
@@ -269,9 +285,12 @@
                             </p>
                             <div class="flex justify-between items-center text-sm text-gray-400 mb-4">
                                 <span>{{ $noticia->fecha_publicacion->format('d/m/Y') }}</span>
-                                <span class="bg-primary/80 px-2 py-1 rounded text-white">{{ $noticia->seccionNoticia->titulo }}</span>
+                                <span
+                                    class="bg-primary/80 px-2 py-1 rounded text-white">{{ $noticia->seccionNoticia->titulo }}</span>
                             </div>
-                            <a href="{{ route('noticias.show', $noticia->id) }}" class="inline-block text-primary font-semibold hover:text-primary-light transition-colors duration-200">Leer más →</a>
+                            <a href="{{ route('noticias.show', $noticia->id) }}"
+                                class="inline-block text-primary font-semibold hover:text-primary-light transition-colors duration-200">Leer
+                                más →</a>
                         </div>
                     </article>
                 @empty
@@ -282,7 +301,8 @@
             </div>
 
             <div class="text-center mt-12">
-                <a href="{{ route('blog') }}" class="inline-block px-8 py-3 bg-primary text-white rounded-full hover:bg-primary-dark transition-colors duration-300 transform hover:scale-105">
+                <a href="{{ route('blog') }}"
+                    class="inline-block px-8 py-3 bg-primary text-white rounded-full hover:bg-primary-dark transition-colors duration-300 transform hover:scale-105">
                     Ver todas las noticias
                 </a>
             </div>
@@ -440,8 +460,8 @@
                                     <div
                                         class="absolute inset-0 bg-accent-700 rounded-full blur group-hover:blur-lg transition-all duration-300">
                                     </div>
-                                    <svg class="w-8 h-8 text-accent-300 p-1.5 relative" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-8 h-8 text-accent-300 p-1.5 relative" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
@@ -504,70 +524,97 @@
         </div>
     </div>
 
-    <section class="py-20 " data-aos="fade-in">
-        <div class="max-w-7xl mx-auto px-6">
-            <!-- Encabezado de la Sección -->
-            <div class="flex flex-col md:flex-row justify-between items-center mb-16">
-                <div class="md:w-1/2 mb-8 md:mb-0" data-aos="fade-right">
-                    <h2 class="text-5xl font-extrabold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent mb-6">Próximos Eventos</h2>
+    <!-- Galería de Videos Mejorada y Responsiva -->
+    <section class="py-16 bg-gradient-to-br relative overflow-hidden" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <!-- Encabezado con animación -->
+            <div class="text-center mb-12">
+                <div class="inline-flex relative">
+                    <span class="absolute -inset-4 bg-galactic-500/50 blur-3xl rounded-full"></span>
+                    <h2 id="typed-text-gallery-title"
+                        class="text-4xl sm:text-5xl md:text-6xl bg-gradient-to-r from-cyan-500 to-secondary bg-clip-text text-transparent font-bold mb-6 relative">
+                        Galería de Videos
+                    </h2>
+                </div>
+                <p class="text-base sm:text-lg text-tech-300 max-w-2xl mx-auto">
+                    Descubre nuestros contenidos destacados y sumérgete en el universo
+                </p>
+            </div>
+
+            <!-- Video Principal -->
+            <div class="mb-8 relative group">
+                <div
+                    class="aspect-video bg-gray-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-300 hover:scale-[1.02]">
+                    <iframe id="main-video-player" class="w-full h-full"
+                        src="https://www.youtube.com/embed/hI9HQfCAw64?modestbranding=1&rel=0" frameborder="0"
+                        allowfullscreen loading="lazy"></iframe>
                 </div>
             </div>
 
-            <!-- Tarjetas de Eventos -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                @if($convocatorias->count() > 0)
-                    @foreach($convocatorias as $convocatoria)
-                        <div class="relative" data-aos="fade-up" data-aos-delay="{{ $loop->index * 200 }}">
-                            <div class="bg-cosmic-800/90 backdrop-blur-lg rounded-2xl p-8 border-2 border-cosmic-600 shadow-xl">
-                                <!-- Información Principal -->
-                                <div class="flex items-center justify-between mb-8">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-16 h-16 bg-gradient-to-br from-cosmic-600 to-cosmic-400 rounded-2xl flex items-center justify-center shadow-lg">
-                                            <span class="text-white font-bold text-2xl">{{ strtoupper(substr($convocatoria->concurso->titulo, 0, 1)) }}</span>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-2xl font-bold text-white mb-1">{{ $convocatoria->concurso->titulo }}</h3>
-                                            <p class="text-white">{{ $convocatoria->sede }}</p>
-                                        </div>
-                                    </div>
-                                    <span class="text-sm text-white px-4 py-2 rounded-xl font-medium">{{ $convocatoria->dirigido_a }}</span>
-                                </div>
-
-                                <!-- Información Adicional -->
-                                @if($convocatoria->fechasImportantes->isNotEmpty())
-                                    <div class="space-y-3 mb-8">
-                                        <h4 class="text-white font-semibold mb-4">Fechas Importantes</h4>
-                                        @foreach($convocatoria->fechasImportantes->take(2) as $fecha)
-                                            <div class="flex items-center text-sm bg-cosmic-700/50 rounded-xl p-4 border border-cosmic-500">
-                                                <i class="fas fa-calendar-alt text-secondary mr-4 text-lg"></i>
-                                                <div>
-                                                    <span class="font-medium text-white">{{ $fecha->titulo }}</span>
-                                                    <span class="ml-2 text-white">{{ \Carbon\Carbon::parse($fecha->fecha)->format('d/m/Y') }}</span>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @endif
-
-                                <div class="flex justify-end">
-                                    <a href="{{ route('convocatorias.show', $convocatoria) }}" 
-                                       class="inline-flex items-center px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white rounded-xl font-medium shadow-lg transition-colors duration-300">
-                                        <i class="fas fa-info-circle mr-2"></i>Ver Detalles
-                                    </a>
-                                </div>
+            <!-- Carrusel de Videos -->
+            <div class="flex overflow-x-auto pb-6 space-x-4 scrollbar-hide" id="video-carousel">
+                @foreach ([['id' => '3g8i7fFp5bc', 'title' => 'Long March-6A launches SpaceSail Polar Orbit 01'], ['id' => 'gmA1Gr_JNio', 'title' => 'Una vista de satelites orbitando desde un órbita baja'], ['id' => 'px31OjiqoNM', 'title' => 'Comunicaciones Satelitales Avanzadas'], ['id' => '5voQfQOTem8', 'title' => '¿Cómo construir un satélite?']] as $video)
+                    <div class="flex-shrink-0 w-52 sm:w-64 cursor-pointer video-carousel-item transition-all duration-300 border border-tech-500 rounded-lg overflow-hidden bg-tech-700 hover:scale-105"
+                        data-video-id="{{ $video['id'] }}">
+                        <div class="aspect-video bg-gray-800 relative">
+                            <img src="https://img.youtube.com/vi/{{ $video['id'] }}/hqdefault.jpg" alt="{{ $video['title'] }}"
+                                class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <button class="text-white bg-black/50 rounded-full p-3 hover:bg-black/70 transition-all">
+                                    <i class="fas fa-play text-xl"></i>
+                                </button>
                             </div>
                         </div>
-                    @endforeach
-                @else
-                    <div class="col-span-2 text-center py-12">
-                        <div class="bg-cosmic-800/50 backdrop-blur-lg rounded-2xl p-8 max-w-2xl mx-auto border-2 border-cosmic-600">
-                            <i class="fas fa-calendar-times text-6xl text-cosmic-400 mb-6"></i>
-                            <h2 class="text-2xl font-bold text-white mb-4">No hay eventos próximos</h2>
-                            <p class="text-cosmic-200">En este momento no hay eventos programados. Por favor, vuelve a consultar más tarde.</p>
+                        <div class="p-3 bg-cosmic-500">
+                            <h3 class="text-sm sm:text-md font-semibold text-primary line-clamp-2">
+                                {{ $video['title'] }}
+                            </h3>
                         </div>
                     </div>
-                @endif
+                @endforeach
             </div>
         </div>
+
+        <!-- Efecto Nebulosa -->
+        <div class="absolute inset-0 bg-gradient-to-br from-galactic-700 to-cosmic-500 opacity-20 pointer-events-none">
+        </div>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const carouselItems = document.querySelectorAll('.video-carousel-item');
+            const mainVideo = document.getElementById('main-video-player');
+
+            carouselItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    const videoId = this.dataset.videoId;
+                    mainVideo.src =
+                        `https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0`;
+                });
+            });
+        });
+        </script>
+
+        <style>
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+            .video-carousel-item:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
+            }
+
+            #video-carousel {
+                scroll-behavior: smooth;
+            }
+        </style>
     </section>
+
+    
+    
 @endsection

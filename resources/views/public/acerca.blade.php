@@ -32,7 +32,7 @@
                     </div>
                     <h3 class="text-2xl font-bold text-white">Nuestra Travesía</h3>
                 </div>
-                <p class="text-white leading-relaxed">Desde 2012, escribiendo la historia de la exploración espacial con innovación y determinación.</p>
+                <p class="text-white leading-relaxed">Desde 2013, ha mostrado crecimiento en el desarrollo de la ingeniería cosmonáutica a partir de colaboraciones y proyectos prácticos</p>
             </a>
 
             <a href="#valores" class="group cosmic-card backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6 transition-all duration-500 hover:scale-[1.05] hover:shadow-glow">
@@ -103,7 +103,7 @@
             <!-- Imagen Representativa con efecto parallax -->
             <div class="relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 group" data-aos="fade-right" data-aos-duration="800">
                 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <img src="{{ asset('images/exoplanetas.jpg')}}" alt="Laboratorio Espacial" class="w-full h-full object-cover filter brightness-75 group-hover:brightness-100 transition-all duration-500 transform group-hover:scale-105">
+                <img src="{{ asset('images/logo.png')}}" alt="Laboratorio Espacial" class="w-full h-full object-cover filter brightness-75 group-hover:brightness-100 transition-all duration-500 transform group-hover:scale-105">
             </div>
 
             <!-- Texto Descriptivo con efecto Glassmorphism -->
@@ -112,7 +112,7 @@
                     ¿Quiénes Somos?
                 </h2>
                 <p class="text-gray-300 text-lg leading-relaxed text-justify">
-                    UNISEC es un centro de innovación aeroespacial comprometido con la investigación, el desarrollo y la colaboración global. Impulsamos proyectos que desafían los límites de la tecnología y acercamos la exploración espacial a nuevas fronteras.
+                    UNISEC-MÉXICO (University Space Engineering Consortium-México) es una organización con el objetivo de promover las capacidades tecnológicas, científicas en la ingeniería cosmonáutica a través de colaboraciones interinstitucionales nacionales e internacionales.
                 </p>
             </div>
         </div>
@@ -142,7 +142,7 @@
         <div class="text-center mb-16">
             <h2 class="text-5xl font-extrabold text-white drop-shadow-md animate-text-glow">Nuestra Misión, Visión y Objetivos</h2>
             <p class="text-gray-300 text-xl max-w-3xl mx-auto mt-4">
-                UNISEC-MX facilita y promueve las actividades prácticas de desarrollo aéreo y espacial a nivel universitario, tales como el diseño, desarrollo, fabricación, armado, lanzamiento y operación de micro/nano/pico satélites, cohetes sonda y aeronaves incluyendo sus cargas útiles
+                UNISEC-MX facilita y promueve las actividades prácticas de desarrollo cosmonáutico a nivel universitario, tales como el diseño, desarrollo, fabricación, armado, lanzamiento y operación de micro/nano/pico satélites, cohetes sonda y aeronaves incluyendo sus cargas útiles
             </p>
         </div>
 
@@ -204,7 +204,7 @@
     <div class="max-w-3xl mx-auto px-6 relative z-10 text-center">
         <blockquote class="text-white">
             <p class="text-2xl md:text-3xl leading-relaxed font-medium mb-6 drop-shadow-xl">
-                "La exploración del espacio no es solo un sueño, sino una misión que transforma nuestro presente y nos proyecta hacia un futuro lleno de posibilidades infinitas."
+                "Impulsamos la soberanía tecnológica espacial mediante la integración de capacidades académicas, científicas e industriales nacionales"
             </p>
             <footer class="flex items-center justify-center">
                 <div class="border-l-4 border-cyan-400 pl-4">
@@ -295,17 +295,17 @@ $secciones = [
 
     <!-- Presidente -->
     <div class="mb-10">
-      <div class="max-w-md mx-auto bg-space-500/20 backdrop-blur-xl rounded-2xl border-2 border-primary/60 hover:border-primary/60 transition-all p-8 transform hover:scale-[1.03] hover:shadow-2xl hover:shadow-primary/20 group text-center">
+      <div class="max-w-sm mx-auto bg-space-500/20 backdrop-blur-xl rounded-2xl border-2 border-primary/60 hover:border-primary/60 transition-all p-4 transform hover:scale-[1.03] hover:shadow-2xl hover:shadow-primary/20 group text-center">
         <div class="relative overflow-hidden">
           <img src="{{ asset('images/' . $presidente['imagen']) }}" alt="{{ $presidente['nombre'] }}" 
-               class="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-500">
+               class="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-space-900 via-space-900/60 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-500"></div>
         </div>
         
-        <div class="p-8 relative text-center">
-          <h3 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300 mb-2 tracking-wide">{{ $presidente['nombre'] }}</h3>
-          <p class="text-primary font-medium text-lg mb-4">{{ $presidente['cargo'] }}</p>
-          <p class="text-gray-300/90 text-base leading-relaxed mb-6">
+        <div class="p-4 relative text-center">
+          <h3 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300 mb-2 tracking-wide">{{ $presidente['nombre'] }}</h3>
+          <p class="text-primary font-medium text-base mb-2">{{ $presidente['cargo'] }}</p>
+          <p class="text-gray-300/90 text-sm leading-relaxed mb-4">
             {{ $presidente['descripcion'] }}
           </p>
           
@@ -333,15 +333,15 @@ $secciones = [
         <!-- Director Regional -->
         <div class="relative">
           <div class="bg-space-500/20 backdrop-blur-xl rounded-2xl border-2 border-primary/40 hover:border-primary/60 transition-all p-8 transform hover:scale-[1.03] hover:shadow-2xl hover:shadow-primary/20 group text-center">
-            <div class="mb-6 relative overflow-hidden rounded-xl">
+            <div class="mb-4 relative overflow-hidden rounded-xl">
               <img src="{{ asset('images/' . $seccion['director']['imagen']) }}" 
                    alt="{{ $seccion['director']['nombre'] }}" 
-                   class="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                   class="w-full h-28 object-cover transform group-hover:scale-105 transition-transform duration-500">
               <div class="absolute inset-0 bg-gradient-to-t from-space-900 via-space-900/60 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-500"></div>
             </div>
-            <h4 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300 mb-3">{{ $seccion['director']['nombre'] }}</h4>
-            <p class="text-primary font-medium text-lg mb-3">{{ $seccion['director']['cargo'] }}</p>
-            <p class="text-gray-300/90 text-base leading-relaxed mb-4">{{ $seccion['director']['descripcion'] }}</p>
+            <h4 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300 mb-2">{{ $seccion['director']['nombre'] }}</h4>
+            <p class="text-primary font-medium text-base mb-2">{{ $seccion['director']['cargo'] }}</p>
+            <p class="text-gray-300/90 text-sm leading-relaxed mb-3">{{ $seccion['director']['descripcion'] }}</p>
 
           </div>
 
@@ -357,15 +357,15 @@ $secciones = [
             <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-gradient-to-b from-primary/90 to-primary/90"></div>
             
             <div class="bg-space-500/20 backdrop-blur-xl rounded-2xl border-2 border-primary/30 hover:border-primary/50 transition-all p-6 transform hover:scale-[1.03] hover:shadow-xl hover:shadow-primary/20 group text-center">
-              <div class="mb-4 relative overflow-hidden rounded-xl">
+              <div class="mb-3 relative overflow-hidden rounded-xl">
                 <img src="{{ asset('images/' . $miembro['imagen']) }}" 
                      alt="{{ $miembro['nombre'] }}" 
-                     class="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                     class="w-full h-20 object-cover transform group-hover:scale-105 transition-transform duration-500">
                 <div class="absolute inset-0 bg-gradient-to-t from-space-900 via-space-900/60 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-500"></div>
               </div>
-              <h4 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300 mb-2">{{ $miembro['nombre'] }}</h4>
-              <p class="text-primary font-medium text-base mb-2">{{ $miembro['cargo'] }}</p>
-              <p class="text-gray-300/90 text-sm leading-relaxed mb-4">{{ $miembro['descripcion'] }}</p>
+              <h4 class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300 mb-1">{{ $miembro['nombre'] }}</h4>
+              <p class="text-primary font-medium text-sm mb-1">{{ $miembro['cargo'] }}</p>
+              <p class="text-gray-300/90 text-xs leading-relaxed mb-3">{{ $miembro['descripcion'] }}</p>
               <div class="flex justify-center space-x-4">
                 </a>
               </div>
@@ -395,10 +395,49 @@ $secciones = [
         <div class="relative flex flex-col items-center">
             @php
                 $timeline = [
-                    ['year' => '2020', 'event' => 'Fundación de UNISEC y lanzamiento del primer proyecto de investigación aeroespacial'],
-                    ['year' => '2021', 'event' => 'Desarrollo de colaboraciones internacionales y registro de patentes innovadoras'],
-                    ['year' => '2023', 'event' => 'Reconocimiento como líder en tecnología espacial en Latinoamérica'],
-                    ['year' => '2025', 'event' => 'Liderazgo en el desarrollo de misiones interplanetarias y construcción de satélites de próxima generación'],
+                    ['year' => '2013', 
+                    'events' => ['Participación en CLTP']],
+                    ['year' => '2014', 'events' => [
+                        'Participación en CLTP',
+                        'Asistencias a reuniones globales de UNISEC',
+                        'Organización del primer entrenamiento Cansat en México'
+                    ]],
+                    ['year' => '2015', 'events' => [
+                        'Participación en CLTP',
+                        'Entrenamiento Cansat',
+                        'Primer Concurso Nacional Cansat'
+                    ]],
+                    ['year' => '2016', 'events' => [
+                        'Entrenamiento Cansat',
+                        'Segundo Concurso Nacional Cansat'
+                    ]],
+                    ['year' => '2017', 'events' => [
+                        'Entrenamiento Cansat',
+                        'Tercer Concurso Nacional Cansat',
+                        'Colaboración con UNISEC-Costa Rica'
+                    ]],
+                    ['year' => '2018', 'events' => [
+                        'Participación en ARLISS',
+                        'Cuarto Concurso Nacional Cansat',
+                        'Entrenamiento en cohetería con Tripoli Rocketry Association'
+                    ]],
+                    ['year' => '2019', 'events' => [
+                        'Participación en la integración de AzTechSat-1',
+                        'Quinto Concurso Nacional Cansat',
+                        'Entrenamiento en cohetería con Tripoli Rocketry Association',
+                        'Lanzamiento de cohete con Cansat en Laguna Salada, Tecate, B.C.'
+                    ]],
+                    ['year' => '2020-2023', 'events' => [
+                        'Formación de recursos humanos: Estudiantes de ingeniería y maestría',
+                        'Intercambio académico: UANL, UNAM, UABC, UACH',
+                        'Colaboraciones entre universidades nacionales e internacionales'
+                    ]],
+                    ['year' => '2024', 'events' => [
+                        'Elecciones para representante de UNISEC-MÉXICO',
+                        'Primer taller de investigación cosmonáutica junior 2024',
+                        'Intercambio académico interuniversitario',
+                        'Elección de la sede del 1er Congreso Nacional de Ingeniería Cosmonáutica y 8vo Concurso Nacional de Lanzamientos de Cansats '    
+                    ]]
                 ];
             @endphp
 
@@ -412,7 +451,11 @@ $secciones = [
                     <!-- TARJETA DE EVENTO -->
                     <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 ease-in-out mx-auto w-full">
                         <span class="block text-cyan-400 text-lg font-semibold">{{ $item['year'] }}</span>
-                        <p class="text-gray-300 text-base mt-2 leading-relaxed">{{ $item['event'] }}</p>
+                        <ol class="text-gray-300 text-base mt-2 space-y-2 pl-4 list-decimal list-inside">
+                    @foreach($item['events'] as $event)
+                        <ul class="leading-relaxed bg-gray-700/20 px-3 py-2 rounded-lg">{{ $event }}</ul>
+                    @endforeach
+                </ol>
                     </div>
                 </div>
             @endforeach
@@ -491,7 +534,7 @@ $secciones = [
             </div>
         </div>
     </div>
-</section>
+
 
     <!-- Estilos Personalizados -->
     <style>
@@ -646,34 +689,34 @@ $secciones = [
         </div>
 
         <!-- GRID DE VALORES -->
-        <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
             @php
                 $valores = [
-                    ['nombre' => 'Innovación', 'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>'],
-                    ['nombre' => 'Compromiso', 'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>'],
-                    ['nombre' => 'Colaboración', 'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>'],
-                    ['nombre' => 'Exploración', 'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>'],
-                    ['nombre' => 'Excelencia', 'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>'],
+                    ['nombre' => 'Innovación', 'icon' => 'fas fa-rocket'],
+                    ['nombre' => 'Compromiso', 'icon' => 'fas fa-handshake'],
+                    ['nombre' => 'Colaboración', 'icon' => 'fas fa-users'],
+                    ['nombre' => 'Exploración', 'icon' => 'fas fa-binoculars'],
+                    ['nombre' => 'Excelencia', 'icon' => 'fas fa-award'],
                 ];
             @endphp
 
             @foreach($valores as $valor)
-            <div class="p-8 bg-gray-800 rounded-2xl shadow-lg transition-transform transform hover:scale-105 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-purple-600 hover:shadow-2xl flex flex-col items-center text-center">
-                <div class="mb-6">
-                    {!! $valor['icon'] !!}
+            <div class="p-6 bg-gray-800 rounded-xl transition-transform duration-300 transform hover:scale-105 hover:bg-gray-700 group">
+                <div class="mb-4 text-4xl text-cyan-400 group-hover:text-white">
+                    <i class="{{ $valor['icon'] }}"></i>
                 </div>
-                <h4 class="text-2xl font-semibold text-white mb-2">{{ $valor['nombre'] }}</h4>
-                <p class="text-gray-300 text-sm">
+                <h4 class="text-xl font-semibold text-white mb-3">{{ $valor['nombre'] }}</h4>
+                <p class="text-gray-300 text-sm leading-relaxed">
                     @if($valor['nombre'] === 'Innovación')
-                        Impulsamos el desarrollo de soluciones creativas y tecnologías de vanguardia para los desafíos espaciales
+                        Soluciones creativas y tecnologías de vanguardia para desafíos espaciales
                     @elseif($valor['nombre'] === 'Compromiso')
-                        Dedicación total a la excelencia y al avance de la ciencia espacial en beneficio de la humanidad
+                        Excelencia y avance científico en beneficio de la humanidad
                     @elseif($valor['nombre'] === 'Colaboración')
-                        Fomentamos alianzas estratégicas y trabajo en equipo para alcanzar metas compartidas
+                        Alianzas estratégicas para alcanzar metas compartidas
                     @elseif($valor['nombre'] === 'Exploración')
-                        Buscamos constantemente nuevas fronteras en el conocimiento y la tecnología espacial
+                        Nuevas fronteras en conocimiento y tecnología cosmonáutica
                     @elseif($valor['nombre'] === 'Excelencia')
-                        Mantenemos los más altos estándares en investigación, desarrollo y educación espacial
+                        Altos estándares en investigación y desarrollo espacial
                     @endif
                 </p>
             </div>
