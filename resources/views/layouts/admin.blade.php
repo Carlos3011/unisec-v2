@@ -103,7 +103,7 @@
             <i class="fas fa-chevron-up" x-show="open"></i>
           </button>
           <div x-show="open" class="pl-8 space-y-2" x-collapse>
-            <a href="{{ route('admin.pagos-facturacion') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Pagos y Facturación</a>
+            <a href="{{ route('admin.pagos.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Pagos y Facturación</a>
             <a href="{{ route('admin.becas') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Becas</a>
           </div>
         </div>

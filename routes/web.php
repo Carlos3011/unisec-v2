@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\TallerController;
 
 use App\Http\Controllers\Admin\SeccionNoticiaController;
 use App\Http\Controllers\Admin\NoticiaController;
+use App\Http\Controllers\Admin\PagoPreRegistroController;
 
 /*----
 | Controladores para la gestión de de concursos
@@ -144,6 +145,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/becas', [AdminController::class, 'becas'])->name('admin.becas');
     Route::get('/admin/pagos-facturacion', [AdminController::class, 'pagosFacturacion'])->name('admin.pagos-facturacion');
     Route::get('/admin/reportes-estadisticas', [AdminController::class, 'reportesEstadisticas'])->name('admin.reportes-estadisticas');
+
+    // Rutas para la gestión de pagos de pre-registro
+    Route::get('/admin/pagos', [PagoPreRegistroController::class, 'index'])->name('admin.pagos.index');
+    Route::get('/admin/pagos/{pago}', [PagoPreRegistroController::class, 'show'])->name('admin.pagos.show');
+    Route::get('/admin/pagos/{pago}/factura', [PagoPreRegistroController::class, 'generarFactura'])->name('admin.pagos.factura');
+    Route::get('/admin/pagos/exportar', [PagoPreRegistroController::class, 'exportarPagos'])->name('admin.pagos.exportar');
 
     // Rutas para la gestión de secciones de noticias
     Route::get('/admin/secciones', [SeccionNoticiaController::class, 'index'])->name('admin.noticias.secciones.index');
