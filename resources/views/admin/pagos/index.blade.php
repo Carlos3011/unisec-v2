@@ -37,7 +37,7 @@
                             ${{ number_format($pago['monto'], 2) }}
                         </td>
                         <td class="px-4 py-3 text-sm">
-                            <span class="px-2 py-1 font-semibold leading-tight rounded-full {{ $pago['estado_pago'] === 'completado' ? 'text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100' : 'text-orange-700 bg-orange-100 dark:bg-orange-700 dark:text-orange-100' }}">
+                            <span class="px-2 py-1 font-semibold leading-tight rounded-full {{ $pago['estado_pago'] === 'pagado' ? 'text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100' : 'text-orange-700 bg-orange-100 dark:bg-orange-700 dark:text-orange-100' }}">
                                 {{ ucfirst($pago['estado_pago']) }}
                             </span>
                         </td>
@@ -52,7 +52,7 @@
                                         <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                     </svg>
                                 </a>
-                                @if($pago['estado_pago'] === 'completado')
+                                @if($pago['estado_pago'] === 'pagado')
                                 <a href="{{ route('admin.pagos.factura', $pago['id']) }}" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>

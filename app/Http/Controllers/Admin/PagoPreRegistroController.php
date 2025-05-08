@@ -40,8 +40,19 @@ class PagoPreRegistroController extends Controller
                 'referencia_paypal' => $pago->referencia_paypal,
                 'estado_pago' => $pago->estado_pago,
                 'fecha_pago' => $pago->fecha_pago ? Carbon::parse($pago->fecha_pago)->format('Y-m-d H:i:s') : null,
-                'payer_email' => $detalles ? ($detalles['payer']['email_address'] ?? null) : null,
-                'payer_name' => $detalles ? ($detalles['payer']['name']['given_name'] . ' ' . $detalles['payer']['name']['surname']) : null,
+                'payee_email' => $detalles['payee']['email_address'] ?? null,
+                'merchant_id' => $detalles['payee']['merchant_id'] ?? null,
+                'description' => $detalles['description'] ?? null,
+                'soft_descriptor' => $detalles['soft_descriptor'] ?? null,
+                'shipping_name' => $detalles['shipping']['name']['full_name'] ?? null,
+                'shipping_address' => [
+                    'address_line_1' => $detalles['shipping']['address']['address_line_1'] ?? null,
+                    'address_line_2' => $detalles['shipping']['address']['address_line_2'] ?? null,
+                    'admin_area_2' => $detalles['shipping']['address']['admin_area_2'] ?? null,
+                    'admin_area_1' => $detalles['shipping']['address']['admin_area_1'] ?? null,
+                    'postal_code' => $detalles['shipping']['address']['postal_code'] ?? null,
+                    'country_code' => $detalles['shipping']['address']['country_code'] ?? null,
+                ],
             ];
         });
 
@@ -52,8 +63,60 @@ class PagoPreRegistroController extends Controller
     {
         $pago = PagoPreRegistro::with(['usuario', 'concurso'])->findOrFail($id);
         $detalles = json_decode($pago->detalles_transaccion, true);
+        
+        $datosPago = [
+            'id' => $pago->id,
+            'usuario' => $pago->usuario->name,
+            'concurso' => $pago->concurso->nombre,
+            'monto' => $pago->monto,
+            'metodo_pago' => $pago->metodo_pago,
+            'referencia_paypal' => $pago->referencia_paypal,
+            'estado_pago' => $pago->estado_pago,
+            'fecha_pago' => $pago->fecha_pago ? Carbon::parse($pago->fecha_pago)->format('Y-m-d H:i:s') : null,
+            'paypal_order_id' => $detalles['id'] ?? null,
+            'paypal_status' => $detalles['status'] ?? null,
+            'paypal_intent' => $detalles['intent'] ?? null,
+            'payee' => [
+                'email_address' => $detalles['purchase_units'][0]['payee']['email_address'] ?? null,
+                'merchant_id' => $detalles['purchase_units'][0]['payee']['merchant_id'] ?? null
+            ],
+            'description' => $detalles['purchase_units'][0]['description'] ?? null,
+            'soft_descriptor' => $detalles['purchase_units'][0]['soft_descriptor'] ?? null,
+            'shipping' => [
+                'name' => $detalles['purchase_units'][0]['shipping']['name']['full_name'] ?? null,
+                'address' => [
+                    'address_line_1' => $detalles['purchase_units'][0]['shipping']['address']['address_line_1'] ?? null,
+                    'address_line_2' => $detalles['purchase_units'][0]['shipping']['address']['address_line_2'] ?? null,
+                    'admin_area_2' => $detalles['purchase_units'][0]['shipping']['address']['admin_area_2'] ?? null,
+                    'admin_area_1' => $detalles['purchase_units'][0]['shipping']['address']['admin_area_1'] ?? null,
+                    'postal_code' => $detalles['purchase_units'][0]['shipping']['address']['postal_code'] ?? null,
+                    'country_code' => $detalles['purchase_units'][0]['shipping']['address']['country_code'] ?? null
+                ]
+            ],
+            'payer' => [
+                'name' => [
+                    'given_name' => $detalles['payer']['name']['given_name'] ?? null,
+                    'surname' => $detalles['payer']['name']['surname'] ?? null
+                ],
+                'email_address' => $detalles['payer']['email_address'] ?? null,
+                'payer_id' => $detalles['payer']['payer_id'] ?? null,
+                'country_code' => $detalles['payer']['address']['country_code'] ?? null
+            ],
+            'payment_capture' => [
+                'id' => $detalles['purchase_units'][0]['payments']['captures'][0]['id'] ?? null,
+                'status' => $detalles['purchase_units'][0]['payments']['captures'][0]['status'] ?? null,
+                'amount' => [
+                    'currency_code' => $detalles['purchase_units'][0]['payments']['captures'][0]['amount']['currency_code'] ?? null,
+                    'value' => $detalles['purchase_units'][0]['payments']['captures'][0]['amount']['value'] ?? null
+                ],
+                'create_time' => $detalles['purchase_units'][0]['payments']['captures'][0]['create_time'] ?? null,
+                'update_time' => $detalles['purchase_units'][0]['payments']['captures'][0]['update_time'] ?? null
+            ],
+            'create_time' => $detalles['create_time'] ?? null,
+            'update_time' => $detalles['update_time'] ?? null
+        ];
 
-        return view('admin.pagos.show', compact('pago', 'detalles'));
+        return view('admin.pagos.show', compact('datosPago'));
     }
 
     public function generarFactura($id)
@@ -61,13 +124,36 @@ class PagoPreRegistroController extends Controller
         $pago = PagoPreRegistro::with(['usuario', 'concurso'])->findOrFail($id);
         $detalles = json_decode($pago->detalles_transaccion, true);
 
-        // Aquí iría la lógica para generar la factura en PDF
+        $datosFactura = [
+            'id' => $pago->id,
+            'usuario' => $pago->usuario->name,
+            'concurso' => $pago->concurso->nombre,
+            'monto' => $pago->monto,
+            'metodo_pago' => $pago->metodo_pago,
+            'referencia_paypal' => $pago->referencia_paypal,
+            'estado_pago' => $pago->estado_pago,
+            'fecha_pago' => $pago->fecha_pago ? Carbon::parse($pago->fecha_pago)->format('Y-m-d H:i:s') : null,
+            'payee_email' => $detalles['payee']['email_address'] ?? null,
+            'merchant_id' => $detalles['payee']['merchant_id'] ?? null,
+            'description' => $detalles['description'] ?? null,
+            'soft_descriptor' => $detalles['soft_descriptor'] ?? null,
+            'shipping_name' => $detalles['shipping']['name']['full_name'] ?? null,
+            'shipping_address' => [
+                'address_line_1' => $detalles['shipping']['address']['address_line_1'] ?? null,
+                'address_line_2' => $detalles['shipping']['address']['address_line_2'] ?? null,
+                'admin_area_2' => $detalles['shipping']['address']['admin_area_2'] ?? null,
+                'admin_area_1' => $detalles['shipping']['address']['admin_area_1'] ?? null,
+                'postal_code' => $detalles['shipping']['address']['postal_code'] ?? null,
+                'country_code' => $detalles['shipping']['address']['country_code'] ?? null,
+            ],
+        ];
+
+        // Aquí iría la lógica para generar la factura en PDF usando los datosFactura
         // Puedes usar paquetes como DomPDF o TCPDF
 
-        // Ejemplo básico de respuesta
         return response()->json([
             'mensaje' => 'Funcionalidad de generación de factura en desarrollo',
-            'pago_id' => $id
+            'datos_factura' => $datosFactura
         ]);
     }
 
