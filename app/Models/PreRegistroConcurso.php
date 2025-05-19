@@ -82,6 +82,11 @@ class PreRegistroConcurso extends Model
         return $this->hasMany(IntegranteEquipoConcurso::class, 'pre_registro_concurso_id');
     }
 
-
-
+    /**
+     * Obtiene el pago por tercero asociado al pre-registro.
+     */
+    public function pagoTercero()
+    {
+        return $this->belongsTo(PagoTerceroTransferenciaConcurso::class, 'codigo_pago_terceros', 'codigo_validacion_unico');
+    }
 }

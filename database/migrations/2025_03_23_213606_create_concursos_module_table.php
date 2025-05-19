@@ -106,6 +106,7 @@ return new class extends Migration
             
             // Campo JSON para almacenar los datos de los integrantes
             $table->json('integrantes_data')->nullable();  // Almacena los datos de los integrantes en formato JSON
+            $table->string('codigo_pago_terceros')->nullable()->comment('FK lógico a pagos_terceros_transferencia_concurso');
             
             $table->timestamps();  // Registra las fechas de creación y actualización.
             $table->softDeletes();  // Permite el borrado suave de los pre-registros.
@@ -145,9 +146,32 @@ return new class extends Migration
             $table->string('archivo_pfr')->nullable();  // Archivo PFR
             $table->enum('estado_pfr', ['pendiente', 'en revisión', 'aprobado', 'rechazado'])->default('pendiente');
             $table->text('comentarios_pfr')->nullable();
+            $table->string('codigo_pago_terceros')->nullable()->comment('FK lógico a pagos_terceros_transferencia_concurso');
             
             $table->timestamps();  // Registra las fechas de creación y actualización.
             $table->softDeletes();  // Permite el borrado suave de las inscripciones.
+        });
+
+        Schema::create('pagos_terceros_transferencia_concurso', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');  // Relación con la tabla 'users'
+            $table->foreignId('concurso_id')->constrained('concursos')->onDelete('cascade');  // Relación con la tabla 'concursos'
+            $table->enum('tipo_tercero', ['universidad', 'empresa', 'persona_fisica'])->default('persona_fisica');
+            $table->string('nombre_tercero');
+            $table->string('rfc_tercero')->nullable();
+            $table->string('contacto_tercero');
+            $table->string('correo_tercero');
+            $table->string('comprobante_pago')->nullable();
+            $table->decimal('monto_total', 10, 2);
+            $table->enum('estado_pago', ['pendiente', 'validado', 'rechazado'])->default('pendiente');
+            $table->string('referencia_transferencia')->nullable();
+            $table->integer('numero_pagos')->unsigned()->default(1);
+            $table->boolean('cubre_pre_registro')->default(false);
+            $table->boolean('cubre_inscripcion')->default(false);
+            $table->string('codigo_validacion_unico', 100);
+            $table->timestamp('fecha_pago')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -161,6 +185,7 @@ return new class extends Migration
         Schema::dropIfExists('pagos_inscripcion');
         Schema::dropIfExists('pre_registro_concursos');
         Schema::dropIfExists('pagos_pre_registro');
+        Schema::dropIfExists('pagos_terceros_transferencia_concurso');
         Schema::dropIfExists('imagenes_concursos');
         Schema::dropIfExists('fechas_importantes_concursos');
         Schema::dropIfExists('convocatorias_concursos');

@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\Concurso\PreRegistroConcursoController;
 use App\Http\Controllers\User\Concurso\ConcursoUserController;
 use App\Http\Controllers\User\Concurso\ConvocatoriaUserController;
 use App\Http\Controllers\User\Concurso\PreRegistroUserController;
+use App\Http\Controllers\User\Concurso\PagoTerceroController;
 
 use App\Http\Controllers\PayPalController;
 
@@ -204,6 +205,13 @@ Route::middleware(['auth', 'role:usuario'])->group(function () {
     Route::put('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'update'])->name('user.concursos.pre-registros.update');
     Route::delete('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'destroy'])->name('user.concursos.pre-registros.destroy');
 
+    // Rutas para la gestión de pagos por terceros
+    Route::get('/user/pagos-terceros/create', [PagoTerceroController::class, 'create'])->name('user.concursos.pagos-terceros.create');
+    Route::post('/user/pagos-terceros', [PagoTerceroController::class, 'store'])->name('user.concursos.pagos-terceros.store');
+    Route::get('/user/pagos-terceros/validar', [PagoTerceroController::class, 'validarForm'])->name('user.concursos.pagos-terceros.validar');
+    Route::post('/user/pagos-terceros/validar-codigo', [PagoTerceroController::class, 'validarCodigo'])->name('user.concursos.pagos-terceros.validar-codigo');
+    Route::post('/user/pagos-terceros/usar-codigo-pre-registro/{preRegistro}', [PagoTerceroController::class, 'usarCodigoEnPreRegistro'])->name('user.concursos.pagos-terceros.usar-codigo-pre-registro');
+    Route::post('/user/pagos-terceros/usar-codigo-inscripcion/{inscripcion}', [PagoTerceroController::class, 'usarCodigoEnInscripcion'])->name('user.concursos.pagos-terceros.usar-codigo-inscripcion');
 
     Route::get('/user/inscripciones', [UserController::class, 'inscripciones'])->name('user.inscripciones');
     Route::get('/user/certificados', [UserController::class, 'certificados'])->name('user.certificados');

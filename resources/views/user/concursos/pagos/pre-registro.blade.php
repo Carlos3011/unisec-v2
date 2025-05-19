@@ -23,7 +23,15 @@
                     </div>
                 </div>
 
-                <div id="paypal-button-container" class="mb-6"></div>
+                <div class="flex flex-col gap-4 mb-6">
+                    <div id="paypal-button-container"></div>
+                    
+                    <a href="{{ route('user.concursos.pagos-terceros.create') }}" 
+                       class="w-full py-3 px-4 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-semibold rounded-lg text-center hover:from-emerald-700 hover:to-green-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                        <i class="fas fa-university"></i>
+                        <span>Pagar por Transferencia Bancaria</span>
+                    </a>
+                </div>
 
                 <div class="text-center text-white/60 text-sm">
                     <p>Al realizar el pago, aceptas nuestros términos y condiciones.</p>

@@ -23,7 +23,8 @@ class InscripcionConcurso extends Model
         'comentarios_cdr',
         'archivo_pfr',
         'estado_pfr',
-        'comentarios_pfr'
+        'comentarios_pfr',
+        'codigo_pago_terceros'
     ];
 
     protected $casts = [
@@ -56,5 +57,13 @@ class InscripcionConcurso extends Model
     public function pagoInscripcion()
     {
         return $this->belongsTo(PagoInscripcion::class, 'pago_inscripcion_id');
+    }
+
+    /**
+     * Obtiene el pago por tercero asociado a la inscripción.
+     */
+    public function pagoTercero()
+    {
+        return $this->belongsTo(PagoTerceroTransferenciaConcurso::class, 'codigo_pago_terceros', 'codigo_validacion_unico');
     }
 }
