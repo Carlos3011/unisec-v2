@@ -55,7 +55,7 @@
             </a>
 
             <!-- Tarjeta de Pagos -->
-            <a href="{{ route('user.pagos') }}"
+            <a href="{{ route('user.concursos.pagos-terceros.index') }}"
                 class="group bg-space-900/40 backdrop-blur-md rounded-2xl p-6 border border-white/5 hover:border-accent-500/50 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(236,72,153,0.2)]">
                 <div class="flex items-center justify-between mb-4">
                     <div class="p-3 bg-accent-500/10 rounded-xl group-hover:scale-110 transition-transform duration-500">

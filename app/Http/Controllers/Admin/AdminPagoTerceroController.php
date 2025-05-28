@@ -4,18 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PagoTerceroTransferenciaConcurso;
+use App\Models\Concurso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class AdminPagoTerceroController extends Controller
 {
     public function index(Request $request)
     {
-        $query = PagoTerceroTransferenciaConcurso::query();
+        $query = PagoTerceroTransferenciaConcurso::query()->with(['concurso', 'usuario']);
 
         // Aplicar filtros si existen
-        if ($request->filled('tipo')) {
-            $query->where('tipo', $request->tipo);
+        if ($request->filled('tipo_tercero')) {
+            $query->where('tipo_tercero', $request->tipo_tercero);
         }
 
         if ($request->filled('concurso')) {
@@ -26,14 +28,15 @@ class AdminPagoTerceroController extends Controller
             $query->where('estado', $request->estado);
         }
 
-        $pagos = $query->paginate(10);
-        return view('admin.pagos.index', compact('pagos'));
+        $pagos = $query->latest()->paginate(10);
+        $concursos = Concurso::where('estado', 'activo')->get();
+        return view('admin.pagos-terceros.index', compact('pagos', 'concursos'));
     }
 
     public function show($id)
     {
         $pago = PagoTerceroTransferenciaConcurso::findOrFail($id);
-        return view('admin.pagos.show', compact('pago'));
+        return view('admin.pagos-terceros.show', compact('pago'));
     }
 
     public function updateEstado(Request $request, $id)
@@ -44,14 +47,23 @@ class AdminPagoTerceroController extends Controller
         ]);
 
         $pago = PagoTerceroTransferenciaConcurso::findOrFail($id);
+
+        if ($pago->estado_pago !== 'pendiente') {
+            return redirect()->back()->with('error', 'Este pago ya ha sido procesado anteriormente.');
+        }
+
         $pago->update([
-            'estado' => $request->estado,
+            'estado_pago' => $request->estado,
             'observacion' => $request->observacion,
             'fecha_validacion' => now()
         ]);
 
-        return redirect()->route('admin.pagos.show', $pago)
-            ->with('success', 'Estado del pago actualizado exitosamente.');
+        $mensaje = $request->estado === 'validado' 
+            ? 'Pago validado exitosamente.' 
+            : 'Pago rechazado exitosamente.';
+
+        return redirect()->route('admin.pagos-terceros.show', $pago)
+            ->with('success', $mensaje);
     }
 
     /**

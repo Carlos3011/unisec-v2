@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\PagoPreRegistroController;
 use App\Http\Controllers\Admin\Concurso\ConcursoController;
 use App\Http\Controllers\Admin\Concurso\ConvocatoriaConcursoController;
 use App\Http\Controllers\Admin\Concurso\PreRegistroConcursoController;
+use App\Http\Controllers\Admin\AdminPagoTerceroController;
 
 use App\Http\Controllers\User\Concurso\ConcursoUserController;
 use App\Http\Controllers\User\Concurso\ConvocatoriaUserController;
@@ -147,6 +148,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/pagos-facturacion', [AdminController::class, 'pagosFacturacion'])->name('admin.pagos-facturacion');
     Route::get('/admin/reportes-estadisticas', [AdminController::class, 'reportesEstadisticas'])->name('admin.reportes-estadisticas');
 
+    // Rutas para la gestión de pagos de terceros
+    Route::get('/admin/pagos-terceros', [AdminPagoTerceroController::class, 'index'])->name('admin.pagos-terceros.index');
+    Route::get('/admin/pagos-terceros/{pago}', [AdminPagoTerceroController::class, 'show'])->name('admin.pagos-terceros.show');
+    Route::put('/admin/pagos-terceros/{pago}/estado', [AdminPagoTerceroController::class, 'updateEstado'])->name('admin.pagos-terceros.update-estado');
+
     // Rutas para la gestión de pagos de pre-registro
     Route::get('/admin/pagos', [PagoPreRegistroController::class, 'index'])->name('admin.pagos.index');
     Route::get('/admin/pagos/{pago}', [PagoPreRegistroController::class, 'show'])->name('admin.pagos.show');
@@ -206,8 +212,10 @@ Route::middleware(['auth', 'role:usuario'])->group(function () {
     Route::delete('/user/pre-registros/{preRegistro}', [PreRegistroUserController::class, 'destroy'])->name('user.concursos.pre-registros.destroy');
 
     // Rutas para la gestión de pagos por terceros
+    Route::get('/user/pagos-terceros', [PagoTerceroController::class, 'index'])->name('user.concursos.pagos-terceros.index');
     Route::get('/user/pagos-terceros/create', [PagoTerceroController::class, 'create'])->name('user.concursos.pagos-terceros.create');
     Route::post('/user/pagos-terceros', [PagoTerceroController::class, 'store'])->name('user.concursos.pagos-terceros.store');
+    Route::get('/user/pagos-terceros/{pago}', [PagoTerceroController::class, 'show'])->name('user.concursos.pagos-terceros.show');
     Route::get('/user/pagos-terceros/validar', [PagoTerceroController::class, 'validarForm'])->name('user.concursos.pagos-terceros.validar');
     Route::post('/user/pagos-terceros/validar-codigo', [PagoTerceroController::class, 'validarCodigo'])->name('user.concursos.pagos-terceros.validar-codigo');
     Route::post('/user/pagos-terceros/usar-codigo-pre-registro/{preRegistro}', [PagoTerceroController::class, 'usarCodigoEnPreRegistro'])->name('user.concursos.pagos-terceros.usar-codigo-pre-registro');

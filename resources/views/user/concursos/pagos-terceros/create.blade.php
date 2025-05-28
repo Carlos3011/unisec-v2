@@ -17,13 +17,14 @@
                 <h1 class="text-3xl font-bold text-white mb-6 text-center">Registro de Pago por Transferencia</h1>
                 
                 <form id="pagoForm" class="space-y-6" enctype="multipart/form-data">
-                    @csrf
+                 
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-white/90">Seleccionar Concurso</label>
                         <select name="concurso_id" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all" required>
-                            <option value="">Seleccione un concurso</option>
+                            <option value="" class="text-gray-800">Seleccione un concurso</option>
                             @foreach($concursos as $concurso)
-                                <option value="{{ $concurso->id }}">{{ $concurso->nombre }}</option>
+                                <option value="{{ $concurso->id }}" class="text-gray-800">{{ $concurso->titulo }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -87,12 +88,12 @@
                         <label class="block text-sm font-medium text-white/90">Tipo de Cobertura</label>
                         <div class="flex flex-col space-y-2">
                             <label class="inline-flex items-center">
-                                <input type="checkbox" name="cubre_pre_registro" class="form-checkbox rounded bg-white/5 border-white/10 text-purple-500 focus:ring-purple-500">
-                                <span class="ml-2 text-white/90">Pre-registro (${{ number_format($concurso->costo_pre_registro, 2) }} MXN)</span>
+                                <input type="checkbox" name="cubre_pre_registro" value="1" class="form-checkbox rounded bg-white/5 border-white/10 text-purple-500 focus:ring-purple-500">
+                                <span class="ml-2 text-white/90">Pre-registro (${{ number_format($concurso->convocatorias->first()->costo_pre_registro, 2) }} MXN)</span>
                             </label>
                             <label class="inline-flex items-center">
-                                <input type="checkbox" name="cubre_inscripcion" class="form-checkbox rounded bg-white/5 border-white/10 text-purple-500 focus:ring-purple-500">
-                                <span class="ml-2 text-white/90">Inscripción (${{ number_format($concurso->costo_inscripcion, 2) }} MXN)</span>
+                                <input type="checkbox" name="cubre_inscripcion" value="1" class="form-checkbox rounded bg-white/5 border-white/10 text-purple-500 focus:ring-purple-500">
+                                <span class="ml-2 text-white/90">Inscripción (${{ number_format($concurso->convocatorias->first()->costo_inscripcion, 2) }} MXN)</span>
                             </label>
                         </div>
                     </div>
@@ -107,8 +108,8 @@
                     <!-- Comprobante de Pago -->
                     <div>
                         <label class="block text-sm font-medium text-white/90 mb-2">Comprobante de Pago</label>
-                        <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-white/10 border-dashed rounded-lg hover:border-purple-500/50 transition-all">
-                            <div class="space-y-1 text-center">
+                        <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-white/10 border-dashed rounded-lg hover:border-purple-500/50 transition-all relative">
+                            <div class="space-y-1 text-center" id="dropzone-container">
                                 <i class="fas fa-cloud-upload-alt text-4xl text-white/50"></i>
                                 <div class="flex text-sm text-white/70">
                                     <label for="comprobante" class="relative cursor-pointer rounded-md font-medium text-purple-400 hover:text-purple-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-purple-500">
@@ -119,9 +120,128 @@
                                 </div>
                                 <p class="text-xs text-white/50">PNG, JPG, PDF hasta 2MB</p>
                             </div>
+                            <!-- Previsualización del archivo -->
+                            <div id="file-preview" class="hidden w-full">
+                                <div class="flex items-center justify-between bg-white/5 p-4 rounded-lg">
+                                    <div class="flex items-center space-x-4">
+                                        <i class="fas fa-file text-purple-400 text-2xl"></i>
+                                        <div>
+                                            <p id="file-name" class="text-white font-medium"></p>
+                                            <p id="file-size" class="text-white/50 text-sm"></p>
+                                        </div>
+                                    </div>
+                                    <button type="button" id="remove-file" class="text-red-400 hover:text-red-300 transition-colors">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <!-- Contenedor para la vista previa de imagen -->
+                                <div id="image-preview" class="hidden mt-4 rounded-lg overflow-hidden">
+                                    <img id="preview-img" src="" alt="Vista previa" class="w-full h-auto">
+                                </div>
+                            </div>
                         </div>
                     </div>
 
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const dropzoneContainer = document.getElementById('dropzone-container');
+                        const fileInput = document.getElementById('comprobante');
+                        const filePreview = document.getElementById('file-preview');
+                        const fileName = document.getElementById('file-name');
+                        const fileSize = document.getElementById('file-size');
+                        const removeFile = document.getElementById('remove-file');
+                        const imagePreview = document.getElementById('image-preview');
+                        const previewImg = document.getElementById('preview-img');
+
+                        function formatFileSize(bytes) {
+                            if (bytes === 0) return '0 Bytes';
+                            const k = 1024;
+                            const sizes = ['Bytes', 'KB', 'MB'];
+                            const i = Math.floor(Math.log(bytes) / Math.log(k));
+                            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+                        }
+
+                        function handleFile(file) {
+                            if (file) {
+                                if (file.size > 2 * 1024 * 1024) {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'El archivo no debe superar los 2MB',
+                                        icon: 'error',
+                                        confirmButtonText: 'Entendido'
+                                    });
+                                    fileInput.value = '';
+                                    return;
+                                }
+
+                                dropzoneContainer.classList.add('hidden');
+                                filePreview.classList.remove('hidden');
+                                fileName.textContent = file.name;
+                                fileSize.textContent = formatFileSize(file.size);
+
+                                // Mostrar vista previa para imágenes
+                                if (file.type.startsWith('image/')) {
+                                    const reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        previewImg.src = e.target.result;
+                                        imagePreview.classList.remove('hidden');
+                                    };
+                                    reader.readAsDataURL(file);
+                                } else {
+                                    imagePreview.classList.add('hidden');
+                                }
+                            }
+                        }
+
+                        fileInput.addEventListener('change', function(e) {
+                            handleFile(this.files[0]);
+                        });
+
+                        removeFile.addEventListener('click', function() {
+                            fileInput.value = '';
+                            dropzoneContainer.classList.remove('hidden');
+                            filePreview.classList.add('hidden');
+                            imagePreview.classList.add('hidden');
+                            previewImg.src = '';
+                        });
+
+                        // Soporte para arrastrar y soltar
+                        const dropZone = document.querySelector('.border-dashed');
+                        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                            dropZone.addEventListener(eventName, preventDefaults, false);
+                        });
+
+                        function preventDefaults (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                        }
+
+                        ['dragenter', 'dragover'].forEach(eventName => {
+                            dropZone.addEventListener(eventName, highlight, false);
+                        });
+
+                        ['dragleave', 'drop'].forEach(eventName => {
+                            dropZone.addEventListener(eventName, unhighlight, false);
+                        });
+
+                        function highlight(e) {
+                            dropZone.classList.add('border-purple-500');
+                        }
+
+                        function unhighlight(e) {
+                            dropZone.classList.remove('border-purple-500');
+                        }
+
+                        dropZone.addEventListener('drop', handleDrop, false);
+
+                        function handleDrop(e) {
+                            const dt = e.dataTransfer;
+                            const file = dt.files[0];
+                            fileInput.files = dt.files;
+                            handleFile(file);
+                        }
+                    });
+                    </script>
                     <div class="pt-4">
                         <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-300 transform hover:scale-105">
                             Registrar Pago
@@ -133,27 +253,35 @@
     </div>
 </div>
 
-@push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('pagoForm');
     const fileInput = document.getElementById('comprobante');
+    const concursoSelect = document.querySelector('select[name="concurso_id"]');
 
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const formData = new FormData(form);
+        // Asegurar que los checkboxes no marcados envíen valor 0
+        if (!formData.has('cubre_pre_registro')) formData.append('cubre_pre_registro', '0');
+        if (!formData.has('cubre_inscripcion')) formData.append('cubre_inscripcion', '0');
+
+        // Depuración: mostrar datos del formulario
+        console.log('Enviando formulario...');
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }
         
         try {
             const response = await fetch('{{ route("user.concursos.pagos-terceros.store") }}', {
                 method: 'POST',
                 body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
+                credentials: 'same-origin'
             });
 
             const data = await response.json();
+            console.log('Respuesta del servidor:', data);
 
             if (response.ok) {
                 Swal.fire({
@@ -163,13 +291,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     confirmButtonText: 'Entendido'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = '{{ route("user.concursos.convocatorias.show", $concurso) }}';
+                        const concursoId = concursoSelect.value;
+                        window.location.href = `/user/concursos/${concursoId}`;
                     }
                 });
             } else {
                 throw new Error(data.message || 'Error al procesar el pago');
             }
         } catch (error) {
+            console.error('Error:', error);
             Swal.fire({
                 title: 'Error',
                 text: error.message || 'Hubo un error al procesar tu solicitud',
@@ -194,6 +324,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-@endpush
 
 @endsection
