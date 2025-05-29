@@ -32,6 +32,9 @@
                                 <i class="fas fa-ticket-alt text-blue-400 text-4xl mb-3"></i>
                                 <h3 class="text-xl font-semibold text-white mb-2">Pre-registro</h3>
                                 <p class="text-3xl font-bold text-blue-400">{{ $convocatoria->costo_pre_registro > 0 ? '$' . number_format($convocatoria->costo_pre_registro, 2) : 'Gratuito' }}</p>
+                                <a href="#seccion-pre-registro" class="mt-4 inline-flex items-center px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-all duration-300">
+                                    <i class="fas fa-arrow-down mr-2"></i>Ver más
+                                </a>
                             </div>
                         </div>
                         <div class="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-6 border border-purple-400/30 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105">
@@ -39,6 +42,7 @@
                                 <i class="fas fa-clipboard-check text-purple-400 text-4xl mb-3"></i>
                                 <h3 class="text-xl font-semibold text-white mb-2">Inscripción</h3>
                                 <p class="text-3xl font-bold text-purple-400">{{ $convocatoria->costo_inscripcion > 0 ? '$' . number_format($convocatoria->costo_inscripcion, 2) : 'Gratuito' }}</p>
+                            
                             </div>
                         </div>
                     </div>
@@ -240,7 +244,7 @@
 
     <!-- Sección de Pre-registro -->
     @guest
-    <div class="max-w-4xl mx-auto mt-8 p-8 bg-black/30 backdrop-blur-xl rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)]">
+    <div id="seccion-pre-registro" class="max-w-4xl mx-auto mt-8 p-8 bg-black/30 backdrop-blur-xl rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)]">
         <div class="text-center space-y-6">
             <h2 class="text-3xl font-bold text-white">¿Listo para la misión?</h2>
             <p class="text-xl text-white/80">Únete a esta aventura espacial y forma parte de la próxima generación de innovadores aeroespaciales</p>

@@ -1,80 +1,84 @@
 @extends('layouts.user')
 
 @section('contenido')
-<div class="container mx-auto px-4 py-8">
-    <div class="mb-6">
-        <a href="{{ route('user.concursos.pagos-terceros.index') }}" class="text-blue-500 hover:text-blue-600">
-            <i class="fas fa-arrow-left mr-2"></i>Volver a la lista
-        </a>
-    </div>
-
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h2 class="text-2xl font-bold text-gray-800">Detalles del Pago</h2>
+<div class="min-h-screen py-12 relative overflow-hidden bg-gradient-to-b from-space-950 to-cosmic-900">
+    <div class="container mx-auto px-4">
+        <div class="mb-6">
+            <a href="{{ route('user.concursos.pagos-terceros.index') }}" class="text-white/90 hover:text-white flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg w-fit transition-all duration-300 hover:bg-white/10">
+                <i class="fas fa-arrow-left"></i>
+                <span>Volver a la lista</span>
+            </a>
         </div>
 
-        <div class="p-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Información del Concurso</h3>
-                    <div class="space-y-3">
-                        <p><span class="font-medium">Concurso:</span> {{ $pago->concurso->nombre }}</p>
-                        <p><span class="font-medium">Estado del pago:</span>
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                @if($pago->estado_pago == 'validado')
-                                    bg-green-100 text-green-800
-                                @elseif($pago->estado_pago == 'rechazado')
-                                    bg-red-100 text-red-800
-                                @else
-                                    bg-yellow-100 text-yellow-800
-                                @endif">
-                                {{ ucfirst($pago->estado_pago) }}
-                            </span>
-                        </p>
-                        <p><span class="font-medium">Fecha de registro:</span> {{ $pago->created_at->format('d/m/Y H:i') }}</p>
-                        <p><span class="font-medium">Monto total:</span> ${{ number_format($pago->monto_total, 2) }}</p>
-                    </div>
-                </div>
+        <div class="bg-black/30 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)]">
+            <div class="px-6 py-4 border-b border-white/10">
+                <h2 class="text-2xl font-bold text-white">Detalles del Pago</h2>
+            </div>
 
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Información del Tercero</h3>
-                    <div class="space-y-3">
-                        <p><span class="font-medium">Tipo:</span> {{ ucfirst(str_replace('_', ' ', $pago->tipo_tercero)) }}</p>
-                        <p><span class="font-medium">Nombre:</span> {{ $pago->nombre_tercero }}</p>
-                        <p><span class="font-medium">RFC:</span> {{ $pago->rfc_tercero }}</p>
-                        <p><span class="font-medium">Contacto:</span> {{ $pago->contacto_tercero }}</p>
-                        <p><span class="font-medium">Correo:</span> {{ $pago->correo_tercero }}</p>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+                        <h3 class="text-lg font-semibold text-white mb-4">Información del Concurso</h3>
+                        <div class="space-y-3 text-white/90">
+                            <p><span class="font-medium">Concurso:</span> {{ $pago->concurso->nombre }}</p>
+                            <p><span class="font-medium">Estado del pago:</span>
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
+                                    @if($pago->estado_pago == 'validado')
+                                        bg-green-400/10 text-green-400
+                                    @elseif($pago->estado_pago == 'rechazado')
+                                        bg-red-400/10 text-red-400
+                                    @else
+                                        bg-yellow-400/10 text-yellow-400
+                                    @endif">
+                                    {{ ucfirst($pago->estado_pago) }}
+                                </span>
+                            </p>
+                            <p><span class="font-medium">Fecha de registro:</span> {{ $pago->created_at->format('d/m/Y H:i') }}</p>
+                            <p><span class="font-medium">Monto total:</span> ${{ number_format($pago->monto_total, 2) }}</p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="md:col-span-2">
-                    <h3 class="text-lg font-semibold mb-4">Detalles de Cobertura</h3>
-                    <div class="space-y-3">
-                        <p><span class="font-medium">Cubre pre-registro:</span> 
-                            <span class="{{ $pago->cubre_pre_registro ? 'text-green-600' : 'text-red-600' }}">
-                                {{ $pago->cubre_pre_registro ? 'Sí' : 'No' }}
-                            </span>
-                        </p>
-                        <p><span class="font-medium">Cubre inscripción:</span>
-                            <span class="{{ $pago->cubre_inscripcion ? 'text-green-600' : 'text-red-600' }}">
-                                {{ $pago->cubre_inscripcion ? 'Sí' : 'No' }}
-                            </span>
-                        </p>
-                        <p><span class="font-medium">Número de pagos:</span> {{ $pago->numero_pagos }}</p>
-                        <p><span class="font-medium">Código de validación:</span> {{ $pago->codigo_validacion_unico }}</p>
+                    <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+                        <h3 class="text-lg font-semibold text-white mb-4">Información del Tercero</h3>
+                        <div class="space-y-3 text-white/90">
+                            <p><span class="font-medium">Tipo:</span> {{ ucfirst(str_replace('_', ' ', $pago->tipo_tercero)) }}</p>
+                            <p><span class="font-medium">Nombre:</span> {{ $pago->nombre_tercero }}</p>
+                            <p><span class="font-medium">RFC:</span> {{ $pago->rfc_tercero }}</p>
+                            <p><span class="font-medium">Contacto:</span> {{ $pago->contacto_tercero }}</p>
+                            <p><span class="font-medium">Correo:</span> {{ $pago->correo_tercero }}</p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="md:col-span-2">
-                    <h3 class="text-lg font-semibold mb-4">Comprobante de Pago</h3>
-                    <div class="border rounded-lg p-4">
-                        @if($pago->comprobante_pago)
-                            <a href="{{ Storage::url($pago->comprobante_pago) }}" target="_blank" class="text-blue-500 hover:text-blue-600">
-                                <i class="fas fa-download mr-2"></i>Ver comprobante
-                            </a>
-                        @else
-                            <p class="text-gray-500">No hay comprobante disponible</p>
-                        @endif
+                    <div class="md:col-span-2 bg-white/5 rounded-xl p-6 border border-white/10">
+                        <h3 class="text-lg font-semibold text-white mb-4">Detalles de Cobertura</h3>
+                        <div class="space-y-3 text-white/90">
+                            <p><span class="font-medium">Cubre pre-registro:</span> 
+                                <span class="{{ $pago->cubre_pre_registro ? 'text-green-400' : 'text-red-400' }}">
+                                    {{ $pago->cubre_pre_registro ? 'Sí' : 'No' }}
+                                </span>
+                            </p>
+                            <p><span class="font-medium">Cubre inscripción:</span>
+                                <span class="{{ $pago->cubre_inscripcion ? 'text-green-400' : 'text-red-400' }}">
+                                    {{ $pago->cubre_inscripcion ? 'Sí' : 'No' }}
+                                </span>
+                            </p>
+                            <p><span class="font-medium">Número de pagos:</span> {{ $pago->numero_pagos }}</p>
+                            <p><span class="font-medium">Código de validación:</span> {{ $pago->codigo_validacion_unico }}</p>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 bg-white/5 rounded-xl p-6 border border-white/10">
+                        <h3 class="text-lg font-semibold text-white mb-4">Comprobante de Pago</h3>
+                        <div class="p-4 border border-white/10 rounded-lg bg-white/5">
+                            @if($pago->comprobante_pago)
+                                <a href="{{ Storage::url($pago->comprobante_pago) }}" target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors duration-200 flex items-center gap-2">
+                                    <i class="fas fa-download"></i>
+                                    <span>Ver comprobante</span>
+                                </a>
+                            @else
+                                <p class="text-white/60">No hay comprobante disponible</p>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

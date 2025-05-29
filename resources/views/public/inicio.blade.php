@@ -67,7 +67,7 @@
 
 
     <!-- SEPARADOR ORGÁNICO -->
-    <div class="h-48 bg-space-700 relative overflow-hidden">
+    <div class="h-2 bg-space-700 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-50"></div>
         <div class="absolute inset-0 animate-orbital-movement">
             <div class="w-48 h-48 bg-secondary/20 rounded-full blur-3xl"></div>
@@ -153,7 +153,7 @@
     
 
     <!-- SEPARADOR ORGÁNICO -->
-    <div class="h-48 bg-space-700 relative overflow-hidden">
+    <div class="h-2 bg-space-700 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-50"></div>
         <div class="absolute inset-0 animate-orbital-movement">
             <div class="w-48 h-48 bg-secondary/20 rounded-full blur-3xl"></div>
@@ -311,7 +311,7 @@
 
 
     <!-- SEPARADOR ORGÁNICO -->
-    <div class="h-48 bg-space-700 relative overflow-hidden">
+    <div class="h-2 bg-space-700 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-50"></div>
         <div class="absolute inset-0 animate-orbital-movement">
             <div class="w-48 h-48 bg-secondary/20 rounded-full blur-3xl"></div>
@@ -418,7 +418,7 @@
     </section>
 
     <!-- SEPARADOR ORGÁNICO -->
-    <div class="h-48 bg-space-700 relative overflow-hidden">
+    <div class="h-2 bg-space-700 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-50"></div>
         <div class="absolute inset-0 animate-orbital-movement">
             <div class="w-48 h-48 bg-secondary/20 rounded-full blur-3xl"></div>
@@ -445,7 +445,7 @@
                     </h2>
                 </div>
 
-                <p class="text-tech-200 text-xl mb-10 leading-relaxed">
+                <p class="text-white text-xl mb-10 leading-relaxed">
                     Apoyamos tu proyecto con la mejor asesoría espacial en el sector cosmonáutico en México.
                 </p>
 
@@ -517,7 +517,7 @@
     </section>
 
     <!-- SEPARADOR ORGÁNICO -->
-    <div class="h-48 bg-space-700 relative overflow-hidden">
+    <div class="h-2 bg-space-700 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-50"></div>
         <div class="absolute inset-0 animate-orbital-movement">
             <div class="w-48 h-48 bg-secondary/20 rounded-full blur-3xl"></div>

@@ -183,8 +183,9 @@ class PreRegistroUserController extends Controller
             return null;
         }
 
-        $path = Storage::disk('public')->put('pdr_files', $file);
-        return $path;
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('images/comprobantes_pago'), $fileName);
+        return 'images/comprobantes_pago/' . $fileName;
     }
 
     /**
