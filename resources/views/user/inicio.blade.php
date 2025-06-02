@@ -23,7 +23,20 @@
 
     <!-- Accesos Rápidos -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            <!-- Tarjeta de Validación de Código -->
+            <a href="{{ route('user.concursos.pagos-terceros.validar') }}"
+                class="group bg-space-900/40 backdrop-blur-md rounded-2xl p-6 border border-white/5 hover:border-emerald-500/50 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-3 bg-emerald-500/10 rounded-xl group-hover:scale-110 transition-transform duration-500">
+                        <i class="fas fa-key text-2xl text-emerald-500/80 group-hover:text-emerald-500 transition-colors"></i>
+                    </div>
+                    <span class="text-gray-300 group-hover:text-white transition-colors duration-500">Validar</span>
+                </div>
+                <h3 class="text-xl font-light text-white mb-2 tracking-wide">Validar Código</h3>
+                <p class="text-gray-300 group-hover:text-gray-200 transition-colors duration-500">Valida tu código de pago</p>
+            </a>
+
             <!-- Tarjeta de Eventos -->
             <a href="{{ route('user.eventos') }}"
                 class="group bg-space-900/40 backdrop-blur-md rounded-2xl p-6 border border-white/5 hover:border-secondary/50 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(99,102,241,0.2)]">

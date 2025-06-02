@@ -1,263 +1,213 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
+    <title>Formato de Pago #{{ $datos['id'] }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Factura #{{ $datos['id'] }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-primary: #1e40af;
-            --color-secondary: #2563eb;
-            --color-accent: #60a5fa;
-        }
-
-        @media print {
-            body { 
-                -webkit-print-color-adjust: exact; 
-                padding: 0 !important;
-            }
-            .no-print, .header img, .footer {
-                display: none !important;
-            }
-            .container {
-                box-shadow: none;
-                padding: 20px !important;
-            }
+            --primary: #1e293b;
+            --accent: #2563eb;
+            --bg-light: #ffffff;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 40px;
+            background-color: var(--bg-light);
             color: #1a1a1a;
-            background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 30px 0;
-            background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
-            color: white;
-            border-radius: 8px;
-            position: relative;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url("{{ asset('images/logo.png') }}") no-repeat 95% 50%/auto 60%;
-            opacity: 0.1;
-        }
-
-        .header h1 {
             margin: 0;
-            font-size: 2.8em;
-            font-weight: 800;
-            letter-spacing: -1px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            font-size: 12px;
         }
 
-        .header p {
-            font-size: 1.1em;
-            margin: 8px 0 0;
-            opacity: 0.9;
-        }
-
-        .factura-info {
-            margin-bottom: 40px;
-            padding: 25px;
-            background: #f8fafc;
-            border-radius: 8px;
+        .invoice-container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
             border: 1px solid #e2e8f0;
         }
 
-        .factura-info h2 {
-            color: var(--color-primary);
-            margin: 0 0 20px;
-            font-size: 1.6em;
-            font-weight: 700;
-            position: relative;
-            padding-bottom: 10px;
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 20px;
         }
 
-        .factura-info h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--color-accent);
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .detalles-pago {
-            margin-bottom: 40px;
+        .logo-section img {
+            height: 50px;
         }
 
-        .detalles-pago h2 {
-            color: var(--color-primary);
-            margin: 0 0 25px;
-            font-size: 1.6em;
-            font-weight: 700;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--color-accent);
+        .company-details {
+            text-align: right;
+            font-size: 0.9em;
+        }
+
+        .document-title {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 20px 0;
+            color: var(--primary);
+        }
+
+        .document-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .qr-section {
+            text-align: right;
+            margin-left: 20px;
+        }
+
+        .qr-code {
+            width: 100px;
+            height: 100px;
+            background-color: #f8fafc;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 25px 0;
-            background: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin: 20px 0;
         }
 
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        th {
-            background: var(--color-primary);
-            color: white;
-            font-weight: 600;
-            font-size: 0.95em;
-            letter-spacing: 0.3px;
-        }
-
-        tr:nth-child(even) {
+        table th {
             background-color: #f8fafc;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8em;
         }
 
-        .total {
+        table th,
+        table td {
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .total-section {
             text-align: right;
-            font-size: 1.4em;
-            margin: 35px 0;
-            padding: 25px;
-            background: var(--color-primary);
-            border-radius: 8px;
-            color: white;
-        }
-
-        .total strong {
-            font-weight: 700;
-            margin-left: 15px;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
         }
 
         .footer {
-            margin-top: 60px;
-            text-align: center;
-            font-size: 0.95em;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.8em;
             color: #64748b;
-            padding-top: 30px;
-            border-top: 2px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .security-note {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            font-size: 0.8em;
+            color: #64748b;
         }
 
         .watermark {
-            position: absolute;
-            opacity: 0.05;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
             font-size: 6em;
-            font-weight: 800;
-            color: var(--color-primary);
-            transform: rotate(-30deg);
+            color: rgba(0, 0, 0, 0.03);
             pointer-events: none;
             z-index: -1;
-            top: 30%;
-            left: 10%;
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="watermark">UNISEC</div>
-            <h1 class="mb-2">FACTURA</h1>
-            <p class="text-lg">#{{ $datos['id'] }}</p>
-            <p class="text-sm opacity-80">{{ $datos['fecha_pago'] }}</p>
+    <div class="invoice-container">
+        <div class="watermark">UNISEC MÉXICO</div>
+
+        <div class="header-section" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo-section" style="display: flex; align-items: center; gap: 15px;">
+                <img src="{{ public_path('images/logo.png') }}" alt="UNISEC-MX Logo" style="height: 50px;">
+            </div>
+
+            <div class="company-details" style="text-align: right;">
+                <h2 style="margin: 0;">UNISEC-MX</h2>
+                <p style="margin: 0;">CIRCUITO UNIVERSITARIO No. 1, RESIDENCIAL UNIVERSIDAD,<br>31125 CHIHUAHUA, CHIH,
+                    MÉXICO</p>
+            </div>
         </div>
 
-    <div class="factura-info">
-        <h2>Información del Cliente</h2>
-        <p><strong>Nombre:</strong> {{ $datos['usuario'] }}</p>
-        <p><strong>Email:</strong> {{ $datos['email'] }}</p>
-        @if(isset($datos['shipping']['address']))
-        <p><strong>Dirección:</strong><br>
-            {{ $datos['shipping']['address']['address_line_1'] ?? '' }}<br>
-            {{ $datos['shipping']['address']['address_line_2'] ?? '' }}<br>
-            {{ $datos['shipping']['address']['admin_area_2'] ?? '' }}, 
-            {{ $datos['shipping']['address']['admin_area_1'] ?? '' }}<br>
-            {{ $datos['shipping']['address']['postal_code'] ?? '' }}
-            {{ $datos['shipping']['address']['country_code'] ?? '' }}
-        </p>
-        @endif
-    </div>
 
-    <div class="detalles-pago">
-        <h2>Detalles del Pago</h2>
+        <div class="document-title">FORMATO DE PAGO</div>
+
+        <div class="document-info">
+            <div>
+                <p><strong>N.° del formato de pago:</strong> #{{ str_pad($datos['id'], 4, '0', STR_PAD_LEFT) }}</p>
+                <p><strong>Fecha del formato de pago:</strong>
+                    {{ \Carbon\Carbon::parse($datos['fecha_pago'])->format('d M Y') }}</p>
+            </div>
+
+        </div>
+
         <table>
-            <tr>
-                <th>Descripción</th>
-                <th>Referencia</th>
-                <th>Estado</th>
-                <th>Monto</th>
-            </tr>
-            <tr>
-                <td>{{ $datos['concurso'] }}</td>
-                <td>{{ $datos['referencia_paypal'] }}</td>
-                <td>{{ ucfirst($datos['estado_pago']) }}</td>
-                <td>${{ number_format($datos['monto'], 2) }}</td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>N.°</th>
+                    <th>DESCRIPCIÓN</th>
+                    <th>PRECIO</th>
+                    <th>IMPORTE($)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ $datos['concurso'] }}</td>
+                    <td>1</td>
+                    <td>${{ number_format($datos['monto'], 2) }}</td>
+                    <td>${{ number_format($datos['monto'], 2) }}</td>
+                </tr>
+            </tbody>
         </table>
 
-        <div class="total">
-            <p><strong>Total Pagado:</strong> ${{ number_format($datos['monto'], 2) }}</p>
+        <div class="total-section">
+            <p style="margin: 5px 0;"><strong>Subtotal:</strong> ${{ number_format($datos['monto'], 2) }}</p>
+            <p style="margin: 5px 0;"><strong>TOTAL:</strong> ${{ number_format($datos['monto'], 2) }} MXN</p>
         </div>
-    </div>
 
-    <div class="detalles-pago">
-        <h2>Información de la Transacción</h2>
-        <p><strong>Método de Pago:</strong> {{ ucfirst($datos['metodo_pago']) }}</p>
-        <p><strong>ID de Orden PayPal:</strong> {{ $datos['paypal_order_id'] }}</p>
-        <p><strong>Estado PayPal:</strong> {{ $datos['paypal_status'] }}</p>
-        <p><strong>Fecha de Creación:</strong> {{ $datos['create_time'] }}</p>
-        @if(isset($datos['payment_capture']))
-        <p><strong>ID de Captura:</strong> {{ $datos['payment_capture']['id'] }}</p>
-        <p><strong>Estado de Captura:</strong> {{ $datos['payment_capture']['status'] }}</p>
-        @endif
-    </div>
+        <div class="security-note">
+            <p style="margin: 0;"><strong>Información de Seguridad:</strong></p>
+            <p style="margin: 5px 0;">ID de Transacción: {{ $datos['paypal_order_id'] }}</p>
+            <p style="margin: 5px 0;">Método de Pago: {{ ucfirst($datos['metodo_pago']) }}</p>
+            <p style="margin: 5px 0;">Estado: {{ ucfirst($datos['estado_pago']) }}</p>
+            <p style="margin: 5px 0;">Fecha y Hora:
+                {{ \Carbon\Carbon::parse($datos['create_time'])->format('d/m/Y H:i:s') }}</p>
+        </div>
 
         <div class="footer">
-            <p>Esta factura fue generada automáticamente y es válida sin firma ni sello.</p>
-            <p>Para cualquier consulta, por favor conserve este documento.</p>
+            <p>Este documento es una representación impresa de un comprobante digital.</p>
+            <p style="margin-top: 20px;">UNISEC México - Todos los derechos reservados © {{ date('Y') }}</p>
         </div>
     </div>
 </body>
+
 </html>

@@ -3,40 +3,81 @@
 @section('titulo', 'Pago de Pre-registro')
 
 @section('contenido')
-<div class="min-h-screen py-12 relative overflow-hidden bg-gradient-to-b from-space-950 to-cosmic-900">
+<div class="min-h-screen py-12 relative overflow-hidden">
     <div class="container mx-auto px-4">
-        <div class="max-w-2xl mx-auto bg-black/30 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 relative transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)]">
-            <div class="p-6">
-                <a href="{{ route('user.concursos.convocatorias.show', $convocatoria) }}" class="text-white/90 hover:text-white flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg w-fit transition-all duration-300 hover:bg-white/10">
+        <div class="max-w-3xl mx-auto bg-white/60 rounded-2xl overflow-hidden shadow-xl relative">
+            <!-- Header con logo y navegación -->
+            <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                <a href="{{ route('user.concursos.convocatorias.show', $convocatoria) }}" class="text-white hover:text-gray-800 flex items-center gap-2 transition-colors">
                     <i class="fas fa-arrow-left"></i>
                     <span>Volver a la Convocatoria</span>
                 </a>
+                <img src="{{ asset('images/logo.png') }}" alt="UNISEC-MX" class="h-8">
             </div>
 
             <div class="p-8">
-                <h1 class="text-3xl font-bold text-white mb-6 text-center">Pago de Pre-registro</h1>
-                
-                <div class="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl p-6 border border-blue-400/30 mb-8">
-                    <div class="text-center">
-                        <p class="text-white/90 mb-4">Monto a pagar:</p>
-                        <p class="text-4xl font-bold text-blue-400">${{ number_format($convocatoria->costo_pre_registro, 2) }} MXN</p>
+                <!-- Información del comerciante -->
+                <div class="flex items-center mb-8 bg-gray-50 p-4 rounded-lg">
+                    <div class="flex-shrink-0 mr-4">
+                        <i class="fas fa-shield-check text-4xl text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-800">UNISEC-MX</h2>
+                        <p class="text-gray-600">CHIHUAHUA, CHIH, MÉXICO</p>
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-4 mb-6">
-                    <div id="paypal-button-container"></div>
+                <!-- Detalles del pago -->
+                <div class="bg-white/60 border border-gray-200 rounded-xl p-6 mb-8 shadow-sm">
+                    <h1 class="text-2xl font-bold text-gray-800 mb-6">Pago de Pre-registro</h1>
                     
-                    <a href="{{ route('user.concursos.pagos-terceros.create') }}" 
-                       class="w-full py-3 px-4 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-semibold rounded-lg text-center hover:from-emerald-700 hover:to-green-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-                        <i class="fas fa-university"></i>
-                        <span>Pagar por Transferencia Bancaria</span>
-                    </a>
+                    <div class="space-y-4 mb-6">
+                        <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                            <span class="text-gray-600">Concepto</span>
+                            <span class="text-gray-800 font-medium">{{ $convocatoria->concurso->titulo }}</span>
+                        </div>
+                        <div class="flex justify-between items-center py-3">
+                            <span class="text-gray-600">Total a pagar</span>
+                            <span class="text-2xl font-bold text-blue-600">${{ number_format($convocatoria->costo_pre_registro, 2) }} MXN</span>
+                        </div>
+                    </div>
+
+                    <!-- Opciones de pago -->
+                    <div class="space-y-4">
+                        <div id="paypal-button-container" class="w-full"></div>
+                        
+                        <div class="relative">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-gray-200"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-2 bg-white/60 text-gray-500">o paga mediante</span>
+                            </div>
+                        </div>
+
+                        <a href="{{ route('user.concursos.pagos-terceros.create') }}" 
+                           class="w-full py-3 px-4 bg-white/60 border border-gray-300 text-gray-700 font-semibold rounded-lg text-center hover:bg-gray-50 transition-all duration-300 flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fas fa-university text-blue-600"></i>
+                            <span>Transferencia Bancaria</span>
+                        </a>
+                    </div>
                 </div>
 
-                <div class="text-center text-white/60 text-sm">
-                    <p>Al realizar el pago, aceptas nuestros términos y condiciones.</p>
+                <!-- Información de seguridad y términos -->
+                <div class="flex items-center justify-center gap-6 text-sm text-gray-500">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-lock text-green-500"></i>
+                        <span>Pago Seguro</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-shield-alt text-blue-500"></i>
+                        <span>Protección al Comprador</span>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </div>

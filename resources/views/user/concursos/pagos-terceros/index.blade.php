@@ -3,12 +3,18 @@
 @section('contenido')
 <div class="min-h-screen py-12 relative overflow-hidden bg-gradient-to-b from-space-950 to-cosmic-900">
     <div class="container mx-auto px-4">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-white">Mis Pagos por Terceros</h2>
-            <a href="{{ route('user.concursos.pagos-terceros.create') }}" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
-                <i class="fas fa-plus"></i>
-                <span>Nuevo Pago</span>
+        <div class="mb-6">
+            <a href="{{ route('user.inicio') }}" class="text-blue-400 hover:text-blue-300 transition-colors flex items-center space-x-2 bg-black/30 backdrop-blur-sm rounded-xl px-4 py-2 w-fit mb-4">
+                <i class="fas fa-arrow-left"></i>
+                <span>Volver a Concursos</span>
             </a>
+            <div class="flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-white">Mis Pagos por Terceros</h2>
+                <a href="{{ route('user.concursos.pagos-terceros.create') }}" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
+                    <i class="fas fa-plus"></i>
+                    <span>Nuevo Pago</span>
+                </a>
+            </div>
         </div>
 
         @if($pagos->isEmpty())
@@ -34,7 +40,7 @@
                             @foreach($pagos as $pago)
                                 <tr class="hover:bg-white/5 transition-colors duration-200">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-white/90">
-                                        {{ $pago->concurso->nombre }}
+                                        {{ $pago->concurso->titulo }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-white/90">
                                         {{ $pago->nombre_tercero }}
