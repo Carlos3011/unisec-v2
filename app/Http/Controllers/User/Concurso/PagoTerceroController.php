@@ -33,8 +33,18 @@ class PagoTerceroController extends Controller
             ->with('concurso')
             ->findOrFail($id);
 
-        return view('user.concursos.pagos-terceros.show', compact('pago'));
+        $usosTotales = $pago->numero_pagos;
+        $usosRealizadosPre = PreRegistroConcurso::where('pago_pre_registro_id', $pago->id)->count();
+        $usosRealizadosIns = InscripcionConcurso::where('pago_inscripcion_id', $pago->id)->count();
+
+        $usosDisponibles = $usosTotales - ($usosRealizadosPre + $usosRealizadosIns);
+        $usosDisponiblesPre = $pago->cubre_pre_registro ? max(0, $usosTotales - $usosRealizadosPre - $usosRealizadosIns) : 0;
+        $usosDisponiblesIns = $pago->cubre_inscripcion ? max(0, $usosTotales - $usosRealizadosPre - $usosRealizadosIns) : 0;
+
+        return view('user.concursos.pagos-terceros.show', compact('pago', 'usosDisponibles', 'usosDisponiblesPre', 'usosDisponiblesIns'));
     }
+
+
 
     public function create()
     {
@@ -160,7 +170,20 @@ class PagoTerceroController extends Controller
             return response()->json(['error' => 'El código no cubre inscripción'], 400);
         }
 
-        return response()->json(['valid' => true, 'pago_tercero' => $pagoTercero]);
+                // Registrar el uso exitoso
+        $pagoTercero->increment('usos_actuales');
+
+        $pagoTercero->save();
+
+        return response()->json([
+            'valid' => true,
+            'usosDisponibles' => $pagoTercero->numero_pagos - $pagoTercero->usos_actuales,
+            'message' => 'Validación exitosa. El código puede ser usado para ' .
+                ($pagoTercero->cubre_pre_registro && $pagoTercero->cubre_inscripcion ? 'pre-registro e inscripción' :
+                ($pagoTercero->cubre_pre_registro ? 'solo pre-registro' : 'solo inscripción')) .
+                '. Usos restantes: ' . ($pagoTercero->numero_pagos - $pagoTercero->usos_actuales)
+        ]);
+        
     }
 
     public function usarCodigoEnPreRegistro($codigo, $preRegistroId)

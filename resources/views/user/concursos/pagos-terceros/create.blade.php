@@ -291,8 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     confirmButtonText: 'Entendido'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        const concursoId = concursoSelect.value;
-                        window.location.href = `/user/concursos/${concursoId}`;
+                        window.location.href = '{{ route("user.concursos.pagos-terceros.index") }}';
                     }
                 });
             } else {

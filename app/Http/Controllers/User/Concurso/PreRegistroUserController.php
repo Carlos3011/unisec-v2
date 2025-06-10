@@ -34,7 +34,7 @@ class PreRegistroUserController extends Controller
 
     public function create($convocatoria)
     {
-        $this->authorize('create', PreRegistroConcurso::class);
+       
         $convocatoria = ConvocatoriaConcurso::findOrFail($convocatoria);
         $concurso = $convocatoria->concurso;
         $concursos = collect([$concurso]);
@@ -227,7 +227,7 @@ class PreRegistroUserController extends Controller
         if ($request->hasFile('archivo_pdr')) {
             // Eliminar el archivo anterior si existe
             if ($preRegistro->archivo_pdr) {
-                Storage::disk('public')->delete($preRegistro->archivo_pdr);
+                unlink(public_path($preRegistro->archivo_pdr));
             }
             // Almacenar el nuevo archivo
             $updateData['archivo_pdr'] = $this->storeFile($request->file('archivo_pdr'));
@@ -258,9 +258,6 @@ class PreRegistroUserController extends Controller
 
     /**
      * Descarga el archivo PDR.
-     *
-     * @param PreRegistroConcurso $preRegistro
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function downloadPDR(PreRegistroConcurso $preRegistro)
     {
@@ -270,6 +267,6 @@ class PreRegistroUserController extends Controller
             return back()->with('error', 'No hay archivo PDR disponible.');
         }
 
-        return Storage::disk('public')->download($preRegistro->archivo_pdr);
+        return response()->download(public_path($preRegistro->archivo_pdr));
     }
 }
