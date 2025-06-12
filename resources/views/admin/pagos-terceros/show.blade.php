@@ -86,7 +86,7 @@
                     <h3 class="text-lg font-semibold mb-4 text-blue-400">Comprobante de Pago</h3>
                     <div class="bg-gray-800/30 p-4 rounded-xl border border-gray-700/50">
                         @if($pago->comprobante_pago)
-                            <a href="{{ Storage::url($pago->comprobante_pago) }}" target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors flex items-center space-x-2">
+                            <a href="{{ asset($pago->comprobante_pago) }}" target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors flex items-center space-x-2">
                                 <i class="fas fa-download mr-2"></i>Ver comprobante
                             </a>
                         @else

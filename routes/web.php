@@ -215,7 +215,7 @@ Route::middleware(['auth', 'role:usuario'])->group(function () {
     ->name('user.concursos.pre-registros.factura');
 
     // Rutas para la gestión de pagos por terceros
-    Route::post('/user/pagos-terceros/validar', [PagoTerceroController::class, 'validarCodigo'])->name('user.concursos.pagos-terceros.validar');
+    Route::get('/user/pagos-terceros/validar', [PagoTerceroController::class, 'validar'])->name('user.concursos.pagos-terceros.validar');
     Route::get('/user/pagos-terceros', [PagoTerceroController::class, 'index'])->name('user.concursos.pagos-terceros.index');
     Route::get('/user/pagos-terceros/create', [PagoTerceroController::class, 'create'])->name('user.concursos.pagos-terceros.create');
     Route::post('/user/pagos-terceros', [PagoTerceroController::class, 'store'])->name('user.concursos.pagos-terceros.store');

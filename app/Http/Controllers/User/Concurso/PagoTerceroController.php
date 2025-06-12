@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class PagoTerceroController extends Controller
 {
@@ -54,11 +53,9 @@ class PagoTerceroController extends Controller
         return view('user.concursos.pagos-terceros.create', compact('concursos'));
     }
 
-    public function validarForm()
+    public function validar()
     {
-        $concursos = Concurso::with('convocatorias')
-            ->where('estado', 'activo')
-            ->get();
+        $concursos = Concurso::where('estado', 'activo')->get();
         return view('user.concursos.pagos-terceros.validar', compact('concursos'));
     }
 
@@ -102,7 +99,18 @@ class PagoTerceroController extends Controller
             }
 
             $codigoValidacion = Str::uuid();
-            $comprobantePath = $request->file('comprobante')->store('comprobantes_pago_terceros', 'public');
+            
+            $comprobanteFile = $request->file('comprobante');
+            $filename = uniqid() . '_' . $comprobanteFile->getClientOriginalName();
+            $destinationPath = public_path('comprobantes_pago_terceros');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            $comprobanteFile->move($destinationPath, $filename);
+            $comprobantePath = 'comprobantes_pago_terceros/' . $filename;
+
 
             $pagoTercero = new PagoTerceroTransferenciaConcurso([
                 'usuario_id' => Auth::id(),
@@ -140,17 +148,16 @@ class PagoTerceroController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'codigo' => 'required|string',
-            'concurso_id' => 'required|exists:concursos,id',
-            'tipo_uso' => 'required|in:pre_registro,inscripcion'
+            'concurso_id' => 'required|exists:concursos,id'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $pagoTercero = PagoTerceroTransferenciaConcurso::where('codigo_validacion', $request->codigo)
+        $pagoTercero = PagoTerceroTransferenciaConcurso::where('codigo_validacion_unico', $request->codigo)
             ->where('concurso_id', $request->concurso_id)
-            ->where('estado', 'validado')
+            ->where('estado_pago', 'validado')
             ->first();
 
         if (!$pagoTercero) {
@@ -162,28 +169,17 @@ class PagoTerceroController extends Controller
             return response()->json(['error' => 'El código ha alcanzado el límite de usos permitidos'], 400);
         }
 
-        if ($request->tipo_uso === 'pre_registro' && !$pagoTercero->cubre_pre_registro) {
-            return response()->json(['error' => 'El código no cubre pre-registro'], 400);
-        }
-
-        if ($request->tipo_uso === 'inscripcion' && !$pagoTercero->cubre_inscripcion) {
-            return response()->json(['error' => 'El código no cubre inscripción'], 400);
-        }
-
-                // Registrar el uso exitoso
-        $pagoTercero->increment('usos_actuales');
-
-        $pagoTercero->save();
+        $usosDisponiblesPre = $pagoTercero->cubre_pre_registro ? max(0, $pagoTercero->numero_pagos - $usosActuales) : 0;
+        $usosDisponiblesIns = $pagoTercero->cubre_inscripcion ? max(0, $pagoTercero->numero_pagos - $usosActuales) : 0;
 
         return response()->json([
             'valid' => true,
-            'usosDisponibles' => $pagoTercero->numero_pagos - $pagoTercero->usos_actuales,
-            'message' => 'Validación exitosa. El código puede ser usado para ' .
-                ($pagoTercero->cubre_pre_registro && $pagoTercero->cubre_inscripcion ? 'pre-registro e inscripción' :
-                ($pagoTercero->cubre_pre_registro ? 'solo pre-registro' : 'solo inscripción')) .
-                '. Usos restantes: ' . ($pagoTercero->numero_pagos - $pagoTercero->usos_actuales)
+            'usosDisponiblesPre' => $usosDisponiblesPre,
+            'usosDisponiblesIns' => $usosDisponiblesIns,
+            'message' => 'Validación exitosa. ' .
+                ($usosDisponiblesPre > 0 ? "Disponible para {$usosDisponiblesPre} pre-registros. " : '') .
+                ($usosDisponiblesIns > 0 ? "Disponible para {$usosDisponiblesIns} inscripciones." : '')
         ]);
-        
     }
 
     public function usarCodigoEnPreRegistro($codigo, $preRegistroId)

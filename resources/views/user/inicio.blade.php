@@ -153,14 +153,22 @@
                                             ->where('concurso_id', $concurso->id)
                                             ->where('estado_pago', 'pagado')
                                             ->exists();
-                                    @endphp
-                                    @php
+                                            
+                                        $pagoTercero = \App\Models\PagoTerceroTransferenciaConcurso::where('usuario_id', Auth::id())
+                                            ->where('concurso_id', $concurso->id)
+                                            ->exists();
+                                            
                                         $tienePreRegistro = \App\Models\PreRegistroConcurso::where('usuario_id', Auth::id())
                                             ->where('concurso_id', $concurso->id)
                                             ->exists();
                                     @endphp
 
-                                    @if($pagoConfirmado)
+                                    @if($pagoTercero)
+                                        <a href="{{ route('user.concursos.pagos-terceros.store') }}" 
+                                           class="inline-flex items-center justify-center px-4 py-2 bg-blue-500/20 text-blue-400 rounded-xl hover:bg-blue-500/30 transition-all duration-500">
+                                            <i class="fas fa-receipt mr-2"></i>Ver Estado de Pago
+                                        </a>
+                                    @elseif($pagoConfirmado)
                                         @if($tienePreRegistro)
                                             <a href="{{ route('user.concursos.convocatorias.show', $convocatoria) }}"
                                             class="inline-flex items-center justify-center px-4 py-2 bg-green-500/20 text-green-400 rounded-xl hover:bg-green-500/30 transition-all duration-500">

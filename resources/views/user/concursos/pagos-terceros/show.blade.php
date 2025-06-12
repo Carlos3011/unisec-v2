@@ -89,9 +89,8 @@
                     <div class="md:col-span-2 bg-white/5 rounded-xl p-6 border border-white/10">
                         <h3 class="text-lg font-semibold text-white mb-4">Comprobante de Pago</h3>
                         <div class="p-4 border border-white/10 rounded-lg bg-white/5">
-                            // Control de visibilidad del comprobante
                             @if($pago->estado_pago === 'validado' && $pago->comprobante_pago)
-                                <a href="{{ Storage::url($pago->comprobante_pago) }}" target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors duration-200 flex items-center gap-2">
+                                <a href="{{ asset($pago->comprobante_pago) }}" target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors duration-200 flex items-center gap-2">
                                     <i class="fas fa-download"></i>
                                     <span>Ver comprobante</span>
                                 </a>
@@ -99,77 +98,6 @@
                                 <p class="text-white/60">Comprobante no disponible</p>
                             @endif
                             
-                            <div class="flex flex-col gap-2 md:flex-row md:items-center mt-4">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                                <div class="relative">
-                                    <div class="absolute inset-0 bg-green-900/20 rounded-lg border border-green-400/30 opacity-30"></div>
-                                    <select id="tipo_uso" class="relative z-10 w-full bg-transparent text-white p-2 rounded-lg">
-                                        <option value="pre_registro" class="bg-green-900 text-white">Usar para Pre-registro</option>
-                                        <option value="inscripcion" class="bg-purple-900 text-white">Usar para Inscripción</option>
-                                    </select>
-                                </div>
-                                <button onclick="validarCodigo()" class="relative bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
-                                    id="btn-validar">
-                                    <i class="fas fa-check-circle mr-2"></i>
-                                    Validar Código
-                                </button>
-                            </div>
-
-                                
-                            </div>
-
-                            
-                            <script>
-                                function validarCodigo() {
-                                    const tipoUso = document.getElementById('tipo_uso').value;
-                                    const boton = document.getElementById('btn-validar');
-
-                                    fetch('{{ route("user.concursos.pagos-terceros.validar") }}', {
-                                        method: 'POST',
-                                        headers: {
-                                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({
-                                            codigo: '{{ $pago->codigo_validacion_unico }}',
-                                            concurso_id: {{ $pago->concurso_id }},
-                                            tipo_uso: tipoUso
-                                        })
-                                    })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        const resultadoDiv = document.getElementById('resultadoValidacion') || createResultContainer();
-                                        if (data.valid) {
-                                            resultadoDiv.innerHTML = `<div class="p-3 mb-2 bg-green-600 text-white rounded-lg">\${data.message}</div>`;
-
-                                            // Actualizar contador individual
-                                            if (tipoUso === 'pre_registro') {
-                                                document.querySelector('option[value="pre_registro"]').textContent =
-                                                    `Pre-registro (Usos restantes: ${data.usos_pre})`;
-                                            } else {
-                                                document.querySelector('option[value="inscripcion"]').textContent =
-                                                    `Inscripción (Usos restantes: ${data.usos_ins})`;
-                                            }
-
-                                            // Desactivar si ya no hay usos para ambos
-                                            if (data.usos_pre <= 0 && data.usos_ins <= 0) {
-                                                boton.disabled = true;
-                                                boton.classList.add('opacity-50', 'cursor-not-allowed');
-                                            }
-                                        } else {
-                                            resultadoDiv.innerHTML = `<div class="p-3 mb-2 bg-red-600 text-white rounded-lg">\${data.error}</div>`;
-                                        }
-                                    });
-                                }
-
-                                function createResultContainer() {
-                                    const div = document.createElement('div');
-                                    div.id = 'resultadoValidacion';
-                                    document.querySelector('.p-4.border').appendChild(div);
-                                    return div;
-                                }
-
-                            </script>
                         </div>
                     </div>
                 </div>
