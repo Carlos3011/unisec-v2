@@ -29,7 +29,9 @@ class PreRegistroConcurso extends Model
         'archivo_pdr',
         'estado_pdr',
         'comentarios_pdr',
-        'integrantes_data'
+        'integrantes_data',
+        'codigo_pago_terceros',
+        'estado'
     ];
 
     protected $casts = [

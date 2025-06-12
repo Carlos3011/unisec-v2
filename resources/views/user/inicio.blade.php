@@ -200,6 +200,85 @@
         </div>
     </div>
 
+    <!-- Sección de Códigos de Pago -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="bg-gradient-to-br from-space-900/80 to-cosmic-900/80 backdrop-blur-lg rounded-3xl p-8 border border-white/5 hover:border-white/10 transition-all duration-500">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-light text-white tracking-wider">Usar Código de Pago</h2>
+                <a href="{{ route('user.concursos.pagos-terceros.index') }}" class="text-primary/90 hover:text-primary transition-colors duration-500 flex items-center group">
+                    Ver mis códigos
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Tarjeta para Usar Código -->
+                <div class="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-white/5 group hover:border-purple-500/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(147,51,234,0.1)]">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-light text-white tracking-wide group-hover:text-purple-500/90 transition-colors duration-500">
+                            Validar Código
+                        </h3>
+                        <span class="px-3 py-1 text-xs font-medium rounded-full bg-purple-500/20 text-purple-400">
+                            <i class="fas fa-key mr-1"></i>Validación
+                        </span>
+                    </div>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-user-plus w-5 text-gray-400"></i>
+                            <span>Usar código para pre-registro</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-clipboard-list w-5 text-gray-400"></i>
+                            <span>Usar código para inscripción</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-info-circle w-5 text-gray-400"></i>
+                            <span>Valida el código proporcionado por un tercero</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <a href="{{ route('user.concursos.pagos-terceros.validar') }}" class="w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-purple-600/80 to-blue-600/80 text-white rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-lg group">
+                            <i class="fas fa-key mr-2 group-hover:scale-110 transition-transform"></i>
+                            <span>Validar y Usar Código</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tarjeta para Solicitar Código -->
+                <div class="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-white/5 group hover:border-emerald-500/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-light text-white tracking-wide group-hover:text-emerald-500/90 transition-colors duration-500">
+                            Solicitar Código
+                        </h3>
+                        <span class="px-3 py-1 text-xs font-medium rounded-full bg-emerald-500/20 text-emerald-400">
+                            <i class="fas fa-plus-circle mr-1"></i>Nuevo
+                        </span>
+                    </div>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-university w-5 text-gray-400"></i>
+                            <span>Para instituciones o empresas</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-users w-5 text-gray-400"></i>
+                            <span>Múltiples usos disponibles</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-shield-alt w-5 text-gray-400"></i>
+                            <span>Proceso seguro y verificado</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <a href="{{ route('user.concursos.pagos-terceros.create') }}" class="w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-emerald-600/80 to-teal-600/80 text-white rounded-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-lg group">
+                            <i class="fas fa-plus mr-2 group-hover:scale-110 transition-transform"></i>
+                            <span>Solicitar Nuevo Código</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Sección de Exploración Espacial -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div
@@ -264,4 +343,39 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            function copiarCodigo(codigo) {
+                navigator.clipboard.writeText(codigo).then(function() {
+                    Swal.fire({
+                        title: '¡Código Copiado!',
+                        text: 'El código ha sido copiado al portapapeles',
+                        icon: 'success',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        background: '#1a1a1a',
+                        color: '#fff',
+                        iconColor: '#10B981'
+                    });
+                }).catch(function() {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No se pudo copiar el código',
+                        icon: 'error',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        background: '#1a1a1a',
+                        color: '#fff',
+                        iconColor: '#EF4444'
+                    });
+                });
+            }
+        </script>
+    @endpush
 @endsection
