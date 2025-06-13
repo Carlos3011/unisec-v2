@@ -31,6 +31,14 @@ use App\Http\Controllers\User\Concurso\ConvocatoriaUserController;
 use App\Http\Controllers\User\Concurso\PreRegistroUserController;
 use App\Http\Controllers\User\Concurso\PagoTerceroController;
 
+/*----
+| Controladores para la gestión de de congresos
+----*/
+use App\Http\Controllers\Admin\Congreso\CongresoController;
+use App\Http\Controllers\Admin\Congreso\ConvocatoriaCongresoController;
+use App\Http\Controllers\Admin\Congreso\InscripcionCongresoController;
+use App\Http\Controllers\Admin\PagoInscripcionCongresoController;
+
 use App\Http\Controllers\PayPalController;
 
 
@@ -176,8 +184,38 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/noticias/{noticia}', [NoticiaController::class, 'update'])->name('admin.noticias.noticia.update');
     Route::delete('/admin/noticias/{noticia}', [NoticiaController::class, 'destroy'])->name('admin.noticias.noticia.destroy');
 
+    // Rutas para la gestion de congresos
+    Route::get('/admin/congresos', [CongresoController::class, 'index'])->name('admin.congresos.index');
+    Route::get('/admin/congresos/create', [CongresoController::class, 'create'])->name('admin.congresos.create');
+    Route::post('/admin/congresos', [CongresoController::class, 'store'])->name('admin.congresos.store');
+    Route::get('/admin/congresos/{congreso}', [CongresoController::class, 'show'])->name('admin.congresos.show');
+    Route::get('/admin/congresos/{congreso}/edit', [CongresoController::class, 'edit'])->name('admin.congresos.edit');
+    Route::put('/admin/congresos/{congreso}', [CongresoController::class, 'update'])->name('admin.congresos.update');
+    Route::delete('/admin/congresos/{congreso}', [CongresoController::class, 'destroy'])->name('admin.congresos.destroy');
 
-});
+    // Rutas para la gestion de convocatorias de congresos
+    Route::get('/admin/congresos-convocatorias', [ConvocatoriaCongresoController::class, 'index'])->name('admin.congresos.convocatorias.index');
+    Route::get('/admin/congresos-convocatorias/create', [ConvocatoriaCongresoController::class, 'create'])->name('admin.congresos.convocatorias.create');
+    Route::post('/admin/congresos-convocatorias', [ConvocatoriaCongresoController::class, 'store'])->name('admin.congresos.convocatorias.store');
+    Route::get('/admin/congresos-convocatorias/{convocatoria}', [ConvocatoriaCongresoController::class, 'show'])->name('admin.congresos.convocatorias.show');
+    Route::get('/admin/congresos-convocatorias/{convocatoria}/edit', [ConvocatoriaCongresoController::class, 'edit'])->name('admin.congresos.convocatorias.edit');
+    Route::put('/admin/congresos-convocatorias/{convocatoria}', [ConvocatoriaCongresoController::class, 'update'])->name('admin.congresos.convocatorias.update');
+    Route::delete('/admin/congresos-convocatorias/{convocatoria}', [ConvocatoriaCongresoController::class, 'destroy'])->name('admin.congresos.convocatorias.destroy');
+
+    // Rutas para la gestión de inscripciones de congresos
+    Route::get('/admin/congresos-inscripciones', [InscripcionCongresoController::class, 'index'])->name('admin.congresos.inscripciones.index');
+    Route::get('/admin/congresos-inscripciones/{inscripcion}', [InscripcionCongresoController::class, 'show'])->name('admin.congresos.inscripciones.show');
+    Route::post('/admin/congresos-inscripciones/{inscripcion}/evaluar-articulo', [InscripcionCongresoController::class, 'evaluarArticulo'])->name('admin.congresos.inscripciones.evaluar-articulo');
+    Route::post('/admin/congresos-inscripciones/{inscripcion}/evaluar-extenso', [InscripcionCongresoController::class, 'evaluarExtenso'])->name('admin.congresos.inscripciones.evaluar-extenso');
+    Route::post('/admin/congresos-inscripciones/{inscripcion}/actualizar-pago', [InscripcionCongresoController::class, 'actualizarEstadoPago'])->name('admin.congresos.inscripciones.actualizar-pago');
+    Route::delete('/admin/congresos-inscripciones/{inscripcion}', [InscripcionCongresoController::class, 'destroy'])->name('admin.congresos.inscripciones.destroy');
+
+    // Rutas para la gestión de pagos de inscripciones de congresos
+    Route::get('/admin/congresos-pagos', [PagoInscripcionCongresoController::class, 'index'])->name('admin.congresos.pagos.index');
+    Route::get('/admin/congresos-pagos/{pago}', [PagoInscripcionCongresoController::class, 'show'])->name('admin.congresos.pagos.show');
+    Route::get('/admin/congresos-pagos/{pago}/factura', [PagoInscripcionCongresoController::class, 'generarFactura'])->name('admin.congresos.pagos.factura');
+    Route::get('/admin/congresos-pagos/exportar', [PagoInscripcionCongresoController::class, 'exportarPagos'])->name('admin.congresos.pagos.exportar');
+}); 
 
 // Grupo de rutas para Usuarios
 Route::middleware(['auth', 'role:usuario'])->group(function () {
