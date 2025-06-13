@@ -16,13 +16,37 @@ class Congreso extends Model
         'nombre',
         'descripcion',
         'fecha_inicio',
-        'fecha_fin'
+        'fecha_fin',
+        'estado'
+    ];
+
+    protected $attributes = [
+        'estado' => 'pendiente'
     ];
 
     protected $dates = ['deleted_at', 'fecha_inicio', 'fecha_fin'];
 
+    // Relación con eventos del congreso
     public function eventos(): HasMany
     {
         return $this->hasMany(EventoCongreso::class, 'congreso_id');
+    }
+
+    // Relación con convocatorias
+    public function convocatorias(): HasMany
+    {
+        return $this->hasMany(ConvocatoriaCongreso::class, 'congreso_id');
+    }
+
+    // Relación con artículos
+    public function articulos(): HasMany
+    {
+        return $this->hasMany(ArticuloCongreso::class, 'congreso_id');
+    }
+
+    // Relación con pagos de inscripción
+    public function pagosInscripcion(): HasMany
+    {
+        return $this->hasMany(PagoInscripcionCongreso::class, 'congreso_id');
     }
 }
