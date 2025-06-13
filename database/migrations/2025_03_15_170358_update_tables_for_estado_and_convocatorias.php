@@ -39,15 +39,7 @@ return new class extends Migration
         });
 
 
-        // Crear la tabla de inscripciones para congresos
-        Schema::create('inscripciones_congresos', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade'); // Relación con la tabla 'users'
-            $table->foreignId('congreso_id')->constrained('congresos')->onDelete('cascade'); // Relación con la tabla 'congresos'
-            $table->enum('estado', ['pendiente', 'confirmada', 'cancelada'])->default('pendiente'); // Estado de la inscripción
-            $table->timestamps();
-            $table->softDeletes();
-        });
+   
 
         // Agregar la columna "estado" a las tablas existentes
         Schema::table('cursos', function (Blueprint $table) {
