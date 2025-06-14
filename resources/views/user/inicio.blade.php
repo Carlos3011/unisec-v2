@@ -14,9 +14,6 @@
                     </h1>
                     <div class="text-gray-300 text-lg">Tu portal para explorar el universo y la tecnología espacial</div>
                 </div>
-                <div class="hidden sm:block transform transition-all duration-500 group-hover:-translate-x-2">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-20 w-auto filter brightness-110">
-                </div>
             </div>
         </div>
     </div>
@@ -101,11 +98,16 @@
     <!-- Sección de Concursos Activos -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div
-            class="bg-gradient-to-br from-space-900/80 to-cosmic-900/80 backdrop-blur-lg rounded-3xl p-8 border border-white/5 hover:border-white/10 transition-all duration-500">
+            class="bg-gradient-to-br from-space-900/80 to-cosmic-900/80 backdrop-blur-lg rounded-3xl p-8 border border-cyan-500/10 hover:border-cyan-500/20 transition-all duration-500">
             <div class="flex items-center justify-between mb-8">
-                <h2 class="text-2xl font-light text-white tracking-wider">Concursos Disponibles</h2>
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-cyan-500/10 rounded-xl">
+                        <i class="fas fa-trophy text-2xl text-cyan-400"></i>
+                    </div>
+                    <h2 class="text-2xl font-light text-white tracking-wider">Concursos Disponibles</h2>
+                </div>
                 <a href="{{ route('user.concursos.index') }}"
-                    class="text-primary/90 hover:text-primary transition-colors duration-500 flex items-center group">
+                    class="text-cyan-400/90 hover:text-cyan-400 transition-colors duration-500 flex items-center group">
                     Ver todos
                     <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
                 </a>
@@ -116,28 +118,28 @@
                     @if($concurso->estado === 'activo' && $concurso->convocatorias->count() > 0)
                         @foreach($concurso->convocatorias->take(2) as $convocatoria)
                             <div
-                                class="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-white/5 group hover:border-primary/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(59,130,246,0.1)]">
+                                class="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-cyan-500/10 group hover:border-cyan-500/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(34,211,238,0.1)]">
                                 <div class="flex items-start justify-between mb-4">
                                     <h3
-                                        class="text-xl font-light text-white tracking-wide group-hover:text-primary/90 transition-colors duration-500">
+                                        class="text-xl font-light text-white tracking-wide group-hover:text-cyan-400/90 transition-colors duration-500">
                                         {{ $concurso->titulo }}
                                     </h3>
-                                    <span class="px-3 py-1 text-xs font-medium rounded-full bg-green-500/20 text-green-400">
+                                    <span class="px-3 py-1 text-xs font-medium rounded-full bg-cyan-500/20 text-cyan-400">
                                         <i class="fas fa-check-circle mr-1"></i>Activo
                                     </span>
                                 </div>
                                 <div class="space-y-3 mb-6">
                                     <div class="flex items-center text-sm text-gray-300">
-                                        <i class="fas fa-map-marker-alt w-5 text-gray-400"></i>
+                                        <i class="fas fa-map-marker-alt w-5 text-cyan-400"></i>
                                         <span>{{ $convocatoria->sede }}</span>
                                     </div>
                                     <div class="flex items-center text-sm text-gray-300">
-                                        <i class="fas fa-users w-5 text-gray-400"></i>
+                                        <i class="fas fa-users w-5 text-cyan-400"></i>
                                         <span>{{ $convocatoria->dirigido_a }}</span>
                                     </div>
                                     @if($convocatoria->fechasImportantes->count() > 0)
                                         <div class="flex items-center text-sm text-gray-300">
-                                            <i class="fas fa-calendar w-5 text-gray-400"></i>
+                                            <i class="fas fa-calendar w-5 text-cyan-400"></i>
                                             <span>Próxima fecha: {{ $convocatoria->fechasImportantes->sortBy('fecha')->first()->titulo }} -
                                                 {{ $convocatoria->fechasImportantes->sortBy('fecha')->first()->fecha->format('d/m/Y') }}</span>
                                         </div>
@@ -145,7 +147,7 @@
                                 </div>
                                 <div class="flex space-x-2">
                                     <a href="{{ route('user.concursos.convocatorias.show', $convocatoria) }}"
-                                        class="inline-flex items-center justify-center px-4 py-2 bg-primary/10 text-primary/90 rounded-xl hover:bg-primary/20 transition-all duration-500">
+                                        class="inline-flex items-center justify-center px-4 py-2 bg-cyan-500/10 text-cyan-400/90 rounded-xl hover:bg-cyan-500/20 transition-all duration-500">
                                         <i class="fas fa-info-circle mr-2"></i>Ver detalles
                                     </a>
                                     @php
@@ -165,7 +167,7 @@
 
                                     @if($pagoTercero)
                                         <a href="{{ route('user.concursos.pagos-terceros.store') }}" 
-                                           class="inline-flex items-center justify-center px-4 py-2 bg-blue-500/20 text-blue-400 rounded-xl hover:bg-blue-500/30 transition-all duration-500">
+                                           class="inline-flex items-center justify-center px-4 py-2 bg-cyan-500/20 text-cyan-400 rounded-xl hover:bg-cyan-500/30 transition-all duration-500">
                                             <i class="fas fa-receipt mr-2"></i>Ver Estado de Pago
                                         </a>
                                     @elseif($pagoConfirmado)
@@ -176,7 +178,7 @@
                                             </a>
                                         @else
                                             <a href="{{ route('user.concursos.pre-registros.create', ['convocatoria' => $convocatoria->id]) }}" 
-                                            class="inline-flex items-center justify-center px-4 py-2 bg-blue-500/20 text-blue-400 rounded-xl hover:bg-blue-500/30 transition-all duration-500">
+                                            class="inline-flex items-center justify-center px-4 py-2 bg-cyan-500/20 text-cyan-400 rounded-xl hover:bg-cyan-500/30 transition-all duration-500">
                                                 <i class="fas fa-user-plus mr-2"></i>Pre-registrarse
                                             </a>
                                         @endif
@@ -192,8 +194,81 @@
                     @endif
                 @empty
                     <div class="col-span-full p-8 text-center">
-                        <i class="fas fa-trophy text-4xl text-gray-600 mb-4"></i>
+                        <i class="fas fa-trophy text-4xl text-cyan-600 mb-4"></i>
                         <p class="text-gray-400">No hay concursos activos en este momento</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de Congresos Activos -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div
+            class="bg-gradient-to-br from-space-900/80 to-cosmic-900/80 backdrop-blur-lg rounded-3xl p-8 border border-purple-400/20 hover:border-purple-400/30 transition-all duration-500">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-purple-400/20 rounded-xl">
+                        <i class="fas fa-graduation-cap text-2xl text-purple-300"></i>
+                    </div>
+                    <h2 class="text-2xl font-light text-white tracking-wider">Congresos Disponibles</h2>
+                </div>
+                <a href="#"
+                    class="text-purple-300/90 hover:text-purple-300 transition-colors duration-500 flex items-center group">
+                    Ver todos
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                @forelse($congresos as $congreso)
+                    @if($congreso->estado === 'activo' && $congreso->convocatorias->count() > 0)
+                        @foreach($congreso->convocatorias->take(2) as $convocatoria)
+                            <div
+                                class="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-purple-400/20 group hover:border-purple-400/40 transition-all duration-500 hover:shadow-[0_0_30px_rgba(192,132,252,0.15)]">
+                                <div class="flex items-start justify-between mb-4">
+                                    <h3
+                                        class="text-xl font-light text-white tracking-wide group-hover:text-purple-300/90 transition-colors duration-500">
+                                        {{ $congreso->nombre }}
+                                    </h3>
+                                    <span class="px-3 py-1 text-xs font-medium rounded-full bg-purple-400/20 text-purple-300">
+                                        <i class="fas fa-check-circle mr-1"></i>Activo
+                                    </span>
+                                </div>
+                                <div class="space-y-3 mb-6">
+                                    <div class="flex items-center text-sm text-gray-300">
+                                        <i class="fas fa-map-marker-alt w-5 text-purple-300"></i>
+                                        <span>{{ $convocatoria->sede }}</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-300">
+                                        <i class="fas fa-calendar-alt w-5 text-purple-300"></i>
+                                        <span>{{ \Carbon\Carbon::parse($congreso->fecha_inicio)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($congreso->fecha_fin)->format('d/m/Y') }}</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-300">
+                                        <i class="fas fa-users w-5 text-purple-300"></i>
+                                        <span>{{ $convocatoria->dirigido_a }}</span>
+                                    </div>
+                                    @if($convocatoria->fechasImportantes->count() > 0)
+                                        <div class="flex items-center text-sm text-gray-300">
+                                            <i class="fas fa-calendar w-5 text-purple-300"></i>
+                                            <span>Próxima fecha: {{ $convocatoria->fechasImportantes->sortBy('fecha')->first()->titulo }} -
+                                                {{ $convocatoria->fechasImportantes->sortBy('fecha')->first()->fecha->format('d/m/Y') }}</span>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="flex space-x-2">
+                                    <a href="#"
+                                        class="inline-flex items-center justify-center px-4 py-2 bg-purple-400/20 text-purple-300/90 rounded-xl hover:bg-purple-400/30 transition-all duration-500">
+                                        <i class="fas fa-info-circle mr-2"></i>Ver detalles
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                @empty
+                    <div class="col-span-full p-8 text-center">
+                        <i class="fas fa-graduation-cap text-4xl text-purple-400 mb-4"></i>
+                        <p class="text-gray-400">No hay congresos activos en este momento</p>
                     </div>
                 @endforelse
             </div>
@@ -213,7 +288,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Tarjeta para Usar Código -->
-                <div class="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-white/5 group hover:border-purple-500/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(147,51,234,0.1)]">
+                <div class="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(147,51,234,0.1)]">
                     <div class="flex items-start justify-between mb-4">
                         <h3 class="text-xl font-light text-white tracking-wide group-hover:text-purple-500/90 transition-colors duration-500">
                             Validar Código
@@ -245,7 +320,7 @@
                 </div>
 
                 <!-- Tarjeta para Solicitar Código -->
-                <div class="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-white/5 group hover:border-emerald-500/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+                <div class="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-emerald-500/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]">
                     <div class="flex items-start justify-between mb-4">
                         <h3 class="text-xl font-light text-white tracking-wide group-hover:text-emerald-500/90 transition-colors duration-500">
                             Solicitar Código
@@ -287,7 +362,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Sistema Solar Interactivo -->
                 <div
-                    class="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-white/5 group hover:border-secondary/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(99,102,241,0.1)]">
+                    class="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-secondary/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(99,102,241,0.1)]">
                     <h3
                         class="text-xl font-light text-white mb-4 tracking-wide group-hover:text-secondary/90 transition-colors duration-500">
                         Sistema Solar Interactivo</h3>
@@ -302,7 +377,7 @@
 
                 <!-- Últimas Noticias Espaciales -->
                 <div
-                    class="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-white/5 group hover:border-primary/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(59,130,246,0.1)]">
+                    class="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-primary/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(59,130,246,0.1)]">
                     <h3
                         class="text-xl font-light text-white mb-4 tracking-wide group-hover:text-primary/90 transition-colors duration-500">
                         Últimas Noticias Espaciales</h3>

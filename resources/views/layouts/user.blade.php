@@ -61,21 +61,13 @@
             </button>
             <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
               class="absolute left-0 mt-2 w-48 bg-gray-800/95 backdrop-blur-sm border border-gray-600/50 rounded-lg shadow-xl py-2 z-50">
-              <a href="{{ route('user.cursos') }}"
-                class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg">
-                <i class="fas fa-book-open mr-2 opacity-75"></i>Cursos
-              </a>
-              <a href="{{ route('user.talleres') }}"
-                class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200">
-                <i class="fas fa-tools mr-2 opacity-75"></i>Talleres
-              </a>
-              <a href="{{ route('user.ponencias') }}"
-                class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200">
-                <i class="fas fa-microphone mr-2 opacity-75"></i>Ponencias
-              </a>
               <a href="{{ route('user.concursos.index') }}"
                 class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200">
                 <i class="fas fa-trophy mr-2 opacity-75"></i>Concursos
+              </a>
+              <a href="{{ route('user.congresos.index') }}"
+                class="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg">
+                <i class="fas fa-graduation-cap mr-2 opacity-75"></i>Congresos
               </a>
             </div>
           </div>

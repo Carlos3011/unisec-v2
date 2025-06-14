@@ -39,6 +39,9 @@ use App\Http\Controllers\Admin\Congreso\ConvocatoriaCongresoController;
 use App\Http\Controllers\Admin\Congreso\InscripcionCongresoController;
 use App\Http\Controllers\Admin\PagoInscripcionCongresoController;
 
+use App\Http\Controllers\User\Congreso\CongresoUserController;
+use App\Http\Controllers\User\Congreso\ConvocatoriaCongresoUserController;
+
 use App\Http\Controllers\PayPalController;
 
 
@@ -236,11 +239,22 @@ Route::middleware(['auth', 'role:usuario'])->group(function () {
 
     // Rutas para la gestión de concursos del usuario
     Route::get('/user/concursos', [ConcursoUserController::class, 'index'])->name('user.concursos.index');
-    
     Route::get('/user/concursos/{concurso}', [ConcursoUserController::class, 'show'])->name('user.concursos.show');
+    
     // Rutas para la gestión de convocatorias del usuario
     Route::get('/user/convocatorias', [ConvocatoriaUserController::class, 'index'])->name('user.concursos.convocatorias.index');
     Route::get('/user/convocatorias/{convocatoria}', [ConvocatoriaUserController::class, 'show'])->name('user.concursos.convocatorias.show');
+
+    // Rutas para la gestión de congresos del usuario
+    Route::get('/user/congresos', [CongresoUserController::class, 'index'])->name('user.congresos.index');
+    Route::get('/user/congresos/{congreso}/convocatoria', [CongresoUserController::class, 'showConvocatoria'])->name('user.congresos.convocatoria');
+    Route::get('/user/congresos/filter/tematica', [CongresoUserController::class, 'filterByTematica'])->name('user.congresos.filter.tematica');
+
+    // Rutas para la gestión de convocatorias de congresos
+    Route::get('/user/congresos/convocatorias/{convocatoria}', [ConvocatoriaCongresoUserController::class, 'show'])->name('user.congresos.convocatorias.show');
+    Route::get('/user/congresos/convocatorias/{convocatoria}/download', [ConvocatoriaCongresoUserController::class, 'downloadConvocatoria'])->name('user.congresos.convocatorias.download');
+    Route::get('/user/congresos/convocatorias/{convocatoria}/download/articulo', [ConvocatoriaCongresoUserController::class, 'downloadArticulo'])->name('user.congresos.convocatorias.download.articulo');
+    Route::get('/user/congresos/convocatorias/{convocatoria}/download/formato-extenso', [ConvocatoriaCongresoUserController::class, 'downloadFormatoExtenso'])->name('user.congresos.convocatorias.download.formato-extenso');
 
     // Rutas para la gestión de pre-registros del usuario
     Route::get('/user/pre-registros', [PreRegistroUserController::class, 'index'])->name('user.concursos.pre-registros.index');

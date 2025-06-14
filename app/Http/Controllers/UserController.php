@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Concurso;
+use App\Models\Congreso;
 use App\Models\Noticia;
 
 class UserController extends Controller
@@ -16,14 +17,19 @@ class UserController extends Controller
             ->latest()
             ->get();
 
+        // Obtener congresos activos con sus relaciones
+        $congresos = Congreso::with(['convocatorias.fechasImportantes'])
+            ->where('estado', 'activo')
+            ->latest()
+            ->get();
+
         // Obtener las últimas noticias
         $noticias = Noticia::with('seccionNoticia')
             ->latest('fecha_publicacion')
             ->take(2)
             ->get();
 
-
-        return view('user.inicio', compact('concursos', 'noticias'));
+        return view('user.inicio', compact('concursos', 'noticias', 'congresos'));
     }
 
     public function espacio()
