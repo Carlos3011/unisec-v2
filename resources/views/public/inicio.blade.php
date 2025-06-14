@@ -4,8 +4,7 @@
 
 @section('contenido')
 
-    <section
-        class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-space-900 via-cosmic-900 to-black py-20 px-6 sm:px-10">
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-space-900 via-cosmic-900 to-black py-20 px-6 sm:px-10">
 
         <div class="max-w-7xl w-full z-10" data-aos="zoom-in-up" data-aos-duration="1000">
             <div class="space-y-10 text-center">
@@ -87,129 +86,145 @@
             </div>
 
             <!-- Tarjetas de Eventos -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                @if($convocatorias->count() > 0)
-                    @foreach($convocatorias as $convocatoria)
-                        <div class="relative" data-aos="fade-up" data-aos-delay="{{ $loop->index * 200 }}">
-                            <div class="bg-cosmic-800/90 backdrop-blur-lg rounded-2xl p-8 border-2 border-cosmic-600 shadow-xl">
-                                <!-- Información Principal -->
-                                <div class="flex items-center justify-between mb-8">
-                                    <div class="flex items-center gap-4">
-                                        <div
-                                            class="w-16 h-16 bg-gradient-to-br from-cosmic-600 to-cosmic-400 rounded-2xl flex items-center justify-center shadow-lg">
-                                            <span
-                                                class="text-white font-bold text-2xl">{{ strtoupper(substr($convocatoria->concurso->titulo, 0, 1)) }}</span>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-2xl font-bold text-white mb-1">{{ $convocatoria->concurso->titulo }}
-                                            </h3>
-                                            <p class="text-white">{{ $convocatoria->sede }}</p>
-                                        </div>
-                                    </div>
-                                    <span
-                                        class="text-sm text-white px-4 py-2 rounded-xl font-medium">{{ $convocatoria->dirigido_a }}</span>
-                                </div>
-
-                                <!-- Información Adicional -->
-                                @if($convocatoria->fechasImportantes->isNotEmpty())
-                                    <div class="space-y-3 mb-8">
-                                        <h4 class="text-white font-semibold mb-4">Fechas Importantes</h4>
-                                        @foreach($convocatoria->fechasImportantes->take(2) as $fecha)
-                                            <div class="flex items-center text-sm bg-cosmic-700/50 rounded-xl p-4 border border-cosmic-500">
-                                                <i class="fas fa-calendar-alt text-secondary mr-4 text-lg"></i>
-                                                <div>
-                                                    <span class="font-medium text-white">{{ $fecha->titulo }}</span>
-                                                    <span
-                                                        class="ml-2 text-white">{{ \Carbon\Carbon::parse($fecha->fecha)->format('d/m/Y') }}</span>
-                                                </div>
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-6 border-b border-cosmic-600 pb-2">
+                    Convocatorias de Concursos
+                </h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    @if($convocatorias->count() > 0)
+                        @foreach($convocatorias as $convocatoria)
+                            <div class="relative" data-aos="fade-up" data-aos-delay="{{ $loop->index * 200 }}">
+                                <div class="bg-cosmic-800/90 backdrop-blur-lg rounded-2xl p-8 border-2 border-cosmic-600 shadow-xl">
+                                    <!-- Información Principal -->
+                                    <div class="flex items-center justify-between mb-8">
+                                        <div class="flex items-center gap-4">
+                                            <div
+                                                class="w-16 h-16 bg-gradient-to-br from-cosmic-600 to-cosmic-400 rounded-2xl flex items-center justify-center shadow-lg">
+                                                <span
+                                                    class="text-white font-bold text-2xl">{{ strtoupper(substr($convocatoria->concurso->titulo, 0, 1)) }}</span>
                                             </div>
-                                        @endforeach
+                                            <div>
+                                                <h3 class="text-2xl font-bold text-white mb-1">{{ $convocatoria->concurso->titulo }}
+                                                </h3>
+                                                <p class="text-white">{{ $convocatoria->sede }}</p>
+                                            </div>
+                                        </div>
+                                        <span
+                                            class="text-sm text-white px-4 py-2 rounded-xl font-medium">{{ $convocatoria->dirigido_a }}</span>
                                     </div>
-                                @endif
 
-                                <div class="flex justify-end">
-                                    <a href="{{ route('convocatorias.show', $convocatoria) }}"
-                                        class="inline-flex items-center px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white rounded-xl font-medium shadow-lg transition-colors duration-300">
-                                        <i class="fas fa-info-circle mr-2"></i>Ver Detalles
-                                    </a>
+                                    <!-- Información Adicional -->
+                                    @if($convocatoria->fechasImportantes->isNotEmpty())
+                                        <div class="space-y-3 mb-8">
+                                            <h4 class="text-white font-semibold mb-4">Fechas Importantes</h4>
+                                            @foreach($convocatoria->fechasImportantes->take(2) as $fecha)
+                                                <div class="flex items-center text-sm bg-cosmic-700/50 rounded-xl p-4 border border-cosmic-500">
+                                                    <i class="fas fa-calendar-alt text-secondary mr-4 text-lg"></i>
+                                                    <div>
+                                                        <span class="font-medium text-white">{{ $fecha->titulo }}</span>
+                                                        <span
+                                                            class="ml-2 text-white">{{ \Carbon\Carbon::parse($fecha->fecha)->format('d/m/Y') }}</span>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+
+                                    <div class="flex justify-end">
+                                        <a href="{{ route('convocatorias.show', $convocatoria) }}"
+                                            class="inline-flex items-center px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white rounded-xl font-medium shadow-lg transition-colors duration-300">
+                                            <i class="fas fa-info-circle mr-2"></i>Ver Detalles
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
-                @else
-                    <div class="col-span-2 text-center py-12">
-                        <div
-                            class="bg-cosmic-800/50 backdrop-blur-lg rounded-2xl p-8 max-w-2xl mx-auto border-2 border-cosmic-600">
-                            <i class="fas fa-calendar-times text-6xl text-cosmic-400 mb-6"></i>
-                            <h2 class="text-2xl font-bold text-white mb-4">No hay eventos próximos</h2>
-                            <p class="text-cosmic-200">En este momento no hay eventos programados. Por favor, vuelve a consultar
-                                más tarde.</p>
-                        </div>
-                    </div>
-                @endif
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                @if($convocatoriasCongreso->count() > 0)
-                    @foreach($convocatoriasCongreso as $convocatoriaCongreso)
-                        <div class="relative" data-aos="fade-up" data-aos-delay="{{ $loop->index * 200 }}">
-                            <div class="bg-cosmic-800/90 backdrop-blur-lg rounded-2xl p-8 border-2 border-cosmic-600 shadow-xl">
-                                <!-- Información Principal -->
-                                <div class="flex items-center justify-between mb-8">
-                                    <div class="flex items-center gap-4">
-                                        <div
-                                            class="w-16 h-16 bg-gradient-to-br from-cosmic-600 to-cosmic-400 rounded-2xl flex items-center justify-center shadow-lg">
-                                            <span
-                                                class="text-white font-bold text-2xl">{{ strtoupper(substr($convocatoriaCongreso->congreso->nombre, 0, 1)) }}</span>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-2xl font-bold text-white mb-1">{{ $convocatoriaCongreso->congreso->nombre }}
-                                            </h3>
-                                            <p class="text-white">{{ $convocatoriaCongreso->sede }}</p>
-                                        </div>
-                                    </div>
-                                    <span
-                                        class="text-sm text-white px-4 py-2 rounded-xl font-medium">{{ $convocatoriaCongreso->dirigido_a }}</span>
-                                </div>
-
-                                <!-- Información Adicional -->
-                                @if($convocatoriaCongreso->fechasImportantes->isNotEmpty())
-                                    <div class="space-y-3 mb-8">
-                                        <h4 class="text-white font-semibold mb-4">Fechas Importantes</h4>
-                                        @foreach($convocatoriaCongreso->fechasImportantes->take(2) as $fecha)
-                                            <div class="flex items-center text-sm bg-cosmic-700/50 rounded-xl p-4 border border-cosmic-500">
-                                                <i class="fas fa-calendar-alt text-secondary mr-4 text-lg"></i>
-                                                <div>
-                                                    <span class="font-medium text-white">{{ $fecha->titulo }}</span>
-                                                    <span
-                                                        class="ml-2 text-white">{{ \Carbon\Carbon::parse($fecha->fecha)->format('d/m/Y') }}</span>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @endif
-
-                                <div class="flex justify-end">
-                                    <a href="{{ route('convocatorias.show', $convocatoriaCongreso) }}"
-                                        class="inline-flex items-center px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white rounded-xl font-medium shadow-lg transition-colors duration-300">
-                                        <i class="fas fa-info-circle mr-2"></i>Ver Detalles
-                                    </a>
-                                </div>
+                        @endforeach
+                    @else
+                        <div class="col-span-2 text-center py-12">
+                            <div
+                                class="bg-cosmic-800/50 backdrop-blur-lg rounded-2xl p-8 max-w-2xl mx-auto border-2 border-cosmic-600">
+                                <i class="fas fa-calendar-times text-6xl text-cosmic-400 mb-6"></i>
+                                <h2 class="text-2xl font-bold text-white mb-4">No hay eventos próximos</h2>
+                                <p class="text-cosmic-200">En este momento no hay eventos programados. Por favor, vuelve a consultar
+                                    más tarde.</p>
                             </div>
                         </div>
-                    @endforeach
-                @else
-                    <div class="col-span-2 text-center py-12">
-                        <div
-                            class="bg-cosmic-800/50 backdrop-blur-lg rounded-2xl p-8 max-w-2xl mx-auto border-2 border-cosmic-600">
-                            <i class="fas fa-calendar-times text-6xl text-cosmic-400 mb-6"></i>
-                            <h2 class="text-2xl font-bold text-white mb-4">No hay eventos próximos</h2>
-                            <p class="text-cosmic-200">En este momento no hay eventos programados. Por favor, vuelve a consultar
-                                más tarde.</p>
-                        </div>
-                    </div>
-                @endif
+                    @endif
+                </div>
             </div>
+
+            <div class="w-full border-t border-white-700 my-12"></div>
+            
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-6 border-b border-cosmic-600 pb-2">
+                    Convocatorias de Congresos
+                </h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    @if($convocatoriasCongreso->count() > 0)
+                        @foreach($convocatoriasCongreso as $convocatoriaCongreso)
+                            <div class="relative" data-aos="fade-up" data-aos-delay="{{ $loop->index * 200 }}">
+                                <div class="bg-cosmic-800/90 backdrop-blur-lg rounded-2xl p-8 border-2 border-cosmic-600 shadow-xl">
+                                    <!-- Información Principal -->
+                                    <div class="flex items-center justify-between mb-8">
+                                        <div class="flex items-center gap-4">
+                                            <div
+                                                class="w-16 h-16 bg-gradient-to-br from-cosmic-600 to-cosmic-400 rounded-2xl flex items-center justify-center shadow-lg">
+                                                <span
+                                                    class="text-white font-bold text-2xl">{{ strtoupper(substr($convocatoriaCongreso->congreso->nombre, 0, 1)) }}</span>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-2xl font-bold text-white mb-1">{{ $convocatoriaCongreso->congreso->nombre }}
+                                                </h3>
+                                                <p class="text-white">{{ $convocatoriaCongreso->sede }}</p>
+                                            </div>
+                                        </div>
+                                        <span
+                                            class="text-sm text-white px-4 py-2 rounded-xl font-medium">{{ $convocatoriaCongreso->dirigido_a }}</span>
+                                    </div>
+
+                                    <!-- Información Adicional -->
+                                    @if($convocatoriaCongreso->fechasImportantes->isNotEmpty())
+                                        <div class="space-y-3 mb-8">
+                                            <h4 class="text-white font-semibold mb-4">Fechas Importantes</h4>
+                                            @foreach($convocatoriaCongreso->fechasImportantes->take(2) as $fecha)
+                                                <div class="flex items-center text-sm bg-cosmic-700/50 rounded-xl p-4 border border-cosmic-500">
+                                                    <i class="fas fa-calendar-alt text-secondary mr-4 text-lg"></i>
+                                                    <div>
+                                                        <span class="font-medium text-white">{{ $fecha->titulo }}</span>
+                                                        <span
+                                                            class="ml-2 text-white">{{ \Carbon\Carbon::parse($fecha->fecha)->format('d/m/Y') }}</span>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+
+                                    <div class="flex justify-end">
+                                        <a href="{{ route('convocatorias.show', $convocatoriaCongreso) }}"
+                                            class="inline-flex items-center px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white rounded-xl font-medium shadow-lg transition-colors duration-300">
+                                            <i class="fas fa-info-circle mr-2"></i>Ver Detalles
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="col-span-2 text-center py-12">
+                            <div
+                                class="bg-cosmic-800/50 backdrop-blur-lg rounded-2xl p-8 max-w-2xl mx-auto border-2 border-cosmic-600">
+                                <i class="fas fa-calendar-times text-6xl text-cosmic-400 mb-6"></i>
+                                <h2 class="text-2xl font-bold text-white mb-4">No hay eventos próximos</h2>
+                                <p class="text-cosmic-200">En este momento no hay eventos programados. Por favor, vuelve a consultar
+                                    más tarde.</p>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            <div class="w-full border-t border-white-700 my-12"></div>
+            
         </div>
     </section>
     

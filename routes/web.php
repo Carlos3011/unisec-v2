@@ -63,7 +63,9 @@ Route::controller(PublicController::class)->group(function () {
     Route::get('/espacio', 'espacio')->name('espacio');
 
     Route::get('/convocatorias-publicas', 'convocatorias')->name('convocatorias.index');
-    Route::get('/convocatorias-publicas/{convocatoria}', 'show')->name('convocatorias.show');
+    Route::get('/convocatorias-publicas/concurso/{convocatoria}', 'show')->name('convocatorias.show');
+    Route::get('/convocatorias-publicas/congreso/{convocatoria}', 'showConvocatoriaCongreso')->name('convocatorias.congreso.show');
+    
 
     Route::get('/miembros', 'miembros')->name('miembros');
 

@@ -5,14 +5,15 @@
 @section('contenido')
 <div class="min-h-screen py-12 relative overflow-hidden bg-gradient-to-b from-space-950 to-cosmic-900">
     <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto bg-black/30 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 relative transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)]">
-             <!-- Navegación -->
-             <div class="p-6">
+        <div class="max-w-4xl mx-auto bg-black/30 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 relative transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]">
+            <!-- Navegación -->
+            <div class="p-6">
                 <a href="{{route('convocatorias.index')}}" class="text-white/90 hover:text-white flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg w-fit transition-all duration-300 hover:bg-white/10">
                     <i class="fas fa-arrow-left"></i>
                     <span>Volver a Convocatorias</span>
                 </a>
             </div>
+
             <!-- Encabezado de la Convocatoria -->
             <div class="relative overflow-hidden mb-6">
                 @if($convocatoria->imagen_portada)
@@ -25,9 +26,9 @@
                 <div class="relative z-20 p-8">
                     <h1 class="text-5xl font-bold text-white mb-4 text-center drop-shadow-lg">{{ $convocatoria->concurso->titulo }}</h1>
                     
-                    <!-- Nueva sección de costos destacada -->
+                    <!-- Información de Costos -->
                     <div class="mb-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-105">
+                        <div class="bg-gradient-to-r from-blue-500/20 to-indigo-500/20 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-105">
                             <div class="flex flex-col items-center text-center">
                                 <i class="fas fa-ticket-alt text-blue-400 text-4xl mb-3"></i>
                                 <h3 class="text-xl font-semibold text-white mb-2">Pre-registro</h3>
@@ -37,12 +38,11 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-6 border border-purple-400/30 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105">
+                        <div class="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl p-6 border border-indigo-400/30 hover:border-indigo-400/50 transition-all duration-300 transform hover:scale-105">
                             <div class="flex flex-col items-center text-center">
-                                <i class="fas fa-clipboard-check text-purple-400 text-4xl mb-3"></i>
+                                <i class="fas fa-clipboard-check text-indigo-400 text-4xl mb-3"></i>
                                 <h3 class="text-xl font-semibold text-white mb-2">Inscripción</h3>
-                                <p class="text-3xl font-bold text-purple-400">{{ $convocatoria->costo_inscripcion > 0 ? '$' . number_format($convocatoria->costo_inscripcion, 2) : 'Gratuito' }}</p>
-                            
+                                <p class="text-3xl font-bold text-indigo-400">{{ $convocatoria->costo_inscripcion > 0 ? '$' . number_format($convocatoria->costo_inscripcion, 2) : 'Gratuito' }}</p>
                             </div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
 
             <div class="space-y-8 p-8">
                 <!-- Fechas Importantes -->
-                <div class="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
+                <div class="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
                     <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
                         <i class="fas fa-calendar-alt mr-3 text-blue-400 text-2xl"></i>Fechas Importantes
                     </h2>
@@ -95,9 +95,9 @@
                 </div>
 
                 @if($convocatoria->requisitos)
-                <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-xl p-6 border border-green-400/30 hover:border-green-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(34,197,94,0.2)]">
+                <div class="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
                     <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
-                        <i class="fas fa-clipboard-list mr-3 text-green-400 text-2xl"></i>Requisitos
+                        <i class="fas fa-clipboard-list mr-3 text-blue-400 text-2xl"></i>Requisitos
                     </h2>
                     <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify bg-black/30 p-6 rounded-lg border border-white/10">
                         {!! $convocatoria->requisitos !!}
@@ -106,9 +106,9 @@
                 @endif
 
                 @if($convocatoria->etapas_mision)
-                <div class="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-xl p-6 border border-yellow-400/30 hover:border-yellow-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(234,179,8,0.2)]">
+                <div class="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
                     <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
-                        <i class="fas fa-tasks mr-3 text-yellow-400 text-2xl"></i>Etapas de la Misión
+                        <i class="fas fa-tasks mr-3 text-blue-400 text-2xl"></i>Etapas de la Misión
                     </h2>
                     <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify bg-black/30 p-6 rounded-lg border border-white/10">
                         {!! $convocatoria->etapas_mision !!}
@@ -117,9 +117,9 @@
                 @endif
 
                 @if($convocatoria->pruebas_requeridas)
-                <div class="bg-gradient-to-r from-red-500/10 to-pink-500/10 rounded-xl p-6 border border-red-400/30 hover:border-red-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(239,68,68,0.2)]">
+                <div class="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
                     <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
-                        <i class="fas fa-vial mr-3 text-red-400 text-2xl"></i>Pruebas Requeridas
+                        <i class="fas fa-vial mr-3 text-blue-400 text-2xl"></i>Pruebas Requeridas
                     </h2>
                     <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify bg-black/30 p-6 rounded-lg border border-white/10">
                         {!! $convocatoria->pruebas_requeridas !!}
@@ -128,9 +128,9 @@
                 @endif
 
                 @if($convocatoria->documentacion_requerida)
-                <div class="bg-gradient-to-r from-purple-500/10 to-indigo-500/10 rounded-xl p-6 border border-purple-400/30 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(147,51,234,0.2)]">
+                <div class="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
                     <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
-                        <i class="fas fa-rocket mr-3 text-purple-400 text-2xl"></i>Documentación Requerida
+                        <i class="fas fa-rocket mr-3 text-blue-400 text-2xl"></i>Documentación Requerida
                     </h2>
                     <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify bg-black/30 p-6 rounded-lg border border-white/10">
                         {!! $convocatoria->documentacion_requerida !!}
@@ -139,9 +139,9 @@
                 @endif
 
                 @if($convocatoria->criterios_evaluacion)
-                <div class="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-xl p-6 border border-cyan-400/30 hover:border-cyan-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(34,211,238,0.2)]">
+                <div class="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
                     <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
-                        <i class="fas fa-star mr-3 text-cyan-400 text-2xl"></i>Criterios de Evaluación
+                        <i class="fas fa-star mr-3 text-blue-400 text-2xl"></i>Criterios de Evaluación
                     </h2>
                     <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify bg-black/30 p-6 rounded-lg border border-white/10">
                         {!! $convocatoria->criterios_evaluacion !!}
@@ -150,9 +150,9 @@
                 @endif
 
                 @if($convocatoria->premiacion)
-                <div class="bg-gradient-to-r from-amber-500/10 to-yellow-500/10 rounded-xl p-6 border border-amber-400/30 hover:border-amber-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(251,191,36,0.2)]">
+                <div class="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
                     <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
-                        <i class="fas fa-trophy mr-3 text-amber-400 text-2xl"></i>Premiación
+                        <i class="fas fa-trophy mr-3 text-blue-400 text-2xl"></i>Premiación
                     </h2>
                     <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify bg-black/30 p-6 rounded-lg border border-white/10">
                         {!! $convocatoria->premiacion !!}
@@ -161,9 +161,9 @@
                 @endif
 
                 @if($convocatoria->penalizaciones)
-                <div class="bg-gradient-to-r from-rose-500/10 to-red-500/10 rounded-xl p-6 border border-rose-400/30 hover:border-rose-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(251,113,133,0.2)]">
+                <div class="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
                     <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
-                        <i class="fas fa-exclamation-triangle mr-3 text-rose-400 text-2xl"></i>Penalizaciones
+                        <i class="fas fa-exclamation-triangle mr-3 text-blue-400 text-2xl"></i>Penalizaciones
                     </h2>
                     <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify bg-black/30 p-6 rounded-lg border border-white/10">
                         {!! $convocatoria->penalizaciones !!}
@@ -244,11 +244,11 @@
 
     <!-- Sección de Pre-registro -->
     @guest
-    <div id="seccion-pre-registro" class="max-w-4xl mx-auto mt-8 p-8 bg-black/30 backdrop-blur-xl rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)]">
+    <div id="seccion-pre-registro" class="max-w-4xl mx-auto mt-8 p-8 bg-black/30 backdrop-blur-xl rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]">
         <div class="text-center space-y-6">
             <h2 class="text-3xl font-bold text-white">¿Listo para la misión?</h2>
             <p class="text-xl text-white/80">Únete a esta aventura espacial y forma parte de la próxima generación de innovadores aeroespaciales</p>
-            <a href="{{ route('register') }}" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-lg font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-[0_0_30px_rgba(147,51,234,0.5)]">
+            <a href="{{ route('register') }}" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-lg font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-[0_0_30px_rgba(59,130,246,0.5)]">
                 <i class="fas fa-rocket mr-3"></i>
                 Regístrate para Pre-inscribirte
             </a>

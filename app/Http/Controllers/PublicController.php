@@ -43,7 +43,13 @@ class PublicController extends Controller
 
         $concursos = Concurso::all();
 
-        return view('public.convocatorias.index', compact('convocatorias', 'concursos'));
+        $convocatoriasCongreso = ConvocatoriaCongreso::with(['fechasImportantes', 'congreso'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $congresos = Congreso::all();
+
+        return view('public.convocatorias.index', compact('convocatorias', 'concursos', 'convocatoriasCongreso', 'congresos'));
     }
 
     public function show(ConvocatoriaConcurso $convocatoria) {
@@ -73,21 +79,11 @@ class PublicController extends Controller
         return view('public.miembros');
     }
 
-    public function convocatoriasCongreso() {
-        $convocatorias = ConvocatoriaCongreso::with(['fechasImportantes', 'congreso'])
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $congresos = Congreso::all();
-
-        return view('public.congresos.convocatorias.index', compact('convocatorias', 'congresos'));
-    }
-
     public function showConvocatoriaCongreso(ConvocatoriaCongreso $convocatoria) {
         $convocatoria->load(['fechasImportantes', 'congreso']);
 
         $congresos = Congreso::all();
-        return view('public.congresos.convocatorias.show', compact('convocatoria', 'congresos'));
+        return view('public.convocatorias.congresos.show', compact('convocatoria', 'congresos'));
     }
 }
 
