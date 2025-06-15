@@ -1,0 +1,208 @@
+@extends('layouts.user')
+
+@section('titulo', 'Mis Inscripciones al Congreso')
+
+@section('contenido')
+    <div class="min-h-screen py-6 sm:py-12 relative overflow-hidden bg-gradient-to-b from-space-950 to-cosmic-900">
+        <div class="container mx-auto px-2 sm:px-4">
+            <div
+                class="max-w-7xl mx-auto bg-black/30 backdrop-blur-xl rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 relative transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)]">
+                <div class="p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <h2 class="text-3xl font-bold text-white/90 flex items-center gap-3">
+                        <i class="fas fa-clipboard-list text-purple-400"></i>
+                        Mis Inscripciones al Congreso
+                    </h2>
+                    @if ($convocatoria && $convocatoria->estaActiva())
+                        <a href="{{ route('user.congresos.inscripciones.create', ['convocatoria' => $convocatoria->id]) }}"
+                            class="group inline-flex items-center px-4 py-2 rounded-xl shadow-lg text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-300 transform hover:scale-105">
+                            <i class="fas fa-user-plus mr-2 group-hover:scale-110 transition-transform duration-300"></i>
+                            Nueva Inscripción
+                        </a>
+                    @endif
+                </div>
+
+                @if (session('success'))
+                    <div
+                        class="mx-6 bg-green-600/20 border border-green-500/30 text-green-300 px-4 py-3 rounded-xl mb-6 backdrop-blur-sm">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            {{ session('success') }}
+                        </div>
+                    </div>
+                @endif
+
+                @if ($inscripciones->isEmpty())
+                    <div class="text-center py-16 px-6">
+                        <div class="text-6xl mb-4 text-gray-500/50">
+                            <i class="fas fa-clipboard"></i>
+                        </div>
+                        <p class="text-gray-400 text-lg mb-2">No tienes inscripciones actualmente.</p>
+                        <p class="text-gray-500">¡Comienza creando una nueva inscripción!</p>
+                    </div>
+                @else
+                    <div class="px-2 sm:px-6 pb-6">
+                        <!-- Vista de tabla para pantallas medianas y grandes -->
+                        <div class="hidden md:block overflow-x-auto">
+                            <table class="min-w-full divide-y divide-white/10 table-auto">
+                                <thead>
+                                    <tr class="bg-white/5">
+                                        <th
+                                            class="px-6 py-4 text-left text-xs font-semibold text-purple-300 uppercase tracking-wider">
+                                            Congreso</th>
+                                        <th
+                                            class="px-6 py-4 text-left text-xs font-semibold text-purple-300 uppercase tracking-wider">
+                                            Tipo</th>
+                                        <th
+                                            class="px-6 py-4 text-left text-xs font-semibold text-purple-300 uppercase tracking-wider">
+                                            Institución</th>
+                                        <th
+                                            class="px-6 py-4 text-left text-xs font-semibold text-purple-300 uppercase tracking-wider">
+                                            Artículo</th>
+                                        <th
+                                            class="px-6 py-4 text-left text-xs font-semibold text-purple-300 uppercase tracking-wider">
+                                            Estado</th>
+                                        <th
+                                            class="px-6 py-4 text-left text-xs font-semibold text-purple-300 uppercase tracking-wider">
+                                            Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-white/10">
+                                    @foreach ($inscripciones as $inscripcion)
+                                        <tr class="group transition-colors hover:bg-white/5">
+                                            <td class="px-6 py-4">
+                                                <div class="text-sm text-white/80 group-hover:text-white transition-colors">
+                                                    {{ $inscripcion->congreso->nombre }}</div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="text-sm text-white/80 group-hover:text-white transition-colors">
+                                                    {{ ucfirst($inscripcion->tipo_participante) }}</div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="text-sm text-white/80 group-hover:text-white transition-colors">
+                                                    {{ $inscripcion->institucion }}</div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                @if($inscripcion->articulo)
+                                                    <span class="px-3 py-1 inline-flex items-center gap-1.5 text-xs font-medium rounded-full
+                                                        @if($inscripcion->articulo->estado_articulo === 'aceptado') bg-green-500/20 text-green-300 border border-green-500/30
+                                                        @elseif($inscripcion->articulo->estado_articulo === 'rechazado') bg-red-500/20 text-red-300 border border-red-500/30
+                                                        @else bg-yellow-500/20 text-yellow-300 border border-yellow-500/30
+                                                        @endif">
+                                                        <span class="w-1.5 h-1.5 rounded-full
+                                                            @if($inscripcion->articulo->estado_articulo === 'aceptado') bg-green-400
+                                                            @elseif($inscripcion->articulo->estado_articulo === 'rechazado') bg-red-400
+                                                            @else bg-yellow-400
+                                                            @endif"></span>
+                                                        {{ ucfirst($inscripcion->articulo->estado_articulo) }}
+                                                    </span>
+                                                @else
+                                                    <span class="text-gray-500">Sin artículo</span>
+                                                @endif
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <span class="px-3 py-1 inline-flex items-center gap-1.5 text-xs font-medium rounded-full
+                                                    @if($inscripcion->estado === 'validado') bg-green-500/20 text-green-300 border border-green-500/30
+                                                    @elseif($inscripcion->estado === 'rechazado') bg-red-500/20 text-red-300 border border-red-500/30
+                                                    @else bg-yellow-500/20 text-yellow-300 border border-yellow-500/30
+                                                    @endif">
+                                                    <span class="w-1.5 h-1.5 rounded-full
+                                                        @if($inscripcion->estado === 'validado') bg-green-400
+                                                        @elseif($inscripcion->estado === 'rechazado') bg-red-400
+                                                        @else bg-yellow-400
+                                                        @endif"></span>
+                                                    {{ ucfirst($inscripcion->estado) }}
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 text-sm font-medium space-x-3">
+                                                <a href="{{ route('user.congresos.inscripciones.show', $inscripcion) }}"
+                                                    class="text-blue-400 hover:text-blue-300 transition-colors inline-flex items-center gap-1.5">
+                                                    <i class="fas fa-eye"></i>
+                                                    <span>Ver</span>
+                                                </a>
+                                                @if($inscripcion->estado === 'pendiente')
+                                                    <a href="{{ route('user.congresos.inscripciones.edit', $inscripcion) }}"
+                                                        class="text-yellow-400 hover:text-yellow-300 transition-colors inline-flex items-center gap-1.5">
+                                                        <i class="fas fa-edit"></i>
+                                                        <span>Editar</span>
+                                                    </a>
+                                                @endif
+                                                @if($inscripcion->pago_inscripcion_id)
+                                                    <a href="{{ route('user.congresos.inscripciones.factura', $inscripcion) }}"
+                                                        class="text-green-400 hover:text-green-300 transition-colors inline-flex items-center gap-1.5">
+                                                        <i class="fas fa-file-invoice"></i>
+                                                        <span>Ticket</span>
+                                                    </a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Vista de tarjetas para dispositivos móviles -->
+                        <div class="md:hidden space-y-4">
+                            @foreach ($inscripciones as $inscripcion)
+                                <div class="bg-white/5 rounded-xl p-4 space-y-4 hover:bg-white/10 transition-colors duration-200">
+                                    <div class="flex justify-between items-start">
+                                        <div class="space-y-1">
+                                            <h3 class="text-sm font-medium text-white">{{ $inscripcion->congreso->nombre }}</h3>
+                                            <p class="text-sm text-white/70">{{ ucfirst($inscripcion->tipo_participante) }} - {{ $inscripcion->institucion }}</p>
+                                        </div>
+                                        <span class="px-3 py-1 inline-flex items-center gap-1.5 text-xs font-medium rounded-full
+                                            @if($inscripcion->estado === 'validado') bg-green-500/20 text-green-300 border border-green-500/30
+                                            @elseif($inscripcion->estado === 'rechazado') bg-red-500/20 text-red-300 border border-red-500/30
+                                            @else bg-yellow-500/20 text-yellow-300 border border-yellow-500/30
+                                            @endif">
+                                            <span class="w-1.5 h-1.5 rounded-full
+                                                @if($inscripcion->estado === 'validado') bg-green-400
+                                                @elseif($inscripcion->estado === 'rechazado') bg-red-400
+                                                @else bg-yellow-400
+                                                @endif"></span>
+                                            {{ ucfirst($inscripcion->estado) }}
+                                        </span>
+                                    </div>
+
+                                    <div class="flex items-center text-sm text-white/70">
+                                        <i class="fas fa-file-alt mr-2 text-purple-400"></i>
+                                        @if($inscripcion->articulo)
+                                            <span>Artículo: {{ ucfirst($inscripcion->articulo->estado_articulo) }}</span>
+                                        @else
+                                            <span>Sin artículo</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="flex justify-end space-x-3 pt-2 border-t border-white/10">
+                                        <a href="{{ route('user.congresos.inscripciones.show', $inscripcion) }}"
+                                            class="text-blue-400 hover:text-blue-300 transition-colors inline-flex items-center gap-1.5">
+                                            <i class="fas fa-eye"></i>
+                                            <span>Ver</span>
+                                        </a>
+                                        @if($inscripcion->estado === 'pendiente')
+                                            <a href="{{ route('user.congresos.inscripciones.edit', $inscripcion) }}"
+                                                class="text-yellow-400 hover:text-yellow-300 transition-colors inline-flex items-center gap-1.5">
+                                                <i class="fas fa-edit"></i>
+                                                <span>Editar</span>
+                                            </a>
+                                        @endif
+                                        @if($inscripcion->pago_inscripcion_id)
+                                            <a href="{{ route('user.congresos.inscripciones.factura', $inscripcion) }}"
+                                                class="text-green-400 hover:text-green-300 transition-colors inline-flex items-center gap-1.5">
+                                                <i class="fas fa-file-invoice"></i>
+                                                <span>Ticket</span>
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="px-6 pb-6 text-gray-300">
+                        {{ $inscripciones->links() }}
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+@endsection

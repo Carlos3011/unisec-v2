@@ -21,7 +21,6 @@ class InscripcionCongresoUserController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', InscripcionCongreso::class);
         $inscripciones = InscripcionCongreso::with(['congreso', 'articulo'])
             ->where('usuario_id', Auth::id())
             ->latest()
@@ -118,7 +117,6 @@ class InscripcionCongresoUserController extends Controller
 
     public function show(InscripcionCongreso $inscripcion)
     {
-        $this->authorize('view', $inscripcion);
         $inscripcion->load(['congreso', 'articulo']);
         
         return view('user.congresos.inscripciones.show', compact('inscripcion'));
@@ -126,7 +124,7 @@ class InscripcionCongresoUserController extends Controller
 
     public function edit(InscripcionCongreso $inscripcion)
     {
-        $this->authorize('update', $inscripcion);
+       
         $inscripcion->load(['congreso', 'articulo']);
         
         return view('user.congresos.inscripciones.edit', compact('inscripcion'));
@@ -134,7 +132,7 @@ class InscripcionCongresoUserController extends Controller
 
     public function update(Request $request, InscripcionCongreso $inscripcion)
     {
-        $this->authorize('update', $inscripcion);
+       
 
         $request->validate([
             'tipo_participante' => 'required|string|in:estudiante,docente,investigador,profesional',
@@ -223,7 +221,6 @@ class InscripcionCongresoUserController extends Controller
 
     public function factura(InscripcionCongreso $inscripcion)
     {
-        $this->authorize('view', $inscripcion);
         
         $pago = PagoInscripcionCongreso::with(['usuario', 'congreso'])
             ->findOrFail($inscripcion->pago_inscripcion_id);
