@@ -92,7 +92,7 @@ return new class extends Migration {
             $table->enum('tipo_participante', ['estudiante', 'docente', 'investigador', 'profesional'])->default('estudiante');
             $table->string('institucion');
             $table->string('comprobante_estudiante')->nullable(); // Para estudiantes que requieran validar su estatus
-            $table->foreignId('pago_inscripcion_id')->constrained('pagos_pre_registro')->onDelete('cascade');  // Relación con el pago previo
+            $table->foreignId('pago_inscripcion_id')->constrained('pagos_inscripcion_congreso')->onDelete('cascade');  // Relación con el pago previo
             $table->timestamps();
             $table->softDeletes();
         });

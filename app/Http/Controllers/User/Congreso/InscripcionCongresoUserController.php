@@ -7,6 +7,7 @@ use App\Models\InscripcionCongreso;
 use App\Models\Congreso;
 use App\Models\ConvocatoriaCongreso;
 use App\Models\PagoInscripcionCongreso;
+use App\Models\ArticuloCongreso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -14,14 +15,14 @@ use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class InscripcionCongresoController extends Controller
+class InscripcionCongresoUserController extends Controller
 {
     use AuthorizesRequests;
 
     public function index()
     {
         $this->authorize('viewAny', InscripcionCongreso::class);
-        $inscripciones = InscripcionCongreso::with('congreso')
+        $inscripciones = InscripcionCongreso::with(['congreso', 'articulo'])
             ->where('usuario_id', Auth::id())
             ->latest()
             ->paginate(10);
@@ -48,10 +49,15 @@ class InscripcionCongresoController extends Controller
     {
         $request->validate([
             'congreso_id' => 'required|exists:congresos,id',
-            'tipo_participante' => 'required|string|in:ponente,asistente',
+            'tipo_participante' => 'required|string|in:estudiante,docente,investigador,profesional',
             'institucion' => 'required|string|max:255',
-            'comprobante_estudiante' => 'required_if:tipo_participante,asistente|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            'articulo_id' => 'required_if:tipo_participante,ponente|exists:articulos_congreso,id'
+            'comprobante_estudiante' => 'required_if:tipo_participante,estudiante|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'archivo_articulo' => 'nullable|file|mimes:pdf|max:10240',
+            'titulo_articulo' => 'required_if:archivo_articulo,!=,null|string|max:255',
+            'autores' => 'required_if:archivo_articulo,!=,null|array',
+            'autores.*.nombre' => 'required_if:archivo_articulo,!=,null|string|max:255',
+            'autores.*.correo' => 'required_if:archivo_articulo,!=,null|email|max:255',
+            'autores.*.institucion' => 'required_if:archivo_articulo,!=,null|string|max:255'
         ]);
 
         // Verificar si el usuario ya tiene una inscripción activa para este congreso
@@ -76,6 +82,22 @@ class InscripcionCongresoController extends Controller
                 ->with('error', 'Debe tener un pago confirmado para realizar la inscripción');
         }
 
+        // Crear el artículo si se proporcionó el archivo
+        $articuloId = null;
+        if ($request->hasFile('archivo_articulo')) {
+            $articulo = ArticuloCongreso::create([
+                'usuario_id' => Auth::id(),
+                'congreso_id' => $request->congreso_id,
+                'convocatoria_congreso_id' => $request->convocatoria_id,
+                'titulo' => $request->titulo_articulo,
+                'autores_data' => json_encode($request->autores),
+                'archivo_articulo' => $this->storeFile($request->file('archivo_articulo'), 'articulos'),
+                'estado_articulo' => 'pendiente',
+                'estado_extenso' => 'pendiente'
+            ]);
+            $articuloId = $articulo->id;
+        }
+
         // Crear la inscripción
         $inscripcion = InscripcionCongreso::create([
             'usuario_id' => Auth::id(),
@@ -83,10 +105,10 @@ class InscripcionCongresoController extends Controller
             'convocatoria_congreso_id' => $request->convocatoria_id,
             'tipo_participante' => $request->tipo_participante,
             'institucion' => $request->institucion,
-            'articulo_id' => $request->articulo_id,
+            'articulo_id' => $articuloId,
             'pago_inscripcion_id' => $pagoConfirmado->id,
             'comprobante_estudiante' => $request->hasFile('comprobante_estudiante') 
-                ? $this->storeFile($request->file('comprobante_estudiante')) 
+                ? $this->storeFile($request->file('comprobante_estudiante'), 'comprobantes_estudiante') 
                 : null
         ]);
 
@@ -97,7 +119,7 @@ class InscripcionCongresoController extends Controller
     public function show(InscripcionCongreso $inscripcion)
     {
         $this->authorize('view', $inscripcion);
-        $inscripcion->load('congreso', 'articulo');
+        $inscripcion->load(['congreso', 'articulo']);
         
         return view('user.congresos.inscripciones.show', compact('inscripcion'));
     }
@@ -105,7 +127,7 @@ class InscripcionCongresoController extends Controller
     public function edit(InscripcionCongreso $inscripcion)
     {
         $this->authorize('update', $inscripcion);
-        $inscripcion->load('congreso', 'articulo');
+        $inscripcion->load(['congreso', 'articulo']);
         
         return view('user.congresos.inscripciones.edit', compact('inscripcion'));
     }
@@ -115,29 +137,88 @@ class InscripcionCongresoController extends Controller
         $this->authorize('update', $inscripcion);
 
         $request->validate([
-            'tipo_participante' => 'required|string|in:ponente,asistente',
+            'tipo_participante' => 'required|string|in:estudiante,docente,investigador,profesional',
             'institucion' => 'required|string|max:255',
-            'comprobante_estudiante' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            'articulo_id' => 'required_if:tipo_participante,ponente|exists:articulos_congreso,id'
+            'comprobante_estudiante' => 'required_if:tipo_participante,estudiante|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'archivo_articulo' => 'nullable|file|mimes:pdf|max:10240',
+            'titulo_articulo' => 'required_if:archivo_articulo,!=,null|string|max:255',
+            'autores' => 'required_if:archivo_articulo,!=,null|array',
+            'autores.*.nombre' => 'required_if:archivo_articulo,!=,null|string|max:255',
+            'autores.*.correo' => 'required_if:archivo_articulo,!=,null|email|max:255',
+            'autores.*.institucion' => 'required_if:archivo_articulo,!=,null|string|max:255'
         ]);
 
         $updateData = [
             'tipo_participante' => $request->tipo_participante,
-            'institucion' => $request->institucion,
-            'articulo_id' => $request->articulo_id
+            'institucion' => $request->institucion
         ];
 
         if ($request->hasFile('comprobante_estudiante')) {
             if ($inscripcion->comprobante_estudiante) {
-                Storage::delete($inscripcion->comprobante_estudiante);
+                $this->deleteFile($inscripcion->comprobante_estudiante);
             }
-            $updateData['comprobante_estudiante'] = $this->storeFile($request->file('comprobante_estudiante'));
+            $updateData['comprobante_estudiante'] = $this->storeFile($request->file('comprobante_estudiante'), 'comprobantes_estudiante');
+        }
+
+        // Si se proporciona un archivo de artículo
+        if ($request->hasFile('archivo_articulo')) {
+            if ($inscripcion->articulo) {
+                // Actualizar artículo existente
+                if ($inscripcion->articulo->archivo_articulo) {
+                    $this->deleteFile($inscripcion->articulo->archivo_articulo);
+                }
+                $inscripcion->articulo->update([
+                    'titulo' => $request->titulo_articulo,
+                    'autores_data' => json_encode($request->autores),
+                    'archivo_articulo' => $this->storeFile($request->file('archivo_articulo'), 'articulos'),
+                    'estado_articulo' => 'pendiente'
+                ]);
+            } else {
+                // Crear nuevo artículo
+                $articulo = ArticuloCongreso::create([
+                    'usuario_id' => Auth::id(),
+                    'congreso_id' => $inscripcion->congreso_id,
+                    'convocatoria_congreso_id' => $inscripcion->convocatoria_congreso_id,
+                    'titulo' => $request->titulo_articulo,
+                    'autores_data' => json_encode($request->autores),
+                    'archivo_articulo' => $this->storeFile($request->file('archivo_articulo'), 'articulos'),
+                    'estado_articulo' => 'pendiente',
+                    'estado_extenso' => 'pendiente'
+                ]);
+                $updateData['articulo_id'] = $articulo->id;
+            }
         }
 
         $inscripcion->update($updateData);
 
         return redirect()->route('user.congresos.inscripciones.show', $inscripcion)
             ->with('success', 'Inscripción actualizada exitosamente');
+    }
+
+    public function subirExtenso(Request $request, ArticuloCongreso $articulo)
+    {
+        $this->authorize('update', $articulo);
+
+        $request->validate([
+            'archivo_extenso' => 'required|file|mimes:pdf|max:10240'
+        ]);
+
+        if ($articulo->estado_articulo !== 'aceptado') {
+            return redirect()->back()
+                ->with('error', 'El artículo debe estar aceptado para subir el extenso.');
+        }
+
+        if ($articulo->archivo_extenso) {
+            $this->deleteFile($articulo->archivo_extenso);
+        }
+
+        $articulo->update([
+            'archivo_extenso' => $this->storeFile($request->file('archivo_extenso'), 'extensos'),
+            'estado_extenso' => 'en_revision'
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Artículo extenso subido exitosamente');
     }
 
     public function factura(InscripcionCongreso $inscripcion)
@@ -202,19 +283,32 @@ class InscripcionCongresoController extends Controller
             'update_time' => $detalles['update_time'] ?? null
         ];
 
-        $pdf = PDF::loadView('factura', ['datos' => $datosFactura]);
+        $pdf = PDF::loadView('factura-congreso', ['datos' => $datosFactura]);
         return $pdf->download('ticket_'.$pago->id.'.pdf');
     }
 
-    private function storeFile($file)
+    private function storeFile($file, $directory)
     {
         if (!$file) {
             return null;
         }
 
+        // Crear el directorio si no existe
+        $path = public_path('articulos/' . $directory);
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
         $fileName = time() . '_' . $file->getClientOriginalName();
-        $file->move(public_path('images/comprobantes_estudiante'), $fileName);
-        return 'images/comprobantes_estudiante/' . $fileName;
+        $file->move($path, $fileName);
+        return 'articulos/' . $directory . '/' . $fileName;
+    }
+
+    private function deleteFile($filePath)
+    {
+        if ($filePath && file_exists(public_path($filePath))) {
+            unlink(public_path($filePath));
+        }
     }
 
     public function downloadComprobante(InscripcionCongreso $inscripcion)
@@ -226,5 +320,27 @@ class InscripcionCongresoController extends Controller
         }
 
         return response()->download(public_path($inscripcion->comprobante_estudiante));
+    }
+
+    public function downloadArticulo(ArticuloCongreso $articulo)
+    {
+        $this->authorize('view', $articulo);
+
+        if (!$articulo->archivo_articulo) {
+            return back()->with('error', 'No hay artículo disponible.');
+        }
+
+        return response()->download(public_path($articulo->archivo_articulo));
+    }
+
+    public function downloadExtenso(ArticuloCongreso $articulo)
+    {
+        $this->authorize('view', $articulo);
+
+        if (!$articulo->archivo_extenso) {
+            return back()->with('error', 'No hay artículo extenso disponible.');
+        }
+
+        return response()->download(public_path($articulo->archivo_extenso));
     }
 } 

@@ -41,6 +41,7 @@ use App\Http\Controllers\Admin\PagoInscripcionCongresoController;
 
 use App\Http\Controllers\User\Congreso\CongresoUserController;
 use App\Http\Controllers\User\Congreso\ConvocatoriaCongresoUserController;
+use App\Http\Controllers\User\Congreso\InscripcionCongresoUserController;
 
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\PayPalInscripcionController;
@@ -269,6 +270,21 @@ Route::middleware(['auth', 'role:usuario'])->group(function () {
     Route::get('/user/congresos/convocatorias/{convocatoria}/download', [ConvocatoriaCongresoUserController::class, 'downloadConvocatoria'])->name('user.congresos.convocatorias.download');
     Route::get('/user/congresos/convocatorias/{convocatoria}/download/articulo', [ConvocatoriaCongresoUserController::class, 'downloadArticulo'])->name('user.congresos.convocatorias.download.articulo');
     Route::get('/user/congresos/convocatorias/{convocatoria}/download/formato-extenso', [ConvocatoriaCongresoUserController::class, 'downloadFormatoExtenso'])->name('user.congresos.convocatorias.download.formato-extenso');
+
+    // Rutas para la gestión de inscripciones a congresos
+    Route::get('/user/congresos/inscripciones', [InscripcionCongresoUserController::class, 'index'])->name('user.congresos.inscripciones.index');
+    Route::get('/user/congresos/inscripciones/create/{convocatoria}', [InscripcionCongresoUserController::class, 'create'])->name('user.congresos.inscripciones.create');
+    Route::post('/user/congresos/inscripciones', [InscripcionCongresoUserController::class, 'store'])->name('user.congresos.inscripciones.store');
+    Route::get('/user/congresos/inscripciones/{inscripcion}', [InscripcionCongresoUserController::class, 'show'])->name('user.congresos.inscripciones.show');
+    Route::get('/user/congresos/inscripciones/{inscripcion}/edit', [InscripcionCongresoUserController::class, 'edit'])->name('user.congresos.inscripciones.edit');
+    Route::put('/user/congresos/inscripciones/{inscripcion}', [InscripcionCongresoUserController::class, 'update'])->name('user.congresos.inscripciones.update');
+    Route::get('/user/congresos/inscripciones/{inscripcion}/factura', [InscripcionCongresoUserController::class, 'factura'])->name('user.congresos.inscripciones.factura');
+    Route::get('/user/congresos/inscripciones/{inscripcion}/comprobante', [InscripcionCongresoUserController::class, 'downloadComprobante'])->name('user.congresos.inscripciones.comprobante');
+
+    // Rutas para la gestión de artículos
+    Route::post('/user/congresos/articulos/{articulo}/extenso', [InscripcionCongresoUserController::class, 'subirExtenso'])->name('user.congresos.articulos.subir-extenso');
+    Route::get('/user/congresos/articulos/{articulo}/download', [InscripcionCongresoUserController::class, 'downloadArticulo'])->name('user.congresos.articulos.download');
+    Route::get('/user/congresos/articulos/{articulo}/download-extenso', [InscripcionCongresoUserController::class, 'downloadExtenso'])->name('user.congresos.articulos.download-extenso');
 
     // Rutas para la gestión de pre-registros del usuario
     Route::get('/user/pre-registros', [PreRegistroUserController::class, 'index'])->name('user.concursos.pre-registros.index');
