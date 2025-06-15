@@ -257,7 +257,7 @@
                                     @endif
                                 </div>
                                 <div class="flex space-x-2">
-                                    <a href="#"
+                                    <a href="{{ route('user.congresos.convocatorias.show', $convocatoria) }}"
                                         class="inline-flex items-center justify-center px-4 py-2 bg-purple-400/20 text-purple-300/90 rounded-xl hover:bg-purple-400/30 transition-all duration-500">
                                         <i class="fas fa-info-circle mr-2"></i>Ver detalles
                                     </a>

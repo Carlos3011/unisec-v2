@@ -218,6 +218,51 @@
             </div>
         </div>
 
-        
+        <!-- Botón de Inscripción con PayPal -->
+        @auth
+            @php
+                $pagoConfirmado = \App\Models\PagoInscripcionCongreso::where('usuario_id', Auth::id())
+                    ->where('congreso_id', $convocatoria->congreso->id)
+                    ->where('estado_pago', 'pagado')
+                    ->exists();
+            @endphp
+            <div class="fixed bottom-8 right-8 z-50">
+                @php
+                    $inscripcion = \App\Models\InscripcionCongreso::where('usuario_id', Auth::id())
+                        ->where('congreso_id', $convocatoria->congreso->id)
+                        ->first();
+                @endphp
+
+                @if($pagoConfirmado)
+                    @if($inscripcion)
+                        <a href="{{ route('user.congresos.inscripciones.show', $inscripcion->id) }}"
+                           class="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-emerald-600 to-green-600 rounded-xl text-white font-semibold shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-eye text-2xl"></i>
+                            <span>Ver Inscripción</span>
+                        </a>
+                    @else
+                        <a href="{{ route('user.congresos.inscripciones.create', ['convocatoria' => $convocatoria->id]) }}"
+                           class="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-600 rounded-xl text-white font-semibold shadow-lg hover:shadow-amber-500/25 transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-user-plus text-2xl"></i>
+                            <span>Completar Inscripción</span>
+                        </a>
+                    @endif
+                @else
+                    <a href="{{ route('user.congresos.pagos.inscripcion', $convocatoria) }}" 
+                       class="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-600 rounded-xl text-white font-semibold shadow-lg hover:shadow-amber-500/25 transition-all duration-300 hover:scale-105">
+                        <i class="fab fa-paypal text-2xl"></i>
+                        <span>Realizar Inscripción</span>
+                    </a>
+                @endif
+            </div>
+        @else
+            <div class="fixed bottom-8 right-8 z-50">
+                <a href="{{ route('login') }}" 
+                   class="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 rounded-xl text-white font-semibold shadow-lg hover:shadow-gray-500/25 transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-sign-in-alt text-2xl"></i>
+                    <span>Iniciar Sesión para Inscribirse</span>
+                </a>
+            </div>
+        @endauth
     </div>
 @endsection

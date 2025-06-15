@@ -43,20 +43,34 @@ use App\Http\Controllers\User\Congreso\CongresoUserController;
 use App\Http\Controllers\User\Congreso\ConvocatoriaCongresoUserController;
 
 use App\Http\Controllers\PayPalController;
+use App\Http\Controllers\PayPalInscripcionController;
 
+use App\Models\ConvocatoriaConcurso;
+use App\Models\ConvocatoriaCongreso;
 
 use App\Http\Middleware\RoleMiddleware;
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('user/concursos/pagos')->group(function () {
         // Vista del formulario de pago
-        Route::get('pre-registro/{convocatoria}', function(\App\Models\ConvocatoriaConcurso $convocatoria) {
+        Route::get('pre-registro/{convocatoria}', function(ConvocatoriaConcurso $convocatoria) {
             return view('user.concursos.pagos.pre-registro', compact('convocatoria'));
         })->name('user.concursos.pagos.pre-registro');
 
         // Endpoints para PayPal
         Route::post('create-order', [PayPalController::class, 'createOrder']);
         Route::match(['get', 'post'], 'capture-order', [PayPalController::class, 'captureOrder']);
+    });
+
+    Route::prefix('user/congresos/pagos')->group(function () {
+        // Vista del formulario de pago
+        Route::get('inscripcion/{convocatoria}', function(ConvocatoriaCongreso $convocatoria) {
+            return view('user.congresos.pagos.inscripcion', compact('convocatoria'));
+        })->name('user.congresos.pagos.inscripcion');
+
+        // Endpoints para PayPal
+        Route::post('create-order', [PayPalInscripcionController::class, 'createOrder'])->name('user.congresos.pagos.create-order');
+        Route::post('capture-order', [PayPalInscripcionController::class, 'captureOrder'])->name('user.congresos.pagos.capture-order');
     });
 });
 

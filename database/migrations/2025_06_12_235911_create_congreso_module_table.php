@@ -102,7 +102,6 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('congreso_id')->constrained('congresos')->onDelete('cascade');
-            $table->foreignId('articulo_id')->constrained('articulos_congreso')->onDelete('cascade');
             $table->decimal('monto', 10, 2);
             $table->string('metodo_pago')->default('paypal');
             $table->string('referencia_paypal')->nullable();

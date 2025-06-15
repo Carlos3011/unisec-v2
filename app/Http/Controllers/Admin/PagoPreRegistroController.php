@@ -209,7 +209,7 @@ class PagoPreRegistroController extends Controller
         ];
 
         $pdf = PDF::loadView( 'factura', ['datos' => $datosFactura]);
-        return $pdf->download('factura_'.$pago->id.'.pdf');
+        return $pdf->download('ticket_preregistro-concurso_'.$pago->id.'.pdf');
     }
 
     public function exportarPagos(Request $request)

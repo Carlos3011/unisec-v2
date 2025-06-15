@@ -15,7 +15,6 @@ class PagoInscripcionCongreso extends Model
     protected $fillable = [
         'usuario_id',
         'congreso_id',
-        'articulo_id',
         'monto',
         'metodo_pago',
         'referencia_paypal',
@@ -51,11 +50,6 @@ class PagoInscripcionCongreso extends Model
         return $this->belongsTo(Congreso::class, 'congreso_id');
     }
 
-    // Relación con el artículo
-    public function articulo(): BelongsTo
-    {
-        return $this->belongsTo(ArticuloCongreso::class, 'articulo_id');
-    }
 
     // Relación con la inscripción
     public function inscripcion(): BelongsTo

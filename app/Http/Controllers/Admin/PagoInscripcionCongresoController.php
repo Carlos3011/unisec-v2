@@ -15,7 +15,7 @@ class PagoInscripcionCongresoController extends Controller
 {
     public function index(Request $request)
     {
-        $query = PagoInscripcionCongreso::with(['usuario', 'congreso', 'articulo'])
+        $query = PagoInscripcionCongreso::with(['usuario', 'congreso'])
             ->orderBy('created_at', 'desc');
 
         // Filtros
@@ -35,16 +35,12 @@ class PagoInscripcionCongresoController extends Controller
             return [
                 'id' => $pago->id,
                 'usuario' => $pago->usuario->name,
-                'congreso' => $pago->congreso->titulo,
+                'congreso' => $pago->congreso->nombre,
                 'monto' => $pago->monto,
                 'metodo_pago' => $pago->metodo_pago,
                 'referencia_paypal' => $pago->referencia_paypal,
                 'estado_pago' => $pago->estado_pago,
                 'fecha_pago' => $pago->fecha_pago ? Carbon::parse($pago->fecha_pago)->format('Y-m-d H:i:s') : null,
-                'articulo' => $pago->articulo ? [
-                    'estado_articulo' => $pago->articulo->estado_articulo,
-                    'estado_extenso' => $pago->articulo->estado_extenso
-                ] : null,
                 'paypal_order_id' => $detalles['id'] ?? null,
                 'paypal_status' => $detalles['status'] ?? null,
                 'paypal_intent' => $detalles['intent'] ?? null,
@@ -94,25 +90,19 @@ class PagoInscripcionCongresoController extends Controller
 
     public function show($id)
     {
-        $pago = PagoInscripcionCongreso::with(['usuario', 'congreso', 'articulo'])->findOrFail($id);
+        $pago = PagoInscripcionCongreso::with(['usuario', 'congreso'])->findOrFail($id);
         $detalles = json_decode($pago->detalles_transaccion, true);
 
         $datosPago = [
             'id' => $pago->id,
             'usuario' => $pago->usuario->name,
             'email' => $pago->usuario->email, 
-            'congreso' => $pago->congreso->titulo,
+            'congreso' => $pago->congreso->nombre,
             'monto' => $pago->monto,
             'metodo_pago' => $pago->metodo_pago,
             'referencia_paypal' => $pago->referencia_paypal,
             'estado_pago' => $pago->estado_pago,
             'fecha_pago' => $pago->fecha_pago ? Carbon::parse($pago->fecha_pago)->format('Y-m-d H:i:s') : null,
-            'articulo' => $pago->articulo ? [
-                'estado_articulo' => $pago->articulo->estado_articulo,
-                'estado_extenso' => $pago->articulo->estado_extenso,
-                'comentarios_articulo' => $pago->articulo->comentarios_articulo,
-                'comentarios_extenso' => $pago->articulo->comentarios_extenso
-            ] : null,
             'paypal_order_id' => $detalles['id'] ?? null,
             'paypal_status' => $detalles['status'] ?? null,
             'paypal_intent' => $detalles['intent'] ?? null,
@@ -168,7 +158,7 @@ class PagoInscripcionCongresoController extends Controller
             'id' => $pago->id,
             'usuario' => $pago->usuario->name,
             'email' => $pago->usuario->email, 
-            'congreso' => $pago->congreso->titulo,
+            'congreso' => $pago->congreso->nombre,
             'monto' => $pago->monto,
             'metodo_pago' => $pago->metodo_pago,
             'referencia_paypal' => $pago->referencia_paypal,
@@ -217,13 +207,13 @@ class PagoInscripcionCongresoController extends Controller
             'update_time' => $detalles['update_time'] ?? null
         ];
 
-        $pdf = PDF::loadView('factura', ['datos' => $datosFactura]);
-        return $pdf->download('factura_'.$pago->id.'.pdf');
+        $pdf = PDF::loadView('factura-congreso', ['datos' => $datosFactura]);
+        return $pdf->download('ticket_congreso_'.$pago->id.'.pdf');
     }
 
     public function exportarPagos(Request $request)
     {
-        $pagos = PagoInscripcionCongreso::with(['usuario', 'congreso', 'articulo'])
+        $pagos = PagoInscripcionCongreso::with(['usuario', 'congreso'])
             ->when($request->estado_pago, function ($query, $estado) {
                 return $query->where('estado_pago', $estado);
             })
@@ -238,14 +228,12 @@ class PagoInscripcionCongresoController extends Controller
                 return [
                     'ID' => $pago->id,
                     'Usuario' => $pago->usuario->name,
-                    'Congreso' => $pago->congreso->titulo,
+                    'Congreso' => $pago->congreso->nombre,
                     'Monto' => $pago->monto,
                     'Método de Pago' => $pago->metodo_pago,
                     'Referencia PayPal' => $pago->referencia_paypal,
                     'Estado' => $pago->estado_pago,
-                    'Fecha de Pago' => $pago->fecha_pago ? Carbon::parse($pago->fecha_pago)->format('Y-m-d H:i:s') : '',
-                    'Estado Artículo' => $pago->articulo ? $pago->articulo->estado_articulo : 'N/A',
-                    'Estado Extenso' => $pago->articulo ? $pago->articulo->estado_extenso : 'N/A'
+                    'Fecha de Pago' => $pago->fecha_pago ? Carbon::parse($pago->fecha_pago)->format('Y-m-d H:i:s') : ''
                 ];
             });
 
