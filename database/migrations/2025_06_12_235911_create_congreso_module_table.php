@@ -30,28 +30,37 @@ return new class extends Migration {
             $table->string('dirigido_a')
                 ->default('Docentes/Investigadores y Estudiantes');
             $table->text('requisitos');
-
-            // Temáticas y subtemas en formato estructurado
             $table->json('tematicas');
-
             $table->text('criterios_evaluacion');
-
-            // Formato de ponencia y extenso
             $table->text('formato_articulo');
             $table->text('formato_extenso')->nullable();
-
-            $table->json('cuotas_inscripcion')->nullable(); // {"estudiante": 1200, "docente": 2320}
-
-            // Contacto y archivos asociados
+            $table->json('cuotas_inscripcion')->nullable();
             $table->string('contacto_email')->nullable();
-            $table->string('archivo_convocatoria')->nullable(); // PDF convocatoria
-            $table->string('archivo_articulo')->nullable(); // PDF formato articulo
-            $table->string('imagen_portada')->nullable(); // Imagen promocional
-
+            $table->string('archivo_convocatoria')->nullable();
+            $table->string('archivo_articulo')->nullable();
+            $table->string('imagen_portada')->nullable();
+            $table->date('fecha_inicio')->nullable();
+            $table->date('fecha_fin')->nullable();
+            $table->enum('estado', ['activo', 'inactivo', 'pendiente'])->default('pendiente');
             $table->timestamps();
             $table->softDeletes();
         });
 
+        // Tabla para pagos de inscripción al congreso
+        Schema::create('pagos_inscripcion_congreso', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('congreso_id')->constrained('congresos')->onDelete('cascade');
+            $table->decimal('monto', 10, 2);
+            $table->string('metodo_pago')->default('paypal');
+            $table->string('referencia_paypal')->nullable();
+            $table->string('paypal_order_id')->nullable();
+            $table->enum('estado_pago', ['pendiente', 'pagado', 'rechazado'])->default('pendiente');
+            $table->timestamp('fecha_pago')->nullable();
+            $table->text('detalles_transaccion')->nullable();
+            $table->string('comprobante_pago')->nullable();
+            $table->timestamps();
+        });
 
         // Tabla para fechas importantes del congreso
         Schema::create('fechas_importantes_congreso', function (Blueprint $table) {
@@ -87,7 +96,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('congreso_id')->constrained('congresos')->onDelete('cascade');
-            $table->foreignId('articulo_id')->constrained('articulos_congreso')->onDelete('cascade');
+            $table->foreignId('articulo_id')->nullable()->constrained('articulos_congreso')->onDelete('cascade');
             $table->foreignId('convocatoria_congreso_id')->constrained('convocatorias_congreso')->onDelete('cascade');
             $table->enum('tipo_participante', ['estudiante', 'docente', 'investigador', 'profesional'])->default('estudiante');
             $table->string('institucion');
@@ -95,22 +104,6 @@ return new class extends Migration {
             $table->foreignId('pago_inscripcion_id')->constrained('pagos_inscripcion_congreso')->onDelete('cascade');  // Relación con el pago previo
             $table->timestamps();
             $table->softDeletes();
-        });
-
-        // Tabla para pagos de inscripción al congreso
-        Schema::create('pagos_inscripcion_congreso', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('congreso_id')->constrained('congresos')->onDelete('cascade');
-            $table->decimal('monto', 10, 2);
-            $table->string('metodo_pago')->default('paypal');
-            $table->string('referencia_paypal')->nullable();
-            $table->string('paypal_order_id')->nullable();
-            $table->enum('estado_pago', ['pendiente', 'pagado', 'rechazado'])->default('pendiente');
-            $table->timestamp('fecha_pago')->nullable();
-            $table->text('detalles_transaccion')->nullable();
-            $table->string('comprobante_pago')->nullable();
-            $table->timestamps();
         });
     }
 

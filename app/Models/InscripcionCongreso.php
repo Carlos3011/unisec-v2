@@ -20,7 +20,7 @@ class InscripcionCongreso extends Model
         'tipo_participante',
         'institucion',
         'comprobante_estudiante',
-        'pago_inscripcion_id',
+        'pago_inscripcion_id'
     ];
 
     protected $casts = [
@@ -29,6 +29,12 @@ class InscripcionCongreso extends Model
         'deleted_at' => 'datetime',
         'tipo_participante' => 'string'
     ];
+
+    // Tipos de participante posibles
+    const TIPO_ESTUDIANTE = 'estudiante';
+    const TIPO_DOCENTE = 'docente';
+    const TIPO_INVESTIGADOR = 'investigador';
+    const TIPO_PROFESIONAL = 'profesional';
 
     // Relación con el usuario
     public function usuario()
@@ -57,7 +63,7 @@ class InscripcionCongreso extends Model
     // Relación con el pago de inscripción
     public function pagoInscripcion()
     {
-        return $this->belongsTo(PagoPreRegistro::class, 'pago_inscripcion_id');
+        return $this->belongsTo(PagoInscripcionCongreso::class, 'pago_inscripcion_id');
     }
 
     // Relación con los pagos del congreso
@@ -75,7 +81,6 @@ class InscripcionCongreso extends Model
             ->exists();
     }
 
-    // Método para obtener el último pago
     public function ultimoPago()
     {
         return $this->pagosCongreso()

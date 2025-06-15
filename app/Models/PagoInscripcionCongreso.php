@@ -50,12 +50,10 @@ class PagoInscripcionCongreso extends Model
         return $this->belongsTo(Congreso::class, 'congreso_id');
     }
 
-
     // Relación con la inscripción
     public function inscripcion(): BelongsTo
     {
-        return $this->belongsTo(InscripcionCongreso::class, 'usuario_id', 'usuario_id')
-            ->where('congreso_id', $this->congreso_id);
+        return $this->hasOne(InscripcionCongreso::class, 'pago_inscripcion_id');
     }
 
     // Métodos de utilidad para verificar estados

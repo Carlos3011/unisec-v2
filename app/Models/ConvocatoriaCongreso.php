@@ -28,14 +28,41 @@ class ConvocatoriaCongreso extends Model
         'contacto_email',
         'archivo_convocatoria',
         'archivo_articulo',
-        'imagen_portada'
+        'imagen_portada',
+        'fecha_inicio',
+        'fecha_fin',
+        'estado'
     ];
 
     protected $casts = [
         'tematicas' => 'array',
         'cuotas_inscripcion' => 'array',
-        'costo_inscripcion' => 'decimal:2'
+        'costo_inscripcion' => 'decimal:2',
+        'fecha_inicio' => 'date',
+        'fecha_fin' => 'date',
+        'estado' => 'string'
     ];
+
+    // Estados posibles de la convocatoria
+    const ESTADO_ACTIVO = 'activo';
+    const ESTADO_INACTIVO = 'inactivo';
+    const ESTADO_PENDIENTE = 'pendiente';
+
+    // Métodos de utilidad para verificar estados
+    public function estaActiva(): bool
+    {
+        return $this->estado === self::ESTADO_ACTIVO;
+    }
+
+    public function estaInactiva(): bool
+    {
+        return $this->estado === self::ESTADO_INACTIVO;
+    }
+
+    public function estaPendiente(): bool
+    {
+        return $this->estado === self::ESTADO_PENDIENTE;
+    }
 
     // Relación con el congreso
     public function congreso(): BelongsTo
@@ -53,5 +80,11 @@ class ConvocatoriaCongreso extends Model
     public function articulos(): HasMany
     {
         return $this->hasMany(ArticuloCongreso::class, 'convocatoria_congreso_id');
+    }
+
+    // Relación con las inscripciones
+    public function inscripciones(): HasMany
+    {
+        return $this->hasMany(InscripcionCongreso::class, 'convocatoria_congreso_id');
     }
 }
