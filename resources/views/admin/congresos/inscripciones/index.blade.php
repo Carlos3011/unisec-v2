@@ -49,7 +49,7 @@
                     @forelse($inscripciones as $inscripcion)
                         <tr class="hover:bg-gray-800/50">
                             <td class="px-4 py-3">{{ $inscripcion->usuario->name }}</td>
-                            <td class="px-4 py-3">{{ $inscripcion->congreso->titulo }}</td>
+                            <td class="px-4 py-3">{{ $inscripcion->congreso->nombre }}</td>
                             <td class="px-4 py-3 text-center">
                                 <span class="px-3 py-1 rounded-full text-xs
                                     {{ $inscripcion->tipo_participante === 'ponente' ? 'bg-purple-500/20 text-purple-500' : 'bg-blue-500/20 text-blue-500' }}">

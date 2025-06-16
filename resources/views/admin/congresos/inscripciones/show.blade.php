@@ -51,11 +51,7 @@
                 <div class="space-y-4">
                     <div>
                         <label class="text-gray-400 text-sm">Congreso</label>
-                        <p class="text-white">{{ $inscripcion->congreso->titulo }}</p>
-                    </div>
-                    <div>
-                        <label class="text-gray-400 text-sm">Convocatoria</label>
-                        <p class="text-white">{{ $inscripcion->convocatoria->titulo }}</p>
+                        <p class="text-white">{{ $inscripcion->congreso->nombre }}</p>
                     </div>
                     <div>
                         <label class="text-gray-400 text-sm">Fecha de Inscripción</label>
@@ -165,60 +161,6 @@
             </div>
             @endif
 
-            <!-- Información del Pago -->
-            <div class="bg-gray-800/50 rounded-xl p-6">
-                <h2 class="text-xl font-semibold text-white mb-4">Información del Pago</h2>
-                <div class="space-y-4">
-                    <div>
-                        <label class="text-gray-400 text-sm">Estado del Pago</label>
-                        <div class="mt-1">
-                            <span class="px-3 py-1 rounded-full text-xs inline-block
-                                @switch($inscripcion->pagoInscripcion->estado_pago ?? 'pendiente')
-                                    @case('pagado')
-                                        bg-green-500/20 text-green-500
-                                        @break
-                                    @case('rechazado')
-                                        bg-red-500/20 text-red-500
-                                        @break
-                                    @default
-                                        bg-yellow-500/20 text-yellow-500
-                                @endswitch">
-                                {{ ucfirst($inscripcion->pagoInscripcion->estado_pago ?? 'pendiente') }}
-                            </span>
-                        </div>
-                    </div>
-                    @if($inscripcion->pagoInscripcion)
-                        <div>
-                            <label class="text-gray-400 text-sm">Fecha de Pago</label>
-                            <p class="text-white">{{ $inscripcion->pagoInscripcion->fecha_pago ? $inscripcion->pagoInscripcion->fecha_pago->format('d/m/Y H:i') : 'No registrada' }}</p>
-                        </div>
-                        <div>
-                            <label class="text-gray-400 text-sm">Detalles de la Transacción</label>
-                            <p class="text-white">{{ $inscripcion->pagoInscripcion->detalles_transaccion ?: 'Sin detalles' }}</p>
-                        </div>
-                    @endif
-
-                    <!-- Formulario de Actualización de Estado de Pago -->
-                    <form action="{{ route('admin.congresos.inscripciones.actualizar-pago', $inscripcion) }}" method="POST" class="mt-6 space-y-4">
-                        @csrf
-                        <div>
-                            <label for="estado_pago" class="block text-sm font-medium text-gray-400 mb-2">Estado del Pago</label>
-                            <select name="estado_pago" id="estado_pago" class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
-                                <option value="pendiente" {{ ($inscripcion->pagoInscripcion->estado_pago ?? 'pendiente') === 'pendiente' ? 'selected' : '' }}>Pendiente</option>
-                                <option value="pagado" {{ ($inscripcion->pagoInscripcion->estado_pago ?? '') === 'pagado' ? 'selected' : '' }}>Pagado</option>
-                                <option value="rechazado" {{ ($inscripcion->pagoInscripcion->estado_pago ?? '') === 'rechazado' ? 'selected' : '' }}>Rechazado</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="detalles_transaccion" class="block text-sm font-medium text-gray-400 mb-2">Detalles de la Transacción</label>
-                            <textarea name="detalles_transaccion" id="detalles_transaccion" rows="3" class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ $inscripcion->pagoInscripcion->detalles_transaccion ?? '' }}</textarea>
-                        </div>
-                        <button type="submit" class="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all">
-                            Actualizar Estado del Pago
-                        </button>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 </div>
