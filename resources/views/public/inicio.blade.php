@@ -26,37 +26,89 @@
                 </h2>
 
                 <!-- Texto fijo + botones -->
-                <div class="space-y-6">
-                    <p class="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto">
+                <div class="space-y-8">
+                    <p class="text-lg sm:text-xl text-gray-300/90 max-w-2xl mx-auto text-center leading-relaxed">
                         Convocatorias abiertas: Participa en nuestro Concurso de Innovación y asiste al Congreso Científico.
                     </p>
 
                     <div class="flex flex-col sm:flex-row justify-center gap-6 pt-2">
                         <!-- Botón Concurso -->
-                        <a href="#"
-                            class="group relative p-6 sm:p-8 bg-gradient-to-br from-cyan-600/80 to-accent-600/80 rounded-2xl xl:rounded-3xl text-white transition-all duration-500 hover:scale-105 hover:shadow-xl">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-accent-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        @if($convocatorias->count() > 0)
+                            @foreach($convocatorias as $convocatoria)
+                                <a href="{{ route('convocatorias.show', $convocatoria) }}"
+                                    class="group relative p-6 sm:p-8 min-w-[280px] transition-all duration-500 hover:scale-[1.03]">
+                                    <div class="absolute inset-0 rounded-2xl xl:rounded-3xl overflow-hidden">
+                                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-600/80 to-accent-600/80"></div>
+                                        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
+                                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-accent-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    </div>
+                                    <div class="relative flex flex-col items-center space-y-4 z-10">
+                                        <div class="p-4 bg-gradient-to-br from-white/10 to-white/20 rounded-full border border-white/20 group-hover:border-cyan-300/50 transition-all">
+                                            <i class="fas fa-microscope text-3xl text-cyan-300"></i>
+                                        </div>
+                                        <span class="text-xl font-bold text-white">{{ $convocatoria->concurso->titulo }}</span>
+                                        <span class="text-sm text-white/80">Demuestra tu ingenio</span>
+                                        <div class="absolute -bottom-4 h-1 w-16 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-y-2"></div>
+                                    </div>
+                                    <div class="absolute inset-0 rounded-2xl border border-white/10 group-hover:border-cyan-300/30 transition-all duration-500"></div>
+                                    <div class="absolute inset-0 rounded-2xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:shadow-[0_0_30px_-5px_rgba(34,211,238,0.3)] transition-all duration-500"></div>
+                                </a>
+                            @endforeach
+                        @else
+                            <div class="group relative p-6 sm:p-8 min-w-[280px] transition-all duration-500 hover:scale-[1.03]">
+                                <div class="absolute inset-0 rounded-2xl xl:rounded-3xl overflow-hidden">
+                                    <div class="absolute inset-0 bg-gradient-to-br from-gray-700/80 to-gray-800/80"></div>
+                                    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
+                                </div>
+                                <div class="relative flex flex-col items-center space-y-4 z-10">
+                                    <div class="p-4 bg-gradient-to-br from-white/5 to-white/10 rounded-full border border-white/10">
+                                        <i class="fas fa-clock text-3xl text-gray-400"></i>
+                                    </div>
+                                    <span class="text-xl font-bold text-white">No hay concursos activos</span>
+                                    <span class="text-sm text-white/60">Próximamente</span>
+                                </div>
+                                <div class="absolute inset-0 rounded-2xl border border-white/10 transition-all duration-500"></div>
                             </div>
-                            <div class="relative flex flex-col items-center space-y-3">
-                                <i class="fas fa-rocket text-4xl text-primary-200"></i>
-                                <span class="text-xl font-semibold">Concurso de Innovación</span>
-                                <span class="text-sm text-white/70">Demuestra tu ingenio</span>
-                            </div>
-                        </a>
+                        @endif
 
                         <!-- Botón Congreso -->
-                        <a href="#"
-                            class="group relative p-6 sm:p-8 bg-gradient-to-br from-cyan-600/80 to-accent-600/80 rounded-2xl xl:rounded-3xl text-white transition-all duration-500 hover:scale-105 hover:shadow-xl">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-accent-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        @if($convocatoriasCongreso->count() > 0)
+                            @foreach($convocatoriasCongreso as $convocatoriaCongreso)
+                                <a href="{{ route('convocatorias.show', $convocatoriaCongreso) }}"
+                                    class="group relative p-6 sm:p-8 min-w-[280px] transition-all duration-500 hover:scale-[1.03]">
+                                    <div class="absolute inset-0 rounded-2xl xl:rounded-3xl overflow-hidden">
+                                        <div class="absolute inset-0 bg-gradient-to-br from-primary-600/80 to-accent-600/80"></div>
+                                        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
+                                        <div class="absolute inset-0 bg-gradient-to-br from-primary-400/20 to-accent-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    </div>
+                                    <div class="relative flex flex-col items-center space-y-4 z-10">
+                                        <div class="p-4 bg-gradient-to-br from-white/10 to-white/20 rounded-full border border-white/20 group-hover:border-primary-300/50 transition-all">
+                                            <i class="fas fa-atom text-3xl text-primary-300"></i>
+                                        </div>
+                                        <span class="text-xl font-bold text-white">{{ $convocatoriaCongreso->congreso->nombre }}</span>
+                                        <span class="text-sm text-white/80">Reserva tu participación</span>
+                                        <div class="absolute -bottom-4 h-1 w-16 bg-primary-400 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-y-2"></div>
+                                    </div>
+                                    <div class="absolute inset-0 rounded-2xl border border-white/10 group-hover:border-primary-300/30 transition-all duration-500"></div>
+                                    <div class="absolute inset-0 rounded-2xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:shadow-[0_0_30px_-5px_rgba(139,92,246,0.3)] transition-all duration-500"></div>
+                                </a>
+                            @endforeach
+                        @else
+                            <div class="group relative p-6 sm:p-8 min-w-[280px] transition-all duration-500 hover:scale-[1.03]">
+                                <div class="absolute inset-0 rounded-2xl xl:rounded-3xl overflow-hidden">
+                                    <div class="absolute inset-0 bg-gradient-to-br from-gray-700/80 to-gray-800/80"></div>
+                                    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
+                                </div>
+                                <div class="relative flex flex-col items-center space-y-4 z-10">
+                                    <div class="p-4 bg-gradient-to-br from-white/5 to-white/10 rounded-full border border-white/10">
+                                        <i class="fas fa-clock text-3xl text-gray-400"></i>
+                                    </div>
+                                    <span class="text-xl font-bold text-white">No hay congresos activos</span>
+                                    <span class="text-sm text-white/60">Próximamente</span>
+                                </div>
+                                <div class="absolute inset-0 rounded-2xl border border-white/10 transition-all duration-500"></div>
                             </div>
-                            <div class="relative flex flex-col items-center space-y-3">
-                                <i class="fas fa-satellite text-4xl text-cyan-200"></i>
-                                <span class="text-xl font-semibold">Congreso Científico</span>
-                                <span class="text-sm text-white/70">Reserva tu participación</span>
-                            </div>
-                        </a>
+                        @endif
                     </div>
                 </div>
             </div>

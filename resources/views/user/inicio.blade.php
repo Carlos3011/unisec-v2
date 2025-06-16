@@ -162,7 +162,7 @@
                                             
                                         $tienePreRegistro = \App\Models\PreRegistroConcurso::where('usuario_id', Auth::id())
                                             ->where('concurso_id', $concurso->id)
-                                            ->exists();
+                                            ->first();
                                     @endphp
 
                                     @if($pagoTercero)
@@ -172,7 +172,7 @@
                                         </a>
                                     @elseif($pagoConfirmado)
                                         @if($tienePreRegistro)
-                                            <a href="{{ route('user.concursos.convocatorias.show', $convocatoria) }}"
+                                            <a href="{{ route('user.concursos.pre-registros.show', $tienePreRegistro->id) }}"
                                             class="inline-flex items-center justify-center px-4 py-2 bg-green-500/20 text-green-400 rounded-xl hover:bg-green-500/30 transition-all duration-500">
                                                 <i class="fas fa-eye mr-2"></i>Ver Pre-registro
                                             </a>
@@ -258,42 +258,38 @@
                                 </div>
                                 <div class="flex flex-col sm:flex-row gap-2">
                                     <a href="{{ route('user.congresos.convocatorias.show', $convocatoria) }}"
-                                        class="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-600/80 to-blue-600/80 text-white rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-lg group">
-                                        <i class="fas fa-info-circle mr-2 group-hover:scale-110 transition-transform"></i>
-                                        <span>Ver Detalles</span>
+                                        class="inline-flex items-center justify-center px-4 py-2 bg-cyan-500/10 text-cyan-400/90 rounded-xl hover:bg-cyan-500/20 transition-all duration-500">
+                                        <i class="fas fa-info-circle mr-2"></i>Ver detalles
                                     </a>
-                                    @if($convocatoria->pdf_convocatoria)
-                                        <a href="{{ asset($convocatoria->pdf_convocatoria) }}" 
-                                           target="_blank"
-                                           class="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-red-600/80 to-pink-600/80 text-white rounded-xl hover:from-red-600 hover:to-pink-600 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-lg group">
-                                            <i class="fas fa-file-pdf mr-2 group-hover:scale-110 transition-transform"></i>
-                                            <span>Descargar Convocatoria</span>
-                                        </a>
-                                    @endif
                                     @php
                                         $pagoConfirmado = \App\Models\PagoInscripcionCongreso::where('usuario_id', Auth::id())
                                             ->where('congreso_id', $congreso->id)
                                             ->where('estado_pago', 'pagado')
                                             ->exists();
                                             
-                                        $tieneInscripcion = \App\Models\InscripcionCongreso::where('usuario_id', Auth::id())
+                                        $inscripcion = \App\Models\InscripcionCongreso::where('usuario_id', Auth::id())
                                             ->where('congreso_id', $congreso->id)
-                                            ->exists();
+                                            ->first();
+                                            
+                                        $tieneInscripcion = $inscripcion ? true : false;
                                     @endphp
 
                                     @if($pagoConfirmado)
-                                        @if(!$tieneInscripcion)
-                                            <a href="{{ route('user.congresos.inscripciones.create', $convocatoria) }}"
-                                                class="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-emerald-600/80 to-teal-600/80 text-white rounded-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-lg group">
-                                                <i class="fas fa-user-plus mr-2 group-hover:scale-110 transition-transform"></i>
-                                                <span>Inscribirse</span>
+                                        @if($tieneInscripcion)
+                                            <a href="{{ route('user.congresos.inscripciones.show', $inscripcion->id) }}"
+                                            class="inline-flex items-center justify-center px-4 py-2 bg-green-500/20 text-green-400 rounded-xl hover:bg-green-500/30 transition-all duration-500">
+                                                <i class="fas fa-eye mr-2"></i>Ver Inscripción
+                                            </a>
+                                        @else
+                                            <a href="{{ route('user.congresos.inscripciones.create', ['convocatoria' => $convocatoria->id]) }}" 
+                                            class="inline-flex items-center justify-center px-4 py-2 bg-cyan-500/20 text-cyan-400 rounded-xl hover:bg-cyan-500/30 transition-all duration-500">
+                                                <i class="fas fa-user-plus mr-2"></i>Inscribirse
                                             </a>
                                         @endif
                                     @else
                                         <a href="{{ route('user.congresos.pagos.inscripcion', $convocatoria) }}" 
-                                           class="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-yellow-600/80 to-orange-600/80 text-white rounded-xl hover:from-yellow-600 hover:to-orange-600 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-lg group">
-                                            <i class="fas fa-credit-card mr-2 group-hover:scale-110 transition-transform"></i>
-                                            <span>Realizar Pago</span>
+                                           class="inline-flex items-center justify-center px-4 py-2 bg-yellow-500/20 text-yellow-400 rounded-xl hover:bg-yellow-500/30 transition-all duration-500">
+                                            <i class="fas fa-credit-card mr-2"></i>Realizar Pago
                                         </a>
                                     @endif
                                 </div>

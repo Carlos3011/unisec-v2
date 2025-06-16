@@ -200,19 +200,45 @@
 
                 const result = await response.json();
                 if (result.success) {
-                    // Redirigir a la página de inscripción con el ID de la convocatoria
-                    window.location.href = `{{ route('user.congresos.inscripciones.create', '') }}/${result.convocatoria_id}`;
+                    // Mostrar alerta de éxito
+                    Swal.fire({
+                        title: '¡Pago Exitoso!',
+                        text: 'Tu pago ha sido procesado correctamente',
+                        icon: 'success',
+                        confirmButtonText: 'Continuar',
+                        confirmButtonColor: '#3085d6',
+                        allowOutsideClick: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirigir a la página de inscripción usando el ID de la convocatoria actual
+                            window.location.href = `{{ route('user.congresos.inscripciones.create', ['convocatoria' => $convocatoria->id]) }}`;
+                        }
+                    });
                 } else {
                     throw new Error(result.message || 'Error al procesar el pago');
                 }
             } catch (error) {
                 console.error('Error al capturar el pago:', error);
-                alert('Error al procesar el pago: ' + error.message);
+                // Mostrar alerta de error
+                Swal.fire({
+                    title: 'Error en el Pago',
+                    text: error.message || 'Hubo un error al procesar tu pago',
+                    icon: 'error',
+                    confirmButtonText: 'Intentar de nuevo',
+                    confirmButtonColor: '#d33'
+                });
             }
         },
         onError: function(err) {
             console.error('Error en el pago:', err);
-            alert('Hubo un error al procesar el pago: ' + (err.message || 'Error desconocido. Por favor, inténtalo de nuevo.'));
+            // Mostrar alerta de error
+            Swal.fire({
+                title: 'Error en el Pago',
+                text: err.message || 'Hubo un error al procesar el pago. Por favor, inténtalo de nuevo.',
+                icon: 'error',
+                confirmButtonText: 'Intentar de nuevo',
+                confirmButtonColor: '#d33'
+            });
         }
     }).render('#paypal-button-container');
 </script>

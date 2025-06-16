@@ -97,7 +97,6 @@ class PreRegistroUserController extends Controller
             'institucion' => $request->institucion,
             'comentarios' => $request->comentarios,
             'estado_pdr' => 'pendiente',
-            'estado' => 'pendiente',
             'archivo_pdr' => $this->storeFile($request->file('archivo_pdr')),
             'integrantes_data' => $request->integrantes_data
         ]);

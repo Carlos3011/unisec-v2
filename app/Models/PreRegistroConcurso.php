@@ -31,12 +31,11 @@ class PreRegistroConcurso extends Model
         'comentarios_pdr',
         'integrantes_data',
         'codigo_pago_terceros',
-        'estado'
+        'estado_pago'
     ];
 
     protected $casts = [
         'integrantes' => 'integer',
-        'estado' => 'string',
         'estado_pdr' => 'string',
         'integrantes_data' => 'array'
     ];

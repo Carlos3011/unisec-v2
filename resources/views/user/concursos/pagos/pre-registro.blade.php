@@ -135,7 +135,15 @@
 
                 const result = await response.json();
                 if (result.success) {
-                    window.location.href = '{{ route("user.concursos.pre-registros.create", "") }}/' + result.convocatoria_id;
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Pago Exitoso!',
+                        text: 'Tu pago ha sido procesado correctamente. Serás redirigido al formulario de pre-registro.',
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => {
+                        window.location.href = '{{ route("user.concursos.pre-registros.create", "") }}/' + result.convocatoria_id;
+                    });
                 } else {
                     throw new Error(result.message || 'Error al procesar el pago');
                 }

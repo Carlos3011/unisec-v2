@@ -116,7 +116,7 @@
       <!-- Información de contacto -->
       <div>
         <h3 class="text-gray-100 text-lg font-semibold mb-4">Contacto</h3>
-        <p class="text-sm text-white"><i class="fas fa-envelope mr-2"></i>unisecmx@unisecmexico.com</p>
+        <p class="text-sm text-white"><i class="fas fa-envelope mr-2"></i>unisecmx@unisecmexico.mx</p>
       </div>
 
       <!-- Redes Sociales -->
