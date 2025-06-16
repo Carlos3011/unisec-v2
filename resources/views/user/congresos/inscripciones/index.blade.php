@@ -146,8 +146,14 @@
                                 <div class="bg-white/5 rounded-xl p-4 space-y-4 hover:bg-white/10 transition-colors duration-200">
                                     <div class="flex justify-between items-start">
                                         <div class="space-y-1">
-                                            <h3 class="text-sm font-medium text-white">{{ $inscripcion->congreso->nombre }}</h3>
-                                            <p class="text-sm text-white/70">{{ ucfirst($inscripcion->tipo_participante) }} - {{ $inscripcion->institucion }}</p>
+                                            <div class="flex items-center gap-2">
+                                                <i class="fas fa-university text-purple-400"></i>
+                                                <h3 class="text-sm font-medium text-white">{{ $inscripcion->congreso->nombre }}</h3>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <i class="fas fa-building text-blue-400"></i>
+                                                <p class="text-sm text-white/70">{{ ucfirst($inscripcion->tipo_participante) }} - {{ $inscripcion->institucion }}</p>
+                                            </div>
                                         </div>
                                         <span class="px-3 py-1 inline-flex items-center gap-1.5 text-xs font-medium rounded-full
                                             @if($inscripcion->estado === 'validado') bg-green-500/20 text-green-300 border border-green-500/30

@@ -235,6 +235,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/congresos-pagos/{pago}', [PagoInscripcionCongresoController::class, 'show'])->name('admin.congresos.pagos.show');
     Route::get('/admin/congresos-pagos/{pago}/factura', [PagoInscripcionCongresoController::class, 'generarFactura'])->name('admin.congresos.pagos.factura');
     Route::get('/admin/congresos-pagos/exportar', [PagoInscripcionCongresoController::class, 'exportarPagos'])->name('admin.congresos.pagos.exportar');
+
+    // Rutas para descarga de artículos
+    Route::get('/admin/congresos/articulos/{articulo}/download', [App\Http\Controllers\Admin\Congreso\InscripcionCongresoController::class, 'downloadArticulo'])
+        ->name('admin.congresos.articulos.download')
+        ->middleware(['auth', 'admin']);
+
+    Route::get('/admin/congresos/articulos/{articulo}/download-extenso', [App\Http\Controllers\Admin\Congreso\InscripcionCongresoController::class, 'downloadExtenso'])
+        ->name('admin.congresos.articulos.download-extenso')
+        ->middleware(['auth', 'admin']);
 }); 
 
 // Grupo de rutas para Usuarios

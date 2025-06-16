@@ -21,7 +21,9 @@ class InscripcionCongresoUserController extends Controller
 
     public function index()
     {
-        $inscripciones = InscripcionCongreso::with(['congreso', 'articulo'])
+        $inscripciones = InscripcionCongreso::with(['congreso' => function($query) {
+                $query->select('id', 'nombre', 'descripcion');
+            }, 'articulo'])
             ->where('usuario_id', Auth::id())
             ->latest()
             ->paginate(10);
@@ -231,7 +233,7 @@ class InscripcionCongresoUserController extends Controller
             'id' => $pago->id,
             'usuario' => $pago->usuario->name,
             'email' => $pago->usuario->email,
-            'congreso' => $pago->congreso->titulo,
+            'congreso' => $pago->congreso->nombre,
             'monto' => $pago->monto,
             'metodo_pago' => $pago->metodo_pago,
             'referencia_paypal' => $pago->referencia_paypal,
@@ -310,7 +312,6 @@ class InscripcionCongresoUserController extends Controller
 
     public function downloadComprobante(InscripcionCongreso $inscripcion)
     {
-        $this->authorize('view', $inscripcion);
 
         if (!$inscripcion->comprobante_estudiante) {
             return back()->with('error', 'No hay comprobante disponible.');
@@ -321,7 +322,7 @@ class InscripcionCongresoUserController extends Controller
 
     public function downloadArticulo(ArticuloCongreso $articulo)
     {
-        $this->authorize('view', $articulo);
+
 
         if (!$articulo->archivo_articulo) {
             return back()->with('error', 'No hay artículo disponible.');
@@ -332,7 +333,6 @@ class InscripcionCongresoUserController extends Controller
 
     public function downloadExtenso(ArticuloCongreso $articulo)
     {
-        $this->authorize('view', $articulo);
 
         if (!$articulo->archivo_extenso) {
             return back()->with('error', 'No hay artículo extenso disponible.');
