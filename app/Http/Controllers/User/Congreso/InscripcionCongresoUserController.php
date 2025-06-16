@@ -113,13 +113,23 @@ class InscripcionCongresoUserController extends Controller
                 : null
         ]);
 
-        return redirect()->route('user.congresos.inscripciones.index')
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Inscripción creada exitosamente',
+                'redirect' => route('user.congresos.inscripciones.show', $inscripcion)
+            ]);
+        }
+
+        return redirect()->route('user.congresos.inscripciones.show', $inscripcion)
             ->with('success', 'Inscripción creada exitosamente');
     }
 
     public function show(InscripcionCongreso $inscripcion)
     {
-        $inscripcion->load(['congreso', 'articulo']);
+        $inscripcion->load(['congreso', 'articulo' => function($query) {
+            $query->select('id', 'titulo', 'estado_articulo', 'estado_extenso', 'comentarios_articulo', 'comentarios_extenso', 'autores_data', 'archivo_articulo', 'archivo_extenso');
+        }]);
         
         return view('user.congresos.inscripciones.show', compact('inscripcion'));
     }

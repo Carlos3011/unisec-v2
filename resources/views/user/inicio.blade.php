@@ -213,7 +213,7 @@
                     </div>
                     <h2 class="text-2xl font-light text-white tracking-wider">Congresos Disponibles</h2>
                 </div>
-                <a href="#"
+                <a href="{{ route('user.congresos.index') }}"
                     class="text-purple-300/90 hover:text-purple-300 transition-colors duration-500 flex items-center group">
                     Ver todos
                     <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
@@ -256,11 +256,46 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="flex space-x-2">
+                                <div class="flex flex-col sm:flex-row gap-2">
                                     <a href="{{ route('user.congresos.convocatorias.show', $convocatoria) }}"
-                                        class="inline-flex items-center justify-center px-4 py-2 bg-purple-400/20 text-purple-300/90 rounded-xl hover:bg-purple-400/30 transition-all duration-500">
-                                        <i class="fas fa-info-circle mr-2"></i>Ver detalles
+                                        class="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-600/80 to-blue-600/80 text-white rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-lg group">
+                                        <i class="fas fa-info-circle mr-2 group-hover:scale-110 transition-transform"></i>
+                                        <span>Ver Detalles</span>
                                     </a>
+                                    @if($convocatoria->pdf_convocatoria)
+                                        <a href="{{ asset($convocatoria->pdf_convocatoria) }}" 
+                                           target="_blank"
+                                           class="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-red-600/80 to-pink-600/80 text-white rounded-xl hover:from-red-600 hover:to-pink-600 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-lg group">
+                                            <i class="fas fa-file-pdf mr-2 group-hover:scale-110 transition-transform"></i>
+                                            <span>Descargar Convocatoria</span>
+                                        </a>
+                                    @endif
+                                    @php
+                                        $pagoConfirmado = \App\Models\PagoInscripcionCongreso::where('usuario_id', Auth::id())
+                                            ->where('congreso_id', $congreso->id)
+                                            ->where('estado_pago', 'pagado')
+                                            ->exists();
+                                            
+                                        $tieneInscripcion = \App\Models\InscripcionCongreso::where('usuario_id', Auth::id())
+                                            ->where('congreso_id', $congreso->id)
+                                            ->exists();
+                                    @endphp
+
+                                    @if($pagoConfirmado)
+                                        @if(!$tieneInscripcion)
+                                            <a href="{{ route('user.congresos.inscripciones.create', $convocatoria) }}"
+                                                class="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-emerald-600/80 to-teal-600/80 text-white rounded-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-lg group">
+                                                <i class="fas fa-user-plus mr-2 group-hover:scale-110 transition-transform"></i>
+                                                <span>Inscribirse</span>
+                                            </a>
+                                        @endif
+                                    @else
+                                        <a href="{{ route('user.congresos.pagos.inscripcion', $convocatoria) }}" 
+                                           class="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-yellow-600/80 to-orange-600/80 text-white rounded-xl hover:from-yellow-600 hover:to-orange-600 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-lg group">
+                                            <i class="fas fa-credit-card mr-2 group-hover:scale-110 transition-transform"></i>
+                                            <span>Realizar Pago</span>
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach

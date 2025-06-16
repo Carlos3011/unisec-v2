@@ -15,7 +15,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('user.congresos.inscripciones.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <form id="inscripcionForm" action="{{ route('user.congresos.inscripciones.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     <input type="hidden" name="convocatoria_id" value="{{ $convocatoria->id }}">
                     <input type="hidden" name="congreso_id" value="{{ $convocatoria->congreso_id }}">
@@ -155,6 +155,7 @@
     </div>
 </div>
 
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const tipoParticipante = document.getElementById('tipo_participante');
@@ -164,7 +165,76 @@ document.addEventListener('DOMContentLoaded', function() {
     const articuloFields = document.getElementById('articulo_fields');
     const agregarAutorBtn = document.getElementById('agregar_autor');
     const autoresContainer = document.getElementById('autores_container');
+    const inscripcionForm = document.getElementById('inscripcionForm');
     let autorCount = 1;
+
+    // Función para manejar el envío del formulario
+    inscripcionForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Mostrar alerta de confirmación
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Deseas crear la inscripción?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#9333ea',
+            cancelButtonColor: '#4b5563',
+            confirmButtonText: 'Sí, crear inscripción',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Mostrar alerta de carga
+                Swal.fire({
+                    title: 'Procesando inscripción',
+                    text: 'Por favor espere...',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // Enviar el formulario vía AJAX
+                const formData = new FormData(inscripcionForm);
+                
+                fetch(inscripcionForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: '¡Éxito!',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonColor: '#9333ea'
+                        }).then(() => {
+                            window.location.href = data.redirect;
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Hubo un error al crear la inscripción',
+                            icon: 'error',
+                            confirmButtonColor: '#9333ea'
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Hubo un error al procesar la solicitud',
+                        icon: 'error',
+                        confirmButtonColor: '#9333ea'
+                    });
+                });
+            }
+        });
+    });
 
     function toggleComprobante() {
         if (tipoParticipante.value === 'estudiante') {

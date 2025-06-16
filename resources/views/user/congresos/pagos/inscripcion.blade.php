@@ -200,7 +200,8 @@
 
                 const result = await response.json();
                 if (result.success) {
-                    window.location.href = '{{ route("user.congresos.inscripciones.create", "") }}/' + result.convocatoria_id;
+                    // Redirigir a la página de inscripción con el ID de la convocatoria
+                    window.location.href = `{{ route('user.congresos.inscripciones.create', '') }}/${result.convocatoria_id}`;
                 } else {
                     throw new Error(result.message || 'Error al procesar el pago');
                 }
