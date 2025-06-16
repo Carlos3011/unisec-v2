@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   @vite('resources/css/app.css')
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body class="bg-black font-['Inter']">
   <!-- Capa de partículas -->
@@ -17,164 +18,209 @@
   
   <div class="flex h-screen">
     <!-- Sidebar -->
-    <aside class="w-64 bg-gradient-to-b from-primary-500 to-purple-700 shadow-xl h-full p-6 text-gray-100 space-y-6">
-      <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-3">
-        <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-36 h-auto">
-      </a>
-      <nav class="space-y-4">
-        <a href="{{ route('admin.dashboard') }}" class="flex items-center px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
-          <i class="fas fa-home text-lg"></i>
+    <aside class="w-72 bg-gradient-to-b from-primary-500 to-purple-700 shadow-xl h-full p-6 text-gray-100 space-y-6">
+      <!-- Logo y Título -->
+      <div class="flex flex-col items-center space-y-4 pb-6 border-b border-white/10">
+        <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-3">
+          <img src="{{ asset('images/logo.png') }}" alt="Logo de UniSec" class="w-36 h-auto">
+        </a>
+        <h2 class="text-xl font-semibold text-white/90">Panel de Control</h2>
+      </div>
+
+      <!-- Menú Principal -->
+      <nav class="space-y-2">
+        <!-- Dashboard -->
+        <a href="{{ route('admin.dashboard') }}" class="flex items-center px-4 py-3 rounded-lg hover:bg-white/10 transition-all group">
+          <i class="fas fa-home text-lg w-6 text-center text-white/80 group-hover:text-white"></i>
           <span class="ml-3 font-medium">Dashboard</span>
         </a>
 
-        <!-- Gestion de Academica -->
-        <div x-data="{ open: false }">
-          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
-            <div class="flex items-center space-x-3">
-              <i class="fas fa-cogs text-lg"></i>
-              <span class="font-medium">Gestión Académica</span>
+        <!-- Gestión Académica -->
+        <div x-data="{ open: false }" class="relative">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-4 py-3 rounded-lg hover:bg-white/10 transition-all group">
+            <div class="flex items-center">
+              <i class="fas fa-cogs text-lg w-6 text-center text-white/80 group-hover:text-white"></i>
+              <span class="ml-3 font-medium">Gestión Académica</span>
             </div>
-            <i class="fas fa-chevron-down" x-show="!open"></i>
-            <i class="fas fa-chevron-up" x-show="open"></i>
+            <i class="fas fa-chevron-down text-sm transition-transform" :class="{ 'transform rotate-180': open }"></i>
           </button>
-          <div x-show="open" class="pl-8 space-y-2" x-collapse>
-            <a href="{{ route('admin.categorias.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Categorías</a>
-            <a href="{{ route('admin.cursos.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Cursos</a>
-            <a href="{{ route('admin.talleres.index')}}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Talleres</a>
-            <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Ponencias</a>
+          <div x-show="open" class="mt-2 space-y-1" x-collapse>
+            <div class="pl-10 border-l-2 border-white/10">
+              <a href="{{ route('admin.categorias.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-tags mr-2"></i>Categorías
+              </a>
+              <a href="{{ route('admin.cursos.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-book mr-2"></i>Cursos
+              </a>
+              <a href="{{ route('admin.talleres.index')}}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-chalkboard mr-2"></i>Talleres
+              </a>
+              <a href="#" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-presentation mr-2"></i>Ponencias
+              </a>
+            </div>
           </div>
         </div>
 
-        <!-- Gestion de Concursos -->
-        <div x-data="{ open: false }">
-          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
-            <div class="flex items-center space-x-3">
-              <i class="fa-solid fa-medal"></i>
-              <span class="font-medium">Gestión Concursos</span>
+        <!-- Gestión de Concursos -->
+        <div x-data="{ open: false }" class="relative">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-4 py-3 rounded-lg hover:bg-white/10 transition-all group">
+            <div class="flex items-center">
+              <i class="fa-solid fa-medal text-lg w-6 text-center text-white/80 group-hover:text-white"></i>
+              <span class="ml-3 font-medium">Gestión Concursos</span>
             </div>
-            <i class="fas fa-chevron-down" x-show="!open"></i>
-            <i class="fas fa-chevron-up" x-show="open"></i>
+            <i class="fas fa-chevron-down text-sm transition-transform" :class="{ 'transform rotate-180': open }"></i>
           </button>
-          <div x-show="open" class="pl-8 space-y-2" x-collapse>
-            <a href="{{ route('admin.concursos.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Concursos</a>
-            <a href="{{ route('admin.concursos.convocatorias.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Convocatorias</a>
-            <a href="{{ route('admin.concursos.pre-registros.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Pre-Registro</a>
+          <div x-show="open" class="mt-2 space-y-1" x-collapse>
+            <div class="pl-10 border-l-2 border-white/10">
+              <a href="{{ route('admin.concursos.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-list mr-2"></i>Concursos
+              </a>
+              <a href="{{ route('admin.concursos.convocatorias.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-bullhorn mr-2"></i>Convocatorias
+              </a>
+              <a href="{{ route('admin.concursos.pre-registros.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-clipboard-list mr-2"></i>Pre-Registro
+              </a>
+            </div>
           </div>
         </div>
 
-        <!-- Gestion de Congresos -->
-        <div x-data="{ open: false }">
-          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
-            <div class="flex items-center space-x-3">
-              <i class="fa-solid fa-graduation-cap"></i>
-              <span class="font-medium">Gestión Congresos</span>
+        <!-- Gestión de Congresos -->
+        <div x-data="{ open: false }" class="relative">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-4 py-3 rounded-lg hover:bg-white/10 transition-all group">
+            <div class="flex items-center">
+              <i class="fa-solid fa-graduation-cap text-lg w-6 text-center text-white/80 group-hover:text-white"></i>
+              <span class="ml-3 font-medium">Gestión Congresos</span>
             </div>
-            <i class="fas fa-chevron-down" x-show="!open"></i>
-            <i class="fas fa-chevron-up" x-show="open"></i>
+            <i class="fas fa-chevron-down text-sm transition-transform" :class="{ 'transform rotate-180': open }"></i>
           </button>
-          <div x-show="open" class="pl-8 space-y-2" x-collapse>
-            <a href="{{ route('admin.congresos.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Congresos</a>
-            <a href="{{ route('admin.congresos.convocatorias.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Convocatorias</a>
-            <a href="{{ route('admin.congresos.inscripciones.index')  }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Inscripciones</a>
+          <div x-show="open" class="mt-2 space-y-1" x-collapse>
+            <div class="pl-10 border-l-2 border-white/10">
+              <a href="{{ route('admin.congresos.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-list mr-2"></i>Congresos
+              </a>
+              <a href="{{ route('admin.congresos.convocatorias.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-bullhorn mr-2"></i>Convocatorias
+              </a>
+              <a href="{{ route('admin.congresos.inscripciones.index')  }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-user-plus mr-2"></i>Inscripciones
+              </a>
+            </div>
           </div>
         </div>
 
-
-         <!-- Gestion de Noticias -->
-         <div x-data="{ open: false }">
-          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
-            <div class="flex items-center space-x-3">
-              <i class="fas fa-newspaper"></i>
-              <span class="font-medium">Gestión Noticias</span>
+        <!-- Gestión de Noticias -->
+        <div x-data="{ open: false }" class="relative">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-4 py-3 rounded-lg hover:bg-white/10 transition-all group">
+            <div class="flex items-center">
+              <i class="fas fa-newspaper text-lg w-6 text-center text-white/80 group-hover:text-white"></i>
+              <span class="ml-3 font-medium">Gestión Noticias</span>
             </div>
-            <i class="fas fa-chevron-down" x-show="!open"></i>
-            <i class="fas fa-chevron-up" x-show="open"></i>
+            <i class="fas fa-chevron-down text-sm transition-transform" :class="{ 'transform rotate-180': open }"></i>
           </button>
-          <div x-show="open" class="pl-8 space-y-2" x-collapse>
-            <a href="{{ route('admin.noticias.secciones.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Secciones</a>
-            <a href="{{ route('admin.noticias.noticia.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Noticias</a>
+          <div x-show="open" class="mt-2 space-y-1" x-collapse>
+            <div class="pl-10 border-l-2 border-white/10">
+              <a href="{{ route('admin.noticias.secciones.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-folder mr-2"></i>Secciones
+              </a>
+              <a href="{{ route('admin.noticias.noticia.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-file-alt mr-2"></i>Noticias
+              </a>
+            </div>
           </div>
         </div>
 
-        <div x-data="{ open: false }">
-          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
-            <div class="flex items-center space-x-3">
-              <i class="fas fa-user-tie text-lg"></i>
-              <span class="font-medium">Gestión de Usuarios</span>
+        <!-- Gestión de Usuarios -->
+        <div x-data="{ open: false }" class="relative">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-4 py-3 rounded-lg hover:bg-white/10 transition-all group">
+            <div class="flex items-center">
+              <i class="fas fa-user-tie text-lg w-6 text-center text-white/80 group-hover:text-white"></i>
+              <span class="ml-3 font-medium">Gestión de Usuarios</span>
             </div>
-            <i class="fas fa-chevron-down" x-show="!open"></i>
-            <i class="fas fa-chevron-up" x-show="open"></i>
+            <i class="fas fa-chevron-down text-sm transition-transform" :class="{ 'transform rotate-180': open }"></i>
           </button>
-          <div x-show="open" class="pl-8 space-y-2" x-collapse>
-            <a href="{{ route('admin.users.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Usuarios</a>
-            <a href="{{ route('admin.ponentes.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Ponentes</a>
+          <div x-show="open" class="mt-2 space-y-1" x-collapse>
+            <div class="pl-10 border-l-2 border-white/10">
+              <a href="{{ route('admin.users.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-users mr-2"></i>Usuarios
+              </a>
+              <a href="{{ route('admin.ponentes.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-chalkboard-teacher mr-2"></i>Ponentes
+              </a>
+            </div>
           </div>
         </div>
 
-        <div x-data="{ open: false }">
-          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
-            <div class="flex items-center space-x-3">
-              <i class="fas fa-file-invoice text-lg"></i>
-              <span class="font-medium">Administración Financiera</span>
+        <!-- Administración Financiera -->
+        <div x-data="{ open: false }" class="relative">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-4 py-3 rounded-lg hover:bg-white/10 transition-all group">
+            <div class="flex items-center">
+              <i class="fas fa-file-invoice text-lg w-6 text-center text-white/80 group-hover:text-white"></i>
+              <span class="ml-3 font-medium">Administración Financiera</span>
             </div>
-            <i class="fas fa-chevron-down" x-show="!open"></i>
-            <i class="fas fa-chevron-up" x-show="open"></i>
+            <i class="fas fa-chevron-down text-sm transition-transform" :class="{ 'transform rotate-180': open }"></i>
           </button>
-          <div x-show="open" class="pl-8 space-y-2" x-collapse>
-           
-            <a href="{{ route('admin.pagos-terceros.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Pagos Transferencias</a>
-            <a href="{{ route('admin.becas') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Becas</a>
+          <div x-show="open" class="mt-2 space-y-1" x-collapse>
+            <div class="pl-10 border-l-2 border-white/10">
+              <a href="{{ route('admin.pagos-terceros.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-exchange-alt mr-2"></i>Pagos Transferencias
+              </a>
+              <a href="{{ route('admin.becas') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-gift mr-2"></i>Becas
+              </a>
+            </div>
           </div>
         </div>
 
-        <div x-data="{ open: false }">
-          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
-            <div class="flex items-center space-x-3">
-              <i class="fas fa-file-invoice text-lg"></i>
-              <span class="font-medium">Pagos con PayPal</span>
+        <!-- Pagos con PayPal -->
+        <div x-data="{ open: false }" class="relative">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-4 py-3 rounded-lg hover:bg-white/10 transition-all group">
+            <div class="flex items-center">
+              <i class="fab fa-paypal text-lg w-6 text-center text-white/80 group-hover:text-white"></i>
+              <span class="ml-3 font-medium">Pagos con PayPal</span>
             </div>
-            <i class="fas fa-chevron-down" x-show="!open"></i>
-            <i class="fas fa-chevron-up" x-show="open"></i>
+            <i class="fas fa-chevron-down text-sm transition-transform" :class="{ 'transform rotate-180': open }"></i>
           </button>
-          <div x-show="open" class="pl-8 space-y-2" x-collapse>
-            <a href="{{ route('admin.pagos.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Pagos Concursos Pre-Registros</a>
-            <a href="{{ route('admin.congresos.pagos.index') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Pagos Congresos Inscripciones </a>
+          <div x-show="open" class="mt-2 space-y-1" x-collapse>
+            <div class="pl-10 border-l-2 border-white/10">
+              <a href="{{ route('admin.pagos.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-credit-card mr-2"></i>Pagos Concursos
+              </a>
+              <a href="{{ route('admin.congresos.pagos.index') }}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-credit-card mr-2"></i>Pagos Congresos
+              </a>
+            </div>
           </div>
         </div>
 
-        <div x-data="{ open: false }">
-          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
-            <div class="flex items-center space-x-3">
-              <i class="fas fa-chart-line text-lg"></i>
-              <span class="font-medium">Reportes y Estadísticas</span>
+        
+        <!-- Separador -->
+        <div class="border-t border-white/10 my-4"></div>
+
+        <!-- Perfil de Usuario -->
+        <div x-data="{ open: false }" class="relative">
+          <button @click="open = !open" class="flex items-center justify-between w-full px-4 py-3 rounded-lg hover:bg-white/10 transition-all group">
+            <div class="flex items-center">
+              <i class="fas fa-user-circle text-lg w-6 text-center text-white/80 group-hover:text-white"></i>
+              <span class="ml-3 font-medium">{{ Auth::user()->name }}</span>
             </div>
-            <i class="fas fa-chevron-down" x-show="!open"></i>
-            <i class="fas fa-chevron-up" x-show="open"></i>
+            <i class="fas fa-chevron-down text-sm transition-transform" :class="{ 'transform rotate-180': open }"></i>
           </button>
-          <div x-show="open" class="pl-8 space-y-2" x-collapse>
-            <a href="{{ route('admin.reportes-estadisticas') }}" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Reportes</a>
+          <div x-show="open" class="mt-2 space-y-1" x-collapse>
+            <div class="pl-10 border-l-2 border-white/10">
+              <a href="#" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                <i class="fas fa-user-cog mr-2"></i>Perfil
+              </a>
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="w-full text-left px-4 py-2 rounded-lg hover:bg-white/10 transition-all text-sm">
+                  <i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión
+                </button>
+              </form>
+            </div>
           </div>
         </div>
-
-        <div x-data="{ open: false }">
-          <button @click="open = !open" class="flex items-center justify-between w-full px-5 py-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
-            <div class="flex items-center space-x-3">
-              <i class="fas fa-user text-lg"></i>
-              <span class="font-medium">{{ Auth::user()->name }}</span>
-            </div>
-            <i class="fas fa-chevron-down" x-show="!open"></i>
-            <i class="fas fa-chevron-up" x-show="open"></i>
-          </button>
-          <div x-show="open" class="pl-8 space-y-2" x-collapse>
-            <a href="#" class="block px-5 py-2 rounded-lg hover:bg-blue-500 transition-all">Perfil</a>
-            <form method="POST" action="{{ route('logout') }}">
-              @csrf
-              <button type="submit" class="w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700">Cerrar Sesión</button>
-            </form>
-          </div>
-        </div>
-
-
       </nav>
     </aside>
     
@@ -186,5 +232,38 @@
 
   @vite('resources/js/app.js')
   @stack('scripts')
+
+  <style>
+    /* Estilos para el sidebar */
+    .sidebar-link {
+      @apply flex items-center px-4 py-3 rounded-lg transition-all;
+    }
+    
+    .sidebar-link:hover {
+      @apply bg-white/10;
+    }
+    
+    .sidebar-icon {
+      @apply w-6 text-center text-white/80;
+    }
+    
+    .sidebar-link:hover .sidebar-icon {
+      @apply text-white;
+    }
+    
+    /* Animación para los submenús */
+    [x-cloak] {
+      display: none !important;
+    }
+    
+    /* Estilo para el menú activo */
+    .active-menu {
+      @apply bg-white/20;
+    }
+    
+    .active-menu .sidebar-icon {
+      @apply text-white;
+    }
+  </style>
 </body>
 </html>
