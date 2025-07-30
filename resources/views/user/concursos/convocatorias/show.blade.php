@@ -268,11 +268,6 @@
                         </a>
                     @endif
                 @else
-                    <a href="{{ route('user.concursos.pagos.pre-registro', $convocatoria) }}" 
-                       class="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl text-white font-semibold shadow-lg hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105">
-                        <i class="fab fa-paypal text-2xl"></i>
-                        <span>Realizar Pre-registro</span>
-                    </a>
                 @endif
             </div>
         @else

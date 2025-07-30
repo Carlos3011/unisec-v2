@@ -144,6 +144,12 @@
                                                 {{ $convocatoria->fechasImportantes->sortBy('fecha')->first()->fecha->format('d/m/Y') }}</span>
                                         </div>
                                     @endif
+                                    <div class="flex items-center text-sm text-gray-300">
+                                        <i class="fas fa-envelope w-5 text-cyan-400"></i>
+                                        <a href="mailto:{{ $convocatoria->contacto_email }}" class="ml-2 text-cyan-400 hover:underline">
+                                            {{ $convocatoria->contacto_email }}
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="flex space-x-2">
                                     <a href="{{ route('user.concursos.convocatorias.show', $convocatoria) }}"
@@ -255,6 +261,12 @@
                                                 {{ $convocatoria->fechasImportantes->sortBy('fecha')->first()->fecha->format('d/m/Y') }}</span>
                                         </div>
                                     @endif
+                                    <div class="flex items-center text-sm text-gray-300">
+                                        <i class="fas fa-envelope w-5 text-purple-300"></i>
+                                        <a href="mailto:{{ $convocatoria->contacto_email }}" class="ml-2 text-purple-300 hover:underline">
+                                            {{ $convocatoria->contacto_email }}
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="flex flex-col sm:flex-row gap-2">
                                     <a href="{{ route('user.congresos.convocatorias.show', $convocatoria) }}"

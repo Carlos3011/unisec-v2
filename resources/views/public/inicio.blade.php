@@ -48,6 +48,7 @@
                                         </div>
                                         <span class="text-xl font-bold text-white">{{ $convocatoria->concurso->titulo }}</span>
                                         <span class="text-sm text-white/80">Demuestra tu ingenio</span>
+                                        <span class="text-l text-white">Contáctanos</span>
                                         <div class="absolute -bottom-4 h-1 w-16 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-y-2"></div>
                                     </div>
                                     <div class="absolute inset-0 rounded-2xl border border-white/10 group-hover:border-cyan-300/30 transition-all duration-500"></div>
@@ -74,7 +75,7 @@
                         <!-- Botón Congreso -->
                         @if($convocatoriasCongreso->count() > 0)
                             @foreach($convocatoriasCongreso as $convocatoriaCongreso)
-                                <a href="{{ route('convocatorias.show', $convocatoriaCongreso) }}"
+                                <a href="{{ route('convocatorias.congreso.show', $convocatoriaCongreso) }}"
                                     class="group relative p-6 sm:p-8 min-w-[280px] transition-all duration-500 hover:scale-[1.03]">
                                     <div class="absolute inset-0 rounded-2xl xl:rounded-3xl overflow-hidden">
                                         <div class="absolute inset-0 bg-gradient-to-br from-primary-600/80 to-accent-600/80"></div>
@@ -85,8 +86,9 @@
                                         <div class="p-4 bg-gradient-to-br from-white/10 to-white/20 rounded-full border border-white/20 group-hover:border-primary-300/50 transition-all">
                                             <i class="fas fa-atom text-3xl text-primary-300"></i>
                                         </div>
-                                        <span class="text-xl font-bold text-white">{{ $convocatoriaCongreso->congreso->nombre }}</span>
+                                        <span class="text-xl font-bold text-white">{{ $convocatoriaCongreso->congreso ? $convocatoriaCongreso->congreso->nombre : 'Congreso no disponible' }}</span>
                                         <span class="text-sm text-white/80">Reserva tu participación</span>
+                                        <span class="text-l text-white">Contáctanos</span>
                                         <div class="absolute -bottom-4 h-1 w-16 bg-primary-400 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-y-2"></div>
                                     </div>
                                     <div class="absolute inset-0 rounded-2xl border border-white/10 group-hover:border-primary-300/30 transition-all duration-500"></div>
@@ -253,7 +255,7 @@
                                     @endif
 
                                     <div class="flex justify-end">
-                                        <a href="{{ route('convocatorias.show', $convocatoriaCongreso) }}"
+                                        <a href="{{ route('convocatorias.congreso.show', $convocatoriaCongreso) }}"
                                             class="inline-flex items-center px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white rounded-xl font-medium shadow-lg transition-colors duration-300">
                                             <i class="fas fa-info-circle mr-2"></i>Ver Detalles
                                         </a>
