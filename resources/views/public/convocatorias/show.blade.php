@@ -77,6 +77,40 @@
             </div>
 
             <div class="space-y-8 p-8">
+                @if($convocatoria->contacto_email)
+                    <div class="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
+                        <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
+                            <i class="fas fa-envelope-open mr-3 text-blue-400 text-2xl"></i>Contáctanos
+                        </h2>
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify bg-black/30 p-6 rounded-lg border border-white/10 flex-1">
+                                <p class="mb-4">Para la generación de las ligas de pago, te pedimos que nos escribas desde tu cuenta institucional a este correo.</p>
+                                <a href="mailto:{{ $convocatoria->contacto_email }}" class="text-blue-400 hover:text-blue-300 transition-colors duration-300 flex items-center justify-center gap-2">
+                                    <i class="fas fa-paper-plane"></i>
+                                    {{ $convocatoria->contacto_email }}
+                                </a>
+                            </div>
+                            <a href="mailto:{{ $convocatoria->contacto_email }}" aria-label="Contactar por correo electrónico"
+                                class="group relative p-6 min-w-[220px] transition-all duration-500 hover:scale-[1.05] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-space-900 rounded-2xl">
+                                <div class="absolute inset-0 rounded-2xl xl:rounded-3xl overflow-hidden">
+                                    <div class="absolute inset-0 bg-gradient-to-br from-blue-600/90 to-indigo-600/90"></div>
+                                    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-15"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-br from-blue-400/30 to-indigo-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                </div>
+                                <div class="relative flex flex-col items-center space-y-4 z-10">
+                                    <div class="p-4 bg-gradient-to-br from-white/15 to-white/25 rounded-full border-2 border-white/30 group-hover:border-blue-300/60 transition-all shadow-lg shadow-blue-500/10 group-hover:shadow-blue-500/30">
+                                        <i class="fas fa-envelope text-3xl text-blue-300 group-hover:text-blue-200 transition-colors"></i>
+                                    </div>
+                                    <span class="text-xl font-bold text-white group-hover:text-blue-100 transition-colors">Enviar correo</span>
+                                    <span class="text-sm text-white/90 font-medium text-center">Respuesta rápida</span>
+                                    <div class="absolute -bottom-2 h-1 w-16 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-y-1"></div>
+                                </div>
+                                <div class="absolute inset-0 rounded-2xl border-2 border-white/20 group-hover:border-blue-300/40 transition-all duration-500"></div>
+                                <div class="absolute inset-0 rounded-2xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.4)] transition-all duration-500"></div>
+                            </a>
+                        </div>
+                    </div>
+                @endif
                 <!-- Fechas Importantes -->
                 <div class="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
                     <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
@@ -238,19 +272,7 @@
                         @endif
                     </div>
                 </div>
-                @if($convocatoria->contacto_email)
-                    <div class="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
-                        <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
-                            <i class="fas fa-envelope-open mr-3 text-blue-400 text-2xl"></i>Contáctanos
-                        </h2>
-                        <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify bg-black/30 p-6 rounded-lg border border-white/10">
-                            <a href="mailto:{{ $convocatoria->contacto_email }}" class="text-blue-400 hover:text-blue-300 transition-colors duration-300 flex items-center justify-center gap-2">
-                                <i class="fas fa-paper-plane"></i>
-                                {{ $convocatoria->contacto_email }}
-                            </a>
-                        </div>
-                    </div>
-                @endif
+                
             </div>
         </div>
     </div>

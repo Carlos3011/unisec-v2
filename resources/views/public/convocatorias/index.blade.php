@@ -103,11 +103,6 @@
                                 <i class="fas fa-info-circle mr-2 group-hover:rotate-12 transition-transform duration-300"></i>Ver Detalles
                             </a>
 
-                            <a href="mailto:{{ $convocatoria->contacto_email }}" 
-                               class="mt-4 inline-flex items-center w-full justify-center px-4 py-2 bg-gradient-to-r from-blue-400/90 to-blue-500/90 text-white rounded-lg hover:from-blue-300/90 hover:to-blue-400/90 transform transition-all duration-300 backdrop-blur-sm font-medium shadow-lg shadow-blue-400/20 group">
-                                <i class="fas fa-envelope mr-2 group-hover:rotate-12 transition-transform duration-300"></i>Contáctanos
-                            </a>
-
                         </div>
                     </div>
                 @endforeach
@@ -189,11 +184,6 @@
                             <a href="{{ route('convocatorias.congreso.show', $convocatoriaCongreso) }}" 
                                class="mt-6 inline-flex items-center w-full justify-center px-6 py-3 bg-gradient-to-r from-amber-600/90 to-orange-600/90 text-white rounded-lg hover:from-amber-500/90 hover:to-orange-500/90 transform transition-all duration-300 backdrop-blur-sm font-medium shadow-lg shadow-amber-500/20 group">
                                 <i class="fas fa-info-circle mr-2 group-hover:rotate-12 transition-transform duration-300"></i>Ver Detalles
-                            </a>
-
-                            <a href="mailto:{{ $convocatoria->contacto_email }}" 
-                               class="mt-4 inline-flex items-center w-full justify-center px-4 py-2 bg-gradient-to-r from-amber-400/90 to-orange-500/90 text-white rounded-lg hover:from-amber-300/90 hover:to-orange-400/90 transform transition-all duration-300 backdrop-blur-sm font-medium shadow-lg shadow-amber-400/20 group">
-                                <i class="fas fa-envelope mr-2 group-hover:rotate-12 transition-transform duration-300"></i>Contáctanos
                             </a>
 
                         </div>
