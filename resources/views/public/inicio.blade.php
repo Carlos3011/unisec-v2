@@ -77,20 +77,20 @@
                                 <a href="{{ route('convocatorias.show', $convocatoriaCongreso) }}"
                                     class="group relative p-6 sm:p-8 min-w-[280px] transition-all duration-500 hover:scale-[1.03]">
                                     <div class="absolute inset-0 rounded-2xl xl:rounded-3xl overflow-hidden">
-                                        <div class="absolute inset-0 bg-gradient-to-br from-primary-600/80 to-accent-600/80"></div>
+                                        <div class="absolute inset-0 bg-gradient-to-br from-purple-600/80 via-indigo-600/80 to-violet-600/80"></div>
                                         <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
-                                        <div class="absolute inset-0 bg-gradient-to-br from-primary-400/20 to-accent-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                        <div class="absolute inset-0 bg-gradient-to-br from-purple-400/20 to-violet-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                     </div>
                                     <div class="relative flex flex-col items-center space-y-4 z-10">
-                                        <div class="p-4 bg-gradient-to-br from-white/10 to-white/20 rounded-full border border-white/20 group-hover:border-primary-300/50 transition-all">
-                                            <i class="fas fa-atom text-3xl text-primary-300"></i>
+                                        <div class="p-4 bg-gradient-to-br from-white/10 to-white/20 rounded-full border border-white/20 group-hover:border-purple-300/50 transition-all">
+                                            <i class="fas fa-atom text-3xl text-purple-300"></i>
                                         </div>
                                         <span class="text-xl font-bold text-white">{{ $convocatoriaCongreso->congreso->nombre }}</span>
                                         <span class="text-sm text-white/80">Reserva tu participación</span>
-                                        <div class="absolute -bottom-4 h-1 w-16 bg-primary-400 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-y-2"></div>
+                                        <div class="absolute -bottom-4 h-1 w-16 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-y-2"></div>
                                     </div>
-                                    <div class="absolute inset-0 rounded-2xl border border-white/10 group-hover:border-primary-300/30 transition-all duration-500"></div>
-                                    <div class="absolute inset-0 rounded-2xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:shadow-[0_0_30px_-5px_rgba(139,92,246,0.3)] transition-all duration-500"></div>
+                                    <div class="absolute inset-0 rounded-2xl border border-white/10 group-hover:border-purple-300/30 transition-all duration-500"></div>
+                                    <div class="absolute inset-0 rounded-2xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:shadow-[0_0_30px_-5px_rgba(147,51,234,0.3)] transition-all duration-500"></div>
                                 </a>
                             @endforeach
                         @else

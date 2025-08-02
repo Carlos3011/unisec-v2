@@ -9,17 +9,18 @@
         <p class="text-blue-200 text-lg">Explora las oportunidades en ingeniería cosmonáutica</p>
     </div>
 
-    {{-- Sección de Convocatorias de Concurso --}}
+    {{-- Sección Unificada de Convocatorias --}}
     <div class="mb-16">
         <div class="flex items-center mb-8">
             <div class="h-12 w-1 bg-gradient-to-b from-blue-500 to-purple-500 rounded-r-lg mr-4"></div>
             <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-                Convocatorias de Concurso
+                Todas las Convocatorias
             </h1>
         </div>
 
-        @if($convocatorias->count() > 0)
+        @if($convocatorias->count() > 0 || $convocatoriasCongreso->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 100)">
+                {{-- Convocatorias de Concurso --}}
                 @foreach($convocatorias as $convocatoria)
                     <div class="bg-gradient-to-br from-gray-900/90 via-gray-800/95 to-gray-900/90 backdrop-blur-xl rounded-2xl overflow-hidden hover:shadow-[0_8px_30px_rgb(59,130,246,0.15)] border border-blue-500/20 transition-all duration-500 ease-out relative group hover:-translate-y-1 hover:border-blue-400/30"
                          x-show="loaded"
@@ -32,6 +33,9 @@
                                     <i class="fas fa-user-tie mr-2"></i>Asesor Requerido
                                 </span>
                             @endif
+                            <span class="bg-gradient-to-r from-blue-400/90 to-blue-500/90 text-white text-xs px-4 py-1.5 rounded-full backdrop-blur-sm shadow-lg font-medium mt-2 block">
+                                <i class="fas fa-trophy mr-2"></i>Concurso
+                            </span>
                         </div>
 
                         @if($convocatoria->imagen_portada)
@@ -101,40 +105,8 @@
                         </div>
                     </div>
                 @endforeach
-            </div>
-        @else
-            <div class="text-center py-12">
-                <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg p-8 max-w-2xl mx-auto border border-blue-500/30">
-                    <i class="fas fa-folder-open text-5xl text-gray-400 mb-4"></i>
-                    <h2 class="text-2xl font-semibold text-blue-300 mb-2">No hay convocatorias de concurso disponibles</h2>
-                    <p class="text-gray-300">En este momento no hay convocatorias de concurso abiertas. Por favor, vuelve a consultar más tarde.</p>
-                </div>
-            </div>
-        @endif
-    </div>
 
-    {{-- Separador --}}
-    <div class="relative my-16">
-        <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-700"></div>
-        </div>
-        <div class="relative flex justify-center">
-            <span class="px-4 bg-gray-900 text-gray-400 text-sm">
-            </span>
-        </div>
-    </div>
-
-    {{-- Sección de Convocatorias de Congreso --}}
-    <div class="mb-16">
-        <div class="flex items-center mb-8">
-            <div class="h-12 w-1 bg-gradient-to-b from-amber-500 to-orange-500 rounded-r-lg mr-4"></div>
-            <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400">
-                Convocatorias de Congreso
-            </h1>
-        </div>
-
-        @if($convocatoriasCongreso->count() > 0)
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 100)">
+                {{-- Convocatorias de Congreso --}}
                 @foreach($convocatoriasCongreso as $convocatoriaCongreso)
                     <div class="bg-gradient-to-br from-gray-900/90 via-gray-800/95 to-gray-900/90 backdrop-blur-xl rounded-2xl overflow-hidden hover:shadow-[0_8px_30px_rgb(245,158,11,0.15)] border border-amber-500/20 transition-all duration-500 ease-out relative group hover:-translate-y-1 hover:border-amber-400/30"
                          x-show="loaded"
@@ -147,6 +119,9 @@
                                     <i class="fas fa-user-tie mr-2"></i>Asesor Requerido
                                 </span>
                             @endif
+                            <span class="bg-gradient-to-r from-amber-400/90 to-orange-500/90 text-white text-xs px-4 py-1.5 rounded-full backdrop-blur-sm shadow-lg font-medium mt-2 block">
+                                <i class="fas fa-graduation-cap mr-2"></i>Congreso
+                            </span>
                         </div>
 
                         @if($convocatoriaCongreso->imagen_portada)
@@ -215,10 +190,10 @@
             </div>
         @else
             <div class="text-center py-12">
-                <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg p-8 max-w-2xl mx-auto border border-amber-500/30">
+                <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg p-8 max-w-2xl mx-auto border border-blue-500/30">
                     <i class="fas fa-folder-open text-5xl text-gray-400 mb-4"></i>
-                    <h2 class="text-2xl font-semibold text-amber-300 mb-2">No hay convocatorias de congreso disponibles</h2>
-                    <p class="text-gray-300">En este momento no hay convocatorias de congreso abiertas. Por favor, vuelve a consultar más tarde.</p>
+                    <h2 class="text-2xl font-semibold text-blue-300 mb-2">No hay convocatorias disponibles</h2>
+                    <p class="text-gray-300">En este momento no hay convocatorias abiertas. Por favor, vuelve a consultar más tarde.</p>
                 </div>
             </div>
         @endif
