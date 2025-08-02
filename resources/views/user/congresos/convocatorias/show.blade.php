@@ -248,11 +248,6 @@
                         </a>
                     @endif
                 @else
-                    <a href="{{ route('user.congresos.pagos.inscripcion', $convocatoria) }}" 
-                       class="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-600 rounded-xl text-white font-semibold shadow-lg hover:shadow-amber-500/25 transition-all duration-300 hover:scale-105">
-                        <i class="fab fa-paypal text-2xl"></i>
-                        <span>Realizar Inscripción</span>
-                    </a>
                 @endif
             </div>
         @else

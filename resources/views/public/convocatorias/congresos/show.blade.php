@@ -203,6 +203,20 @@
                     </div>
                 </div>
                 @endif
+
+                @if($convocatoria->contacto_email)
+                    <div class="bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl p-6 border border-amber-400/30 hover:border-amber-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]">
+                        <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
+                            <i class="fas fa-envelope-open mr-3 text-amber-400 text-2xl"></i>Contáctanos
+                        </h2>
+                        <div class="prose prose-lg prose-invert max-w-none text-white/90 text-justify bg-black/30 p-6 rounded-lg border border-white/10">
+                            <a href="mailto:{{ $convocatoria->contacto_email }}" class="text-amber-400 hover:text-amber-300 transition-colors duration-300 flex items-center justify-center gap-2">
+                                <i class="fas fa-paper-plane"></i>
+                                {{ $convocatoria->contacto_email }}
+                            </a>
+                        </div>
+                    </div>
+                @endif  
             </div>
         </div>
     </div>

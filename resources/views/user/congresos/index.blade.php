@@ -89,7 +89,10 @@
                                     </a>
                                 @endif
 
-                                
+                                <a href="mailto:{{ $convocatoria->contacto_email }}" 
+                                    class="mt-4 inline-flex items-center w-full justify-center px-4 py-2 bg-gradient-to-r from-amber-400/90 to-orange-500/90 text-white rounded-lg hover:from-amber-300/90 hover:to-orange-400/90 transform transition-all duration-300 backdrop-blur-sm font-medium shadow-lg shadow-amber-400/20 group">
+                                    <i class="fas fa-envelope mr-2 group-hover:rotate-12 transition-transform duration-300"></i>Contáctanos
+                                </a>
                             </div>
                         </div>
                     </div>
