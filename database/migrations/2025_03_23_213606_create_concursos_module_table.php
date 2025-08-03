@@ -100,16 +100,13 @@ return new class extends Migration
             $table->integer('integrantes')->unsigned()->default(1);  // Número de integrantes en el equipo.
             $table->string('asesor')->nullable();  // Asesor del equipo (opcional).
             $table->string('institucion')->nullable();  // Institución a la que pertenece el equipo (opcional).
-            
             // Campos para PDR
             $table->string('archivo_pdr')->nullable();  // Archivo PDR
             $table->enum('estado_pdr', ['pendiente', 'en revisión', 'aprobado', 'rechazado'])->default('pendiente');  // Estado de evaluación del PDR
             $table->text('comentarios_pdr')->nullable();  // Comentarios sobre el PDR
-            
             // Campo JSON para almacenar los datos de los integrantes
             $table->json('integrantes_data')->nullable();  // Almacena los datos de los integrantes en formato JSON
             $table->string('codigo_pago_terceros')->nullable()->comment('FK lógico a pagos_terceros_transferencia_concurso');
-            
             $table->timestamps();  // Registra las fechas de creación y actualización.
             $table->softDeletes();  // Permite el borrado suave de los pre-registros.
         });
