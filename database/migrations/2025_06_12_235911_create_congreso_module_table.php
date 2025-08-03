@@ -55,8 +55,7 @@ return new class extends Migration {
             $table->string('metodo_pago')->default('paypal');
             $table->string('referencia_paypal')->nullable();
             $table->string('paypal_order_id')->nullable();
-            $table->string('webpay_token')->nullable();  // Token de Webpay
-            $table->string('webpay_order_id')->nullable();  // ID de orden de Webpay
+
             $table->enum('estado_pago', ['pendiente', 'pagado', 'rechazado'])->default('pendiente');
             $table->timestamp('fecha_pago')->nullable();
             $table->text('detalles_transaccion')->nullable();

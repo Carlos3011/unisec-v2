@@ -18,8 +18,7 @@ class PagoPreRegistro extends Model
         'metodo_pago',
         'referencia_paypal',
         'paypal_order_id',
-        'webpay_token',
-        'webpay_order_id',
+
         'estado_pago',
         'fecha_pago',
         'detalles_transaccion',

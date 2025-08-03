@@ -81,8 +81,7 @@ return new class extends Migration
             $table->string('metodo_pago')->default('paypal');  // Método de pago, por defecto PayPal
             $table->string('referencia_paypal')->nullable();  // Referencia de transacción en PayPal
             $table->string('paypal_order_id')->nullable();  // ID único de la orden en PayPal
-            $table->string('webpay_token')->nullable();  // Token de Webpay
-            $table->string('webpay_order_id')->nullable();  // ID de orden de Webpay
+
             $table->enum('estado_pago', ['pendiente', 'pagado', 'rechazado'])->default('pendiente');  // Estado del pago.
             $table->timestamp('fecha_pago')->nullable();  // Fecha en que se realizó el pago
             $table->text('detalles_transaccion')->nullable();  // Detalles adicionales de la transacción en formato JSON
@@ -121,8 +120,6 @@ return new class extends Migration
             $table->string('metodo_pago')->default('paypal');  // Método de pago, por defecto PayPal
             $table->string('referencia_paypal')->nullable();  // Referencia de transacción en PayPal
             $table->string('paypal_order_id')->nullable();  // ID único de la orden en PayPal
-            $table->string('webpay_token')->nullable();  // Token de Webpay
-            $table->string('webpay_order_id')->nullable();  // ID de orden de Webpay
             $table->enum('estado_pago', ['pendiente', 'pagado', 'rechazado'])->default('pendiente');  // Estado del pago.
             $table->timestamp('fecha_pago')->nullable();  // Fecha en que se realizó el pago
             $table->text('detalles_transaccion')->nullable();  // Detalles adicionales de la transacción en formato JSON
