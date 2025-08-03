@@ -107,12 +107,16 @@ class PreRegistroConcursoController extends Controller
      */
     public function downloadPDR(PreRegistroConcurso $preRegistro)
     {
-        $this->authorize('view', $preRegistro);
-
         if (!$preRegistro->archivo_pdr) {
             return back()->with('error', 'No hay archivo PDR disponible.');
         }
 
-        return Storage::disk('public')->download($preRegistro->archivo_pdr);
+        $filePath = public_path($preRegistro->archivo_pdr);
+        
+        if (!file_exists($filePath)) {
+            return back()->with('error', 'El archivo PDR no existe.');
+        }
+
+        return response()->download($filePath);
     }
 }

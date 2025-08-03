@@ -8,7 +8,6 @@ use App\Models\FechaImportanteConcurso;
 use App\Models\ImagenConcurso;
 use App\Models\Concurso;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ConvocatoriaConcursoController extends Controller
 {

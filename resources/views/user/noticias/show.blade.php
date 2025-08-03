@@ -20,7 +20,7 @@
                 <div class="relative overflow-hidden mb-6">
                     @if($noticia->imagen)
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-                        <img src="{{ asset('storage/' . $noticia->imagen) }}" alt="{{ $noticia->titulo }}"
+                        <img src="{{ asset( $noticia->imagen) }}" alt="{{ $noticia->titulo }}"
                             class="w-full h-80 object-cover">
 
                         <!-- Información de la Imagen -->

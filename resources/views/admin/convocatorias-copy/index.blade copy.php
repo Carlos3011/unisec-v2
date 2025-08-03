@@ -96,7 +96,7 @@
                         <a href="{{ route('admin.convocatorias.edit', $convocatoria) }}" class="p-2 text-gray-400 hover:text-yellow-400 transition-colors" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <button @click="pdfPreview = '{{ Storage::url($convocatoria->archivo_pdf) }}'" class="p-2 text-gray-400 hover:text-red-400 transition-colors" title="Vista Previa PDF">
+                        <button @click="pdfPreview = '{{ asset($convocatoria->archivo_pdf) }}'" class="p-2 text-gray-400 hover:text-red-400 transition-colors" title="Vista Previa PDF">
                             <i class="fas fa-file-pdf"></i>
                         </button>
                         <button @click="confirmDelete = true; selectedConvocatoria = {{ $convocatoria->id }}" class="p-2 text-gray-400 hover:text-red-400 transition-colors" title="Eliminar">

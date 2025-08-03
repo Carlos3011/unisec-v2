@@ -95,7 +95,7 @@
                     <label for="imagen" class="block text-sm font-medium text-gray-300">Imagen</label>
                     @if($convocatoria->imagen)
                         <div class="mb-2">
-                            <img src="{{ Storage::url($convocatoria->imagen) }}" alt="Imagen actual" class="w-32 h-32 object-cover rounded-lg">
+                            <img src="{{ asset($convocatoria->imagen) }}" alt="Imagen actual" class="w-32 h-32 object-cover rounded-lg">
                         </div>
                     @endif
                     <input type="file" name="imagen" id="imagen" accept="image/*" class="mt-1 block w-full text-sm text-gray-300
@@ -111,7 +111,7 @@
                     @if($convocatoria->archivo_pdf)
                         <div class="mb-2 flex items-center space-x-2">
                             <i class="fas fa-file-pdf text-red-400"></i>
-                            <a href="{{ Storage::url($convocatoria->archivo_pdf) }}" target="_blank" class="text-blue-400 hover:text-blue-300">Ver PDF actual</a>
+                            <a href="{{ asset($convocatoria->archivo_pdf) }}" target="_blank" class="text-blue-400 hover:text-blue-300">Ver PDF actual</a>
                         </div>
                     @endif
                     <input type="file" name="archivo_pdf" id="archivo_pdf" accept=".pdf" class="mt-1 block w-full text-sm text-gray-300

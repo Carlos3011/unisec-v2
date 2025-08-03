@@ -53,12 +53,12 @@
             @if($convocatoria->imagen)
                 <div>
                     <h3 class="text-sm font-medium text-gray-400">Imagen</h3>
-                    <img src="{{ Storage::url($convocatoria->imagen) }}" alt="Imagen de la convocatoria" class="mt-2 max-w-full h-auto rounded-lg">
+                    <img src="{{ asset( $convocatoria->imagen) }}" alt="Imagen de la convocatoria" class="mt-2 max-w-full h-auto rounded-lg">
                 </div>
             @endif
             <div>
                 <h3 class="text-sm font-medium text-gray-400">Documento PDF</h3>
-                <a href="{{ Storage::url($convocatoria->archivo_pdf) }}" target="_blank" class="inline-flex items-center mt-2 text-blue-400 hover:text-blue-300">
+                <a href="{{ asset( $convocatoria->archivo_pdf) }}" target="_blank" class="inline-flex items-center mt-2 text-blue-400 hover:text-blue-300">
                     <i class="fas fa-file-pdf mr-2"></i> Ver PDF de la Convocatoria
                 </a>
             </div>

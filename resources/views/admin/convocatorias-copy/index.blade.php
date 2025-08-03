@@ -97,7 +97,7 @@
                             <i class="fas fa-edit"></i>
                         </a>
                         @if($convocatoria->archivo_pdf)
-                            <a href="{{ Storage::url($convocatoria->archivo_pdf) }}" target="_blank" class="p-2 text-gray-400 hover:text-blue-400 transition-colors" title="Vista Previa PDF">
+                            <a href="{{ asset( $convocatoria->archivo_pdf) }}" target="_blank" class="p-2 text-gray-400 hover:text-blue-400 transition-colors" title="Vista Previa PDF">
                                 <i class="fas fa-file-pdf"></i>
                             </a>
                         @else
