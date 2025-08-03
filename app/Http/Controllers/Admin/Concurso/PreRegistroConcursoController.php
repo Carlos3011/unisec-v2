@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PreRegistroConcursoController extends Controller
 {   
-    use AuthorizesRequests;
+
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -26,7 +26,7 @@ class PreRegistroConcursoController extends Controller
                     });
             })
             ->when($estado, function($query) use ($estado) {
-                return $query->where('estado', $estado);
+                return $query->where('estado_pdr', $estado);
             })
             ->latest()
             ->paginate(10);
@@ -49,8 +49,7 @@ class PreRegistroConcursoController extends Controller
 
     public function update(Request $request, PreRegistroConcurso $preRegistro)
     {
-        $this->authorize('update', $preRegistro);
-
+       
         $request->validate([
             'concurso_id' => 'required|exists:concursos,id',
             'nombre_equipo' => 'required|string|max:255',
@@ -58,16 +57,10 @@ class PreRegistroConcursoController extends Controller
             'asesor' => 'nullable|string|max:255',
             'institucion' => 'nullable|string|max:255',
             'comentarios_evaluacion' => 'nullable|string',
-            'estado' => 'required|in:pendiente,validado,rechazado',
             'estado_pdr' => 'required|in:pendiente,aprobado,rechazado'
         ]);
 
         $updateData = $request->all();
-        
-        // Si el estado cambia a validado, actualizar automáticamente el estado_pdr a aprobado
-        if ($request->estado === 'validado') {
-            $updateData['estado_pdr'] = 'aprobado';
-        }
 
         $preRegistro->update($updateData);
 
@@ -87,28 +80,21 @@ class PreRegistroConcursoController extends Controller
 
     public function updateEstado(Request $request, PreRegistroConcurso $preRegistro)
     {
-        $this->authorize('update', $preRegistro);
-
+       
         $request->validate([
-            'estado' => 'required|in:pendiente,validado,rechazado',
+            'estado_pdr' => 'required|in:pendiente,aprobado,rechazado',
             'comentarios_evaluacion' => 'nullable|string'
         ]);
 
         $updateData = [
-            'estado' => $request->estado,
+            'estado_pdr' => $request->estado_pdr,
             'comentarios_evaluacion' => $request->comentarios_evaluacion
         ];
-
-        // Si el estado cambia a validado, actualizar automáticamente el estado_pdr
-        if ($request->estado === 'validado') {
-            $updateData['estado_pdr'] = 'aprobado';
-        }
 
         $preRegistro->update($updateData);
 
         return response()->json([
-            'message' => 'Estado actualizado exitosamente',
-            'estado' => $preRegistro->estado,
+            'message' => 'Estado PDR actualizado exitosamente',
             'estado_pdr' => $preRegistro->estado_pdr
         ]);
     }
