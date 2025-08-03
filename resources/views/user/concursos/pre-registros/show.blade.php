@@ -248,8 +248,8 @@
                         Comentarios de Evaluación
                     </h2>
                     <div class="bg-white/5 p-4 rounded-lg border border-white/10">
-                        @if($preRegistro->comentarios)
-                            <p class="text-white/90 whitespace-pre-line text-lg">{{ $preRegistro->comentarios }}</p>
+                        @if($preRegistro->comentarios_pdr)
+                            <p class="text-white/90 whitespace-pre-line text-lg">{{ $preRegistro->comentarios_pdr }}</p>
                         @else
                             <p class="text-gray-400 text-lg italic flex items-center gap-2">
                                 <i class="fas fa-info-circle"></i>

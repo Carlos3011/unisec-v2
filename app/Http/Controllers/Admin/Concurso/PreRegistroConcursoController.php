@@ -56,7 +56,7 @@ class PreRegistroConcursoController extends Controller
             'integrantes' => 'required|integer|min:1',
             'asesor' => 'nullable|string|max:255',
             'institucion' => 'nullable|string|max:255',
-            'comentarios_evaluacion' => 'nullable|string',
+            'comentarios_pdr' => 'nullable|string',
             'estado_pdr' => 'required|in:pendiente,aprobado,rechazado'
         ]);
 
@@ -83,12 +83,12 @@ class PreRegistroConcursoController extends Controller
        
         $request->validate([
             'estado_pdr' => 'required|in:pendiente,aprobado,rechazado',
-            'comentarios_evaluacion' => 'nullable|string'
+            'comentarios_pdr' => 'nullable|string'
         ]);
 
         $updateData = [
             'estado_pdr' => $request->estado_pdr,
-            'comentarios_evaluacion' => $request->comentarios_evaluacion
+            'comentarios_pdr' => $request->comentarios_pdr
         ];
 
         $preRegistro->update($updateData);

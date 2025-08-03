@@ -8,7 +8,7 @@
             <div class="max-w-4xl mx-auto bg-black/30 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 relative transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)]">
                 <!-- Navegación -->
                 <div class="p-6">
-                    <a href="{{route('convocatorias.index')}}" class="text-white/90 hover:text-white flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg w-fit transition-all duration-300 hover:bg-white/10">
+                    <a href="{{route('user.concursos.index')}}" class="text-white/90 hover:text-white flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg w-fit transition-all duration-300 hover:bg-white/10">
                         <i class="fas fa-arrow-left"></i>
                         <span>Volver a Convocatorias</span>
                     </a>

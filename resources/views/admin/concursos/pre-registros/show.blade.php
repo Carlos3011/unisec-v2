@@ -360,12 +360,12 @@
                                     <div class="bg-amber-500 p-2 rounded-lg mr-3">
                                         <i class="fas fa-comment-dots text-white"></i>
                                     </div>
-                                    <label for="comentarios_evaluacion" class="text-amber-300 text-sm font-bold uppercase tracking-wider">Comentarios del Evaluador</label>
+                                    <label for="comentarios_pdr" class="text-amber-300 text-sm font-bold uppercase tracking-wider">Comentarios del Evaluador</label>
                                 </div>
                                 <div class="bg-gray-600 rounded-lg border border-amber-400">
-                                    <textarea id="comentarios_evaluacion" name="comentarios_evaluacion" rows="6"
+                                    <textarea id="comentarios_pdr" name="comentarios_pdr" rows="6"
                                               class="w-full bg-transparent text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
-                                              placeholder="Ingrese sus comentarios sobre la evaluación del PDR...">{{ $preRegistro->comentarios_evaluacion }}</textarea>
+                                              placeholder="Ingrese sus comentarios sobre la evaluación del PDR...">{{ $preRegistro->comentarios_pdr }}</textarea>
                                 </div>
                             </div>
                             <div class="flex justify-end">
@@ -424,7 +424,7 @@ function actualizarEstadoPDR(id, estado_pdr, comentarios = null) {
         if (result.isConfirmed) {
             const requestBody = { estado_pdr: estado_pdr };
             if (comentarios) {
-                requestBody.comentarios_evaluacion = comentarios;
+                requestBody.comentarios_pdr = comentarios;
             }
             
             fetch(`/admin/pre-registros/${id}/estado`, {
@@ -463,12 +463,12 @@ function actualizarEstadoPDR(id, estado_pdr, comentarios = null) {
 }
 
 function aprobarPDR() {
-    const comentarios = document.getElementById('comentarios_evaluacion').value;
+    const comentarios = document.getElementById('comentarios_pdr').value;
     actualizarEstadoPDR('{{ $preRegistro->id }}', 'aprobado', comentarios);
 }
 
 function rechazarPDR() {
-    const comentarios = document.getElementById('comentarios_evaluacion').value;
+    const comentarios = document.getElementById('comentarios_pdr').value;
     if (!comentarios.trim()) {
         alert('Por favor, agregue comentarios explicando el motivo del rechazo.');
         return;
@@ -477,12 +477,12 @@ function rechazarPDR() {
 }
 
 function cambiarAPendiente() {
-    const comentarios = document.getElementById('comentarios_evaluacion').value;
+    const comentarios = document.getElementById('comentarios_pdr').value;
     actualizarEstadoPDR('{{ $preRegistro->id }}', 'pendiente', comentarios);
 }
 
 function guardarEvaluacion() {
-    const comentarios = document.getElementById('comentarios_evaluacion').value;
+    const comentarios = document.getElementById('comentarios_pdr').value;
     
     fetch(`/admin/pre-registros/{{ $preRegistro->id }}/estado`, {
         method: 'PUT',
@@ -493,7 +493,7 @@ function guardarEvaluacion() {
         },
         body: JSON.stringify({ 
             estado_pdr: '{{ $preRegistro->estado_pdr }}',
-            comentarios_evaluacion: comentarios 
+            comentarios_pdr: comentarios 
         })
     })
     .then(response => response.json())
