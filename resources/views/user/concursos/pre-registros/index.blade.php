@@ -12,7 +12,7 @@
                         <i class="fas fa-clipboard-list text-purple-400"></i>
                         Mis Pre-registros
                     </h2>
-                    @if ($convocatoria && !$preRegistros->where('concurso_id', $convocatoria->id)->where('usuario_id', auth()->id())->where('estado', '!=', 'rechazado')->count())
+                    @if ($convocatoria && !$preRegistros->where('concurso_id', $convocatoria->id)->where('usuario_id', auth()->id())->where('estado_pdr', '!=', 'rechazado')->count())
                         <a href="{{ route('user.concursos.pre-registros.create', ['convocatoria' => $convocatoria->id]) }}"
                             class="group inline-flex items-center px-4 py-2 rounded-xl shadow-lg text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-300 transform hover:scale-105">
                             <i class="fas fa-user-plus mr-2 group-hover:scale-110 transition-transform duration-300"></i>
@@ -80,16 +80,16 @@
                                             </td>
                                             <td class="px-6 py-4">
                                                 <span class="px-3 py-1 inline-flex items-center gap-1.5 text-xs font-medium rounded-full
-                                                            @if($preRegistro->estado === 'validado') bg-green-500/20 text-green-300 border border-green-500/30
-                                                            @elseif($preRegistro->estado === 'rechazado') bg-red-500/20 text-red-300 border border-red-500/30
+                                                            @if($preRegistro->estado_pdr === 'aprobado') bg-green-500/20 text-green-300 border border-green-500/30
+                                                            @elseif($preRegistro->estado_pdr === 'rechazado') bg-red-500/20 text-red-300 border border-red-500/30
                                                                 @else bg-yellow-500/20 text-yellow-300 border border-yellow-500/30
                                                             @endif">
                                                     <span class="w-1.5 h-1.5 rounded-full
-                                                                @if($preRegistro->estado === 'validado') bg-green-400
-                                                                @elseif($preRegistro->estado === 'rechazado') bg-red-400
+                                                                @if($preRegistro->estado_pdr === 'aprobado') bg-green-400
+                                                                @elseif($preRegistro->estado_pdr === 'rechazado') bg-red-400
                                                                     @else bg-yellow-400
                                                                 @endif"></span>
-                                                    {{ ucfirst($preRegistro->estado) }}
+                                                    {{ ucfirst($preRegistro->estado_pdr) }}
                                                 </span>
                                             </td>
                                             <td class="px-6 py-4 text-sm font-medium space-x-3">
@@ -98,7 +98,7 @@
                                                     <i class="fas fa-eye"></i>
                                                     <span>Ver</span>
                                                 </a>
-                                                @if($preRegistro->estado === 'pendiente')
+                                                @if($preRegistro->estado_pdr === 'pendiente')
                                                     <a href="{{ route('user.concursos.pre-registros.edit', $preRegistro) }}"
                                                         class="text-yellow-400 hover:text-yellow-300 transition-colors inline-flex items-center gap-1.5">
                                                         <i class="fas fa-edit"></i>
@@ -129,16 +129,16 @@
                                             <p class="text-sm text-white/70">{{ $preRegistro->nombre_equipo }}</p>
                                         </div>
                                         <span class="px-3 py-1 inline-flex items-center gap-1.5 text-xs font-medium rounded-full
-                                                    @if($preRegistro->estado === 'validado') bg-green-500/20 text-green-300 border border-green-500/30
-                                                    @elseif($preRegistro->estado === 'rechazado') bg-red-500/20 text-red-300 border border-red-500/30
+                                                    @if($preRegistro->estado_pdr === 'aprobado') bg-green-500/20 text-green-300 border border-green-500/30
+                                                    @elseif($preRegistro->estado_pdr === 'rechazado') bg-red-500/20 text-red-300 border border-red-500/30
                                                         @else bg-yellow-500/20 text-yellow-300 border border-yellow-500/30
                                                     @endif">
                                             <span class="w-1.5 h-1.5 rounded-full
-                                                        @if($preRegistro->estado === 'validado') bg-green-400
-                                                        @elseif($preRegistro->estado === 'rechazado') bg-red-400
+                                                        @if($preRegistro->estado_pdr === 'aprobado') bg-green-400
+                                                        @elseif($preRegistro->estado_pdr === 'rechazado') bg-red-400
                                                             @else bg-yellow-400
                                                         @endif"></span>
-                                            {{ ucfirst($preRegistro->estado) }}
+                                            {{ ucfirst($preRegistro->estado_pdr) }}
                                         </span>
                                     </div>
 
@@ -153,7 +153,7 @@
                                             <i class="fas fa-eye"></i>
                                             <span>Ver</span>
                                         </a>
-                                        @if($preRegistro->estado === 'pendiente')
+                                        @if($preRegistro->estado_pdr === 'pendiente')
                                             <a href="{{ route('user.concursos.pre-registros.edit', $preRegistro) }}"
                                                 class="text-yellow-400 hover:text-yellow-300 transition-colors inline-flex items-center gap-1.5">
                                                 <i class="fas fa-edit"></i>

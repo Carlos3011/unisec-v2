@@ -19,7 +19,6 @@ class PreRegistroUserController extends Controller
     use AuthorizesRequests;
     public function index()
     {
-        $this->authorize('viewAny', PreRegistroConcurso::class);
         $preRegistros = PreRegistroConcurso::with('concurso')
             ->where('usuario_id', Auth::id())
             ->latest()
@@ -29,6 +28,7 @@ class PreRegistroUserController extends Controller
             $query->where('estado', 'activo');
         })->first();
         
+        // Los pre-registros ya incluyen el estado_pdr por defecto
         return view('user.concursos.pre-registros.index', compact('preRegistros', 'convocatoria'));
     }
 
@@ -107,16 +107,15 @@ class PreRegistroUserController extends Controller
 
     public function show(PreRegistroConcurso $preRegistro)
     {
-        $this->authorize('view', $preRegistro);
         $preRegistro->load('concurso');
         
+        // El estado_pdr ya está disponible en el modelo PreRegistroConcurso
         return view('user.concursos.pre-registros.show', compact('preRegistro'));
     }
 
 
     public function edit(PreRegistroConcurso $preRegistro)
     {
-        $this->authorize('update', $preRegistro);
         $preRegistro->load('concurso');
         
         return view('user.concursos.pre-registros.edit', compact('preRegistro'));
@@ -124,7 +123,6 @@ class PreRegistroUserController extends Controller
 
     public function factura(PreRegistroConcurso $preRegistro)
     {
-        $this->authorize('view', $preRegistro);
         
         $pago = PagoPreRegistro::with(['usuario', 'concurso'])
             ->findOrFail($preRegistro->pago_pre_registro_id);
@@ -190,8 +188,6 @@ class PreRegistroUserController extends Controller
 
     public function update(Request $request, PreRegistroConcurso $preRegistro)
     {
-        $this->authorize('update', $preRegistro);
-
         $request->validate([
             'nombre_equipo' => 'required|string|max:255',
             'integrantes' => 'required|integer|min:1|max:5',
@@ -260,7 +256,6 @@ class PreRegistroUserController extends Controller
      */
     public function downloadPDR(PreRegistroConcurso $preRegistro)
     {
-        $this->authorize('view', $preRegistro);
 
         if (!$preRegistro->archivo_pdr) {
             return back()->with('error', 'No hay archivo PDR disponible.');

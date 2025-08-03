@@ -37,8 +37,8 @@
                         <span class="text-lg font-medium text-white/90">{{ $preRegistro->concurso->titulo }}</span>
                     </div>
                     <div class="flex items-center space-x-3 px-6 py-3 rounded-xl transition-all duration-300 backdrop-blur-sm border hover:transform hover:scale-105
-                        @switch($preRegistro->estado)
-                            @case('validado')
+                        @switch($preRegistro->estado_pdr)
+                            @case('aprobado')
                                 bg-green-500/10 border-green-500/30 hover:bg-green-500/20 hover:border-green-500/50
                                 @break
                             @case('pendiente')
@@ -49,8 +49,8 @@
                                 @break
                         @endswitch">
                         <i class="far fa-check-circle text-2xl
-                            @switch($preRegistro->estado)
-                                @case('validado')
+                            @switch($preRegistro->estado_pdr)
+                                @case('aprobado')
                                     text-green-400
                                     @break
                                 @case('pendiente')
@@ -61,8 +61,8 @@
                                     @break
                             @endswitch"></i>
                         <span class="text-lg font-medium
-                            @switch($preRegistro->estado)
-                                @case('validado')
+                            @switch($preRegistro->estado_pdr)
+                                @case('aprobado')
                                     text-green-400
                                     @break
                                 @case('pendiente')
@@ -72,7 +72,7 @@
                                     text-red-400
                                     @break
                             @endswitch">
-                            {{ ucfirst($preRegistro->estado) }}
+                            {{ ucfirst($preRegistro->estado_pdr) }}
                         </span>
                     </div>
                 </div>
