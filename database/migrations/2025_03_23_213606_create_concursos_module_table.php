@@ -78,6 +78,9 @@ return new class extends Migration
             $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');  // Relación con el usuario que realiza el pago
             $table->foreignId('concurso_id')->constrained('concursos')->onDelete('cascade');  // Relación con el concurso
             $table->decimal('monto', 10, 2);  // Monto del pago.
+            $table->string('metodo_pago')->default('paypal');  // Método de pago, por defecto PayPal
+            $table->string('referencia_paypal')->nullable();  // Referencia de transacción en PayPal
+            $table->string('paypal_order_id')->nullable();  // ID único de la orden en PayPal
             $table->string('webpay_token')->nullable();  // Token de Webpay
             $table->string('webpay_order_id')->nullable();  // ID de orden de Webpay
             $table->enum('estado_pago', ['pendiente', 'pagado', 'rechazado'])->default('pendiente');  // Estado del pago.
@@ -118,6 +121,9 @@ return new class extends Migration
             $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');  // Relación con el usuario
             $table->foreignId('concurso_id')->constrained('concursos')->onDelete('cascade');  // Relación con el concurso
             $table->decimal('monto', 10, 2);  // Monto del pago.
+            $table->string('metodo_pago')->default('paypal');  // Método de pago, por defecto PayPal
+            $table->string('referencia_paypal')->nullable();  // Referencia de transacción en PayPal
+            $table->string('paypal_order_id')->nullable();  // ID único de la orden en PayPal
             $table->string('webpay_token')->nullable();  // Token de Webpay
             $table->string('webpay_order_id')->nullable();  // ID de orden de Webpay
             $table->enum('estado_pago', ['pendiente', 'pagado', 'rechazado'])->default('pendiente');  // Estado del pago.
