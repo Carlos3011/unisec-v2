@@ -1,0 +1,141 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        // Tabla para pagos con PayPal
+        Schema::create('pagos_paypal', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+            $table->morphs('pagable');
+            $table->decimal('monto', 10, 2);
+            $table->string('moneda', 3)->default('USD');
+            $table->string('paypal_payment_id')->unique();
+            $table->string('paypal_payer_id')->nullable(); 
+            $table->string('paypal_payment_token')->nullable();
+            $table->string('paypal_order_id')->nullable(); 
+            $table->enum('estado', ['pendiente', 'completado', 'cancelado', 'fallido', 'reembolsado'])->default('pendiente');
+            $table->json('paypal_response')->nullable();
+            $table->string('email_pagador')->nullable(); 
+            $table->string('nombre_pagador')->nullable(); 
+            $table->timestamp('fecha_pago')->nullable(); 
+            $table->timestamp('fecha_vencimiento')->nullable();
+            $table->text('descripcion')->nullable();
+            $table->string('numero_factura')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+            $table->index(['estado', 'fecha_pago']);
+            $table->index(['usuario_id', 'estado']);
+        });
+
+        // Tabla para pagos por transferencia bancaria
+        Schema::create('pagos_transferencia', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+            $table->morphs('pagable'); 
+            $table->decimal('monto', 10, 2);
+            $table->string('moneda', 3)->default('MXN'); 
+            $table->string('numero_transferencia')->unique(); 
+            $table->string('banco_origen'); // Banco desde donde se realizó la transferencia
+            $table->string('banco_destino'); // Banco de destino
+            $table->string('cuenta_origen')->nullable(); // Número de cuenta origen (últimos 4 dígitos por seguridad)
+            $table->string('cuenta_destino'); // Número de cuenta destino
+            $table->string('rut_titular_origen'); // RFC del titular de la cuenta origen
+            $table->string('nombre_titular_origen'); // Nombre del titular de la cuenta origen
+            $table->string('rut_titular_destino'); // RFC del titular de la cuenta destino
+            $table->string('nombre_titular_destino'); // Nombre del titular de la cuenta destino
+            $table->enum('estado', ['pendiente', 'verificando', 'completado', 'rechazado', 'reembolsado'])->default('pendiente');
+            $table->timestamp('fecha_transferencia'); // Fecha de la transferencia
+            $table->timestamp('fecha_verificacion')->nullable(); // Fecha cuando se verificó la transferencia
+            $table->string('comprobante_archivo')->nullable(); // Ruta del archivo del comprobante
+            $table->text('observaciones')->nullable(); // Observaciones adicionales
+            $table->text('motivo_rechazo')->nullable(); // Motivo de rechazo si aplica
+            $table->foreignId('verificado_por')->nullable()->constrained('users'); // Usuario que verificó la transferencia
+            $table->string('numero_factura')->nullable(); // Número de factura asociado
+            $table->timestamps();
+            $table->softDeletes();
+            $table->index(['estado', 'fecha_transferencia']);
+            $table->index(['usuario_id', 'estado']);
+            $table->index('numero_transferencia');
+        });
+
+        // Tabla para pagos con WebPay Plus (Transbank)
+        Schema::create('pagos_webpay', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+            $table->morphs('pagable');
+            $table->decimal('monto', 10, 2);
+            $table->string('moneda', 3)->default('MXN');
+            $table->string('webpay_token')->unique(); // Token de transacción de WebPay
+            $table->string('webpay_buy_order')->unique(); // Orden de compra de WebPay
+            $table->string('webpay_session_id')->nullable(); // ID de sesión de WebPay
+            $table->string('webpay_authorization_code')->nullable(); // Código de autorización
+            $table->string('webpay_transaction_date')->nullable(); // Fecha de transacción de WebPay
+            $table->string('webpay_card_type')->nullable(); // Tipo de tarjeta (Visa, Mastercard, etc.)
+            $table->string('webpay_card_number')->nullable(); // Últimos 4 dígitos de la tarjeta
+            $table->integer('webpay_installments_number')->nullable(); // Número de cuotas
+            $table->decimal('webpay_installments_amount', 10, 2)->nullable(); // Monto de cada cuota
+            $table->enum('estado', ['pendiente', 'autorizado', 'completado', 'anulado', 'rechazado', 'reembolsado'])->default('pendiente');
+            $table->json('webpay_response')->nullable(); // Respuesta completa de WebPay en formato JSON
+            $table->timestamp('fecha_pago')->nullable(); // Fecha cuando se completó el pago
+            $table->timestamp('fecha_vencimiento')->nullable(); // Fecha de vencimiento del pago
+            $table->text('descripcion')->nullable(); // Descripción del pago
+            $table->string('numero_factura')->nullable(); // Número de factura asociado
+            $table->string('ip_cliente')->nullable(); // IP del cliente que realizó el pago
+            $table->text('observaciones')->nullable(); // Observaciones adicionales
+            $table->timestamps();
+            $table->softDeletes();
+            $table->index(['estado', 'fecha_pago']);
+            $table->index(['usuario_id', 'estado']);
+            $table->index('webpay_token');
+            $table->index('webpay_buy_order');
+        });
+
+        // Tabla para el historial de estados de pagos (auditoría)
+        Schema::create('historial_estados_pagos', function (Blueprint $table) {
+            $table->id();
+            $table->morphs('pago');
+            $table->string('estado_anterior')->nullable();
+            $table->string('estado_nuevo');
+            $table->text('motivo')->nullable();
+            $table->foreignId('usuario_cambio')->nullable()->constrained('users');
+            $table->json('datos_adicionales')->nullable();
+            $table->timestamps();
+            $table->index(['pago_type', 'pago_id']);
+            $table->index('created_at');
+        });
+
+        // Tabla para configuración de métodos de pago
+        Schema::create('configuracion_pagos', function (Blueprint $table) {
+            $table->id();
+            $table->enum('metodo_pago', ['paypal', 'transferencia', 'webpay']);
+            $table->boolean('activo')->default(true);
+            $table->json('configuracion');
+            $table->decimal('comision_porcentaje', 5, 2)->default(0); // Comisión en porcentaje
+            $table->decimal('comision_fija', 10, 2)->default(0); // Comisión fija
+            $table->integer('orden_visualizacion')->default(0); // Orden de visualización en el frontend
+            $table->text('descripcion')->nullable(); // Descripción del método de pago
+            $table->string('icono')->nullable(); // Ruta del icono del método de pago
+            $table->timestamps();
+            $table->softDeletes();
+            $table->unique(['metodo_pago']);
+        });
+    }
+    
+    public function down(): void
+    {
+        Schema::dropIfExists('configuracion_pagos');
+        Schema::dropIfExists('historial_estados_pagos');
+        Schema::dropIfExists('pagos_webpay');
+        Schema::dropIfExists('pagos_transferencia');
+        Schema::dropIfExists('pagos_paypal');
+    }
+};
