@@ -20,9 +20,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        // Ejecutar seeders de configuración
-        $this->call([
-            ConfiguracionPagosSeeder::class,
-        ]);
+        // Ejecutar el seeder del sistema de pagos unificado
+        $this->call(UnifiedPaymentSeeder::class);
     }
 }

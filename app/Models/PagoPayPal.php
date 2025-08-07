@@ -4,194 +4,82 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class PagoPaypal extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $table = 'pagos_paypal';
 
     protected $fillable = [
-        'usuario_id',
-        'pagable_type',
-        'pagable_id',
-        'monto',
-        'moneda',
+        'pago_unificado_id',
+        'paypal_order_id',
         'paypal_payment_id',
         'paypal_payer_id',
-        'paypal_payment_token',
-        'paypal_order_id',
-        'estado',
-        'paypal_response',
-        'email_pagador',
-        'nombre_pagador',
-        'fecha_pago',
-        'fecha_vencimiento',
-        'descripcion',
-        'numero_factura',
+        'paypal_status',
+        'paypal_response'
     ];
 
     protected $casts = [
-        'monto' => 'decimal:2',
-        'paypal_response' => 'array',
-        'fecha_pago' => 'datetime',
-        'fecha_vencimiento' => 'datetime',
-    ];
-
-    protected $dates = [
-        'fecha_pago',
-        'fecha_vencimiento',
-        'deleted_at',
+        'paypal_response' => 'array'
     ];
 
     /**
-     * Estados disponibles para el pago
+     * Relación con el pago unificado
      */
-    const ESTADO_PENDIENTE = 'pendiente';
-    const ESTADO_COMPLETADO = 'completado';
-    const ESTADO_CANCELADO = 'cancelado';
-    const ESTADO_FALLIDO = 'fallido';
-    const ESTADO_REEMBOLSADO = 'reembolsado';
-
-    /**
-     * Relación con el usuario que realizó el pago
-     */
-    public function usuario(): BelongsTo
+    public function pagoUnificado(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'usuario_id');
+        return $this->belongsTo(PagoUnificado::class, 'pago_unificado_id');
     }
 
     /**
-     * Relación polimórfica con el elemento pagable (curso, taller, concurso, etc.)
+     * Verificar si el pago está aprobado en PayPal
      */
-    public function pagable(): MorphTo
+    public function estaAprobado(): bool
     {
-        return $this->morphTo();
+        return $this->paypal_status === 'APPROVED';
     }
 
     /**
-     * Relación con el historial de estados
-     */
-    public function historialEstados(): MorphMany
-    {
-        return $this->morphMany(HistorialEstadoPago::class, 'pago');
-    }
-
-    /**
-     * Scope para filtrar por estado
-     */
-    public function scopePorEstado($query, $estado)
-    {
-        return $query->where('estado', $estado);
-    }
-
-    /**
-     * Scope para pagos completados
-     */
-    public function scopeCompletados($query)
-    {
-        return $query->where('estado', self::ESTADO_COMPLETADO);
-    }
-
-    /**
-     * Scope para pagos pendientes
-     */
-    public function scopePendientes($query)
-    {
-        return $query->where('estado', self::ESTADO_PENDIENTE);
-    }
-
-    /**
-     * Scope para filtrar por rango de fechas
-     */
-    public function scopeEntreFechas($query, $fechaInicio, $fechaFin)
-    {
-        return $query->whereBetween('fecha_pago', [$fechaInicio, $fechaFin]);
-    }
-
-    /**
-     * Verifica si el pago está completado
+     * Verificar si el pago está completado en PayPal
      */
     public function estaCompletado(): bool
     {
-        return $this->estado === self::ESTADO_COMPLETADO;
+        return $this->paypal_status === 'COMPLETED';
     }
 
     /**
-     * Verifica si el pago está pendiente
+     * Obtener información del pagador desde la respuesta de PayPal
      */
-    public function estaPendiente(): bool
+    public function getInfoPagador()
     {
-        return $this->estado === self::ESTADO_PENDIENTE;
+        return $this->paypal_response['payer'] ?? null;
     }
 
     /**
-     * Verifica si el pago fue reembolsado
+     * Obtener detalles de la transacción desde la respuesta de PayPal
      */
-    public function fueReembolsado(): bool
+    public function getDetallesTransaccion()
     {
-        return $this->estado === self::ESTADO_REEMBOLSADO;
+        return $this->paypal_response['purchase_units'][0] ?? null;
     }
 
     /**
-     * Obtiene el monto formateado con la moneda
+     * Obtener el monto desde la respuesta de PayPal
      */
-    public function getMontoFormateadoAttribute(): string
+    public function getMontoPaypal()
     {
-        return number_format($this->monto, 2) . ' ' . $this->moneda;
+        $detalles = $this->getDetallesTransaccion();
+        return $detalles['amount']['value'] ?? null;
     }
 
     /**
-     * Obtiene los últimos 4 dígitos del payment ID para mostrar
+     * Obtener la moneda desde la respuesta de PayPal
      */
-    public function getPaymentIdCortoAttribute(): string
+    public function getMonedaPaypal()
     {
-        return '****' . substr($this->paypal_payment_id, -4);
-    }
-
-    /**
-     * Cambia el estado del pago y registra en el historial
-     */
-    public function cambiarEstado(string $nuevoEstado, string $motivo = null, int $usuarioCambio = null): bool
-    {
-        $estadoAnterior = $this->estado;
-        
-        $this->estado = $nuevoEstado;
-        
-        if ($nuevoEstado === self::ESTADO_COMPLETADO && !$this->fecha_pago) {
-            $this->fecha_pago = now();
-        }
-        
-        $guardado = $this->save();
-        
-        if ($guardado) {
-            // Registrar en el historial
-            $this->historialEstados()->create([
-                'estado_anterior' => $estadoAnterior,
-                'estado_nuevo' => $nuevoEstado,
-                'motivo' => $motivo,
-                'usuario_cambio' => $usuarioCambio,
-            ]);
-        }
-        
-        return $guardado;
-    }
-
-    /**
-     * Obtiene todos los estados disponibles
-     */
-    public static function getEstadosDisponibles(): array
-    {
-        return [
-            self::ESTADO_PENDIENTE => 'Pendiente',
-            self::ESTADO_COMPLETADO => 'Completado',
-            self::ESTADO_CANCELADO => 'Cancelado',
-            self::ESTADO_FALLIDO => 'Fallido',
-            self::ESTADO_REEMBOLSADO => 'Reembolsado',
-        ];
+        $detalles = $this->getDetallesTransaccion();
+        return $detalles['amount']['currency_code'] ?? null;
     }
 }

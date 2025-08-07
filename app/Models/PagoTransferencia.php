@@ -4,255 +4,96 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Storage;
 
 class PagoTransferencia extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $table = 'pagos_transferencia';
 
     protected $fillable = [
-        'usuario_id',
-        'pagable_type',
-        'pagable_id',
-        'monto',
-        'moneda',
+        'pago_unificado_id',
         'numero_transferencia',
         'banco_origen',
         'banco_destino',
         'cuenta_origen',
         'cuenta_destino',
-        'rut_titular_origen',
-        'nombre_titular_origen',
-        'rut_titular_destino',
-        'nombre_titular_destino',
-        'estado',
-        'fecha_transferencia',
-        'fecha_verificacion',
+        'rut_transferente',
+        'nombre_transferente',
         'comprobante_archivo',
+        'estado_verificacion',
         'observaciones',
-        'motivo_rechazo',
-        'verificado_por',
-        'numero_factura',
+        'fecha_transferencia'
     ];
 
     protected $casts = [
-        'monto' => 'decimal:2',
-        'fecha_transferencia' => 'datetime',
-        'fecha_verificacion' => 'datetime',
+        'fecha_transferencia' => 'datetime'
     ];
 
     protected $dates = [
-        'fecha_transferencia',
-        'fecha_verificacion',
-        'deleted_at',
+        'fecha_transferencia'
     ];
 
     /**
-     * Estados disponibles para el pago
+     * Relación con el pago unificado
      */
-    const ESTADO_PENDIENTE = 'pendiente';
-    const ESTADO_VERIFICANDO = 'verificando';
-    const ESTADO_COMPLETADO = 'completado';
-    const ESTADO_RECHAZADO = 'rechazado';
-    const ESTADO_REEMBOLSADO = 'reembolsado';
-
-    /**
-     * Bancos disponibles en México
-     */
-    const BANCOS_MEXICO = [
-        'bbva_bancomer' => 'BBVA México',
-        'santander' => 'Banco Santander México',
-        'banamex' => 'Citibanamex',
-        'banorte' => 'Banorte',
-        'hsbc' => 'HSBC México',
-        'scotiabank' => 'Scotiabank México',
-        'inbursa' => 'Banco Inbursa',
-        'azteca' => 'Banco Azteca',
-        'bancoppel' => 'BanCoppel',
-        'banco_del_bajio' => 'Banco del Bajío',
-        'afirme' => 'Banco Afirme',
-        'banregio' => 'Banregio',
-        'banbajio' => 'BanBajío',
-        'banco_azteca' => 'Banco Azteca',
-        'otro' => 'Otro',
-    ];
-    
-    // Alias para compatibilidad con código existente
-    const BANCOS_CHILE = self::BANCOS_MEXICO;
-
-    /**
-     * Relación con el usuario que realizó el pago
-     */
-    public function usuario(): BelongsTo
+    public function pagoUnificado(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'usuario_id');
+        return $this->belongsTo(PagoUnificado::class, 'pago_unificado_id');
     }
 
     /**
-     * Relación con el usuario que verificó el pago
+     * Scope para transferencias pendientes de verificación
      */
-    public function verificador(): BelongsTo
+    public function scopePendientesVerificacion($query)
     {
-        return $this->belongsTo(User::class, 'verificado_por');
+        return $query->where('estado_verificacion', 'pendiente');
     }
 
     /**
-     * Relación polimórfica con el elemento pagable (curso, taller, concurso, etc.)
+     * Scope para transferencias verificadas
      */
-    public function pagable(): MorphTo
+    public function scopeVerificadas($query)
     {
-        return $this->morphTo();
+        return $query->where('estado_verificacion', 'verificado');
     }
 
     /**
-     * Relación con el historial de estados
+     * Scope para transferencias rechazadas
      */
-    public function historialEstados(): MorphMany
+    public function scopeRechazadas($query)
     {
-        return $this->morphMany(HistorialEstadoPago::class, 'pago');
+        return $query->where('estado_verificacion', 'rechazado');
     }
 
     /**
-     * Scope para filtrar por estado
+     * Verificar si la transferencia está verificada
      */
-    public function scopePorEstado($query, $estado)
+    public function estaVerificada(): bool
     {
-        return $query->where('estado', $estado);
+        return $this->estado_verificacion === 'verificado';
     }
 
     /**
-     * Scope para pagos completados
-     */
-    public function scopeCompletados($query)
-    {
-        return $query->where('estado', self::ESTADO_COMPLETADO);
-    }
-
-    /**
-     * Scope para pagos pendientes
-     */
-    public function scopePendientes($query)
-    {
-        return $query->where('estado', self::ESTADO_PENDIENTE);
-    }
-
-    /**
-     * Scope para pagos en verificación
-     */
-    public function scopeVerificando($query)
-    {
-        return $query->where('estado', self::ESTADO_VERIFICANDO);
-    }
-
-    /**
-     * Scope para filtrar por rango de fechas
-     */
-    public function scopeEntreFechas($query, $fechaInicio, $fechaFin)
-    {
-        return $query->whereBetween('fecha_transferencia', [$fechaInicio, $fechaFin]);
-    }
-
-    /**
-     * Scope para pagos que requieren verificación
-     */
-    public function scopeRequierenVerificacion($query)
-    {
-        return $query->whereIn('estado', [self::ESTADO_PENDIENTE, self::ESTADO_VERIFICANDO]);
-    }
-
-    /**
-     * Verifica si el pago está completado
-     */
-    public function estaCompletado(): bool
-    {
-        return $this->estado === self::ESTADO_COMPLETADO;
-    }
-
-    /**
-     * Verifica si el pago está pendiente
+     * Verificar si la transferencia está pendiente
      */
     public function estaPendiente(): bool
     {
-        return $this->estado === self::ESTADO_PENDIENTE;
+        return $this->estado_verificacion === 'pendiente';
     }
 
     /**
-     * Verifica si el pago está en verificación
+     * Verificar si la transferencia fue rechazada
      */
-    public function estaVerificando(): bool
+    public function fueRechazada(): bool
     {
-        return $this->estado === self::ESTADO_VERIFICANDO;
+        return $this->estado_verificacion === 'rechazado';
     }
 
     /**
-     * Verifica si el pago fue rechazado
-     */
-    public function fueRechazado(): bool
-    {
-        return $this->estado === self::ESTADO_RECHAZADO;
-    }
-
-    /**
-     * Obtiene el monto formateado con la moneda
-     */
-    public function getMontoFormateadoAttribute(): string
-    {
-        return number_format($this->monto, 0, ',', '.') . ' ' . $this->moneda;
-    }
-
-    /**
-     * Obtiene la cuenta origen enmascarada
-     */
-    public function getCuentaOrigenEnmascaradaAttribute(): string
-    {
-        if (!$this->cuenta_origen) {
-            return 'No especificada';
-        }
-        
-        $longitud = strlen($this->cuenta_origen);
-        if ($longitud <= 4) {
-            return $this->cuenta_origen;
-        }
-        
-        return str_repeat('*', $longitud - 4) . substr($this->cuenta_origen, -4);
-    }
-
-    /**
-     * Obtiene el nombre del banco origen
-     */
-    public function getNombreBancoOrigenAttribute(): string
-    {
-        return self::BANCOS_MEXICO[$this->banco_origen] ?? $this->banco_origen;
-    }
-
-    /**
-     * Obtiene el nombre del banco destino
-     */
-    public function getNombreBancoDestinoAttribute(): string
-    {
-        return self::BANCOS_MEXICO[$this->banco_destino] ?? $this->banco_destino;
-    }
-
-    /**
-     * Obtiene la URL del comprobante
-     */
-    public function getUrlComprobanteAttribute(): ?string
-    {
-        if (!$this->comprobante_archivo) {
-            return null;
-        }
-        
-        return Storage::url($this->comprobante_archivo);
-    }
-
-    /**
-     * Verifica si tiene comprobante
+     * Verificar si tiene comprobante
      */
     public function tieneComprobante(): bool
     {
@@ -260,146 +101,78 @@ class PagoTransferencia extends Model
     }
 
     /**
-     * Cambia el estado del pago y registra en el historial
+     * Obtener URL del comprobante
      */
-    public function cambiarEstado(string $nuevoEstado, string $motivo = null, int $usuarioCambio = null): bool
+    public function getUrlComprobanteAttribute(): ?string
     {
-        $estadoAnterior = $this->estado;
-        
-        $this->estado = $nuevoEstado;
-        
-        if ($nuevoEstado === self::ESTADO_COMPLETADO && !$this->fecha_verificacion) {
-            $this->fecha_verificacion = now();
-            $this->verificado_por = $usuarioCambio;
+        if ($this->tieneComprobante()) {
+            return Storage::url($this->comprobante_archivo);
         }
-        
-        if ($nuevoEstado === self::ESTADO_RECHAZADO && $motivo) {
-            $this->motivo_rechazo = $motivo;
-        }
-        
-        $guardado = $this->save();
-        
-        if ($guardado) {
-            // Registrar en el historial
-            $this->historialEstados()->create([
-                'estado_anterior' => $estadoAnterior,
-                'estado_nuevo' => $nuevoEstado,
-                'motivo' => $motivo,
-                'usuario_cambio' => $usuarioCambio,
-            ]);
-        }
-        
-        return $guardado;
+        return null;
     }
 
     /**
-     * Aprobar el pago
+     * Marcar como verificada
      */
-    public function aprobar(int $usuarioVerificador, string $observaciones = null): bool
+    public function marcarComoVerificada($observaciones = null)
     {
-        return $this->cambiarEstado(
-            self::ESTADO_COMPLETADO,
-            $observaciones ?? 'Pago aprobado tras verificación',
-            $usuarioVerificador
-        );
+        $this->update([
+            'estado_verificacion' => 'verificado',
+            'observaciones' => $observaciones
+        ]);
+
+        // Actualizar el estado del pago unificado
+        $this->pagoUnificado->cambiarEstado('completado', 'Transferencia verificada');
+
+        return $this;
     }
 
     /**
-     * Rechazar el pago
+     * Marcar como rechazada
      */
-    public function rechazar(string $motivo, int $usuarioVerificador): bool
+    public function marcarComoRechazada($observaciones)
     {
-        return $this->cambiarEstado(
-            self::ESTADO_RECHAZADO,
-            $motivo,
-            $usuarioVerificador
-        );
+        $this->update([
+            'estado_verificacion' => 'rechazado',
+            'observaciones' => $observaciones
+        ]);
+
+        // Actualizar el estado del pago unificado
+        $this->pagoUnificado->cambiarEstado('fallido', 'Transferencia rechazada: ' . $observaciones);
+
+        return $this;
     }
 
     /**
-     * Obtiene todos los estados disponibles
+     * Formatear RUT
      */
-    public static function getEstadosDisponibles(): array
+    public function getRutFormateadoAttribute(): string
+    {
+        if (empty($this->rut_transferente)) {
+            return 'No especificado';
+        }
+
+        $rut = preg_replace('/[^0-9kK]/', '', $this->rut_transferente);
+        $dv = substr($rut, -1);
+        $numero = substr($rut, 0, -1);
+        
+        return number_format($numero, 0, '', '.') . '-' . $dv;
+    }
+
+    /**
+     * Obtener información completa de la transferencia
+     */
+    public function getResumenTransferenciaAttribute(): array
     {
         return [
-            self::ESTADO_PENDIENTE => 'Pendiente',
-            self::ESTADO_VERIFICANDO => 'En Verificación',
-            self::ESTADO_COMPLETADO => 'Completado',
-            self::ESTADO_RECHAZADO => 'Rechazado',
-            self::ESTADO_REEMBOLSADO => 'Reembolsado',
+            'numero' => $this->numero_transferencia,
+            'banco_origen' => $this->banco_origen,
+            'banco_destino' => $this->banco_destino,
+            'transferente' => $this->nombre_transferente,
+            'rut' => $this->rut_formateado,
+            'fecha' => $this->fecha_transferencia?->format('d/m/Y H:i'),
+            'estado' => $this->estado_verificacion,
+            'tiene_comprobante' => $this->tieneComprobante()
         ];
-    }
-
-    public static function getBancosDisponibles(): array
-    {
-        return self::BANCOS_MEXICO;
-    }
-
-    /**
-     * Valida si un RFC mexicano tiene el formato correcto
-     * 
-     * Formato para personas físicas: AAAA######XXX
-     * Formato para personas morales: AAA######XXX
-     * Donde:
-     * - A: Letras del nombre o razón social
-     * - #: Fecha de nacimiento o constitución (AAMMDD)
-     * - X: Homoclave
-     */
-    public static function validarRFC(string $rfc): bool
-    {
-        // Eliminar espacios y guiones
-        $rfc = str_replace([' ', '-'], '', $rfc);
-        
-        // Convertir a mayúsculas
-        $rfc = strtoupper($rfc);
-        
-        // Validar longitud (13 para personas físicas, 12 para personas morales)
-        if (strlen($rfc) != 13 && strlen($rfc) != 12) {
-            return false;
-        }
-        
-        // Validar formato usando expresión regular
-        // Personas físicas: 4 letras + 6 dígitos + 3 alfanuméricos
-        // Personas morales: 3 letras + 6 dígitos + 3 alfanuméricos
-        $patron = '/^[A-Z]{3,4}[0-9]{6}[A-Z0-9]{3}$/i';
-        
-        return preg_match($patron, $rfc) === 1;
-    }
-    
-    /**
-     * Valida si un CURP mexicano tiene el formato correcto
-     */
-    public static function validarCURP(string $curp): bool
-    {
-        // Eliminar espacios y guiones
-        $curp = str_replace([' ', '-'], '', $curp);
-        
-        // Convertir a mayúsculas
-        $curp = strtoupper($curp);
-        
-        // Validar longitud (18 caracteres)
-        if (strlen($curp) != 18) {
-            return false;
-        }
-        
-        // Validar formato usando expresión regular
-        $patron = '/^[A-Z]{4}[0-9]{6}[HM][A-Z]{5}[0-9A-Z]{2}$/i';
-        
-        return preg_match($patron, $curp) === 1;
-    }
-    
-    /**
-     * Método de compatibilidad para código existente
-     * @deprecated Usar validarRFC en su lugar
-     */
-    public static function validarRut(string $rut): bool
-    {
-        // Intentar validar como RFC si parece un RFC mexicano
-        if (strlen($rut) >= 12) {
-            return self::validarRFC($rut);
-        }
-        
-        // Fallback para compatibilidad
-        return false;
     }
 }
