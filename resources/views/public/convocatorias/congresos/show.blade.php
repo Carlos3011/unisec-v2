@@ -18,7 +18,7 @@
             <div class="relative overflow-hidden mb-6">
                 @if($convocatoria->imagen_portada)
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-                    <img src="{{ asset($convocatoria->imagen_portada) }}" 
+                    <img src="{{ asset('system/public/'.$convocatoria->imagen_portada) }}" 
                          alt="{{ $convocatoria->congreso->nombre }}" 
                          class="w-full h-80 object-cover">
                 @endif
@@ -126,10 +126,76 @@
                 </div>
                 @endif
 
+                <div class="bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl p-6 border border-amber-400/30 hover:border-amber-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]">
+                    <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
+                        <i class="fas fa-book mr-3 text-amber-400 text-2xl"></i>Temática 1 : Ingeniería Cosmonáutica UNISEC-MX
+                    </h2>
+                    <div class="space-y-6">
+                         <!-- Temática 1 -->
+                        <div class="bg-black/30 p-6 rounded-lg border border-white/10 prose prose-invert max-w-none">
+                            <h3 class="text-white text-xl font-bold">Sistemas Cosmonáuticos</h3>
+                            <ul class="text-white/90 text-justify list-disc list-inside">
+                                <li>Sistema de suministro de energía</li>
+                                <li>Sistema de gestión térmica</li>
+                                <li>Sistema de computadora de abordo</li>
+                                <li>Sistema de telemetría y comando</li>
+                                <li>Sistema de control y estabilización</li>
+                            </ul>
+                        </div>
+
+                        <!-- Temática 2 -->
+                        <div class="bg-black/30 p-6 rounded-lg border border-white/10 prose prose-invert max-w-none">
+                            <h3 class="text-white text-xl font-bold">Sistemas Aeronáuticos</h3>
+                            <ul class="text-white/90 text-justify list-disc list-inside">
+                                <li>Aerodinámica</li>
+                                <li>Mecánica de fluidos</li>
+                                <li>Estructuras aeronáuticas</li>
+                                <li>Sistemas de propulsión</li>
+                                <li>Electrónica y aviónica</li>
+                            </ul>
+                        </div>
+
+                        <!-- Temática 3 -->
+                        <div class="bg-black/30 p-6 rounded-lg border border-white/10 prose prose-invert max-w-none">
+                            <h3 class="text-white text-xl font-bold">Propulsión (Cosmonáutica y Tecnologías Subsónicas e Hipersónicas)</h3>
+                            <ul class="text-white/90 text-justify list-disc list-inside">
+                                <li>Motores (scramjet y ramjet)</li>
+                                <li>Propulsión híbrida y eléctrica</li>
+                                <li>Combustibles sostenibles para aviación (y cohetes)</li>
+                                <li>Cámaras de combustión sónica e hipersónicas</li>
+                            </ul>
+                        </div>
+
+                        <!-- Temática 4 -->
+                        <div class="bg-black/30 p-6 rounded-lg border border-white/10 prose prose-invert max-w-none">
+                            <h3 class="text-white text-xl font-bold">Diseño y Simulación de Estructuras Aeroespaciales</h3>
+                            <ul class="text-white/90 text-justify list-disc list-inside">
+                                <li>Materiales compuestos y metamateriales</li>
+                                <li>IA en simulaciones estructurales</li>
+                                <li>Optimización y aligeramiento de estructuras</li>
+                                <li>Estructuras aeronáuticas con algoritmos genéticos</li>
+                                <li>CFD y aeroelasticidad</li>
+                                <li>Gemelos digitales estructurales</li>
+                            </ul>
+                        </div>
+
+                        <!-- Temática 5 -->
+                        <div class="bg-black/30 p-6 rounded-lg border border-white/10 prose prose-invert max-w-none">
+                            <h3 class="text-white text-xl font-bold">Historia de la Cosmonáutica y Legado de la Aviación Mexicana</h3>
+                            <ul class="text-white/90 text-justify list-disc list-inside">
+                                <li>Pioneros de la cosmonáutica</li>
+                                <li>Pioneros de la aviación en México</li>
+                                <li>Desarrollo de la industria aeronáutica nacional</li>
+                                <li>Contribuciones de México a la aviación</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
                 @if(is_array($convocatoria->tematicas) && count($convocatoria->tematicas) > 0)
                     <div class="bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl p-6 border border-amber-400/30 hover:border-amber-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]">
                         <h2 class="text-2xl font-semibold text-white mb-6 flex items-center">
-                            <i class="fas fa-book mr-3 text-amber-400 text-2xl"></i>Temáticas
+                            <i class="fas fa-book mr-3 text-amber-400 text-2xl"></i>Temática 2
                         </h2>
                         <div class="space-y-6">
                             @foreach($convocatoria->tematicas as $tematica)
@@ -186,7 +252,8 @@
                                 <div class="flex flex-col items-center text-center space-y-3">
                                     <i class="fas fa-file-pdf text-amber-400 text-3xl"></i>
                                     <span class="text-white/90 font-medium">Convocatoria</span>
-                                    <a href="{{ asset($convocatoria->archivo_convocatoria) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-amber-500/20 text-amber-400 rounded-lg hover:bg-amber-500/30 transition-colors duration-200">
+                                    <a href="{{ asset('system/public/'.$convocatoria->archivo_convocatoria) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-amber-500/20 text-amber-400 rounded-lg hover:bg-amber-500/30 transition-colors duration-200">
+
                                         <i class="fas fa-eye mr-2"></i>Visualizar
                                     </a>
                                 </div>
@@ -198,7 +265,8 @@
                                 <div class="flex flex-col items-center text-center space-y-3">
                                     <i class="fas fa-file-pdf text-amber-400 text-3xl"></i>
                                     <span class="text-white/90 font-medium">Formato de Artículo</span>
-                                    <a href="{{ asset($convocatoria->archivo_articulo) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-amber-500/20 text-amber-400 rounded-lg hover:bg-amber-500/30 transition-colors duration-200">
+                                    <a href="{{ asset('system/public/'.$convocatoria->archivo_articulo) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-amber-500/20 text-amber-400 rounded-lg hover:bg-amber-500/30 transition-colors duration-200">
+
                                         <i class="fas fa-eye mr-2"></i>Visualizar
                                     </a>
                                 </div>
